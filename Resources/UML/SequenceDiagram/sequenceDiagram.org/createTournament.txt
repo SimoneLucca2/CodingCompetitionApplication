@@ -1,0 +1,32 @@
+Client->APIGateway: POST /v1/tournament
+activate APIGateway
+APIGateway->TournamentManager : POST /tournament
+activate TournamentManager
+TournamentManager->TournamentCreator:CreateTournament(msg)
+activate TournamentCreator
+TournamentCreator-> TournamentDataManager: getTournament(tournamentId)
+activate TournamentDataManager
+TournamentDataManager -> Database: getTournament(tournamentId)
+
+Database-->TournamentDataManager: return tournament
+TournamentDataManager --> TournamentCreator: return tournament
+
+deactivateafter TournamentDataManager
+alt empty response
+    TournamentCreator->TournamentDataManager: CreateTournament
+activate TournamentDataManager
+    TournamentDataManager -> Database: createTournament
+    
+TournamentDataManager<--Database:Commit
+TournamentCreator<--TournamentDataManager:return
+deactivateafter TournamentDataManager
+
+TournamentManager<--TournamentCreator:return
+deactivateafter TournamentCreator
+
+APIGateway<--TournamentManager:200 Ok
+deactivateafter TournamentManager
+APIGateway-->Client: 200 OK
+
+end
+
