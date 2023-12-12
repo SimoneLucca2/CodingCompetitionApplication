@@ -1,0 +1,23 @@
+participant "Student" as Student
+participant "CKB System" as CKB
+
+note right of CKB: Tournament closed\nPoints have been assigned to each group
+CKB->CKB: Elaborate group points and build ranking
+activate CKB
+deactivate CKB
+
+Student->CKB: Ask for ranking
+activate CKB
+CKB->Student: Show ranking
+deactivate CKB
+note right of Student: Student views tournament ranking
+
+CKB->CKB: Assign badges to students
+activate CKB
+deactivate CKB
+
+Student->CKB: Ask for badges
+activate CKB
+CKB->Student: Show badges
+deactivate CKB
+note right of Student: Student views awarded badges

@@ -1,3 +1,5 @@
+entryspacing 0.9
+activate Client
 Client->APIGateway: POST /v1/tournament
 activate APIGateway
 APIGateway->TournamentManager : POST /tournament
@@ -12,11 +14,12 @@ Database-->TournamentDataManager: return tournament
 TournamentDataManager --> TournamentCreator: return tournament
 
 deactivateafter TournamentDataManager
-alt empty response
+alt no active tournament with the same name
     TournamentCreator->TournamentDataManager: CreateTournament
 activate TournamentDataManager
     TournamentDataManager -> Database: createTournament
     
+TournamentDataManager->Database:Post badges for the tournament
 TournamentDataManager<--Database:Commit
 TournamentCreator<--TournamentDataManager:return
 deactivateafter TournamentDataManager

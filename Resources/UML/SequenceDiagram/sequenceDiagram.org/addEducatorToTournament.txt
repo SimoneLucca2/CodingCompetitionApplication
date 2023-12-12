@@ -1,0 +1,41 @@
+participant Client
+participant APIGateway
+participant TournamentManager
+participant TournamentAdministationManager
+participant TournamentDataManager
+participant Database
+
+entryspacing 0.8
+Client->APIGateway:POST /v1/tournament/educator
+activate APIGateway
+APIGateway->TournamentManager:POST /tournament/educator
+activate TournamentManager
+TournamentManager->TournamentAdministationManager:addEducator(jsonMsg)
+TournamentAdministationManager->TournamentDataManager:isLeader(requesterID, tournamentId)
+TournamentDataManager->Database:getLeader(tournamentID)
+TournamentDataManager<--Database:response
+TournamentAdministationManager<--TournamentDataManager:boolean response
+activate TournamentAdministationManager
+
+TournamentAdministationManager -> UserService://///TODO//////\nName of the request
+
+
+TournamentAdministationManager<-UserService:////TODO/////\ncheck if educator exists
+TournamentAdministationManager->TournamentDataManager:addEducator(educatorId, tournamentId)
+activate TournamentDataManager
+TournamentDataManager->Database:addEducator(educatorId, tournamentId)
+Database-->TournamentDataManager:Commit
+deactivate Database
+TournamentDataManager-->TournamentAdministationManager:return
+
+deactivate TournamentDataManager
+    TournamentAdministationManager->TournamentDataManager
+    
+    
+    AddEducatorToTournament(tournamentId, educatorId)
+    TournamentAdministationManager-->TournamentManager: Ok
+    TournamentManager-->APIGateway: Ok
+    APIGateway-->Client: 200 OK
+deactivate TournamentManager
+deactivate TournamentAdministationManager
+deactivate APIGateway

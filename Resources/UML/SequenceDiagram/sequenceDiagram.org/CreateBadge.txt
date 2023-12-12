@@ -1,0 +1,27 @@
+
+participant "Educator" as Educator
+participant "CKB System" as CKB
+
+note over Educator: Educator is logged in
+Educator->CKB: Go to badges section
+activate CKB
+
+Educator->CKB: Click on "new badge" button
+
+Educator->CKB: Enter badge title
+
+Educator->CKB: Select Boolean attributes
+
+Educator->CKB: Click on "confirm" button
+
+CKB->CKB: Validate badge creation
+activate CKB
+deactivate CKB
+
+alt Badge name already in use from the same educator
+    CKB-->Educator: Notify name in use
+    note right of Educator: Go back to entry condition
+else Badge created successfully
+    CKB-->Educator: Confirm badge creation
+    note right of Educator: Badge has been successfully created
+end
