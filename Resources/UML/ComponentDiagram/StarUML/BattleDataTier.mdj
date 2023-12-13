@@ -241,7 +241,7 @@
 											"top": 231,
 											"width": 570,
 											"height": 13,
-											"text": "TournamentDataTier"
+											"text": "BattleDataTier"
 										},
 										{
 											"_type": "LabelView",
@@ -309,7 +309,7 @@
 												"$ref": "AAAAAAGMC2sv+I3ItUU="
 											},
 											"font": "Arial;13;0",
-											"left": 703,
+											"left": 695,
 											"top": 479,
 											"width": 38.66357421875,
 											"height": 13,
@@ -326,7 +326,7 @@
 												"$ref": "AAAAAAGMC2/OPY63gYU="
 											},
 											"font": "Arial;13;0",
-											"left": 703,
+											"left": 695,
 											"top": 494,
 											"width": 38.66357421875,
 											"height": 13,
@@ -343,7 +343,7 @@
 												"$ref": "AAAAAAGMXqifOYX5aI0="
 											},
 											"font": "Arial;13;0",
-											"left": 703,
+											"left": 695,
 											"top": 509,
 											"width": 38.66357421875,
 											"height": 13,
@@ -353,7 +353,7 @@
 									],
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 698,
+									"left": 690,
 									"top": 474,
 									"width": 48.66357421875,
 									"height": 53
@@ -369,7 +369,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 698,
+									"left": 690,
 									"top": 474,
 									"width": 10,
 									"height": 10
@@ -385,7 +385,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 698,
+									"left": 690,
 									"top": 474,
 									"width": 10,
 									"height": 10
@@ -401,7 +401,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 698,
+									"left": 690,
 									"top": 474,
 									"width": 10,
 									"height": 10
@@ -476,7 +476,7 @@
 											"top": 158,
 											"width": 105.93603515625,
 											"height": 13,
-											"text": "TournamentDBI"
+											"text": "BattleDBI"
 										},
 										{
 											"_type": "LabelView",
@@ -832,7 +832,7 @@
 											"top": 399,
 											"width": 155.7841796875,
 											"height": 13,
-											"text": "TournamentDataManager"
+											"text": "BattleDataManager"
 										},
 										{
 											"_type": "LabelView",
@@ -846,7 +846,7 @@
 											"top": -49,
 											"width": 156.28564453125,
 											"height": 13,
-											"text": "(from TournamentDataTier)"
+											"text": "(from BattleDataTier)"
 										},
 										{
 											"_type": "LabelView",
@@ -1026,7 +1026,7 @@
 											"top": 847,
 											"width": 185.68798828125,
 											"height": 13,
-											"text": "(from TournamentDataTier)"
+											"text": "(from BattleDataTier)"
 										},
 										{
 											"_type": "LabelView",
@@ -1483,7 +1483,7 @@
 											"top": 271,
 											"width": 185.68798828125,
 											"height": 13,
-											"text": "(from TournamentDataTier)"
+											"text": "(from BattleDataTier)"
 										},
 										{
 											"_type": "LabelView",
@@ -2600,7 +2600,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGMYppZViOXEKA="
 					},
-					"name": "TournamentDataTier",
+					"name": "BattleDataTier",
 					"ownedElements": [
 						{
 							"_type": "UMLInterfaceRealization",
@@ -2667,7 +2667,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGMC2jQ3IyaysU="
 							},
-							"name": "TournamentDataManager",
+							"name": "BattleDataManager",
 							"ownedElements": [
 								{
 									"_type": "UMLInterfaceRealization",
@@ -2795,7 +2795,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGMYppZViOXEKA="
 					},
-					"name": "TournamentDBI"
+					"name": "BattleDBI"
 				},
 				{
 					"_type": "UMLInterface",
