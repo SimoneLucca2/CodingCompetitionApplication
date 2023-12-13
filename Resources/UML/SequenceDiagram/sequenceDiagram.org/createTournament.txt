@@ -6,20 +6,14 @@ APIGateway->TournamentManager : POST /tournament
 activate TournamentManager
 TournamentManager->TournamentCreator:CreateTournament(msg)
 activate TournamentCreator
-TournamentCreator-> TournamentDataManager: getTournament(tournamentId)
-activate TournamentDataManager
-TournamentDataManager -> Database: getTournament(tournamentId)
 
-Database-->TournamentDataManager: return tournament
-TournamentDataManager --> TournamentCreator: return tournament
-
-deactivateafter TournamentDataManager
-alt no active tournament with the same name
     TournamentCreator->TournamentDataManager: CreateTournament
 activate TournamentDataManager
     TournamentDataManager -> Database: createTournament
     
 TournamentDataManager->Database:Post badges for the tournament
+alt no active tournament with the same name
+
 TournamentDataManager<--Database:Commit
 TournamentCreator<--TournamentDataManager:return
 deactivateafter TournamentDataManager
@@ -31,5 +25,14 @@ APIGateway<--TournamentManager:200 Ok
 deactivateafter TournamentManager
 APIGateway-->Client: 200 OK
 
+else exists active tournament with the same name
+
+
+
+TournamentDataManager<--Database:Abort
+TournamentCreator<--TournamentDataManager:return
+TournamentManager<--TournamentCreator:return
+APIGateway<--TournamentManager:400 bad request
+Client<--APIGateway:400 bad request
 end
 
