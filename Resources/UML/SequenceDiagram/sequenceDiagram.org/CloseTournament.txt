@@ -1,49 +1,60 @@
-participant Client
-participant APIGateway
-participant TournamentManager
-participant TournamentCloser
-participant TournamentDataManager
-participant Database
+title Close a Tournament
 
-Client->APIGateway:PUT /v1/tournament/status
+participant "Client" as Client
+participant "API Gateway" as APIGateway
+participant "Tournament Manager" as TournamentManager
+participant "Tournament Closer" as TournamentCloser
+participant "Tournament Data Tier" as TournamentDataTier
+participant "Battle Service" as BattleService
+
+Client->APIGateway: PUT /v1/tournament/{tournamentId}/status/close
 activate APIGateway
-APIGateway->TournamentManager:PUT /tournament/status
+
+APIGateway->TournamentManager:PUT /tournament/{tournamentId}/status/close
 activate TournamentManager
-TournamentManager->TournamentCloser:closeTournament(jsonMsg)
+
+TournamentManager->TournamentCloser:initiateCloseTournament({tournamentId})
 activate TournamentCloser
-TournamentCloser->TournamentDataManager:setTournamentStatus(tournamentId, status = "closing")
-activate TournamentDataManager
-TournamentDataManager->Database:setTournamentStatus(tournamentId, status = "closing")
-activate Database
-Database-->TournamentDataManager:Commit
-deactivate Database
-TournamentDataManager-->TournamentCloser:return
-deactivate TournamentDataManager
-TournamentCloser -> BattleService: GET /..URL TO CHECK IF A BATTLE IS RUNNING INSIDE THIS TOURNAMENT
-BattleService --> TournamentCloser: response
-alt no battle running
 
-  
+TournamentCloser->TournamentDataTier:setStatus({tournamentId}, "closing")
+activate TournamentDataTier
+TournamentDataTier-->TournamentCloser: Status updated to "closing"
+deactivate TournamentDataTier
 
-TournamentCloser->TournamentDataManager:setTournamentStatus(tournamentId, status = "closed")
-TournamentDataManager->Database:setTournamentStatus(tournamentId, status = "closed")
-TournamentDataManager<--Database:commit
-TournamentCloser<--TournamentDataManager:return
-TournamentManager<--TournamentCloser:return
-APIGateway<--TournamentManager:200 Ok
-Client<--APIGateway:200 Ok
-else 
-BattleService ->TournamentManager:PUT /tournament/status
+TournamentCloser->BattleService: Check if battles are running
+activate BattleService
+BattleService-->TournamentCloser: Active battles detected
+deactivate BattleService
 
-
-TournamentManager->TournamentDataManager:setTournamentStatus(tournamentId, status = "closed")
-TournamentDataManager->Database:setTournamentStatus(tournamentId, status = "closed")
-TournamentDataManager<--Database:commit
-TournamentCloser<--TournamentDataManager:return
-TournamentManager<--TournamentCloser:return
-APIGateway<--TournamentManager:200 Ok
-Client<--APIGateway:200 Ok
-end
+TournamentCloser-->TournamentManager: Tournament is closing
 deactivate TournamentCloser
+
+TournamentManager-->APIGateway: Tournament status set to closing
 deactivate TournamentManager
+
+APIGateway-->Client:200 Ok
+deactivate APIGateway
+
+note over BattleService: Once the last battle ends...
+BattleService->APIGateway: PUT /v1/tournament/{tournamentId}/status/complete
+activate APIGateway
+
+APIGateway->TournamentManager:PUT /tournament/{tournamentId}/status/complete
+activate TournamentManager
+
+TournamentManager->TournamentCloser:completeTournament({tournamentId})
+activate TournamentCloser
+TournamentCloser->TournamentDataTier:setStatus({tournamentId}, "closed")
+activate TournamentDataTier
+
+TournamentDataTier-->TournamentCloser:Tournament closed
+deactivate TournamentDataTier
+
+TournamentManager<--TournamentCloser:Tournament closed
+deactivate TournamentCloser
+
+TournamentManager-->APIGateway: Tournament closure confirmed
+deactivate TournamentManager
+
+APIGateway-->BattleService: Acknowledge tournament closed
 deactivate APIGateway

@@ -1,41 +1,36 @@
+
 participant Client
 participant APIGateway
 participant TournamentManager
 participant TournamentAdministationManager
-participant TournamentDataManager
-participant Database
+participant TournamentDataTier
+participant UserService
 
-entryspacing 0.8
-Client->APIGateway:POST /v1/tournament/educator
+Client->APIGateway: POST /v1/tournament/educator
 activate APIGateway
-APIGateway->TournamentManager:POST /tournament/educator
+APIGateway->TournamentManager: POST /tournament/educator
 activate TournamentManager
-TournamentManager->TournamentAdministationManager:addEducator(jsonMsg)
-TournamentAdministationManager->TournamentDataManager:isLeader(requesterID, tournamentId)
-TournamentDataManager->Database:getLeader(tournamentID)
-TournamentDataManager<--Database:response
-TournamentAdministationManager<--TournamentDataManager:boolean response
+TournamentManager->TournamentAdministationManager: addEducator(jsonMsg)
 activate TournamentAdministationManager
 
-TournamentAdministationManager -> UserService://///TODO//////\nName of the request
+TournamentAdministationManager->TournamentDataTier: isLeader(requesterID, tournamentId)
+activate TournamentDataTier
+TournamentDataTier-->TournamentAdministationManager: boolean response
+deactivate TournamentDataTier
 
+TournamentAdministationManager->UserService:GET /user/{educatorId}/exists
+activate UserService
+UserService-->TournamentAdministationManager: boolean response
+deactivate UserService
 
-TournamentAdministationManager<-UserService:////TODO/////\ncheck if educator exists
-TournamentAdministationManager->TournamentDataManager:addEducator(educatorId, tournamentId)
-activate TournamentDataManager
-TournamentDataManager->Database:addEducator(educatorId, tournamentId)
-Database-->TournamentDataManager:Commit
-deactivate Database
-TournamentDataManager-->TournamentAdministationManager:return
+TournamentAdministationManager->TournamentDataTier: addEducator(educatorId, tournamentId)
+activate TournamentDataTier
+TournamentDataTier-->TournamentAdministationManager: Confirmation
+deactivate TournamentDataTier
 
-deactivate TournamentDataManager
-    TournamentAdministationManager->TournamentDataManager
-    
-    
-    AddEducatorToTournament(tournamentId, educatorId)
-    TournamentAdministationManager-->TournamentManager: Ok
-    TournamentManager-->APIGateway: Ok
-    APIGateway-->Client: 200 OK
-deactivate TournamentManager
+TournamentAdministationManager-->TournamentManager: Educator Added Confirmation
 deactivate TournamentAdministationManager
+TournamentManager-->APIGateway: Educator Added Confirmation
+deactivate TournamentManager
+APIGateway-->Client: HTTP 200 OK
 deactivate APIGateway
