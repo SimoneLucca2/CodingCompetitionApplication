@@ -1,0 +1,14 @@
+participant "Battle Service" as BS
+participant "Message Broker" as MB
+participant "Tournament Service" as TS
+participant "Tournament Data Tier" as DB
+
+BS->MB:tournament.battle.score.update
+
+note over MB:Stores the event
+MB->TS:tournament.battle.score.update
+
+TS->DB:Update student score\nfor the tournament
+note over DB: Stores updated\ntournament data
+
+TS<--DB:Return

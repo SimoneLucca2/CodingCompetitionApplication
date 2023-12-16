@@ -1,0 +1,13 @@
+
+participant "Tournament Service" as TournamentService
+participant "Tournament Data Tier" as TournamentDataTier
+
+note over TournamentService: Assuming the tournament has just closed
+
+TournamentService->TournamentDataTier:Retrieve tournament ranking
+activate TournamentDataTier
+TournamentDataTier-->TournamentService: Return ranking data
+deactivate TournamentDataTier
+
+
+

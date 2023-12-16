@@ -1,10 +1,10 @@
-title Close a Tournament
 
 participant "Client" as Client
 participant "API Gateway" as APIGateway
 participant "Tournament Manager" as TournamentManager
 participant "Tournament Closer" as TournamentCloser
 participant "Tournament Data Tier" as TournamentDataTier
+participant "Message Broker" as MB
 participant "Battle Service" as BattleService
 
 Client->APIGateway: PUT /v1/tournament/{tournamentId}/status/close
@@ -21,40 +21,30 @@ activate TournamentDataTier
 TournamentDataTier-->TournamentCloser: Status updated to "closing"
 deactivate TournamentDataTier
 
-TournamentCloser->BattleService: Check if battles are running
-activate BattleService
-BattleService-->TournamentCloser: Active battles detected
-deactivate BattleService
-
-TournamentCloser-->TournamentManager: Tournament is closing
+TournamentCloser->MB:Publish tournament.lifecycle.closing event
+TournamentCloser-->TournamentManager:Ok
 deactivate TournamentCloser
 
-TournamentManager-->APIGateway: Tournament status set to closing
+TournamentManager-->APIGateway:200 Ok
 deactivate TournamentManager
 
 APIGateway-->Client:200 Ok
 deactivate APIGateway
 
-note over BattleService: Once the last battle ends...
-BattleService->APIGateway: PUT /v1/tournament/{tournamentId}/status/complete
-activate APIGateway
+note over MB:Stores the event
 
-APIGateway->TournamentManager:PUT /tournament/{tournamentId}/status/complete
-activate TournamentManager
 
-TournamentManager->TournamentCloser:completeTournament({tournamentId})
-activate TournamentCloser
+MB->BattleService:Consume tournament.lifecycle.closing Message
+
+note over BattleService:Eventually, \nwhen the last battle ends
+BattleService->MB:Publish tournament.lifecycle.closed event
+
+note over MB:Stores the event
+
+TournamentCloser<-MB:Consume tournament.lifecycle.closed event
+
 TournamentCloser->TournamentDataTier:setStatus({tournamentId}, "closed")
 activate TournamentDataTier
-
-TournamentDataTier-->TournamentCloser:Tournament closed
+TournamentDataTier-->TournamentCloser:Ok
 deactivate TournamentDataTier
 
-TournamentManager<--TournamentCloser:Tournament closed
-deactivate TournamentCloser
-
-TournamentManager-->APIGateway: Tournament closure confirmed
-deactivate TournamentManager
-
-APIGateway-->BattleService: Acknowledge tournament closed
-deactivate APIGateway
