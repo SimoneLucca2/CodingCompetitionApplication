@@ -1,36 +1,24 @@
 
 participant Client
 participant APIGateway
-participant TournamentManager
-participant TournamentAdministationManager
+participant TournamentService
 participant TournamentDataTier
-participant UserService
 
 Client->APIGateway: POST /v1/tournament/educator
 activate APIGateway
-APIGateway->TournamentManager: POST /tournament/educator
-activate TournamentManager
-TournamentManager->TournamentAdministationManager: addEducator(jsonMsg)
-activate TournamentAdministationManager
+APIGateway->TournamentService: POST /tournament/educator
+activate TournamentService
 
-TournamentAdministationManager->TournamentDataTier: isLeader(requesterID, tournamentId)
+
+
+TournamentService->TournamentDataTier:addCollaborator(\n   educatorId, \n   collaboratorId, \n   tournamentId)
 activate TournamentDataTier
-TournamentDataTier-->TournamentAdministationManager: boolean response
+
+TournamentDataTier->TournamentDataTier:Add the collaborator \nto the tournament\nonly if the educator\nis the tournament leader
+TournamentDataTier-->TournamentService:Confirmation
 deactivate TournamentDataTier
 
-TournamentAdministationManager->UserService:GET /user/{educatorId}/exists
-activate UserService
-UserService-->TournamentAdministationManager: boolean response
-deactivate UserService
-
-TournamentAdministationManager->TournamentDataTier: addEducator(educatorId, tournamentId)
-activate TournamentDataTier
-TournamentDataTier-->TournamentAdministationManager: Confirmation
-deactivate TournamentDataTier
-
-TournamentAdministationManager-->TournamentManager: Educator Added Confirmation
-deactivate TournamentAdministationManager
-TournamentManager-->APIGateway: Educator Added Confirmation
-deactivate TournamentManager
-APIGateway-->Client: HTTP 200 OK
+TournamentService-->APIGateway:200 Ok
+deactivate TournamentService
+APIGateway-->Client:200 OK
 deactivate APIGateway

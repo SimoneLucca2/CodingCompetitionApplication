@@ -1,0 +1,20 @@
+participant "Client" as Client
+participant "API Gateway" as APIGateway
+participant "TournamentService" as TS
+participant "Tournament data tier" as DB
+
+Client->APIGateway: POST /v1/tournament
+APIGateway->TS: POST /tournament
+
+
+TS->DB: createTournament
+TS->DB: Post badges for the tournament
+alt No active tournament with the same name
+    DB-->TS: Commit
+    TS-->APIGateway: return 200 OK
+    APIGateway-->Client: 200 OK
+else Exists active tournament with the same name
+TS<--DB:Rollback
+    TS-->APIGateway: return 400 Bad Request
+    APIGateway-->Client: 400 Bad Request
+end

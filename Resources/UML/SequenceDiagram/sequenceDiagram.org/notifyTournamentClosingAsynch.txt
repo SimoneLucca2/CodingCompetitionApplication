@@ -1,0 +1,9 @@
+participant "TournamentService" as TS
+participant "Message Broker" as MB
+participant "BattleService" as BS
+
+TS->MB: Publish tournament.lifecycle.closing
+note over MB: Stores the event
+MB->BS: Consume tournament.lifecycle.closing
+
+BS->BS:Stops creation of new battles\nEliminates non running battles

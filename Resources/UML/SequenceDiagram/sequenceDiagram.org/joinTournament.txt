@@ -1,0 +1,17 @@
+participant "Student" as S
+participant "APIGateway" as APIG
+participant "TournamentService" as TS
+participant "TournamentDataTier" as TDT
+
+S->APIG:POST \n/v1/\ntournament/\n{tournamentId}/\njoin
+activate APIG
+APIG->TS:POST \n/tournament/\n{tournamentId}/\njoin
+activate TS
+TS->TDT:joinTournament(\n   studentId,\n   tournamentId)
+activate TDT
+TDT-->TS: Confirmation
+deactivate TDT
+TS-->APIG: 200 OK
+deactivate TS
+APIG-->S:200 Ok
+deactivate APIG

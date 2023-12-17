@@ -1,0 +1,9 @@
+participant "BattleService" as BS
+participant "Message Broker" as MB
+participant "TournamentService" as TS
+
+note over BS: Last battle ends, closing tournament
+BS->MB:Publish \ntournament.lifecycle.closed
+note over MB: Stores the event
+MB->TS:Consume \ntournament.lifecycle.closed
+note over TS: Handle tournament closed

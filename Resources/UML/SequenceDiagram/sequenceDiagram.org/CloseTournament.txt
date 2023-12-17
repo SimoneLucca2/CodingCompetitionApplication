@@ -7,43 +7,43 @@ participant "Tournament Data Tier" as TournamentDataTier
 participant "Message Broker" as MB
 participant "Battle Service" as BattleService
 
-Client->APIGateway: PUT /v1/tournament/{tournamentId}/status/close
+Client->APIGateway:PUT \n/v1/tournament/\n{tournamentId}/\nstatus/\nclosing
 activate APIGateway
 
-APIGateway->TournamentManager:PUT /tournament/{tournamentId}/status/close
+APIGateway->TournamentManager:PUT \n/tournament/\n{tournamentId}/\nstatus/\nclosing
 activate TournamentManager
 
-TournamentManager->TournamentCloser:initiateCloseTournament({tournamentId})
+TournamentManager->TournamentCloser:initiateCloseTournament\n({tournamentId})
 activate TournamentCloser
 
-TournamentCloser->TournamentDataTier:setStatus({tournamentId}, "closing")
+TournamentCloser->TournamentDataTier:setStatus(\n   {tournamentId}, \n   "closing")
 activate TournamentDataTier
-TournamentDataTier-->TournamentCloser: Status updated to "closing"
+TournamentDataTier-->TournamentCloser:Ok
 deactivate TournamentDataTier
 
-TournamentCloser->MB:Publish tournament.lifecycle.closing event
+TournamentCloser->MB:Publish \ntournament.lifecycle.closing \nevent
 TournamentCloser-->TournamentManager:Ok
 deactivate TournamentCloser
 
 TournamentManager-->APIGateway:200 Ok
 deactivate TournamentManager
 
+note over MB:Stores the event
 APIGateway-->Client:200 Ok
 deactivate APIGateway
 
-note over MB:Stores the event
 
 
-MB->BattleService:Consume tournament.lifecycle.closing Message
+MB->BattleService:Consume \ntournament.lifecycle.closing \nMessage
 
 note over BattleService:Eventually, \nwhen the last battle ends
-BattleService->MB:Publish tournament.lifecycle.closed event
+BattleService->MB:Publish \ntournament.lifecycle.closed \nevent
 
 note over MB:Stores the event
 
-TournamentCloser<-MB:Consume tournament.lifecycle.closed event
+TournamentCloser<-MB:Consume \ntournament.lifecycle.closed \nmessage
 
-TournamentCloser->TournamentDataTier:setStatus({tournamentId}, "closed")
+TournamentCloser->TournamentDataTier:setStatus(\n    {tournamentId}, \n    "closed")
 activate TournamentDataTier
 TournamentDataTier-->TournamentCloser:Ok
 deactivate TournamentDataTier
