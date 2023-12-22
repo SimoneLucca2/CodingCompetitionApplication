@@ -1194,7 +1194,7 @@
 											"top": 318,
 											"width": 96.53515625,
 											"height": 13,
-											"text": "TournamentDBI"
+											"text": "BattleDBI"
 										},
 										{
 											"_type": "LabelView",
@@ -2803,7 +2803,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGMYppZViOXEKA="
 					},
-					"name": "TournamentDBI"
+					"name": "BattleDBI"
 				},
 				{
 					"_type": "UMLInterface",
