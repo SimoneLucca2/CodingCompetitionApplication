@@ -4,10 +4,9 @@ participant "Tournament Data Tier" as TournamentDataTier
 
 note over TournamentService: Assuming the tournament has just closed
 
-TournamentService->TournamentDataTier:Retrieve tournament ranking
+TournamentService->TournamentDataTier:GET /tournament/{tournamentId}/ranking
 activate TournamentDataTier
-TournamentDataTier-->TournamentService: Return ranking data
+TournamentDataTier-->TournamentService:200 Ok
 deactivate TournamentDataTier
-
 
 

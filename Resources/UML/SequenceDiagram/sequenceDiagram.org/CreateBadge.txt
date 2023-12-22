@@ -1,27 +1,26 @@
 
-participant "Educator" as Educator
-participant "CKB System" as CKB
+participant Educator
+participant API Gateway
+participant Badge Service
+participant Badge Data Tier
 
-note over Educator: Educator is logged in
-Educator->CKB: Go to badges section
-activate CKB
-
-Educator->CKB: Click on "new badge" button
-
-Educator->CKB: Enter badge title
-
-Educator->CKB: Select Boolean attributes
-
-Educator->CKB: Click on "confirm" button
-
-CKB->CKB: Validate badge creation
-activate CKB
-deactivate CKB
-
-alt Badge name already in use from the same educator
-    CKB-->Educator: Notify name in use
-    note right of Educator: Go back to entry condition
-else Badge created successfully
-    CKB-->Educator: Confirm badge creation
-    note right of Educator: Badge has been successfully created
+Educator->API Gateway:POST /v1/badge
+activate Educator
+activate API Gateway
+API Gateway->Badge Service:POST /badge
+activate Badge Service
+alt If Badge Details are Valid
+    Badge Service->Badge Data Tier:POST /badge
+    activate Badge Data Tier
+    Badge Data Tier->Badge Service:200 ok
+    deactivate Badge Data Tier
+    Badge Service -> Message Broker:Publish badge.creation
+    Badge Service->API Gateway:200 OK
+    deactivate Badge Service
+    API Gateway->Educator:200 OK
+    deactivate API Gateway
+else If Badge Details are Invalid
+    Badge Service->API Gateway:400 Bad Request 
+    API Gateway->Educator:400 Bad Request
 end
+deactivate Educator

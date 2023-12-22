@@ -1,0 +1,32 @@
+participant Educator
+participant API Gateway
+participant Badge Service
+participant Badge Data Tier
+participant Message Broker
+
+Educator->API Gateway:DELETE /v1/badge/{id}
+activate Educator
+activate API Gateway
+API Gateway->Badge Service:DELETE /badge/{id}
+activate Badge Service
+alt If Badge Exists and creator is the requester
+    Badge Service->Badge Data Tier:GET /badge/{badgeId}/creator
+    activate Badge Data Tier
+    Badge Data Tier->Badge Service:200 OK
+    deactivate Badge Data Tier
+    Badge Service->Badge Data Tier:DELETE /badge/{id}
+    activate Badge Data Tier
+    Badge Data Tier->Badge Service:200 OK
+    deactivate Badge Data Tier
+Badge Service->Message Broker:Publish badge.deletion
+    Badge Service->API Gateway:200 OK
+    deactivate Badge Service
+    API Gateway->Educator:200 OK
+    deactivate API Gateway
+
+    
+else If Badge Does Not Exist
+    Badge Service->API Gateway:400
+    API Gateway->Educator:400
+end
+deactivate Educator
