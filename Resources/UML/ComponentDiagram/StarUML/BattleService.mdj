@@ -6325,7 +6325,7 @@
 											"top": 1031,
 											"width": 171,
 											"height": 13,
-											"text": "NotificationManager"
+											"text": "BattleNotificationManager"
 										},
 										{
 											"_type": "LabelView",
@@ -8363,7 +8363,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "NotificationManager",
+					"name": "BattleNotificationManager",
 					"ownedElements": [
 						{
 							"_type": "UMLInterfaceRealization",
