@@ -1,0 +1,19 @@
+participant "Client" as C
+participant "APIGateway" as APIG
+participant "BattleService" as BS
+participant "BattleDataTier" as BDT
+participant "Message Broker" as MB
+
+C->APIG: POST\n/v1/battle/\n{battleID}/\njoin
+activate APIG
+APIG->BS: POST /battle/{battleID}/join
+activate BS
+BS->BDT: POST /battle/{battleID}/join
+activate BDT
+BS<--BDT: 200 OK
+deactivate BDT
+BS->MB: publish battle.creation
+APIG<--BS: 200 OK
+deactivate BS
+C<--APIG: 200 OK
+deactivate APIG

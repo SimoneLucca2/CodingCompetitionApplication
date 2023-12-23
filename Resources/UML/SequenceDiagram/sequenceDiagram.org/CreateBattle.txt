@@ -1,0 +1,34 @@
+participant "Client" as C
+participant "APIGateway" as APIG
+participant "BattleService" as BS
+participant "BattleDataTier" as BDT
+
+participant "Messasge Broker" as MB
+
+C->APIG: POST\n/v1/battle
+activate APIG
+APIG->BS: POST /battle
+activate BS
+alt If invalid deadlines or invalid group constraints
+  APIG<--BS: 400 Bad request
+  C<--APIG: 400 Bad requet
+else
+  BS->BDT: GET tournament/\n{tournamentID}/battles
+  activate BDT
+  BS<--BDT: 200 OK (json file)
+  deactivate BDT
+  alt If name not available within the tournament or new battle overlaps with other ones already scheduled in the tournament
+  APIG<--BS: 400 Bad request
+  C<--APIG: 400 Bad request
+  else If battle can be created
+     BS->BDT: POST /battle
+  activate BDT
+  BS<--BDT: 200 OK
+  deactivate BDT
+    BS->MB: tournament.battle.creation
+  APIG<--BS: 200 OK
+  deactivate BS
+  C<--APIG: 200 OK
+  deactivate APIG
+  end
+end

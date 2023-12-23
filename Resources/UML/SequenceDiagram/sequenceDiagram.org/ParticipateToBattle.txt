@@ -1,0 +1,11 @@
+participant "BattleDataTier" as BDT
+participant "BattleService" as BS
+participant "GitHub" as GH
+
+BS<-GH: "code ready"
+activate BS
+BS->GH: "pull code"
+BS<-GH: code.zip
+BDT<-BS: POST /battle/\n{battleID}/group/\n{groupID}/score
+BDT-->BS: 200 OK
+deactivate BS
