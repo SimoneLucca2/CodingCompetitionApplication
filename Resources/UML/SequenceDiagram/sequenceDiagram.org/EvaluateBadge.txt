@@ -1,0 +1,35 @@
+
+participant "TournamentService" as TournamentService
+participant "Tournament Data Tier" as TournamentDataTier
+participant "Message Broker" as MB
+participant "Badge Service" as BadgeService
+participant "Badge Data Tier" as BadgeDataTier
+participant "User service" as User
+
+
+
+TournamentService->TournamentDataTier:GET /torunament/students/id
+TournamentService<-TournamentDataTier:200 Ok\n{id1, .. , idN}
+
+loop for each badge-student pair
+TournamentService->MB:Publish\ntournament.badge.request.evaluation
+end
+
+note over MB:Eventually...
+MB->BadgeService:Consume message
+activate BadgeService
+BadgeService->BadgeDataTier:GET /badge/{badgeId}/rule
+activate BadgeDataTier
+BadgeService<-BadgeDataTier:200 Ok
+deactivate BadgeDataTier
+BadgeService->BadgeService:Parse the rule and \nelaborate the outcome
+
+alt badge won by the current student:
+
+MB<-BadgeService:Publish tournament.badge.outcome.win
+
+end
+
+note over MB:Eventually...
+
+MB->User:Consume tournament.badge.outcome.win

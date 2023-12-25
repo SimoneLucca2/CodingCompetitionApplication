@@ -1,0 +1,28 @@
+participant "Student" as std
+participant "API Gateway" as api
+participant "Tournament Service" as ts
+participant "Tournament Data Tier" as tdt
+
+std->api:DELETE \nv1/\ntournament/\n{tournamentID}/\nstudent/\n{studentID}
+activate std
+activate api
+
+api->ts:DELETE \n/tournament/\n{tournamentID}/\nstudent/\n{studentID}
+activate ts
+
+ts->tdt:DELETE \n/tournament/\n{tournamentID}/\nstudent/\n{studentID}
+activate tdt
+
+tdt->tdt:Delete every information \ncorrelated with the student\nin the specified tournament
+
+
+tdt->ts: 200 Ok
+deactivate tdt
+
+ts->Message Broker:Publish tournament.student.quit
+ts->api: 200 Ok
+deactivate ts
+
+api->std: 200 Ok
+deactivate api
+deactivate std

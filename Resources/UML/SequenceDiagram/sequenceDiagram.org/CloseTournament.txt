@@ -16,9 +16,9 @@ activate TournamentManager
 TournamentManager->TournamentCloser:initiateCloseTournament\n({tournamentId})
 activate TournamentCloser
 
-TournamentCloser->TournamentDataTier:setStatus(\n   {tournamentId}, \n   "closing")
+TournamentCloser->TournamentDataTier:PUT \n/tournament/\n{tournamentId}/\nstatus/\nclosing
 activate TournamentDataTier
-TournamentDataTier-->TournamentCloser:Ok
+TournamentDataTier-->TournamentCloser:200 Ok
 deactivate TournamentDataTier
 
 TournamentCloser->MB:Publish \ntournament.lifecycle.closing \nevent

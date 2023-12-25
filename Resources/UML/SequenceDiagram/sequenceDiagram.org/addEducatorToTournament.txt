@@ -6,12 +6,12 @@ participant TournamentDataTier
 
 Client->APIGateway: POST /v1/tournament/educator
 activate APIGateway
-APIGateway->TournamentService: POST /tournament/educator
+APIGateway->TournamentService:POST /tournament/educator
 activate TournamentService
 
 
 
-TournamentService->TournamentDataTier:addCollaborator(\n   educatorId, \n   collaboratorId, \n   tournamentId)
+TournamentService->TournamentDataTier:POST /tournament/educator
 activate TournamentDataTier
 
 TournamentDataTier->TournamentDataTier:Add the collaborator \nto the tournament\nonly if the educator\nis the tournament leader

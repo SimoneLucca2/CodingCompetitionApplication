@@ -1,26 +1,25 @@
-entryspacing 0.9
+
+participant Client
+participant APIGateway
+participant TournamentManager
+participant TournamentDataTier
+
 activate Client
 Client->APIGateway: POST /v1/tournament
 activate APIGateway
 APIGateway->TournamentManager : POST /tournament
 activate TournamentManager
-TournamentManager->TournamentCreator:CreateTournament(msg)
-activate TournamentCreator
 
-    TournamentCreator->TournamentDataManager: CreateTournament
-activate TournamentDataManager
-    TournamentDataManager -> Database: createTournament
+TournamentManager->TournamentDataTier:POST /tournament
+activate TournamentDataTier
     
-TournamentDataManager->Database:Post badges for the tournament
+
+
+
 alt no active tournament with the same name
-
-TournamentDataManager<--Database:Commit
-TournamentCreator<--TournamentDataManager:return
-deactivateafter TournamentDataManager
-
-TournamentManager<--TournamentCreator:return
-deactivateafter TournamentCreator
-
+TournamentManager<--TournamentDataTier:200 Ok
+deactivate TournamentDataTier
+TournamentManager->Message Broker:Publish tournament.creation
 APIGateway<--TournamentManager:200 Ok
 deactivateafter TournamentManager
 APIGateway-->Client: 200 OK
@@ -29,9 +28,7 @@ else exists active tournament with the same name
 
 
 
-TournamentDataManager<--Database:Abort
-TournamentCreator<--TournamentDataManager:return
-TournamentManager<--TournamentCreator:return
+TournamentManager<--TournamentDataTier:400 bad request
 APIGateway<--TournamentManager:400 bad request
 Client<--APIGateway:400 bad request
 end

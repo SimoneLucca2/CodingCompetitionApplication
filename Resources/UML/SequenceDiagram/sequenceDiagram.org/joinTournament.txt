@@ -3,14 +3,15 @@ participant "APIGateway" as APIG
 participant "TournamentService" as TS
 participant "TournamentDataTier" as TDT
 
-S->APIG:POST \n/v1/\ntournament/\n{tournamentId}/\njoin
+S->APIG:POST \n/v1/\ntournament/\n{tournamentId}/\nstudent/\n{studentId}
 activate APIG
-APIG->TS:POST \n/tournament/\n{tournamentId}/\njoin
+APIG->TS:POST \n/tournament/\n{tournamentId}/\nstudent/\n{studentId}
 activate TS
-TS->TDT:joinTournament(\n   studentId,\n   tournamentId)
+TS->TDT:POST \n/tournament/\n{tournamentId}/\nstudent/\n{studentId}
 activate TDT
-TDT-->TS: Confirmation
+TDT-->TS:200 Ok
 deactivate TDT
+TS -> Message Broker: Publish tournament.student.join 
 TS-->APIG: 200 OK
 deactivate TS
 APIG-->S:200 Ok
