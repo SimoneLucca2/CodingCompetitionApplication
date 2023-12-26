@@ -1,32 +1,28 @@
 
 participant "Client" as Client
 participant "API Gateway" as APIGateway
-participant "Tournament Manager" as TournamentManager
-participant "Tournament Closer" as TournamentCloser
+participant "Tournament Service" as TS
 participant "Tournament Data Tier" as TournamentDataTier
 participant "Message Broker" as MB
 participant "Battle Service" as BattleService
 
-Client->APIGateway:PUT \n/v1/tournament/\n{tournamentId}/\nstatus/\nclosing
+Client->APIGateway:PUT \n/v1/tournament/status\nbody: closing
 activate APIGateway
 
-APIGateway->TournamentManager:PUT \n/tournament/\n{tournamentId}/\nstatus/\nclosing
-activate TournamentManager
+APIGateway->TS:PUT \n/tournament/status\nbody: closing
+activate TS
 
-TournamentManager->TournamentCloser:initiateCloseTournament\n({tournamentId})
-activate TournamentCloser
 
-TournamentCloser->TournamentDataTier:PUT \n/tournament/\n{tournamentId}/\nstatus/\nclosing
+TS->TournamentDataTier:PUT \n/tournament/status\nbody: closing
 activate TournamentDataTier
-TournamentDataTier-->TournamentCloser:200 Ok
+
+TournamentDataTier-->TS:200 Ok
 deactivate TournamentDataTier
 
-TournamentCloser->MB:Publish \ntournament.lifecycle.closing \nevent
-TournamentCloser-->TournamentManager:Ok
-deactivate TournamentCloser
+TS->MB:Publish \ntournament.lifecycle.closing \nevent
 
-TournamentManager-->APIGateway:200 Ok
-deactivate TournamentManager
+TS-->APIGateway:200 Ok
+deactivate TS
 
 note over MB:Stores the event
 APIGateway-->Client:200 Ok
@@ -41,10 +37,10 @@ BattleService->MB:Publish \ntournament.lifecycle.closed \nevent
 
 note over MB:Stores the event
 
-TournamentCloser<-MB:Consume \ntournament.lifecycle.closed \nmessage
 
-TournamentCloser->TournamentDataTier:setStatus(\n    {tournamentId}, \n    "closed")
+TS<-MB:Consume \ntournament.lifecycle.closed \nmessage
+TS->TournamentDataTier:PUT \n/tournament/status\nbody: closed
 activate TournamentDataTier
-TournamentDataTier-->TournamentCloser:Ok
+TournamentDataTier-->TS:Ok
 deactivate TournamentDataTier
 

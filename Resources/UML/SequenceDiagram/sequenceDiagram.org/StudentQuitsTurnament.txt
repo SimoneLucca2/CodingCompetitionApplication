@@ -3,14 +3,14 @@ participant "API Gateway" as api
 participant "Tournament Service" as ts
 participant "Tournament Data Tier" as tdt
 
-std->api:DELETE \nv1/\ntournament/\n{tournamentID}/\nstudent/\n{studentID}
+std->api:DELETE \nv1/tournament/student
 activate std
 activate api
 
-api->ts:DELETE \n/tournament/\n{tournamentID}/\nstudent/\n{studentID}
+api->ts:DELETE \nv1/tournament/student
 activate ts
 
-ts->tdt:DELETE \n/tournament/\n{tournamentID}/\nstudent/\n{studentID}
+ts->tdt:DELETE \nv1/tournament/student
 activate tdt
 
 tdt->tdt:Delete every information \ncorrelated with the student\nin the specified tournament

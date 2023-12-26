@@ -1,0 +1,21 @@
+
+participant "Message Broker" as MB
+participant "TimeServer" as TimeS
+
+
+
+MB->TimeS:consume tournament.creation
+note over TimeS:When registration deadline reached
+MB<-TimeS:Publish tournament.lifecycle.active
+
+
+note over MB:Eventually
+
+MB->Tournament Service:Consume tournament.lifecycle.active
+activate Tournament Service
+
+Tournament Service -> Tournament Data Tier:PUT tournament/status\n{body:active}
+activate Tournament Data Tier
+Tournament Service<--Tournament Data Tier:200 Ok
+deactivate Tournament Data Tier
+deactivate Tournament Service

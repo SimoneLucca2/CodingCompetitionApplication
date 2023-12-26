@@ -18,7 +18,7 @@ end
 note over MB:Eventually...
 MB->BadgeService:Consume message
 activate BadgeService
-BadgeService->BadgeDataTier:GET /badge/{badgeId}/rule
+BadgeService->BadgeDataTier:GET /badge/rule
 activate BadgeDataTier
 BadgeService<-BadgeDataTier:200 Ok
 deactivate BadgeDataTier

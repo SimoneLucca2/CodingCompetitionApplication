@@ -3,11 +3,11 @@ participant "APIGateway" as APIG
 participant "TournamentService" as TS
 participant "TournamentDataTier" as TDT
 
-S->APIG:POST \n/v1/\ntournament/\n{tournamentId}/\nstudent/\n{studentId}
+S->APIG:POST \n/v1/tournament/student
 activate APIG
-APIG->TS:POST \n/tournament/\n{tournamentId}/\nstudent/\n{studentId}
+APIG->TS:POST \n/v1/tournament/student
 activate TS
-TS->TDT:POST \n/tournament/\n{tournamentId}/\nstudent/\n{studentId}
+TS->TDT:POST \n/v1/tournament/student
 activate TDT
 TDT-->TS:200 Ok
 deactivate TDT
