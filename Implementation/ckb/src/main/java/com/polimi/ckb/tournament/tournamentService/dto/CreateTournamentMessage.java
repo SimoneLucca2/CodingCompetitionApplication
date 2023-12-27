@@ -8,9 +8,6 @@ import javax.validation.constraints.NotEmpty;
 
 public record CreateTournamentMessage(
 
-        @NotNull(message = "Id cannot be null")
-        Long id,
-
         @NotEmpty(message = "Name cannot be empty")
         String name,
 
