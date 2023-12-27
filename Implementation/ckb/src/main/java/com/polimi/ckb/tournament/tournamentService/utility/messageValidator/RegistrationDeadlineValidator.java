@@ -17,10 +17,6 @@ public class RegistrationDeadlineValidator implements ConstraintValidator<ValidR
 
     @Override
     public boolean isValid(String registrationDeadlineField, ConstraintValidatorContext context) {
-        if (registrationDeadlineField == null) {
-            return true; //TODO change to false
-        }
-
         try {
             OffsetDateTime deadline = OffsetDateTime.parse(registrationDeadlineField, DateTimeFormatter.ISO_DATE_TIME);
             return !deadline.isBefore(OffsetDateTime.now());
