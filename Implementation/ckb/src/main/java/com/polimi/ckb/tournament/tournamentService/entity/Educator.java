@@ -17,13 +17,19 @@ public class Educator {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tournament_organizers",
-            joinColumns = @JoinColumn(name = "educator_id"),
-            inverseJoinColumns = @JoinColumn(name = "tournament_id"))
+    @ManyToMany(mappedBy = "organizers")
     private List<Tournament> tournaments;
 
+    @ManyToMany(mappedBy = "organizers")
+    private List<Tournament> organizedTournaments;
+
+    /**
+     * Checks if the current Educator object is equal to the specified object.
+     * Two Educator objects are considered equal if they have the same ID.
+     *
+     * @param obj the object to compare against
+     * @return true if the objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

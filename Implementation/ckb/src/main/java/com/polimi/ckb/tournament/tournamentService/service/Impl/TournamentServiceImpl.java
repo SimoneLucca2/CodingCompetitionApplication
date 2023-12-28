@@ -2,11 +2,14 @@ package com.polimi.ckb.tournament.tournamentService.service.Impl;
 
 import com.polimi.ckb.tournament.tournamentService.dto.CreateTournamentMessage;
 import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
+import com.polimi.ckb.tournament.tournamentService.exception.TournamentAlreadyExistException;
 import com.polimi.ckb.tournament.tournamentService.repository.TournamentRepository;
 import com.polimi.ckb.tournament.tournamentService.service.TournamentService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class TournamentServiceImpl implements TournamentService {
@@ -19,8 +22,11 @@ public class TournamentServiceImpl implements TournamentService {
 
     @Transactional
     public Tournament saveTournament(CreateTournamentMessage msg) {
-        Tournament tournament = convertToEntity(msg);
-        return tournamentRepository.save(tournament);
+        Optional<Tournament> maybeTournament = tournamentRepository.findByName(msg.name());
+        if(maybeTournament.isPresent()) {
+            throw new TournamentAlreadyExistException();
+        }
+        return tournamentRepository.save(convertToEntity(msg));
     }
 
     @Transactional(readOnly = true)
@@ -29,11 +35,11 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     private Tournament convertToEntity(CreateTournamentMessage createTournamentMessage) {
-        Tournament tournament = new Tournament();
-        tournament.setName(createTournamentMessage.name());
-        tournament.setCreator(createTournamentMessage.creator());
-        tournament.setRegistrationDeadline(createTournamentMessage.registrationDeadline());
-        tournament.setStatus("prepare");
-        return tournament;
+        return Tournament.builder()
+                .name(createTournamentMessage.name())
+                .creator_id(createTournamentMessage.creator())
+                .registrationDeadline(createTournamentMessage.registrationDeadline())
+                .status("prepare")
+                .build();
     }
 }

@@ -17,7 +17,7 @@ activate TournamentDataTier
 TournamentDataTier->TournamentDataTier:Add the collaborator \nto the tournament\nonly if the educator\nis the tournament leader
 TournamentDataTier-->TournamentService:Confirmation
 deactivate TournamentDataTier
-TournamentService -> Message Broker: Publish tournament.educator.assignment
+TournamentService -> Message Broker:Publish tournament.educator.add
 TournamentService-->APIGateway:200 Ok
 deactivate TournamentService
 APIGateway-->Client:200 OK
