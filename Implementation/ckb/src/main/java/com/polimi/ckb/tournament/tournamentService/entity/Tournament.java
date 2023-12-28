@@ -1,18 +1,26 @@
 package com.polimi.ckb.tournament.tournamentService.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import java.time.LocalDate;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Builder
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Tournament {
-
-    public enum TournamentStatus { PREPARE, ACTIVE, CLOSING, CLOSED }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String creator;
-    private LocalDate registrationDeadline;
-    private TournamentStatus status;
+    private String registrationDeadline;
+    private String status;
+
+    @ManyToMany(mappedBy = "tournaments")
+    private List<Educator> educators;
 }

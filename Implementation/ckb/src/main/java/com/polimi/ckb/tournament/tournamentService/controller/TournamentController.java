@@ -4,29 +4,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.tournament.tournamentService.dto.CreateTournamentMessage;
 import com.polimi.ckb.tournament.tournamentService.dto.ErrorResponse;
 import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
-import com.polimi.ckb.tournament.tournamentService.service.TournamentKafkaProducer;
+import com.polimi.ckb.tournament.tournamentService.service.TournamentCreationKafkaProducer;
 import com.polimi.ckb.tournament.tournamentService.service.TournamentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tournament")
 public class TournamentController {
     private final TournamentService tournamentService;
-    private final TournamentKafkaProducer kafkaProducer;
+    private final TournamentCreationKafkaProducer kafkaProducer;
 
     private static final Logger log = LoggerFactory.getLogger(TournamentController.class);
 
@@ -34,7 +28,7 @@ public class TournamentController {
     public ResponseEntity<Object> createTournament(@Valid @RequestBody CreateTournamentMessage msg) {
         try {
             log.info("Creating tournament with message: {}", msg);
-            Tournament createdTournament = tournamentService.createTournament(msg);
+            Tournament createdTournament = tournamentService.saveTournament(msg);
             kafkaProducer.sendTournamentCreationMessage(msg);
             log.info("Tournament created successfully");
             return ResponseEntity.ok(createdTournament);
