@@ -4,23 +4,23 @@ participant "BattleService" as BS
 participant "BattleDataTier" as BDT
 participant "Messasge Broker" as MB
 
-C->APIG: DELETE\n/v1/battle/\n{battleID}/\nstudent/\n{studentID}
+C->APIG: DELETE\n/v1/battle/\nstudent
 activate APIG
-APIG->BS:DELETE\n/battle/\n{battleID}/\nstudent/\n{studentID}
+APIG->BS:DELETE\n/battle/student
 activate BS
-BS->BDT: GET /battle/{battleID}
+BS->BDT: GET /battle
 activate BDT
 BS<--BDT: 200 OK (json file)
 deactivate BDT
 alt If battle in "battle" state
-BS->BDT: POST /battle/{battleID}/\nscore/{studentID}
+BS->BDT: POST /battle/score
 activate BDT
 BDT->BDT: Student's score set\nto 0 (zero)
 BS<--BDT: 200 OK
 deactivate BDT
-BS->MB: Publish battle.score
+BS->MB: Publish tournament.battle.score.update
 else If battle in "pre-battle" state
-BS->BDT: DELETE\n/battle/\n{battleID}/\nstudent/\n{studentID}
+BS->BDT: DELETE\n/battle/student
 activate BDT
 BDT->BDT: Delete every information correlated\nwith the student in the specified battle
 BS<--BDT: 200 OK

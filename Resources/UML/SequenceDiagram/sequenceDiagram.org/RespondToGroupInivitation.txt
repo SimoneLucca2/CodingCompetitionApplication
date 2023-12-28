@@ -2,18 +2,19 @@ participant "Client" as C
 participant "APIGateway" as APIG
 participant "BattleService" as BS
 participant "BattleDataTier" as BDT
-participant "Message Broker" as MB
+participant "Message broker" as MB
 
-C->APIG: POST\n/v1/battle/join
+C->APIG: POST\n/v1/battle/\ngroup/join
 activate APIG
-APIG->BS: POST /battle/join
+APIG->BS: POST /battle/\ngroup/join
 activate BS
-BS->BDT: POST /battle/join
+BS->BDT: POST /battle/\n/group/join
 activate BDT
 BS<--BDT: 200 OK
 deactivate BDT
-BS->MB: publish battle.creation
+BS->MB: publish battle.group.join
 APIG<--BS: 200 OK
 deactivate BS
 C<--APIG: 200 OK
 deactivate APIG
+

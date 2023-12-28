@@ -1,0 +1,17 @@
+participant "Client" as C
+participant "APIGatway" as APIG
+participant "BattleService" as BS
+participant "EmailService" as ES
+
+C->APIG: POST\n/v1/battle/\ngroup
+activate APIG
+APIG->BS: POST /battle/group
+activate BS
+BS->ES: POST /battle/group
+activate ES
+BS<--ES: 200 OK
+deactivate ES
+APIG<--BS: 200 OK
+deactivate BS
+C<--APIG: 200 OK
+deactivate APIG
