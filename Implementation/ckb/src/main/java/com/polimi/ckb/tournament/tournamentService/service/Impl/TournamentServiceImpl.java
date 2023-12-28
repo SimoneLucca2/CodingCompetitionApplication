@@ -1,24 +1,23 @@
 package com.polimi.ckb.tournament.tournamentService.service.Impl;
 
+import com.polimi.ckb.tournament.tournamentService.config.TournamentStatus;
 import com.polimi.ckb.tournament.tournamentService.dto.CreateTournamentMessage;
 import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
 import com.polimi.ckb.tournament.tournamentService.exception.TournamentAlreadyExistException;
 import com.polimi.ckb.tournament.tournamentService.repository.TournamentRepository;
 import com.polimi.ckb.tournament.tournamentService.service.TournamentService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TournamentServiceImpl implements TournamentService {
 
     private final TournamentRepository tournamentRepository;
-
-    public TournamentServiceImpl(TournamentRepository tournamentRepository) {
-        this.tournamentRepository = tournamentRepository;
-    }
 
     @Transactional
     public Tournament saveTournament(CreateTournamentMessage msg) {
@@ -39,7 +38,7 @@ public class TournamentServiceImpl implements TournamentService {
                 .name(createTournamentMessage.name())
                 .creator_id(createTournamentMessage.creator())
                 .registrationDeadline(createTournamentMessage.registrationDeadline())
-                .status("prepare")
+                .status(TournamentStatus.PREPARATION)
                 .build();
     }
 }

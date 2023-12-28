@@ -1,5 +1,6 @@
 package com.polimi.ckb.tournament.tournamentService.entity;
 
+import com.polimi.ckb.tournament.tournamentService.config.TournamentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,9 @@ public class Tournament {
     private String name;
     private String creator_id;
     private String registrationDeadline;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private TournamentStatus status;
 
     @ManyToMany
     @JoinTable(

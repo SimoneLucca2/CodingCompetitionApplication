@@ -1,9 +1,7 @@
 package com.polimi.ckb.tournament.tournamentService.dto;
 
 import com.polimi.ckb.tournament.tournamentService.utility.messageValidator.annotation.ValidRegistrationDeadline;
-import com.polimi.ckb.tournament.tournamentService.utility.messageValidator.annotation.ValidStatus;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotEmpty;
 
 public record CreateTournamentMessage(
@@ -19,6 +17,5 @@ public record CreateTournamentMessage(
         String registrationDeadline,
 
         @NotEmpty(message = "Status cannot be empty")
-        @ValidStatus
         String status
 ) {}
