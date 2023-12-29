@@ -1,0 +1,9 @@
+participant "Time Server" as TS
+participant "BattleService" as BS
+participant "EmailService" as ES
+participant "Client" as C
+
+note over TS: registration deadline expires
+TS->BS: Registration deadline expired
+BS->ES: Send notification with link to\nthe repository to all group\nleader registered to the battle
+ES->C: "Notification"
