@@ -23,6 +23,7 @@ public class TournamentServiceImpl implements TournamentService {
     public Tournament saveTournament(CreateTournamentDto msg) {
         Optional<Tournament> maybeTournament = tournamentRepository.findByName(msg.getName());
         if(maybeTournament.isPresent()) {
+            //tournament already exist
             throw new TournamentAlreadyExistException();
         }
         return tournamentRepository.save(convertToEntity(msg));

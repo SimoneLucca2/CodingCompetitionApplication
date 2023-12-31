@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -16,18 +15,14 @@ import java.io.Serializable;
 @Value
 @Builder
 public class CreateTournamentDto implements Serializable {
-        @NotNull
-        @NotEmpty
-        @NotBlank
-        String name;
 
-        @NotNull
-        @NotEmpty
-        @NotBlank
-        String creatorId;
+        @NotBlank(message = "name must not be blank")
+        String name; // name of the tournament
 
-        @NotNull
-        @NotEmpty
+        @NotBlank(message = "Creator ID must not be blank")
+        Long creatorId;
+
+        @NotBlank(message = "Registration deadline must not be blank")
         @ValidRegistrationDeadline
         String registrationDeadline;
 

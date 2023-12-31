@@ -1,6 +1,7 @@
 package com.polimi.ckb.tournament.tournamentService.service.Impl;
 
 import com.polimi.ckb.tournament.tournamentService.dto.AddEducatorDto;
+import com.polimi.ckb.tournament.tournamentService.dto.NewUserDto;
 import com.polimi.ckb.tournament.tournamentService.entity.Educator;
 import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
 import com.polimi.ckb.tournament.tournamentService.exception.EducatorAlreadyPresentException;
@@ -36,6 +37,11 @@ public class EducatorServiceImpl implements EducatorService {
         Educator educator = getEducatorById(message.getEducatorId());
         checkIfEducatorIsAlreadyPartOfTheTournament(tournament, educator);
         return addEducatorToTournamentAndSave(tournament, educator);
+    }
+
+    @Override
+    public void addNewUser(NewUserDto msg) {
+        educatorRepository.save(convertToEntity(msg));
     }
 
     /**
@@ -96,7 +102,11 @@ public class EducatorServiceImpl implements EducatorService {
      */
     private Educator convertToEntity(AddEducatorDto addEducatorDto) {
         Educator educator = new Educator();
-        educator.setId(addEducatorDto.getEducatorId());
+        educator.setEducatorId(addEducatorDto.getEducatorId());
         return educator;
+    }
+
+    private Educator convertToEntity(NewUserDto msg) {
+        return Educator.builder().educatorId(msg.getUserId()).build();
     }
 }

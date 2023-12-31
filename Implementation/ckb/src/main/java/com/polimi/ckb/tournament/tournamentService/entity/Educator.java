@@ -2,20 +2,28 @@ package com.polimi.ckb.tournament.tournamentService.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Entity class for the Educator table.
+ * Contains all the ids of the educators that are registered to the system.
+ * It is updated by a kafka consumer.
+ */
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Educator {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "educator_id")
+    private Long educatorId;
 
     @ManyToMany(mappedBy = "organizers")
     private List<Tournament> tournaments;
@@ -39,11 +47,11 @@ public class Educator {
             return false;
         }
         Educator other = (Educator) obj;
-        return Objects.equals(id, other.id);
+        return Objects.equals(educatorId, other.educatorId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(educatorId);
     }
 }

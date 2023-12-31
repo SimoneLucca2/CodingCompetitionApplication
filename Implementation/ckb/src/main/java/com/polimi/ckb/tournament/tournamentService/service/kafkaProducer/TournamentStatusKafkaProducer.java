@@ -18,8 +18,7 @@ public class TournamentStatusKafkaProducer {
 
     private static final Map<TournamentStatus, String> TOPIC_MAP = Map.of(
             TournamentStatus.ACTIVE, "tournament.lifecycle.active",
-            TournamentStatus.CLOSING, "tournament.lifecycle.closing",
-            TournamentStatus.CLOSED, "tournament.lifecycle.closed"
+            TournamentStatus.CLOSING, "tournament.lifecycle.closing"
     );
 
     private final KafkaTemplate<String, Object> kafkaTemplate;

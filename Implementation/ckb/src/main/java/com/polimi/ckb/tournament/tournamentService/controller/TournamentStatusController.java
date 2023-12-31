@@ -6,7 +6,7 @@ import com.polimi.ckb.tournament.tournamentService.service.TournamentStatusServi
 import com.polimi.ckb.tournament.tournamentService.service.kafkaProducer.TournamentStatusKafkaProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +27,7 @@ public class TournamentStatusController {
      * @param msg the change tournament status message object containing the necessary information
      * @return a ResponseEntity representing the response of the API call
      */
-    @PostMapping
+    @PutMapping
     public ResponseEntity<Object> updateTournamentStatus(@RequestBody @Valid ChangeTournamentStatusDto msg) {
         try{
             Tournament createdTournament = tournamentStatusService.updateTournamentStatus(msg);

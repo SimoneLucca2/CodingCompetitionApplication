@@ -14,10 +14,16 @@ import java.util.List;
 public class Tournament {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tournament_id")
     private Long tournamentId;
 
+    @Column(name = "name")
     private String name;
-    private String creatorId;
+
+    @Column(name = "creator_id")
+    private Long creatorId;
+
+    @Column(name = "registration_deadline")
     private String registrationDeadline;
 
     @Enumerated(EnumType.STRING)
@@ -31,16 +37,6 @@ public class Tournament {
     )
     @ToString.Exclude
     private List<Educator> organizers;
-
-    @ManyToMany
-    @JoinTable(
-            name = "tournament_badges",
-            joinColumns = @JoinColumn(name = "tournament_id"),
-            inverseJoinColumns = @JoinColumn(name = "badge_id")
-    )
-    @ToString.Exclude
-    private List<Badge> badges;
-
 
     @OneToMany(mappedBy = "tournament")
     @ToString.Exclude
