@@ -3,7 +3,7 @@ package com.polimi.ckb.tournament.tournamentService.service.kafkaProducer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polimi.ckb.tournament.tournamentService.config.TournamentStatus;
-import com.polimi.ckb.tournament.tournamentService.dto.ChangeTournamentStatusMessage;
+import com.polimi.ckb.tournament.tournamentService.dto.ChangeTournamentStatusDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.retry.annotation.Backoff;
@@ -26,8 +26,8 @@ public class TournamentStatusKafkaProducer {
     private final ObjectMapper objectMapper;
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 1000, multiplier = 1.5))
-    public void sendTournamentMessage(ChangeTournamentStatusMessage msg) throws JsonProcessingException {
-        String TOPIC = TOPIC_MAP.getOrDefault(msg.status(), "");
+    public void sendTournamentMessage(ChangeTournamentStatusDto msg) throws JsonProcessingException {
+        String TOPIC = TOPIC_MAP.getOrDefault(msg.getStatus(), "");
 
         if(TOPIC.isEmpty()) {
             return;

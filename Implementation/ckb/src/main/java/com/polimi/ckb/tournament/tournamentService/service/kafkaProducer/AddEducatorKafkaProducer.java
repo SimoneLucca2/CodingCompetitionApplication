@@ -2,7 +2,7 @@ package com.polimi.ckb.tournament.tournamentService.service.kafkaProducer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.polimi.ckb.tournament.tournamentService.dto.AddEducatorMessage;
+import com.polimi.ckb.tournament.tournamentService.dto.AddEducatorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.retry.annotation.Backoff;
@@ -17,7 +17,7 @@ public class AddEducatorKafkaProducer {
     private final ObjectMapper objectMapper;
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 1000, multiplier = 1.5))
-    public void sendAddedEducatorMessage(AddEducatorMessage msg) throws JsonProcessingException {
+    public void sendAddedEducatorMessage(AddEducatorDto msg) throws JsonProcessingException {
         String jsonMessage = objectMapper.writeValueAsString(msg);
         kafkaTemplate.send(TOPIC, jsonMessage);
     }

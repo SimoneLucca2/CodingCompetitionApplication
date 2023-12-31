@@ -1,6 +1,6 @@
 package com.polimi.ckb.tournament.tournamentService.controller;
 
-import com.polimi.ckb.tournament.tournamentService.dto.AddEducatorMessage;
+import com.polimi.ckb.tournament.tournamentService.dto.AddEducatorDto;
 import com.polimi.ckb.tournament.tournamentService.entity.Educator;
 import com.polimi.ckb.tournament.tournamentService.service.EducatorService;
 import com.polimi.ckb.tournament.tournamentService.service.kafkaProducer.AddEducatorKafkaProducer;
@@ -22,7 +22,7 @@ public class EducatorController {
     private final AddEducatorKafkaProducer kafkaProducer;
 
     @PostMapping
-    public ResponseEntity<?> addEducator(@Valid @RequestBody AddEducatorMessage msg) {
+    public ResponseEntity<?> addEducator(@Valid @RequestBody AddEducatorDto msg) {
         try {
             Educator response = educatorService.addEducatorToTournament(msg);
             kafkaProducer.sendAddedEducatorMessage(msg);

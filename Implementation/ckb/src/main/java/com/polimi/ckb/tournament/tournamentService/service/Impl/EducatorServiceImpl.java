@@ -1,6 +1,6 @@
 package com.polimi.ckb.tournament.tournamentService.service.Impl;
 
-import com.polimi.ckb.tournament.tournamentService.dto.AddEducatorMessage;
+import com.polimi.ckb.tournament.tournamentService.dto.AddEducatorDto;
 import com.polimi.ckb.tournament.tournamentService.entity.Educator;
 import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
 import com.polimi.ckb.tournament.tournamentService.exception.EducatorAlreadyPresentException;
@@ -31,9 +31,9 @@ public class EducatorServiceImpl implements EducatorService {
      * @throws EducatorAlreadyPresentException if the Educator is already part of the Tournament.
      */
     @Override
-    public Educator addEducatorToTournament(AddEducatorMessage message) {
-        Tournament tournament = getTournamentById(message.tournamentId());
-        Educator educator = getEducatorById(message.educatorId());
+    public Educator addEducatorToTournament(AddEducatorDto message) {
+        Tournament tournament = getTournamentById(message.getTournamentId());
+        Educator educator = getEducatorById(message.getEducatorId());
         checkIfEducatorIsAlreadyPartOfTheTournament(tournament, educator);
         return addEducatorToTournamentAndSave(tournament, educator);
     }
@@ -91,12 +91,12 @@ public class EducatorServiceImpl implements EducatorService {
     /**
      * Converts an AddEducatorMessage object to an Educator object.
      *
-     * @param addEducatorMessage The AddEducatorMessage object to be converted.
+     * @param addEducatorDto The AddEducatorMessage object to be converted.
      * @return The converted Educator object.
      */
-    private Educator convertToEntity(AddEducatorMessage addEducatorMessage) {
+    private Educator convertToEntity(AddEducatorDto addEducatorDto) {
         Educator educator = new Educator();
-        educator.setId(addEducatorMessage.educatorId());
+        educator.setId(addEducatorDto.getEducatorId());
         return educator;
     }
 }

@@ -2,10 +2,7 @@ package com.polimi.ckb.tournament.tournamentService.entity;
 
 import com.polimi.ckb.tournament.tournamentService.config.TournamentStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -17,10 +14,10 @@ import java.util.List;
 public class Tournament {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tournament_id;
+    private Long tournamentId;
 
     private String name;
-    private String creator_id;
+    private String creatorId;
     private String registrationDeadline;
 
     @Enumerated(EnumType.STRING)
@@ -32,6 +29,7 @@ public class Tournament {
             joinColumns = @JoinColumn(name = "tournament_id"),
             inverseJoinColumns = @JoinColumn(name = "educator_id")
     )
+    @ToString.Exclude
     private List<Educator> organizers;
 
     @ManyToMany
@@ -40,10 +38,12 @@ public class Tournament {
             joinColumns = @JoinColumn(name = "tournament_id"),
             inverseJoinColumns = @JoinColumn(name = "badge_id")
     )
+    @ToString.Exclude
     private List<Badge> badges;
 
 
     @OneToMany(mappedBy = "tournament")
+    @ToString.Exclude
     private List<Score> scores;
 
 }

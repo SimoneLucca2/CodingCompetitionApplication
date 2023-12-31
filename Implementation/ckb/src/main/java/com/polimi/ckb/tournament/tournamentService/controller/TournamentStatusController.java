@@ -1,6 +1,6 @@
 package com.polimi.ckb.tournament.tournamentService.controller;
 
-import com.polimi.ckb.tournament.tournamentService.dto.ChangeTournamentStatusMessage;
+import com.polimi.ckb.tournament.tournamentService.dto.ChangeTournamentStatusDto;
 import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
 import com.polimi.ckb.tournament.tournamentService.service.TournamentStatusService;
 import com.polimi.ckb.tournament.tournamentService.service.kafkaProducer.TournamentStatusKafkaProducer;
@@ -28,7 +28,7 @@ public class TournamentStatusController {
      * @return a ResponseEntity representing the response of the API call
      */
     @PostMapping
-    public ResponseEntity<Object> updateTournamentStatus(@RequestBody @Valid ChangeTournamentStatusMessage msg) {
+    public ResponseEntity<Object> updateTournamentStatus(@RequestBody @Valid ChangeTournamentStatusDto msg) {
         try{
             Tournament createdTournament = tournamentStatusService.updateTournamentStatus(msg);
             kafkaProducer.sendTournamentMessage(msg);

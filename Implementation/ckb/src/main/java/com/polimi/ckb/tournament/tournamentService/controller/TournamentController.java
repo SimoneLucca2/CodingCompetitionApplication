@@ -1,7 +1,7 @@
 package com.polimi.ckb.tournament.tournamentService.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.polimi.ckb.tournament.tournamentService.dto.CreateTournamentMessage;
+import com.polimi.ckb.tournament.tournamentService.dto.CreateTournamentDto;
 import com.polimi.ckb.tournament.tournamentService.dto.ErrorResponse;
 import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
 import com.polimi.ckb.tournament.tournamentService.service.TournamentService;
@@ -25,7 +25,7 @@ public class TournamentController {
     private static final Logger log = LoggerFactory.getLogger(TournamentController.class);
 
     @PostMapping
-    public ResponseEntity<Object> createTournament(@Valid @RequestBody CreateTournamentMessage msg) {
+    public ResponseEntity<Object> createTournament(@Valid @RequestBody CreateTournamentDto msg) {
         try {
             log.info("Creating tournament with message: {}", msg);
             Tournament createdTournament = tournamentService.saveTournament(msg);
