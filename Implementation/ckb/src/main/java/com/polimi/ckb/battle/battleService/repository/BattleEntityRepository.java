@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface BattleRepository extends JpaRepository<BattleEntity, Long> {
+public interface BattleEntityRepository extends JpaRepository<BattleEntity, Long> {
     Optional<BattleEntity> findByName(String name);
 }

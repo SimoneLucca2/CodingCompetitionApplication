@@ -18,6 +18,10 @@ public class GroupEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groupId;
 
-    @OneToMany(mappedBy = "group")
-    private List<StudentEntity> studentEntities;
+    @OneToMany(mappedBy = "studentId")
+    private List<StudentEntity> students;
+
+    @ManyToOne
+    @JoinColumn(name = "groups")
+    private BattleEntity battle;
 }

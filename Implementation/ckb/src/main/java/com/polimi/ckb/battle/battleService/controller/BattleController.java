@@ -1,6 +1,6 @@
 package com.polimi.ckb.battle.battleService.controller;
 
-import com.polimi.ckb.battle.battleService.dto.CreateBattleMessage;
+import com.polimi.ckb.battle.battleService.dto.BattleDto;
 import com.polimi.ckb.battle.battleService.entity.BattleEntity;
 import com.polimi.ckb.battle.battleService.service.BattleService;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +20,15 @@ public class BattleController {
     private static final Logger log = LoggerFactory.getLogger(BattleController.class);
 
     @PostMapping(path = "/battle")
-    public ResponseEntity<BattleEntity> createBattle(@RequestBody CreateBattleMessage msg){
-        try{
+    public ResponseEntity<BattleEntity> createBattle(@RequestBody BattleDto msg){
+       //try{
             log.info("Creating battle with messahe: {}", msg);
             BattleEntity createdBattle = battleService.saveBattle(msg);
             //TODO: kafka producer
             log.info("Battle created successfully");
             return ResponseEntity.ok(createdBattle);
-        } catch (){
+        //} catch (){
 
-        }
+        //}
     }
 }

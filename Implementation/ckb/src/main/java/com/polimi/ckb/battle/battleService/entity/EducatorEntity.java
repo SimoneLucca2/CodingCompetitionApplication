@@ -12,14 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 
+//TODO: delete this class
 public class EducatorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long EducatorId;
+    private Long educatorId;
 
-    @ManyToMany(mappedBy = "organizers")
-    private List<BattleEntity> battleEntities;
-
-    @ManyToMany(mappedBy = "organizers")
-    private List<BattleEntity> organizedBattleEntities;
+    @ManyToMany(mappedBy = "battleId")
+    private List<BattleEntity> battles;
 }
