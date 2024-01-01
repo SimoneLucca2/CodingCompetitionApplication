@@ -1,5 +1,6 @@
 package com.polimi.ckb.tournament.tournamentService.service.Impl;
 
+import com.polimi.ckb.tournament.tournamentService.config.TournamentStatus;
 import com.polimi.ckb.tournament.tournamentService.dto.ChangeTournamentStatusDto;
 import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
 import com.polimi.ckb.tournament.tournamentService.exception.TournamentNotFoundException;
@@ -20,13 +21,22 @@ public class TournamentStatusServiceImpl implements TournamentStatusService {
 
     @Transactional @Override
     public Tournament updateTournamentStatus(@Valid ChangeTournamentStatusDto msg) {
-        Optional<Tournament> maybeTournament = tournamentRepository.findById(msg.getTournamentId());
+
+        Long tournamentId = msg.getTournamentId();
+        TournamentStatus status = msg.getStatus();
+
+        return updateTournamentStatus(tournamentId, status);
+    }
+
+    @Transactional @Override
+    public Tournament updateTournamentStatus(Long tournamentId, TournamentStatus status) {
+        Optional<Tournament> maybeTournament = tournamentRepository.findById(tournamentId);
         if(maybeTournament.isEmpty()) {
             throw new TournamentNotFoundException();
         }
 
         Tournament tournament = maybeTournament.get();
-        tournament.setStatus(msg.getStatus());
+        tournament.setStatus(status);
         return tournamentRepository.save(tournament);
     }
 }

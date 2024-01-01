@@ -1,12 +1,9 @@
 package com.polimi.ckb.tournament.tournamentService.dto;
 
 import com.polimi.ckb.tournament.tournamentService.config.TournamentStatus;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  * DTO for {@link com.polimi.ckb.tournament.tournamentService.entity.Tournament}
@@ -14,11 +11,15 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder
+@NoArgsConstructor
+@Setter
+@AllArgsConstructor
 public class InternalChangeTournamentStatusDto {
 
-    @NotNull(message = "Status cannot be null")
-    @NotEmpty
-    @NotBlank
+    @NotBlank(message = "TournamentId cannot be null")
+    private Long tournamentId;
+
+    @NotBlank(message = "Status cannot be null")
     private TournamentStatus status;
 
 }

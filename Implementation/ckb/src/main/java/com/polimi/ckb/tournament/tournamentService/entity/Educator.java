@@ -1,6 +1,9 @@
 package com.polimi.ckb.tournament.tournamentService.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +24,6 @@ import java.util.Objects;
 @Builder
 public class Educator {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "educator_id")
     private Long educatorId;
 

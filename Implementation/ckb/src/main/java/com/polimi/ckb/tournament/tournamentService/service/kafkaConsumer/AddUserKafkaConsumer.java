@@ -30,8 +30,7 @@ public class AddUserKafkaConsumer {
         userServicesMap.put(UserType.EDUCATOR, educatorService);
     }
 
-
-    @KafkaListener(topics = {"user.creation"}, groupId = "tournament-service")
+    @KafkaListener(topics = "user.creation", groupId = "tournament-service")
     public void listener(ConsumerRecord<String, String> record) {
         try {
             String message = record.value();

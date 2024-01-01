@@ -1,34 +1,28 @@
 package com.polimi.ckb.tournament.tournamentService.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import com.polimi.ckb.tournament.tournamentService.utility.messageValidator.annotation.IsCreator;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  * DTO for {@link com.polimi.ckb.tournament.tournamentService.entity.Educator}
  */
 
 @Getter
+@NoArgsConstructor
+@Setter
 @Builder
 @AllArgsConstructor
 public class AddEducatorDto {
 
-    @NotNull(message = "RequesterId cannot be null")
-    @NotEmpty
-    @NotBlank
+    @NotBlank(message = "RequesterId cannot be null")
+    @IsCreator
     private Long requesterId;
 
-    @NotNull(message = "TournamentId cannot be null")
-    @NotEmpty
-    @NotBlank
+    @NotBlank(message = "TournamentId cannot be null")
     private Long tournamentId;
 
-    @NotNull(message = "EducatorId cannot be null")
-    @NotEmpty
-    @NotBlank
+    @NotBlank(message = "EducatorId cannot be null")
     private Long educatorId;
 }

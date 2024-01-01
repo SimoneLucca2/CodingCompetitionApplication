@@ -2,8 +2,7 @@ package com.polimi.ckb.tournament.tournamentService.dto;
 
 import com.polimi.ckb.tournament.tournamentService.config.TournamentStatus;
 import com.polimi.ckb.tournament.tournamentService.utility.messageValidator.annotation.ValidRegistrationDeadline;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,8 +11,12 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.polimi.ckb.tournament.tournamentService.entity.Tournament}
  */
-@Value
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 @Builder
+@AllArgsConstructor
 public class CreateTournamentDto implements Serializable {
 
         @NotBlank(message = "name must not be blank")
