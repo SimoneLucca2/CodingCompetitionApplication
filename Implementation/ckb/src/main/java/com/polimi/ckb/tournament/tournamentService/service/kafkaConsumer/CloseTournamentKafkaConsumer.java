@@ -19,7 +19,5 @@ public class CloseTournamentKafkaConsumer {
     public void listener(String message) throws JsonProcessingException {
         InternalChangeTournamentStatusDto parsedMessage = objectMapper.readValue(message, InternalChangeTournamentStatusDto.class);
         tournamentStatus.updateTournamentStatus(parsedMessage.getTournamentId(), parsedMessage.getStatus());
-
-        System.out.println("Received message: " + message);
-    } //TODO check this
+    }
 }
