@@ -13,12 +13,12 @@ public class Score {
     private ScoreId id;
 
     @ManyToOne
-    @MapsId("studentId") // This maps studentId in ScoreId
+    @MapsId("studentId") // maps studentId in ScoreId
     @JoinColumn(name = "student_id")
     private Student student;
 
     @ManyToOne
-    @MapsId("tournamentId") // This maps tournamentId in ScoreId
+    @MapsId("tournamentId") // maps tournamentId in ScoreId
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
 
