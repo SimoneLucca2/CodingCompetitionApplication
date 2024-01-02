@@ -1,7 +1,8 @@
 package com.polimi.ckb.tournament.tournamentService.service.Impl;
 
 import com.polimi.ckb.tournament.tournamentService.dto.CreateTournamentDto;
-import com.polimi.ckb.tournament.tournamentService.dto.StudentJoinDto;
+import com.polimi.ckb.tournament.tournamentService.dto.StudentJoinTournamentDto;
+import com.polimi.ckb.tournament.tournamentService.dto.StudentQuitTournamentDto;
 import com.polimi.ckb.tournament.tournamentService.dto.UpdateStudentScoreInTournamentDto;
 import com.polimi.ckb.tournament.tournamentService.entity.Score;
 import com.polimi.ckb.tournament.tournamentService.entity.Student;
@@ -79,7 +80,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Transactional @Override
-    public Tournament joinTournament(@Valid StudentJoinDto msg) {
+    public Tournament joinTournament(@Valid StudentJoinTournamentDto msg) {
         Student student = studentRepository.findById(msg.getStudentId())
                 .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + msg.getStudentId()));
 
@@ -91,5 +92,17 @@ public class TournamentServiceImpl implements TournamentService {
         return tournament;
     }
 
+    @Override @Transactional
+    public Tournament leaveTournament(StudentQuitTournamentDto msg) {
+        Student student = studentRepository.findById(msg.getStudentId())
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + msg.getStudentId()));
+
+        Tournament tournament = tournamentRepository.findById(msg.getTournamentId())
+                .orElseThrow(() -> new EntityNotFoundException("Tournament not found with id: " + msg.getTournamentId()));
+
+        student.getTournaments().remove(tournament);
+
+        return tournament;
+    }
 
 }

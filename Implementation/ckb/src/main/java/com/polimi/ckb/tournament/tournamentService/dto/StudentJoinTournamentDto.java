@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @StudentInSpecifiedTournament
-public class StudentJoinDto {
+public class StudentJoinTournamentDto {
 
     @NotBlank(message = "the tournament id cannot be blank")
     @TournamentExists
