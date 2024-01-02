@@ -1,15 +1,22 @@
 package com.polimi.ckb.tournament.tournamentService.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student {
     @Id
-    private Long student_id;
+    @Column(name = "student_id")
+    private Long studentId;
 
     @ManyToMany
     @JoinTable(

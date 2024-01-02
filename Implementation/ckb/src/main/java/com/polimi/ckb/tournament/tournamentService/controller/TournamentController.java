@@ -3,6 +3,7 @@ package com.polimi.ckb.tournament.tournamentService.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.tournament.tournamentService.dto.CreateTournamentDto;
 import com.polimi.ckb.tournament.tournamentService.dto.ErrorResponse;
+import com.polimi.ckb.tournament.tournamentService.dto.GetTournamentDto;
 import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
 import com.polimi.ckb.tournament.tournamentService.service.TournamentService;
 import com.polimi.ckb.tournament.tournamentService.service.kafkaProducer.TournamentCreationKafkaProducer;
@@ -35,6 +36,19 @@ public class TournamentController {
         } catch (JsonProcessingException e) {
             log.error("Error processing JSON: {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
+        } catch (Exception e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> getTournament(@Valid @RequestBody GetTournamentDto msg) {
+        try {
+            log.info("Getting tournament with id: {}", msg.getTournamentId());
+            Tournament tournament = tournamentService.getTournament(msg.getTournamentId());
+            log.info("Tournament retrieved successfully");
+            return ResponseEntity.ok(tournament);
         } catch (Exception e) {
             log.error("Internal server error: {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));

@@ -6,18 +6,19 @@ import lombok.Data;
 @Entity
 @Data
 public class Score {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private Integer scoreValue;
+    @EmbeddedId
+    private ScoreId id;
 
     @ManyToOne
+    @MapsId("studentId") // This maps studentId in ScoreId
     @JoinColumn(name = "student_id")
     private Student student;
 
     @ManyToOne
+    @MapsId("tournamentId") // This maps tournamentId in ScoreId
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
 
+    private Integer scoreValue;
 }

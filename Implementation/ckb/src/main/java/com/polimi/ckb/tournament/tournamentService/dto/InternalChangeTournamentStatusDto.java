@@ -14,10 +14,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Setter
 @AllArgsConstructor
-public class ChangeTournamentStatusDto {
-
-    @NotBlank(message = "EducatorId cannot be null")
-    private Long educatorId; //id of the educator who is requesting the change
+public class InternalChangeTournamentStatusDto {
 
     @NotBlank(message = "TournamentId cannot be null")
     private Long tournamentId;
