@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class BattleDto implements Serializable {
+public class CreateBattleDto implements Serializable {
     String name;
     String description;
     Educator creatorId;

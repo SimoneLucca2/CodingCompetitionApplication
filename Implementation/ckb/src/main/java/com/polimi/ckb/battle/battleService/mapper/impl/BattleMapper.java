@@ -1,6 +1,6 @@
 package com.polimi.ckb.battle.battleService.mapper.impl;
 
-import com.polimi.ckb.battle.battleService.dto.BattleDto;
+import com.polimi.ckb.battle.battleService.dto.CreateBattleDto;
 import com.polimi.ckb.battle.battleService.entity.Battle;
 import com.polimi.ckb.battle.battleService.mapper.Mapper;
 import lombok.AllArgsConstructor;
@@ -15,16 +15,16 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 @Builder
 @Data
-public class BattleMapper implements Mapper<Battle, BattleDto> {
+public class BattleMapper implements Mapper<Battle, CreateBattleDto> {
     private ModelMapper modelMapper;
 
     @Override
-    public BattleDto mapTo(Battle battle) {
+    public CreateBattleDto mapTo(Battle battle) {
         return null;
     }
 
     @Override
-    public Battle mapFrom(BattleDto battleDto) {
+    public Battle mapFrom(CreateBattleDto createBattleDto) {
         return null;
     }
 }

@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface BattleRepository extends JpaRepository<Battle, Long> {
     Optional<Battle> findByName(String name);
     List<Battle> findByTournamentID(Long tournamentID);
+
+    Integer deleteBattleByName(String name);
 }

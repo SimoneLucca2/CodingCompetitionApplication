@@ -14,4 +14,20 @@ public class KafkaConfig {
                 .replicas(1)
                 .build();
     }
+
+    @Bean
+    public NewTopic battleJoinTopic(){
+        return TopicBuilder.name("battle.student.join")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic battleLeaveTopic(){
+        return TopicBuilder.name("battle.student.leave")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 }
