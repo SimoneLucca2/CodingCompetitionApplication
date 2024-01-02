@@ -4,18 +4,21 @@ participant "BattleService" as BS
 participant "BattleDataTier" as BDT
 participant "Message broker" as MB
 
-C->APIG: POST\n/v1/battle/\n{battleID}/\ngroup/\n{groupID}/\nscore
+C->APIG: POST\n/v1/battle/\ngroup/score
 activate APIG
-APIG->BS: POST /battle/\n{battleID}/group/\n{groupID}/score
+APIG->BS: POST /battle/\ngroup/score
 activate BS
+BS->BDT: GET /battle/group/\nstudents
+BS<--BDT: group member (json file)
 loop For all students in the given group
-BS->BDT: POST /battle/\n{battleID}/group/\n{groupID}/score
+BS->BDT: POST /battle/\nstudent/score
 activate BDT
 BS<--BDT: 200 OK
 deactivate BDT
-BS->MB: publish battle.score
+BS->MB: publish tournament.battle.score.update
 end
 APIG<--BS: 200 OK
 deactivate BS
 C<--APIG:200 OK
 deactivate APIG
+

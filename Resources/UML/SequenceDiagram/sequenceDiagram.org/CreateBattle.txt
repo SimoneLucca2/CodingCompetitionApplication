@@ -13,7 +13,7 @@ alt If invalid deadlines or invalid group constraints
   APIG<--BS: 400 Bad request
   C<--APIG: 400 Bad requet
 else
-  BS->BDT: GET tournament/\n{tournamentID}/battles
+  BS->BDT: GET tournament/battles
   activate BDT
   BS<--BDT: 200 OK (json file)
   deactivate BDT

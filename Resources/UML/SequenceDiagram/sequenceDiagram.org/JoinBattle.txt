@@ -4,11 +4,11 @@ participant "BattleService" as BS
 participant "BattleDataTier" as BDT
 participant "Message Broker" as MB
 
-C->APIG: POST\n/v1/battle/\n{battleID}/\njoin
+C->APIG: POST\n/v1/battle/join
 activate APIG
-APIG->BS: POST /battle/{battleID}/join
+APIG->BS: POST /battle/join
 activate BS
-BS->BDT: POST /battle/{battleID}/join
+BS->BDT: POST /battle/join
 activate BDT
 BS<--BDT: 200 OK
 deactivate BDT
