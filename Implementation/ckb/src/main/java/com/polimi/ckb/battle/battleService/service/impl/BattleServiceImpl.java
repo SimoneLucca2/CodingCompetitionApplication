@@ -2,31 +2,37 @@ package com.polimi.ckb.battle.battleService.service.impl;
 
 import com.polimi.ckb.battle.battleService.config.BattleStatus;
 import com.polimi.ckb.battle.battleService.dto.BattleDto;
-import com.polimi.ckb.battle.battleService.entity.BattleEntity;
-import com.polimi.ckb.battle.battleService.repository.BattleEntityRepository;
+import com.polimi.ckb.battle.battleService.entity.Battle;
+import com.polimi.ckb.battle.battleService.exception.BattleAlreadyExistException;
+import com.polimi.ckb.battle.battleService.repository.BattleRepository;
 import com.polimi.ckb.battle.battleService.service.BattleService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.IconView;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BattleServiceImpl implements BattleService {
-    private final BattleEntityRepository battleEntityRepository;
+    private final BattleRepository battleRepository;
 
     @Transactional
-    public BattleEntity saveBattle(BattleDto battleDto){
-        Optional<BattleEntity> maybeBattle = battleEntityRepository.findByName(battleDto.getName());
-        //TODO: battle must be unique within a tournament
-        return battleEntityRepository.save(convertToEntity(battleDto));
+    public Battle saveBattle(BattleDto battleDto) throws BattleAlreadyExistException {
+        List<Battle> battleWithinSameTournament = battleRepository.findByTournamentID(battleDto.getTournamentID());
+        if(!battleWithinSameTournament.isEmpty()){
+            for(Battle battle : battleWithinSameTournament) {
+                if (battle.getName().equals(battleDto.getName())) {
+                    throw new BattleAlreadyExistException();
+                }
+            }
+        }
+        return battleRepository.save(convertToEntity(battleDto));
     }
 
     //TODO: maybe put this inside a mapper class
-    private BattleEntity convertToEntity(BattleDto battleDto){
-        return BattleEntity.builder()
+    private Battle convertToEntity(BattleDto battleDto){
+        return Battle.builder()
                 .name(battleDto.getName())
                 .description(battleDto.getDescription())
                 .registrationDeadline(battleDto.getRegistrationDeadline())

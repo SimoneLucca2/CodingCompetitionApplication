@@ -2,10 +2,7 @@ package com.polimi.ckb.battle.battleService.entity;
 
 import com.polimi.ckb.battle.battleService.config.BattleStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,18 +11,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BattleEntity {
+public class Battle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long BattleId;
+    @Column(name = "battle_id")
+    private Long battleId;
 
     private String name;
 
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "educatorId")
-    private EducatorEntity creatorId;
+    @JoinColumn(name = "creator_id")
+    private Educator creatorId;
 
     private String registrationDeadline;
 
@@ -37,9 +35,10 @@ public class BattleEntity {
 
     private BattleStatus status;
 
-    @OneToMany(mappedBy = "battles")
-    private List<ScoreEntity> scores;
-
     @OneToMany(mappedBy = "groupId")
-    private List<GroupEntity> groups;
+    private List<Group> groups;
+
+    private int maxGroupSize;
+
+    private int minGroupSize;
 }

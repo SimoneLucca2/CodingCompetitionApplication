@@ -6,27 +6,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class StudentEntity {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "student_id")
     private Long studentId;
 
-    @OneToMany(mappedBy = "groupId")
-    private List<GroupEntity> groups;
-
-    @OneToMany(mappedBy = "studentId")
-    private List<ScoreEntity> scores;
-
-    @OneToMany(mappedBy = "students", orphanRemoval = true)
-    private Set<ScoreEntity> scoreEntities = new LinkedHashSet<>();
-
+    @ManyToMany
+    @JoinTable(
+            name = "student_group",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private List<Group> groups;
 }

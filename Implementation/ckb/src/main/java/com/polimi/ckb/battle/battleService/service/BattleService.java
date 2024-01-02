@@ -1,8 +1,9 @@
 package com.polimi.ckb.battle.battleService.service;
 
 import com.polimi.ckb.battle.battleService.dto.BattleDto;
-import com.polimi.ckb.battle.battleService.entity.BattleEntity;
+import com.polimi.ckb.battle.battleService.entity.Battle;
+import com.polimi.ckb.battle.battleService.exception.BattleAlreadyExistException;
 
 public interface BattleService {
-    BattleEntity saveBattle(BattleDto msg);
+    Battle saveBattle(BattleDto msg) throws BattleAlreadyExistException;
 }

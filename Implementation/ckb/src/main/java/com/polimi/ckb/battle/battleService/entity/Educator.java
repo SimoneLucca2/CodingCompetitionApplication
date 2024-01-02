@@ -2,26 +2,23 @@ package com.polimi.ckb.battle.battleService.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Builder
-public class GroupEntity {
+
+//TODO: delete this class
+public class Educator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long groupId;
+    @Column(name = "educator_id")
+    private Long educatorId;
 
-    @OneToMany(mappedBy = "studentId")
-    private List<StudentEntity> students;
-
-    @ManyToOne
-    @JoinColumn(name = "groups")
-    private BattleEntity battle;
+    @OneToMany(mappedBy = "battleId")
+    private List<Battle> battles;
 }
