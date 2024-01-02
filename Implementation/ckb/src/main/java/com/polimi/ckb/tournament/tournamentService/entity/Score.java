@@ -2,8 +2,10 @@ package com.polimi.ckb.tournament.tournamentService.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
+@ToString
 @Data
 public class Score {
 

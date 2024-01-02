@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.polimi.ckb.tournament.tournamentService.utility.entityConverter.NewUserDtoToUser.convertToEntity;
+
 @Service
 @RequiredArgsConstructor
 public class EducatorServiceImpl implements EducatorService {
@@ -64,7 +66,4 @@ public class EducatorServiceImpl implements EducatorService {
         return optionalEducator.get();
     }
 
-    private Educator convertToEntity(NewUserDto msg) {
-        return Educator.builder().educatorId(msg.getUserId()).build();
-    }
 }

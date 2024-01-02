@@ -7,10 +7,7 @@ import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
 import com.polimi.ckb.tournament.tournamentService.repository.ScoreRepository;
 
 public class InitScore {
-
-    private static ScoreRepository scoreRepository;
-
-    public static Score initScore(Student student, Tournament tournament) {
+    public static Score initScore(Student student, Tournament tournament, ScoreRepository scoreRepository) {
         ScoreId scoreId = new ScoreId(student.getStudentId(), tournament.getTournamentId());
 
         Score newScore = new Score();

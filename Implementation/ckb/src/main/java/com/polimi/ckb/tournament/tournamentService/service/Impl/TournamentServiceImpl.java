@@ -1,7 +1,7 @@
 package com.polimi.ckb.tournament.tournamentService.service.Impl;
 
-import com.polimi.ckb.tournament.tournamentService.config.TournamentStatus;
 import com.polimi.ckb.tournament.tournamentService.dto.CreateTournamentDto;
+import com.polimi.ckb.tournament.tournamentService.dto.StudentJoinDto;
 import com.polimi.ckb.tournament.tournamentService.dto.UpdateStudentScoreInTournamentDto;
 import com.polimi.ckb.tournament.tournamentService.entity.Score;
 import com.polimi.ckb.tournament.tournamentService.entity.Student;
@@ -16,8 +16,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
+import static com.polimi.ckb.tournament.tournamentService.utility.entityConverter.CreateTournamentDtoToTournament.convertToEntity;
 import static com.polimi.ckb.tournament.tournamentService.utility.score.InitScore.initScore;
 
 @Service
@@ -44,14 +46,14 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Transactional @Override
-    public Score updateTournamentScore(UpdateStudentScoreInTournamentDto msg) {
+    public void updateTournamentScore(UpdateStudentScoreInTournamentDto msg) {
         Long tournamentId = msg.getTournamentId();
         Long studentId = msg.getStudentId();
         Integer score = msg.getScore();
 
         //Tournament exist
         Tournament tournament = tournamentRepository.findById(tournamentId)
-                .orElseThrow(() -> new EntityNotFoundException("Tournament not found for battle id: " + tournamentId));
+                .orElseThrow(() -> new EntityNotFoundException("Tournament not found with id: " + tournamentId));
 
         //Student exist
         Student student = studentRepository.findById(studentId)
@@ -69,19 +71,25 @@ public class TournamentServiceImpl implements TournamentService {
                 .filter(s -> s.getStudent().getStudentId().equals(studentId))
                 .findFirst()
                 /* If the student has no score for the tournament, create a new one with 0 score*/
-                .orElseGet(() -> initScore(student, tournament));
+                .orElseGet(() -> initScore(student, tournament, scoreRepository));
 
         studentScore.setScoreValue(studentScore.getScoreValue() + score);
 
-        return scoreRepository.save(studentScore);
+        scoreRepository.save(studentScore);
     }
 
-    private Tournament convertToEntity(CreateTournamentDto createTournamentDto) {
-        return Tournament.builder()
-                .name(createTournamentDto.getName())
-                .creatorId(createTournamentDto.getCreatorId())
-                .registrationDeadline(createTournamentDto.getRegistrationDeadline())
-                .status(TournamentStatus.PREPARATION)
-                .build();
+    @Transactional @Override
+    public Tournament joinTournament(@Valid StudentJoinDto msg) {
+        Student student = studentRepository.findById(msg.getStudentId())
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + msg.getStudentId()));
+
+        Tournament tournament = tournamentRepository.findById(msg.getTournamentId())
+                .orElseThrow(() -> new EntityNotFoundException("Tournament not found with id: " + msg.getTournamentId()));
+
+        student.getTournaments().add(tournament);
+
+        return tournament;
     }
+
+
 }

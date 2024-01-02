@@ -19,7 +19,6 @@ public class UpdateTournamentScoreKafkaConsumer {
     @KafkaListener(topics = "battle.student.score", groupId = "tournament-service")
     public void listener(String message) throws JsonProcessingException {
         UpdateStudentScoreInTournamentDto msg = objectMapper.readValue(message, UpdateStudentScoreInTournamentDto.class);
-        //TODO update the score of the tournament assigned to the specific battle
         tournamentService.updateTournamentScore(msg);
     }
 }
