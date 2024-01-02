@@ -1,4 +1,4 @@
-package com.polimi.ckb.battle.battleService.utility;
+package com.polimi.ckb.battle.battleService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -20,7 +20,8 @@ public class BattleServiceImpl implements BattleService {
     @Transactional
     public Battle saveBattle(BattleDto battleDto) throws BattleAlreadyExistException {
         List<Battle> battleWithinSameTournament = battleRepository.findByTournamentID(battleDto.getTournamentID());
-        if(!battleWithinSameTournament.isEmpty()){
+
+        if(battleWithinSameTournament != null){
             for(Battle battle : battleWithinSameTournament) {
                 if (battle.getName().equals(battleDto.getName())) {
                     throw new BattleAlreadyExistException();

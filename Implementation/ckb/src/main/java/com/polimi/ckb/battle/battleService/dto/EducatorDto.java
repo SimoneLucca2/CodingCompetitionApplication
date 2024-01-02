@@ -1,10 +1,7 @@
 package com.polimi.ckb.battle.battleService.dto;
 
 import com.polimi.ckb.battle.battleService.entity.Educator;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -15,7 +12,7 @@ import java.io.Serializable;
 @Builder
 @Data
 @AllArgsConstructor
-@Value
+@NoArgsConstructor
 public class EducatorDto implements Serializable {
     Long educatorId;
 }
