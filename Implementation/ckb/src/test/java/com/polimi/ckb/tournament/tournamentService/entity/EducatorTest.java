@@ -1,5 +1,6 @@
 package com.polimi.ckb.tournament.tournamentService.entity;
 
+import com.polimi.ckb.tournament.entity.Educator;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

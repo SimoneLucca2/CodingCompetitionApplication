@@ -1,13 +1,14 @@
 package com.polimi.ckb.tournament.tournamentService.service.Impl;
 
-import com.polimi.ckb.tournament.tournamentService.dto.AddEducatorDto;
-import com.polimi.ckb.tournament.tournamentService.entity.Educator;
-import com.polimi.ckb.tournament.tournamentService.entity.Tournament;
-import com.polimi.ckb.tournament.tournamentService.exception.EducatorAlreadyPresentException;
-import com.polimi.ckb.tournament.tournamentService.exception.EducatorNotFoundException;
-import com.polimi.ckb.tournament.tournamentService.exception.TournamentNotFoundException;
-import com.polimi.ckb.tournament.tournamentService.repository.EducatorRepository;
-import com.polimi.ckb.tournament.tournamentService.repository.TournamentRepository;
+import com.polimi.ckb.tournament.dto.AddEducatorDto;
+import com.polimi.ckb.tournament.entity.Educator;
+import com.polimi.ckb.tournament.entity.Tournament;
+import com.polimi.ckb.tournament.exception.EducatorAlreadyPresentException;
+import com.polimi.ckb.tournament.exception.EducatorNotFoundException;
+import com.polimi.ckb.tournament.exception.TournamentNotFoundException;
+import com.polimi.ckb.tournament.repository.EducatorRepository;
+import com.polimi.ckb.tournament.repository.TournamentRepository;
+import com.polimi.ckb.tournament.service.Impl.EducatorServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
