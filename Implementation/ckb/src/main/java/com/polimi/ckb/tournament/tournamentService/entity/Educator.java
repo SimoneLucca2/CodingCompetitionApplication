@@ -1,11 +1,11 @@
 package com.polimi.ckb.tournament.tournamentService.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,10 +16,17 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Table(name = "educator")
 public class Educator {
+
+    @Builder
+    public Educator(Long educatorId, List<Tournament> tournaments, List<Tournament> organizedTournaments) {
+        this.educatorId = educatorId;
+        this.tournaments = tournaments != null ? tournaments : new ArrayList<>();
+        this.organizedTournaments = organizedTournaments != null ? organizedTournaments : new ArrayList<>();
+    }
+
     @Id
     @Column(name = "educator_id")
     private Long educatorId;
