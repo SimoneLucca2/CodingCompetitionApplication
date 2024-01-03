@@ -4,6 +4,7 @@ import com.polimi.ckb.tournament.tournamentService.config.TournamentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -36,10 +37,10 @@ public class Tournament {
             inverseJoinColumns = @JoinColumn(name = "educator_id")
     )
     @ToString.Exclude
-    private List<Educator> organizers;
+    private List<Educator> organizers = new ArrayList<>();
 
     @OneToMany(mappedBy = "tournament")
     @ToString.Exclude
-    private List<Score> scores;
+    private List<Score> scores = new ArrayList<>();
 
 }

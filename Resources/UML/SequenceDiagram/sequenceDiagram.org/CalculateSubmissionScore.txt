@@ -1,0 +1,13 @@
+participant "BattleDataTier" as BDT
+participant "BattleService" as BS
+participant "GitHub" as GH
+participant "MessageBroker" as MB
+
+BS<-GH: New push on main branch
+activate BS
+BS->GH: getCode()
+BS<-GH: code.zip
+BDT<-BS: POST /battle/score
+BS->MB: publish tournament.battle.score.update
+BDT-->BS: 200 OK
+deactivate BS

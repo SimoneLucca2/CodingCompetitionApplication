@@ -1,0 +1,18 @@
+participant "Client" as C
+participant "APIGateway" as APIG
+participant "UserService" as BS
+participant "UserDataTier" as BDT
+
+C->APIG: GET\n/v1/user
+activate APIG
+APIG->BS:GET\n/user
+activate BS
+BS->BDT: GET /user
+activate BDT
+BS<--BDT: 200 OK (json file)
+deactivate BDT
+
+APIG<--BS: 200 OK (json file)
+deactivate BS
+C<--APIG: 200 OK (json file)
+deactivate APIG
