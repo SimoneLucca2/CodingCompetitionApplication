@@ -1,13 +1,15 @@
-participant "BattleDataTier" as BDT
-participant "BattleService" as BS
 participant "GitHub" as GH
-participant "MessageBroker" as MB
+participant "BattleService" as BS
+participant "BattleDataTier" as BDT
 
-BS<-GH: New push on main branch
+
+BS<-GH: Notify about a new\npush on main branch
 activate BS
-BS->GH: getCode()
-BS<-GH: code.zip
+BS->GH: pullSolution()
+BS<-GH: solution.zip
+note over BS: Runs automatic evaluation
 BDT<-BS: POST /battle/score
-BS->MB: publish tournament.battle.score.update
+activate BDT
 BDT-->BS: 200 OK
+deactivate BDT
 deactivate BS

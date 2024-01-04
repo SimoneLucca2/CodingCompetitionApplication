@@ -10,27 +10,40 @@ APIG->BS:DELETE\n/battle/student
 activate BS
 BS->BDT: GET /battle
 activate BDT
-BS<--BDT: 200 OK (json file)
+BS<--BDT: 200 OK (battleId.json)
 deactivate BDT
-alt If battle in "battle" state
-BS->BDT: POST /battle/score
-activate BDT
-BDT->BDT: Student's score set\nto 0 (zero)
-BS<--BDT: 200 OK
-deactivate BDT
-BS->MB: Publish tournament.battle.score.update
-else If battle in "pre-battle" state
-BS->BDT: DELETE\n/battle/student
-activate BDT
-BDT->BDT: Delete every information correlated\nwith the student in the specified battle
-BS<--BDT: 200 OK
-deactivate BDT
-BS->MB:Publish battle.student.quit
+
+alt If battle is in "CONSOLIDATION" or "CLOSED" state
+  APIG<--BS: 400 Bad request
+  C<--APIG: 400 Bad request
+  
+else 
+  BS->BDT: DELETE /battle/group
+  activate BDT
+  BS->BDT: DELETE /battle/student
+  BS<--BDT: 200 OK
+  BS->MB: publish battle.group.quit
+  BS<--BDT: 200 OK
+  deactivate BDT
+  BS->MB: publish battle.student.quit
+
+  alt If group size does no longer satisfy group constraints
+  
+    loop For all the students left in the group
+      BS->BDT: DELETE /battle/group
+      activate BDT
+      BS->BDT: DELETE /battle/student
+      BS<--BDT: 200 OK
+      BS->MB: publish battle.group.quit
+      BS<--BDT: 200 OK
+      deactivate BDT
+      BS->MB: publish battle.student.quit
+      BS->MB: publish email.sending.request
+    end
+  end
+  
+  APIG<--BS: 200 OK
+  deactivate BS
+  C<--APIG: 200 OK
+  deactivate APIG
 end
-APIG<--BS: 200 OK
-deactivate BS
-C<--APIG: 200 OK
-deactivate APIG
-
-
-

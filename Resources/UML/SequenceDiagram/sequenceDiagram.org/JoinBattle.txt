@@ -4,16 +4,27 @@ participant "BattleService" as BS
 participant "BattleDataTier" as BDT
 participant "Message Broker" as MB
 
-C->APIG: POST\n/v1/battle/join
+C->APIG: POST\n/v1/battle/\nstudent
 activate APIG
-APIG->BS: POST /battle/join
+APIG->BS: POST /battle/student
 activate BS
-BS->BDT: POST /battle/join
+BS->BDT: GET /battle
 activate BDT
-BS<--BDT: 200 OK
+BS<--BDT: 200 OK (battleId.json)
 deactivate BDT
-BS->MB: publish battle.creation
-APIG<--BS: 200 OK
-deactivate BS
-C<--APIG: 200 OK
-deactivate APIG
+
+alt If battle status is not "PRE-BATTLE"
+  APIG<--BS: 400 Bad request
+  C<--APIG: 400 Bad request
+  
+else
+  BS->BDT: POST /battle/student
+  activate BDT
+  BS<--BDT: 200 OK
+  deactivate BDT
+  BS->MB: publish battle.student.join
+  APIG<--BS: 200 OK
+  deactivate BS
+  C<--APIG: 200 OK
+  deactivate APIG
+end

@@ -1,11 +1,22 @@
-participant "BattleDataTier" as BDT
+participant "Time Server" as TS
+participant "MessageBroker" as MB
 participant "BattleService" as BS
-participant "GitHub" as GH
+participant "BattleDataTier" as BDT
 
-BS<-GH: "code ready"
+
+note over TS: Registration deadline expires
+TS->MB: publish battle.lifecycle.battle
+note over MB: Eventually
+MB->BS: consume battle.lifecycle.battle
 activate BS
-BS->GH: "pull code"
-BS<-GH: code.zip
-BDT<-BS: POST /battle/\n{battleID}/group/\n{groupID}/score
-BDT-->BS: 200 OK
+BS->BDT: GET /battle
+activate BDT
+BS<--BDT: 200 OK (battleId.json)
+deactivate BDT
+note over BS: Possibly expel groups that do\nnot satisfy all the constraints
+
+BS->BDT: PUT /battle
+activate BDT
+BS<--BDT: 200 OK
+deactivate BDT
 deactivate BS

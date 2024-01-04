@@ -1,35 +1,33 @@
-
 participant Client
 participant APIGateway
-participant TournamentManager
+participant TournamentService
 participant TournamentDataTier
 
 activate Client
 Client->APIGateway: POST /v1/tournament
 activate APIGateway
-APIGateway->TournamentManager : POST /tournament
-activate TournamentManager
+APIGateway->TournamentService : POST /tournament
+activate TournamentService
 
-TournamentManager->TournamentDataTier:POST /tournament
+TournamentService->TournamentDataTier:POST /tournament
 activate TournamentDataTier
     
 
 
 
 alt no active tournament with the same name
-TournamentManager<--TournamentDataTier:200 Ok
+TournamentService<--TournamentDataTier:200 Ok
 deactivate TournamentDataTier
-TournamentManager->Message Broker:Publish tournament.creation
-APIGateway<--TournamentManager:200 Ok
-deactivateafter TournamentManager
+TournamentService->Message Broker:Publish tournament.creation
+APIGateway<--TournamentService:200 Ok
+deactivateafter TournamentService
 APIGateway-->Client: 200 OK
 
 else exists active tournament with the same name
 
 
 
-TournamentManager<--TournamentDataTier:400 bad request
-APIGateway<--TournamentManager:400 bad request
+TournamentService<--TournamentDataTier:400 bad request
+APIGateway<--TournamentService:400 bad request
 Client<--APIGateway:400 bad request
 end
-

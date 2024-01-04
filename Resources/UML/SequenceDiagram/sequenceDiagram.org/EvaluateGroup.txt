@@ -4,21 +4,39 @@ participant "BattleService" as BS
 participant "BattleDataTier" as BDT
 participant "Message broker" as MB
 
-C->APIG: POST\n/v1/battle/\ngroup/score
+C->APIG: GET\n/v1/battle/\nscore
 activate APIG
-APIG->BS: POST /battle/\ngroup/score
+APIG->BS: GET /battle/score
 activate BS
-BS->BDT: GET /battle/group/\nstudents
-BS<--BDT: group member (json file)
-loop For all students in the given group
-BS->BDT: POST /battle/\nstudent/score
+BS->BDT: GET /battle/score
 activate BDT
-BS<--BDT: 200 OK
+BS<--BDT: 200 OK (groupId.json)
 deactivate BDT
-BS->MB: publish tournament.battle.score.update
-end
-APIG<--BS: 200 OK
+APIG<--BS: 200 OK (groupId.json)
 deactivate BS
-C<--APIG:200 OK
+C<--APIG: 200 OK (groupId.json)
 deactivate APIG
+
+note over C: Educator has decided the score
+C->APIG: PUT\n/v1/battle/\nscore
+activate APIG
+APIG->BS: PUT /battle/score
+activate BS
+
+alt If score < 0 or score > 100
+  APIG<--BS: 400 Bad request
+  C<--APIG: 400 Bad request
+
+else
+  BS->BDT: PUT /battle/score
+  activate BDT
+  BS<--BDT: 200 OK
+  deactivate BDT
+  BS->MB: publish tournament.battle.score.update
+  APIG<--BS: 200 OK
+  deactivate BS
+  C<--APIG:200 OK
+  deactivate APIG
+end
+
 
