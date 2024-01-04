@@ -2,8 +2,7 @@ package com.polimi.ckb.user.service.kafkaConsumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polimi.ckb.user.dto.NewUserDto;
-import com.polimi.ckb.user.service.EducatorService;
-import com.polimi.ckb.user.service.StudentService;
+import com.polimi.ckb.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,8 +16,7 @@ import javax.validation.Valid;
 public class NewUserKafkaConsumer {
 
     private final ObjectMapper objectMapper;
-    private final StudentService studentService;
-    private final EducatorService educatorService;
+    private final UserService userService;
 
     @KafkaListener(topics = "user.creation", groupId = "user-service")
     public void listener(ConsumerRecord<String, String> record) {
@@ -33,16 +31,6 @@ public class NewUserKafkaConsumer {
 
     private void processMessage(NewUserDto msg) {
         //add a new participant to the tournament
-        switch (msg.getType()) {
-            case STUDENT:
-                studentService.addNewStudent(msg);
-                break;
-            case EDUCATOR:
-                educatorService.addNewEducator(msg);
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported user type: " + msg.getType());
-        }
-
+        userService.saveUser(msg);
     }
 }
