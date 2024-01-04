@@ -41,6 +41,8 @@ public class StudentController {
 
     @DeleteMapping
     public ResponseEntity<Object> leaveBattle(@RequestBody StudentLeaveBattleDto studentDto){
+        log.info("A student is trying to leave a battle with message: {" + studentDto + "}");
+        studentService.leaveBattle(studentDto);
         return null;
     }
 }

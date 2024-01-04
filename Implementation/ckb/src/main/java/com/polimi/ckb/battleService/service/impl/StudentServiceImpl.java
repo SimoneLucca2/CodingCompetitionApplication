@@ -1,12 +1,11 @@
 package com.polimi.ckb.battleService.service.impl;
 
 import com.polimi.ckb.battleService.dto.StudentJoinBattleDto;
+import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.entity.Student;
-import com.polimi.ckb.battleService.exception.BattleDoesNotExistException;
-import com.polimi.ckb.battleService.exception.StudentAlreadyRegisteredToBattleException;
-import com.polimi.ckb.battleService.exception.StudentDoesNotExistException;
+import com.polimi.ckb.battleService.exception.*;
 import com.polimi.ckb.battleService.repository.BattleRepository;
 import com.polimi.ckb.battleService.repository.GroupRepository;
 import com.polimi.ckb.battleService.repository.StudentRepository;
@@ -36,8 +35,8 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(StudentDoesNotExistException::new);
 
         List<StudentGroup> registeredGroups = groupRepository.findByBattle(battle);
-        for(StudentGroup group : registeredGroups){
-            if(group.getStudents().contains(student)){
+        for (StudentGroup group : registeredGroups) {
+            if (group.getStudents().contains(student)) {
                 throw new StudentAlreadyRegisteredToBattleException();
             }
         }
@@ -56,7 +55,35 @@ public class StudentServiceImpl implements StudentService {
 
     @Transactional
     @Override
-    public void leaveBattle(StudentJoinBattleDto studentDto) {
+    public void leaveBattle(StudentLeaveBattleDto studentDto) {
+        Battle battle = battleRepository.findById(studentDto.getBattleId())
+                .orElseThrow(BattleDoesNotExistException::new);
 
+        Student student = studentRepository.findById(studentDto.getStudentId())
+                .orElseThrow(StudentDoesNotExistException::new);
+
+        List<StudentGroup> registeredGroups = groupRepository.findByBattle(battle);
+        boolean check = false;
+        for (StudentGroup group : registeredGroups) {
+            if (group.getStudents().contains(student)) {
+                check = true;
+                break;
+            }
+        }
+        if (!check) {
+            throw new StudentNotRegisteredInBattleException();
+        }
+
+        //check battle's status
+        switch (battle.getStatus()) {
+            case PRE_BATTLE:
+                break;
+
+            case BATTLE:
+                break;
+
+            default:
+                throw new BattleStateTooAdvancedException();
+        }
     }
 }
