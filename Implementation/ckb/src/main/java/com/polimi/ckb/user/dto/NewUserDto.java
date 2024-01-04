@@ -4,13 +4,14 @@ import com.polimi.ckb.user.utility.UserType;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @Setter
 @AllArgsConstructor
-public class NewUserDto {
+public class NewUserDto implements Serializable {
     @NotBlank(message = "userId cannot be blank")
     private Long userId;
 

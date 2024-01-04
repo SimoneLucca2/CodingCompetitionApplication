@@ -6,6 +6,7 @@ import com.polimi.ckb.tournament.utility.messageValidator.annotation.TournamentE
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * DTO for {@link Tournament}
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Setter
 @AllArgsConstructor
-public class UpdateStudentScoreInTournamentDto {
+public class UpdateStudentScoreInTournamentDto implements Serializable {
 
     @NotBlank(message = "student id cannot be null")
     @StudentExists

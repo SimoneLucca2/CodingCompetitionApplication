@@ -5,6 +5,7 @@ import com.polimi.ckb.tournament.entity.Tournament;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * DTO for {@link Tournament}
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Setter
 @AllArgsConstructor
-public class ChangeTournamentStatusDto {
+public class ChangeTournamentStatusDto implements Serializable {
 
     @NotBlank(message = "EducatorId cannot be null")
     private Long educatorId; //id of the educator who is requesting the change

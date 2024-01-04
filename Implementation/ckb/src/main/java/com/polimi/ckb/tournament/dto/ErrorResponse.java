@@ -1,4 +1,6 @@
 package com.polimi.ckb.tournament.dto;
 
-public record ErrorResponse(String error) {
+import java.io.Serializable;
+
+public record ErrorResponse(String error) implements Serializable {
 }

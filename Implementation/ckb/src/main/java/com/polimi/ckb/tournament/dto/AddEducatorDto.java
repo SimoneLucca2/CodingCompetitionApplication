@@ -5,6 +5,7 @@ import com.polimi.ckb.tournament.utility.messageValidator.annotation.IsCreator;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * DTO for {@link Educator}
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Builder
 @AllArgsConstructor
-public class AddEducatorDto {
+public class AddEducatorDto implements Serializable {
 
     @NotBlank(message = "RequesterId cannot be null")
     @IsCreator

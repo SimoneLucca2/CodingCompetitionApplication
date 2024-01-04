@@ -5,6 +5,7 @@ import com.polimi.ckb.tournament.entity.Tournament;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * DTO for {@link Tournament}
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Setter
 @AllArgsConstructor
-public class InternalChangeTournamentStatusDto {
+public class InternalChangeTournamentStatusDto implements Serializable {
 
     @NotBlank(message = "TournamentId cannot be null")
     private Long tournamentId;

@@ -1,6 +1,5 @@
 package com.polimi.ckb.user.service.impl;
 
-import com.polimi.ckb.user.dto.NewUserDto;
 import com.polimi.ckb.user.entity.User;
 import com.polimi.ckb.user.repository.UserRepository;
 import com.polimi.ckb.user.service.UserService;
@@ -20,16 +19,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("user not found"));
     }
 
-
-    @Transactional @Override
-    public User saveUser(NewUserDto msg) {
-        User user = User.builder()
-                .id(msg.getUserId())
-                .name(msg.getName())
-                .email(msg.getEmail())
-                .userType(msg.getUserType())
-                .build();
-
-        return userRepository.save(user);
-    }
 }

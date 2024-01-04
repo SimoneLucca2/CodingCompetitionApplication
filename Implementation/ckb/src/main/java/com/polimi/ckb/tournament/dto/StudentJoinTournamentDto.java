@@ -7,10 +7,11 @@ import com.polimi.ckb.tournament.utility.messageValidator.annotation.TournamentI
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Getter
 @StudentInSpecifiedTournament
-public class StudentJoinTournamentDto {
+public class StudentJoinTournamentDto implements Serializable {
 
     @NotBlank(message = "the tournament id cannot be blank")
     @TournamentExists
