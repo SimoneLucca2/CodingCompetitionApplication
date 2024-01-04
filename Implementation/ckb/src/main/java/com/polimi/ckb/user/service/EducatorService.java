@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface EducatorService {
     Optional<Educator> getEducatorById(Long id);
-    Educator addNewEducator(NewUserDto msg);
+    void addNewEducator(NewUserDto msg);
 }

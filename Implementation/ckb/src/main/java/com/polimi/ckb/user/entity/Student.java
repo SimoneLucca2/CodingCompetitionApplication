@@ -2,14 +2,12 @@ package com.polimi.ckb.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Builder
 @NoArgsConstructor
 @DiscriminatorValue("STUDENT")
 @AllArgsConstructor

@@ -1,8 +1,8 @@
 package com.polimi.ckb.user.service.impl;
 
-import com.polimi.ckb.tournament.repository.StudentRepository;
 import com.polimi.ckb.user.dto.NewUserDto;
 import com.polimi.ckb.user.entity.Student;
+import com.polimi.ckb.user.repository.StudentRepository;
 import com.polimi.ckb.user.repository.UserRepository;
 import com.polimi.ckb.user.service.StudentService;
 import lombok.RequiredArgsConstructor;
