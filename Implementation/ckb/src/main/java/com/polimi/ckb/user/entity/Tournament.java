@@ -19,8 +19,8 @@ public class Tournament {
     @Column(name = "tournament_id")
     private Long tournamentId;
 
-    @JoinColumn(name = "creator_id")
-    @OneToOne(mappedBy = "tournamentCreator")
+    @ManyToOne
+    @JoinColumn(name="creator_id")
     private Educator creator;
 
     @ManyToMany

@@ -27,8 +27,9 @@ public class BattleController {
             //TODO: kafka producer
             log.info("Battle created successfully");
             return ResponseEntity.ok(createdBattle);
-        } catch (){
+        } catch (Exception e){
 
         }
+        return null;
     }
 }
