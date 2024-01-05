@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.battleService.dto.CreateBattleDto;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.exception.BattleAlreadyExistException;
+import com.polimi.ckb.battleService.exception.BattleDeadlinesOverlapException;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.kafkaProducer.BattleCreationKafkaProducer;
 import lombok.AllArgsConstructor;
@@ -40,7 +41,7 @@ public class BattleController {
            kafkaProducer.sendBattleCreationMessage(createBattleDto);
            log.info("Battle created successfully");
            return ResponseEntity.ok(createdBattle);
-       } catch (BattleAlreadyExistException e){
+       } catch (BattleAlreadyExistException | BattleDeadlinesOverlapException e){
            log.error("Bad request: {}", e.getMessage());
            return ResponseEntity.badRequest().build();
        } catch (JsonProcessingException e) {

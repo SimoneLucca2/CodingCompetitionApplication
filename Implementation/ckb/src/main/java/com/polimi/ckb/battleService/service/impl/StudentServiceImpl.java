@@ -27,7 +27,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public StudentGroup joinBattle(@Valid StudentJoinBattleDto studentDto) {
-        //TODO: check if student is already in the battle
         Battle battle = battleRepository.findById(studentDto.getBattleId())
                 .orElseThrow(BattleDoesNotExistException::new);
 
@@ -42,20 +41,22 @@ public class StudentServiceImpl implements StudentService {
         }
         //validator for status check so it should be ok
 
-        StudentGroup newStudentGroup = groupRepository.save(StudentGroup.builder()
+        StudentGroup newStudentGroup = StudentGroup.builder()
                 .battle(battle)
                 .score(0)
-                .build());
+                .build();
         newStudentGroup.getStudents().add(student);
         battle.getStudentGroups().add(newStudentGroup);
         student.getStudentGroups().add(newStudentGroup);
 
-        return newStudentGroup;
+        battleRepository.save(battle);
+        studentRepository.save(student);
+        return groupRepository.save(newStudentGroup);
     }
 
     @Transactional
     @Override
-    public void leaveBattle(StudentLeaveBattleDto studentDto) {
+    public StudentGroup leaveBattle(StudentLeaveBattleDto studentDto) {
         Battle battle = battleRepository.findById(studentDto.getBattleId())
                 .orElseThrow(BattleDoesNotExistException::new);
 
@@ -63,10 +64,12 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(StudentDoesNotExistException::new);
 
         List<StudentGroup> registeredGroups = groupRepository.findByBattle(battle);
+        StudentGroup leavingStudentGroup = null;
         boolean check = false;
         for (StudentGroup group : registeredGroups) {
             if (group.getStudents().contains(student)) {
                 check = true;
+                leavingStudentGroup = group;
                 break;
             }
         }
@@ -74,16 +77,40 @@ public class StudentServiceImpl implements StudentService {
             throw new StudentNotRegisteredInBattleException();
         }
 
+        leavingStudentGroup.getStudents().remove(student);
+        student.getStudentGroups().remove(leavingStudentGroup);
+        studentRepository.save(student);
+
         //check battle's status
         switch (battle.getStatus()) {
-            case PRE_BATTLE:
-                break;
-
             case BATTLE:
+                if(leavingStudentGroup.getStudents().size() < battle.getMinGroupSize()) {
+                    for(Student leftStudent : leavingStudentGroup.getStudents()){
+                        //leavingStudentGroup.getStudents().remove(leftStudent);
+                        student.getStudentGroups().remove(leavingStudentGroup);
+                        studentRepository.save(leftStudent);
+                    }
+                } else {
+                    leavingStudentGroup = null;
+                    break;
+                }
+
+                //continue: the next case has also to be executed in order to complete the operation
+            case PRE_BATTLE:
+                if(leavingStudentGroup.getStudents().isEmpty()){
+                    battle.getStudentGroups().remove(leavingStudentGroup);
+                    battleRepository.save(battle);
+                    groupRepository.delete(leavingStudentGroup);
+                } else {
+                    leavingStudentGroup = null;
+                }
                 break;
 
             default:
                 throw new BattleStateTooAdvancedException();
         }
+
+        //if null, group still exists, otherwise it has been deleted but caller needs their ids to tell kafka
+        return leavingStudentGroup;
     }
 }

@@ -8,5 +8,5 @@ public interface StudentService {
 
     StudentGroup joinBattle(StudentJoinBattleDto studentDto);
 
-    void leaveBattle(StudentLeaveBattleDto studentDto);
+    StudentGroup leaveBattle(StudentLeaveBattleDto studentDto);
 }
