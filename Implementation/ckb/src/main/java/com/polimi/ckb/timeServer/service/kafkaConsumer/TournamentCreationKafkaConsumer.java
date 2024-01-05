@@ -22,7 +22,7 @@ public class TournamentCreationKafkaConsumer {
     public void listener(String message) throws JsonProcessingException {
         CreatedTournamentKafkaDto msg = objectMapper.readValue(message, CreatedTournamentKafkaDto.class);
 
-        tournamentCreationTimeService.setTimer(calculateMillisecondsToDeadline(msg.getRegistrationDeadline()), msg.getTournamentId());
+        tournamentCreationTimeService.setTimer(calculateMillisecondsToDeadline(msg.getRegistrationDeadline()), msg);
     }
 
 }

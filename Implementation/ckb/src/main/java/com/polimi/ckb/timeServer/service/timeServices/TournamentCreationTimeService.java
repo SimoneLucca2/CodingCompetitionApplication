@@ -1,7 +1,10 @@
 package com.polimi.ckb.timeServer.service.timeServices;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.polimi.ckb.timeServer.dto.CreatedTournamentKafkaDto;
+import com.polimi.ckb.timeServer.service.kafkaProducer.TournamentActiveKafkaProducer;
+import lombok.RequiredArgsConstructor;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.Executors;
@@ -9,19 +12,20 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@RequiredArgsConstructor
 public class TournamentCreationTimeService {
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(80);
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final TournamentActiveKafkaProducer tournamentActiveKafkaProducer;
 
-    @Autowired
-    public TournamentCreationTimeService(KafkaTemplate<String, String> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
-
-    public void setTimer(long milliseconds, Long tournamentId) {
+    @Retryable
+    public void setTimer(long milliseconds, CreatedTournamentKafkaDto msg) {
         scheduler.schedule(() -> {
-            sendTournamentActiveMessage(tournamentId); //TODO cant autowire from kafka producer
+            try {
+                tournamentActiveKafkaProducer.sendTournamentActiveMessage(msg);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }, milliseconds, TimeUnit.MILLISECONDS);
     }
 }
