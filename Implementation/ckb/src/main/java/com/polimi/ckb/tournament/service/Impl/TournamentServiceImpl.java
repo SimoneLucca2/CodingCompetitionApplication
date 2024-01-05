@@ -1,5 +1,6 @@
 package com.polimi.ckb.tournament.service.Impl;
 
+import com.polimi.ckb.tournament.config.TournamentStatus;
 import com.polimi.ckb.tournament.dto.CreateTournamentDto;
 import com.polimi.ckb.tournament.dto.StudentJoinTournamentDto;
 import com.polimi.ckb.tournament.dto.StudentQuitTournamentDto;
@@ -88,7 +89,7 @@ public class TournamentServiceImpl implements TournamentService {
 
         student.getTournaments().add(tournament);
 
-        return tournament;
+        return tournamentRepository.save(tournament);
     }
 
     @Override @Transactional
@@ -101,7 +102,16 @@ public class TournamentServiceImpl implements TournamentService {
 
         student.getTournaments().remove(tournament);
 
-        return tournament;
+        return tournamentRepository.save(tournament);
+    }
+
+    @Override @Transactional
+    public void updateTournamentStatus(Long tournamentId, TournamentStatus status) {
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new EntityNotFoundException("Tournament not found with id: " + tournamentId));
+
+        tournament.setStatus(status);
+        tournamentRepository.save(tournament);
     }
 
 }
