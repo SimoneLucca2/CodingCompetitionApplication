@@ -30,4 +30,12 @@ public class KafkaConfig {
                 .replicas(1)
                 .build();
     }
+
+    @Bean
+    public NewTopic emailSendingRequestTopic(){
+        return TopicBuilder.name("email.sending.request")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 }
