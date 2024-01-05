@@ -1,6 +1,7 @@
 package com.polimi.ckb.tournament.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.polimi.ckb.timeServer.dto.CreatedTournamentKafkaDto;
 import com.polimi.ckb.tournament.dto.CreateTournamentDto;
 import com.polimi.ckb.tournament.dto.ErrorResponse;
 import com.polimi.ckb.tournament.dto.GetTournamentDto;
@@ -30,7 +31,15 @@ public class TournamentController {
         try {
             log.info("Creating tournament with message: {}", msg);
             Tournament createdTournament = tournamentService.saveTournament(msg);
-            kafkaProducer.sendTournamentCreationMessage(msg);
+
+            CreatedTournamentKafkaDto kafkaMsg = CreatedTournamentKafkaDto.builder()
+                    .creatorId(msg.getCreatorId())
+                    .tournamentId(createdTournament.getTournamentId())
+                    .name(msg.getName())
+                    .registrationDeadline(msg.getRegistrationDeadline())
+                    .build();
+
+            kafkaProducer.sendTournamentCreationMessage(kafkaMsg);
             log.info("Tournament created successfully");
             return ResponseEntity.ok(createdTournament);
         } catch (JsonProcessingException e) {
