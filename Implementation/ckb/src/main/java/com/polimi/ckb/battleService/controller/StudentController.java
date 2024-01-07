@@ -8,7 +8,7 @@ import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.BattleDoesNotExistException;
 import com.polimi.ckb.battleService.exception.StudentDoesNotExistException;
 import com.polimi.ckb.battleService.exception.StudentNotRegisteredInBattleException;
-import com.polimi.ckb.battleService.service.StudentService;
+import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.kafkaProducer.StudentJoinBattleProducer;
 import com.polimi.ckb.battleService.service.kafkaProducer.StudentLeaveBattleProducer;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @Slf4j
 public class StudentController {
-    private final StudentService studentService;
+    private final BattleService battleservice;
     private final StudentJoinBattleProducer studentJoinBattleProducer;
     private final StudentLeaveBattleProducer studentLeaveBattleProducer;
 
@@ -29,7 +29,7 @@ public class StudentController {
     public ResponseEntity<Object> joinBattle(@RequestBody StudentJoinBattleDto studentDto) {
         log.info("A student is trying to join a battle with message: {" + studentDto + "}");
         try {
-            studentService.joinBattle(studentDto);
+            battleservice.joinBattle(studentDto);
             studentJoinBattleProducer.sendStudentJoinsBattleMessage(studentDto);
             log.info("Student joined battle successfully");
             return ResponseEntity.ok().build();
@@ -45,13 +45,13 @@ public class StudentController {
     @DeleteMapping
     public ResponseEntity<Object> leaveBattle(@RequestBody StudentLeaveBattleDto studentDto) {
         log.info("A student is trying to leave a battle with message: {" + studentDto + "}");
-        StudentGroup group = studentService.leaveBattle(studentDto);
+        StudentGroup group = battleservice.leaveBattle(studentDto);
         try {
             studentLeaveBattleProducer.sendStudentLeavesBattleMessage(studentDto);
             log.info("Student left battle successfully");
 
             if (group != null) {
-                log.info("Group does no more satisfy the requirements, sending message to kick students");
+                log.info("Group does no more satisfy the requirements, sending message to kick students from the battle");
                 for (Student student : group.getStudents()) {
                     studentLeaveBattleProducer.sendStudentLeavesBattleMessage(
                             StudentLeaveBattleDto.builder()

@@ -38,7 +38,7 @@ public class Battle {
     private BattleStatus status;
 
     @OneToMany(mappedBy = "groupId")
-    @ToString.Exclude
+    //@ToString.Exclude
     private List<StudentGroup> studentGroups;
 
     private int maxGroupSize;

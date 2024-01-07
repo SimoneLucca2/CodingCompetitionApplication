@@ -4,9 +4,6 @@ import com.polimi.ckb.battleService.dto.StudentJoinBattleDto;
 import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 
-public interface StudentService {
+public interface StudentService extends UserService{
 
-    StudentGroup joinBattle(StudentJoinBattleDto studentDto);
-
-    StudentGroup leaveBattle(StudentLeaveBattleDto studentDto);
 }

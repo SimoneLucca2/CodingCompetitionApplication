@@ -6,7 +6,7 @@ import com.polimi.ckb.battleService.dto.StudentLeavesGroupDto;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 
 public interface GroupService {
-    StudentGroup inviteStudentToGroup(StudentInvitesToGroupDto studentInvitesToGroupDto);
+    void inviteStudentToGroup(StudentInvitesToGroupDto studentInvitesToGroupDto);
     StudentGroup joinGroup(StudentJoinsGroupDto studentJoinsGroupDto);
     StudentGroup leaveGroup(StudentLeavesGroupDto studentLeavesGroupDto);
 }
