@@ -21,6 +21,10 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<User> getUser(@Valid @RequestBody GetUserDto msg) {
-        return ResponseEntity.ok(userService.getUser(msg.getUserId()));
+        try{
+            return ResponseEntity.ok(userService.getUser(msg.getUserId()));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
