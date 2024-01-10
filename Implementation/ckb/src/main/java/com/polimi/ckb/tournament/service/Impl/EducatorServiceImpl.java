@@ -33,7 +33,7 @@ public class EducatorServiceImpl implements EducatorService {
      * @throws EducatorAlreadyPresentException if the Educator is already part of the Tournament.
      */
     @Override
-    public Educator addEducatorToTournament(AddEducatorDto message) {
+    public Tournament addEducatorToTournament(AddEducatorDto message) {
         Tournament tournament = getTournamentById(message.getTournamentId());
 
         //The educator must exist in the database
@@ -45,7 +45,7 @@ public class EducatorServiceImpl implements EducatorService {
         // add educator to tournament and save
         tournament.getOrganizers().add(educator);
         tournamentRepository.save(tournament);
-        return educator;
+        return tournament;
     }
 
     @Override
