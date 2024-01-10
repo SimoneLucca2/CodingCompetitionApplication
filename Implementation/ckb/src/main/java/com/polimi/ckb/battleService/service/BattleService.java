@@ -8,7 +8,7 @@ import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.BattleAlreadyExistException;
 
 public interface BattleService {
-    Battle saveBattle(CreateBattleDto msg) throws BattleAlreadyExistException;
+    Battle createBattle(CreateBattleDto msg) throws BattleAlreadyExistException;
 
     StudentGroup joinBattle(StudentJoinBattleDto studentDto);
 

@@ -29,7 +29,7 @@ public class BattleServiceImpl implements BattleService {
     private final StudentRepository studentRepository;
 
     @Transactional
-    public Battle saveBattle(CreateBattleDto createBattleDto) throws RuntimeException {
+    public Battle createBattle(CreateBattleDto createBattleDto) throws RuntimeException {
         List<Battle> battleWithinSameTournament = battleRepository.findByTournamentId(createBattleDto.getTournamentId());
 
         //TODO: check the existence of the creator and of the tournament with HTTP request to TournamentService
@@ -71,7 +71,7 @@ public class BattleServiceImpl implements BattleService {
                 .submissionDeadline(createBattleDto.getSubmissionDeadline())
                 .status(BattleStatus.PRE_BATTLE)
                 .creatorId(educatorRepository
-                        .findById(createBattleDto.getCreatorId())
+                        .findById(createBattleDto.getCreatorId().getEducatorId())
                         .orElseThrow(() -> new RuntimeException("Educator not found")))
                 .tournamentId(createBattleDto.getTournamentId())
                 .maxGroupSize(createBattleDto.getMaxGroupSize())
@@ -103,9 +103,10 @@ public class BattleServiceImpl implements BattleService {
         battle.getStudentGroups().add(newStudentGroup);
         student.getStudentGroups().add(newStudentGroup);
 
+        newStudentGroup = groupRepository.save(newStudentGroup);
         battleRepository.save(battle);
         studentRepository.save(student);
-        return groupRepository.save(newStudentGroup);
+        return newStudentGroup;
     }
 
     @Transactional
@@ -155,6 +156,7 @@ public class BattleServiceImpl implements BattleService {
                     battle.getStudentGroups().remove(leavingStudentGroup);
                     battleRepository.save(battle);
                     groupRepository.delete(leavingStudentGroup);
+                    leavingStudentGroup = null;
                 } else {
                     leavingStudentGroup = null;
                 }

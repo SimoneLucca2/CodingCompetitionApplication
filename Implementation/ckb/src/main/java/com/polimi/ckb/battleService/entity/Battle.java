@@ -4,16 +4,34 @@ import com.polimi.ckb.battleService.config.BattleStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Battle {
+
+    @Builder
+    public Battle(Long battleId, String name, String description, Educator creatorId, String registrationDeadline, String submissionDeadline, String repoLink, Long tournamentId, BattleStatus status, List<StudentGroup> studentGroups, int maxGroupSize, int minGroupSize) {
+        this.battleId = battleId;
+        this.name = name;
+        this.description = description;
+        this.creatorId = creatorId;
+        this.registrationDeadline = registrationDeadline;
+        this.submissionDeadline = submissionDeadline;
+        this.repoLink = repoLink;
+        this.tournamentId = tournamentId;
+        this.status = status;
+        this.studentGroups = studentGroups == null ? new ArrayList<>() : studentGroups;
+        this.maxGroupSize = maxGroupSize;
+        this.minGroupSize = minGroupSize;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "battle_id")
@@ -39,7 +57,7 @@ public class Battle {
 
     @OneToMany(mappedBy = "groupId")
     //@ToString.Exclude
-    private List<StudentGroup> studentGroups;
+    private List<StudentGroup> studentGroups = new ArrayList<>();
 
     private int maxGroupSize;
 
