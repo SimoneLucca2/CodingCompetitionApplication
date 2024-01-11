@@ -1,9 +1,11 @@
 package com.polimi.ckb.tournament.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.polimi.ckb.timeServer.dto.CreatedTournamentKafkaDto;
 import com.polimi.ckb.tournament.dto.CreateTournamentDto;
 import com.polimi.ckb.tournament.dto.ErrorResponse;
 import com.polimi.ckb.tournament.dto.GetTournamentDto;
+import com.polimi.ckb.tournament.dto.TournamentDto;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.service.TournamentService;
 import com.polimi.ckb.tournament.service.kafkaProducer.TournamentCreationKafkaProducer;
@@ -30,9 +32,17 @@ public class TournamentController {
         try {
             log.info("Creating tournament with message: {}", msg);
             Tournament createdTournament = tournamentService.saveTournament(msg);
-            kafkaProducer.sendTournamentCreationMessage(msg);
+
+            CreatedTournamentKafkaDto kafkaMsg = CreatedTournamentKafkaDto.builder()
+                    .creatorId(msg.getCreatorId())
+                    .tournamentId(createdTournament.getTournamentId())
+                    .name(msg.getName())
+                    .registrationDeadline(msg.getRegistrationDeadline())
+                    .build();
+
+            kafkaProducer.sendTournamentCreationMessage(kafkaMsg);
             log.info("Tournament created successfully");
-            return ResponseEntity.ok(createdTournament);
+            return ResponseEntity.ok(TournamentDto.fromEntity(createdTournament));
         } catch (JsonProcessingException e) {
             log.error("Error processing JSON: {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
@@ -48,7 +58,7 @@ public class TournamentController {
             log.info("Getting tournament with id: {}", msg.getTournamentId());
             Tournament tournament = tournamentService.getTournament(msg.getTournamentId());
             log.info("Tournament retrieved successfully");
-            return ResponseEntity.ok(tournament);
+            return ResponseEntity.ok(TournamentDto.fromEntity(tournament));
         } catch (Exception e) {
             log.error("Internal server error: {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));

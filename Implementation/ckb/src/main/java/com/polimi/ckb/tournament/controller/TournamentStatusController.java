@@ -1,6 +1,7 @@
 package com.polimi.ckb.tournament.controller;
 
 import com.polimi.ckb.tournament.dto.ChangeTournamentStatusDto;
+import com.polimi.ckb.tournament.dto.TournamentDto;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.service.TournamentStatusService;
 import com.polimi.ckb.tournament.service.kafkaProducer.TournamentStatusKafkaProducer;
@@ -32,7 +33,7 @@ public class TournamentStatusController {
         try{
             Tournament createdTournament = tournamentStatusService.updateTournamentStatus(msg);
             kafkaProducer.sendTournamentMessage(msg);
-            return ResponseEntity.ok(createdTournament);
+            return ResponseEntity.ok(TournamentDto.fromEntity(createdTournament));
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }

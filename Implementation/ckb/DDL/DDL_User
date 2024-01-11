@@ -1,0 +1,81 @@
+create table userschema.educator
+(
+    id bigint not null
+        primary key
+);
+
+create table userschema.tournament
+(
+    tournament_id bigint auto_increment
+        primary key,
+    creator_id    bigint null,
+    constraint FKb5a6vu3fkwy1kn3m7q9cig2ul
+        foreign key (creator_id) references userschema.educator (id)
+);
+
+create table userschema.battle
+(
+    id            bigint not null
+        primary key,
+    tournament_id bigint null,
+    battle_id     bigint not null,
+    creator_id    bigint null,
+    constraint FK23u9rcvgbduk6rdvo7vx9txs1
+        foreign key (tournament_id) references userschema.tournament (tournament_id),
+    constraint FKqj997cjbgkt5syiggrsdbxvnn
+        foreign key (creator_id) references userschema.educator (id)
+);
+
+create table userschema.tournament_organizers
+(
+    educator_id   bigint not null,
+    tournament_id bigint not null,
+    constraint fk_touorg_on_educator
+        foreign key (educator_id) references userschema.educator (id),
+    constraint fk_touorg_on_tournament
+        foreign key (tournament_id) references userschema.tournament (tournament_id)
+);
+
+create table userschema.user
+(
+    id        bigint       not null
+        primary key,
+    user_type varchar(31)  not null,
+    email     varchar(255) null,
+    name      varchar(255) null
+);
+
+create table userschema.student
+(
+    id bigint not null
+        primary key,
+    constraint student_ibfk_1
+        foreign key (id) references userschema.user (id)
+            on update cascade on delete cascade
+);
+
+create table userschema.battle_participants
+(
+    student_id bigint not null,
+    battle_id  bigint not null,
+    primary key (student_id, battle_id),
+    constraint battle_participants_ibfk_1
+        foreign key (student_id) references userschema.student (id),
+    constraint battle_participants_ibfk_2
+        foreign key (battle_id) references userschema.battle (id)
+);
+
+create index battle_id
+    on userschema.battle_participants (battle_id);
+
+create table userschema.tournament_participants
+(
+    tournament_id bigint not null,
+    student_id    bigint not null,
+    primary key (tournament_id, student_id),
+    constraint FK303bmjl2f5mfposkq9skhvgig
+        foreign key (student_id) references userschema.student (id),
+    constraint FKm6fygd5qbfxt864lymxlgng43
+        foreign key (tournament_id) references userschema.tournament (tournament_id)
+);
+
