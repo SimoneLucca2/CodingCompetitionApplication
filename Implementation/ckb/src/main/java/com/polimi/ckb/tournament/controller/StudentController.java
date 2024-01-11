@@ -2,6 +2,7 @@ package com.polimi.ckb.tournament.controller;
 
 import com.polimi.ckb.tournament.dto.StudentJoinTournamentDto;
 import com.polimi.ckb.tournament.dto.StudentQuitTournamentDto;
+import com.polimi.ckb.tournament.dto.TournamentDto;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.service.TournamentService;
 import com.polimi.ckb.tournament.service.kafkaProducer.StudentJoinTournamentKafkaProducer;
@@ -26,7 +27,7 @@ public class StudentController {
         try {
             Tournament tournament = tournamentService.joinTournament(msg);
             joinKafkaProducer.sendStudentJoinMessage(msg);
-            return ResponseEntity.ok(tournament);
+            return ResponseEntity.ok(TournamentDto.fromEntity(tournament));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
@@ -37,7 +38,7 @@ public class StudentController {
         try {
             Tournament tournament = tournamentService.leaveTournament(msg);
             quitKafkaProducer.sendStudentQuitMessage(msg);
-            return ResponseEntity.ok(tournament);
+            return ResponseEntity.ok(TournamentDto.fromEntity(tournament));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }

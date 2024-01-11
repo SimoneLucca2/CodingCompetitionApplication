@@ -1,6 +1,7 @@
 package com.polimi.ckb.tournament.controller;
 
 import com.polimi.ckb.tournament.dto.AddEducatorDto;
+import com.polimi.ckb.tournament.dto.TournamentDto;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.service.EducatorService;
 import com.polimi.ckb.tournament.service.kafkaProducer.AddEducatorKafkaProducer;
@@ -34,7 +35,7 @@ public class EducatorController {
         try {
             Tournament response = educatorService.addEducatorToTournament(msg);
             kafkaProducer.sendAddedEducatorMessage(msg);
-            return ResponseEntity.ok(response); //TODO debug
+            return ResponseEntity.ok(TournamentDto.fromEntity(response)); //TODO debug
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
