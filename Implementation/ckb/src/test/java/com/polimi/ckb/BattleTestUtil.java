@@ -1,5 +1,6 @@
 package com.polimi.ckb;
 
+import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.Educator;
 import com.polimi.ckb.battleService.entity.Student;
@@ -12,6 +13,18 @@ public final class BattleTestUtil {
     public static Battle createTestBattle(){
         return Battle.builder()
                 .battleId(4L)
+                .name("Test Battle")
+                .description("Test Battle Description")
+                .maxGroupSize(5)
+                .minGroupSize(1)
+                .registrationDeadline("2024-01-20")
+                .submissionDeadline("2024-01-30")
+                .tournamentId(10L)
+                .build();
+    }
+
+    public static CreateBattleDto createTestBattleDto(){
+        return CreateBattleDto.builder()
                 .name("Test Battle")
                 .description("Test Battle Description")
                 .maxGroupSize(5)
@@ -35,14 +48,20 @@ public final class BattleTestUtil {
                 .build();
     }
 
-    public static Educator createTestEducator(){
-        return Educator.builder()
+    public static EducatorDto createTestEducatorDto(){
+        return EducatorDto.builder()
                 .educatorId(1L)
                 .build();
     }
 
-    public static Student createTestStudent(){
-        return Student.builder()
+    public static StudentJoinBattleDto createTestStudentJoinBattleDto(){
+        return StudentJoinBattleDto.builder()
+                .studentId(2L)
+                .build();
+    }
+
+    public static StudentLeaveBattleDto createTestStudentQuitBattleDto(){
+        return StudentLeaveBattleDto.builder()
                 .studentId(2L)
                 .build();
     }

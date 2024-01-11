@@ -3,16 +3,22 @@ package com.polimi.ckb.battleService.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @Builder
 public class Student {
+    @Builder
+    public Student(Long studentId, List<StudentGroup> studentGroups) {
+        this.studentId = studentId;
+        this.studentGroups = studentGroups == null ? new ArrayList<>() : studentGroups;
+    }
+
     @Id
     @Column(name = "student_id")
     private Long studentId;

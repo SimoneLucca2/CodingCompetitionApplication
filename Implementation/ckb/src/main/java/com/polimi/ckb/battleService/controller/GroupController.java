@@ -49,6 +49,7 @@ public class GroupController {
         log.info("A student is trying to join a group with message: {" + studentDto + "}");
         try {
             groupService.joinGroup(studentDto);
+            log.info("Student joined group successfully");
             return ResponseEntity.ok().build();
         } catch (BattleStateTooAdvancedException | GroupIsFullException | StudentAlreadyInAnotherGroupException e) {
             log.error("Bad request: {}", e.getMessage());

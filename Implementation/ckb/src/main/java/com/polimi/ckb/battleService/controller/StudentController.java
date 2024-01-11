@@ -6,6 +6,7 @@ import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.BattleDoesNotExistException;
+import com.polimi.ckb.battleService.exception.BattleStateTooAdvancedException;
 import com.polimi.ckb.battleService.exception.StudentDoesNotExistException;
 import com.polimi.ckb.battleService.exception.StudentNotRegisteredInBattleException;
 import com.polimi.ckb.battleService.service.BattleService;
@@ -33,7 +34,7 @@ public class StudentController {
             studentJoinBattleProducer.sendStudentJoinsBattleMessage(studentDto);
             log.info("Student joined battle successfully");
             return ResponseEntity.ok().build();
-        } catch (StudentDoesNotExistException | BattleDoesNotExistException e) {
+        } catch (StudentDoesNotExistException | BattleDoesNotExistException | BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().build();
         } catch (JsonProcessingException e) {
@@ -45,8 +46,9 @@ public class StudentController {
     @DeleteMapping
     public ResponseEntity<Object> leaveBattle(@RequestBody StudentLeaveBattleDto studentDto) {
         log.info("A student is trying to leave a battle with message: {" + studentDto + "}");
-        StudentGroup group = battleservice.leaveBattle(studentDto);
+        StudentGroup group;
         try {
+            group = battleservice.leaveBattle(studentDto);
             studentLeaveBattleProducer.sendStudentLeavesBattleMessage(studentDto);
             log.info("Student left battle successfully");
 
@@ -63,7 +65,7 @@ public class StudentController {
                 log.info("All students correctly kicked from the battle");
             }
             return ResponseEntity.ok().build();
-        } catch (StudentDoesNotExistException | BattleDoesNotExistException | StudentNotRegisteredInBattleException e) {
+        } catch (StudentDoesNotExistException | BattleDoesNotExistException | StudentNotRegisteredInBattleException | BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().build();
         } catch (JsonProcessingException e) {

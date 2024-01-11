@@ -84,6 +84,10 @@ public class BattleServiceImpl implements BattleService {
         Battle battle = battleRepository.findById(studentDto.getBattleId())
                 .orElseThrow(BattleDoesNotExistException::new);
 
+        if(battle.getStatus() != BattleStatus.PRE_BATTLE){
+            throw new BattleStateTooAdvancedException();
+        }
+
         Student student = studentRepository.findById(studentDto.getStudentId())
                 .orElseThrow(StudentDoesNotExistException::new);
 

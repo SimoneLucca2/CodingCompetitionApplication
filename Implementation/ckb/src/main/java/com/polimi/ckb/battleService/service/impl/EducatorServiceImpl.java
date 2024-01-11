@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class EducatorServiceImpl implements EducatorService {
+
     private final EducatorRepository educatorRepository;
     @Override
     public void addNewUser(NewUserDto newUserDto) {
