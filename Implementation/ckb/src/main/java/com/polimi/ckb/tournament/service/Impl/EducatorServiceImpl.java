@@ -54,9 +54,8 @@ public class EducatorServiceImpl implements EducatorService {
     }
 
     private Tournament getTournamentById(Long id) {
-        Optional<Tournament> optionalTournament = tournamentRepository.findById(id);
-        if(optionalTournament.isEmpty()) throw new TournamentNotFoundException();
-        return optionalTournament.get();
+        return tournamentRepository.findById(id)
+                .orElseThrow(TournamentNotFoundException::new);
     }
 
     private Educator getEducatorById(Long id) {

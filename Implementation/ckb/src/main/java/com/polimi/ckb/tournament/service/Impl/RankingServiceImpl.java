@@ -3,6 +3,7 @@ package com.polimi.ckb.tournament.service.Impl;
 import com.polimi.ckb.tournament.dto.RankingEntryDto;
 import com.polimi.ckb.tournament.entity.Score;
 import com.polimi.ckb.tournament.entity.Tournament;
+import com.polimi.ckb.tournament.exception.TournamentNotFoundException;
 import com.polimi.ckb.tournament.repository.ScoreRepository;
 import com.polimi.ckb.tournament.repository.TournamentRepository;
 import com.polimi.ckb.tournament.service.RankingService;
@@ -26,7 +27,7 @@ public class RankingServiceImpl implements RankingService {
         if(lastIndex == null) lastIndex = Integer.MAX_VALUE;
 
         Tournament tournament = tournamentRepository.findById(tournamentId)
-                .orElseThrow(() -> new RuntimeException("Tournament not found"));
+                .orElseThrow(TournamentNotFoundException::new);
 
         List<Score> scores = scoreRepository.findByTournament(tournament);
 
