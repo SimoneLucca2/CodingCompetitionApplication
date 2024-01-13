@@ -1,7 +1,8 @@
 package com.polimi.ckb.timeServer.dto;
 
-import com.polimi.ckb.tournament.config.TournamentStatus;
-import com.polimi.ckb.tournament.utility.messageValidator.annotation.ValidRegistrationDeadline;
+
+import com.polimi.ckb.timeServer.config.TournamentStatus;
+import com.polimi.ckb.timeServer.utility.messageValidator.annotations.ValidRegistrationDeadline;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
