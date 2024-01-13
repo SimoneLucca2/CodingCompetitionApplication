@@ -1,3 +1,5 @@
+
+
 spring:
   cloud:
     gateway:
@@ -20,3 +22,5 @@ logging:
   level:
     root: WARN
     com.polimi.ckb.battleService: DEBUG
+server:
+  port: 8080
