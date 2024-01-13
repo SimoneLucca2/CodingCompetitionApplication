@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ac8a940f-5571-4700-a9fa-a6541f0a2bf0" name="Changes" comment="Other test for creating, joining and leaving battles">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kafka/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qodana.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/apiGateway/ApiGatewayStarter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/BattleStarter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/config/BattleStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/config/KafkaConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/config/KafkaConsumerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/config/KafkaProducerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/config/RestTemplateConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/controller/BattleController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/controller/GroupController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/controller/StudentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/CreateBattleDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/CreateGroupDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/EducatorDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/NewUserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/StudentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/StudentInvitesToGroupDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/StudentJoinBattleDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/StudentJoinsGroupDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/StudentLeaveBattleDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/dto/StudentLeavesGroupDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/entity/Battle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/entity/Educator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/entity/Student.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/entity/StudentGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/BattleAlreadyExistException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/BattleDeadlinesOverlapException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/BattleDoesNotExistException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/BattleRegistrationDeadlineExpiredException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/BattleStateTooAdvancedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/GroupIsFullException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/StudentAlreadyInAnotherGroupException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/StudentAlreadyRegisteredToBattleException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/StudentDoesNotExistException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/StudentNotMemberOfGroupException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/exception/StudentNotRegisteredInBattleException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/mapper/Mapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/mapper/impl/BattleMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/repository/BattleRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/repository/EducatorRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/repository/GroupRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/repository/StudentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/BattleService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/EducatorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/GroupService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/KafkaConsumer/AddUserKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/StudentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/impl/BattleServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/impl/EducatorServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/impl/GroupServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/impl/StudentServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/kafkaProducer/BattleCreationKafkaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/kafkaProducer/EmailSendingRequestKafkaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/kafkaProducer/StudentJoinBattleProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/service/kafkaProducer/StudentLeaveBattleProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/entityConverter/EntityConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/BattleExistsValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/BattleInPreBattleStateValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/EducatorExistsValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/GroupExistsValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/StudentExistsValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/annotation/BattleExists.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/annotation/BattleInPreBattleState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/annotation/EducatorExists.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/annotation/GroupExists.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/battleService/utility/messageValidator/annotation/StudentExists.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/timeServer/config/KafkaConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/timeServer/config/KafkaConsumerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/timeServer/config/KafkaProducerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/timeServer/dto/ChangeTournamentStatusDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/timeServer/dto/CreatedTournamentKafkaDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/timeServer/service/kafkaConsumer/TournamentCreationKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/timeServer/service/kafkaProducer/TournamentActiveKafkaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/timeServer/service/timeServices/TournamentCreationTimeService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/timeServer/utility/TimeTypeConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/TournamentStarter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/config/KafkaConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/config/KafkaConsumerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/config/KafkaProducerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/config/RestTemplateConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/config/TournamentStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/controller/EducatorController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/controller/StudentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/controller/TournamentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/controller/TournamentRankingController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/controller/TournamentStatusController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/AddEducatorDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/ChangeTournamentStatusDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/CreateTournamentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/CreatedTournamentKafkaDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/GetTournamentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/GetTournamentRankingDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/InternalChangeTournamentStatusDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/NewUserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/RankingEntryDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/StudentJoinTournamentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/StudentQuitTournamentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/TournamentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/dto/UpdateStudentScoreInTournamentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/entity/Educator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/entity/Score.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/entity/ScoreId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/entity/Student.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/entity/Tournament.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/exception/EducatorAlreadyPresentException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/exception/EducatorNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/exception/TournamentAlreadyExistException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/exception/TournamentNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/repository/EducatorRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/repository/ScoreRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/repository/StudentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/repository/TournamentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/EducatorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/Impl/EducatorServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/Impl/RankingServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/Impl/StudentServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/Impl/TournamentServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/Impl/TournamentStatusServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/RankingService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/StudentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/TournamentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/TournamentStatusService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/kafkaConsumer/ActivateTournamentKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/kafkaConsumer/AddUserKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/kafkaConsumer/CloseTournamentKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/kafkaConsumer/UpdateTournamentScoreKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/AddEducatorKafkaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentJoinTournamentKafkaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentQuitTournamentKafkaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/TournamentCreationKafkaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/TournamentStatusKafkaProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/entityConverter/CreateTournamentDtoToTournament.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/entityConverter/EntityConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/entityConverter/NewUserDtoToUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/IsCreatorValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/RegistrationDeadlineValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/StudentExistsValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/StudentInSpecifiedTournamentValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/TournamentExistsValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/TournamentInPrepareStateValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/annotation/IsCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/annotation/StudentExists.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/annotation/StudentInSpecifiedTournament.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/annotation/TournamentExists.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/annotation/TournamentInPrepareState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/messageValidator/annotation/ValidRegistrationDeadline.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/tournament/utility/score/InitScore.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/UserStarter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/config/KafkaConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/config/KafkaConsumerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/config/KafkaProducerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/config/RestTemplateConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/dto/EmailDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/dto/GetUserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/dto/NewTournamentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/dto/NewUserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/dto/StudentJoinTournamentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/dto/StudentQuitsTournamentDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/entity/Battle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/entity/Educator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/entity/Student.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/entity/Tournament.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/repository/EducatorRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/repository/StudentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/repository/TournamentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/EducatorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/EmailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/StudentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/TournamentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/impl/EducatorServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/impl/EmailServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/impl/StudentServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/impl/TournamentServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/impl/UserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/kafkaConsumer/EmailRequestKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/kafkaConsumer/NewTournamentKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/kafkaConsumer/NewUserKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/kafkaConsumer/StudentJoinTournamentKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/service/kafkaConsumer/StudentQuitsTournamentKafkaConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/utility/UserType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/utility/entityConverter/EntityConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/polimi/ckb/user/utility/entityConverter/NewTournamentDtoToTournament.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/banner.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/polimi/ckb/BattleTestUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/polimi/ckb/battleService/controller/BattleControllerTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="battle" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MarcoF17&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="SimoneLucca2" />
+        <option name="repository" value="FeraboliFilippiniLucca" />
+      </RepoCoordinatesHolder>
+    </option>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="346f4bf4-0f35-408a-8d88-22c2dad9242a" />
+        <option name="url" value="https://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@github.com/SimoneLucca2/FeraboliFilippiniLucca" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2aGtAxDcLQTP7zKPjRnIAjXeGWk" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.Kafka: Compose Deployment.executor": "Run",
+    "JUnit.BattleControllerTest.executor": "Run",
+    "JUnit.BattleControllerTest.testThatBattleCanBeCreated.executor": "Run",
+    "JUnit.BattleControllerTest.testThatBattleWithTheSameNameCannotBeCreatedInTheSameTournament.executor": "Run",
+    "JUnit.BattleControllerTest.testThatDeadlinesAreGivenInTheRightOrder.executor": "Run",
+    "JUnit.BattleControllerTest.testThatGroupConstraintsCheckingSystemWorksFine.executor": "Run",
+    "JUnit.BattleControllerTest.testThatOverlappingBattlesCannotBeCreated.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCanJoinABattleBeforeTheDeadline.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCanJoinAnotherGroupIfBattleStatusIsPreBattle.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCanLeaveABattleIfNotRegistered.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCanLeaveABattleIfRegisteredAndClosed.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCanLeaveABattleIfRegisteredAndClosedOrConsolidating.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCanLeaveABattleIfRegisteredAndNotClosed.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCanLeaveABattleIfRegisteredAndStateIsBattle.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCanLeaveABattleIfRegisteredAndStateIsClosed.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCanLeaveABattleIfRegisteredAndStateIsConsolidation.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCannotJoinABattleAfterRegistrationDeadlineHasExpired.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCannotJoinAnotherGroupIfBattleStatusIsNotPreBattle.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCannotJoinAnotherGroupIfItIsFull.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCannotLeaveABattleIfNotRegistered.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentCannotLeaveABattleIfRegisteredAndStateIsClosed.executor": "Run",
+    "JUnit.BattleControllerTest.testThatStudentsCanInviteOtherStudentsInGroupIfBattleNotStarted.executor": "Run",
+    "JUnit.CkbApplicationTests.executor": "Run",
+    "Maven.ckb [clean].executor": "Run",
+    "Maven.ckb [compile].executor": "Run",
+    "Maven.ckb [test].executor": "Run",
+    "Maven.ckb [validate].executor": "Run",
+    "Node.js.App.js.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.BattleStarter.executor": "Run",
+    "Spring Boot.TournamentStarter.executor": "Run",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/marcolino/Documenti/FeraboliFilippiniLucca/Implementation/ckb/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.BattleControllerTest">
+    <configuration name="BattleControllerTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="ckb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.polimi.ckb.battleService.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.polimi.ckb.battleService.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.polimi.ckb.battleService.controller.BattleControllerTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CkbApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ckb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.polimi.ckb.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.polimi.ckb" />
+      <option name="MAIN_CLASS_NAME" value="com.polimi.ckb.CkbApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BattleStarter" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ckb" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.polimi.ckb.battleService.BattleStarter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.polimi.ckb.battleService.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TournamentStarter" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="ckb" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.polimi.ckb.tournament.TournamentStarter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.polimi.ckb.tournament.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.BattleControllerTest" />
+      <item itemvalue="JUnit.CkbApplicationTests" />
+      <item itemvalue="Spring Boot.BattleStarter" />
+      <item itemvalue="Spring Boot.TournamentStarter" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.TournamentStarter" />
+        <item itemvalue="JUnit.CkbApplicationTests" />
+        <item itemvalue="Spring Boot.TournamentStarter" />
+        <item itemvalue="JUnit.CkbApplicationTests" />
+        <item itemvalue="Spring Boot.TournamentStarter" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-20.0.2-corretto-20.0.2.1-f644763e9732-05769f21" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ac8a940f-5571-4700-a9fa-a6541f0a2bf0" name="Changes" comment="" />
+      <created>1703956604008</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1703956604008</updated>
+      <workItem from="1703956605017" duration="205000" />
+      <workItem from="1703956981885" duration="52000" />
+      <workItem from="1704231716792" duration="591000" />
+      <workItem from="1704233406195" duration="1719000" />
+      <workItem from="1704289869901" duration="8244000" />
+      <workItem from="1704475252378" duration="479000" />
+      <workItem from="1704635339054" duration="41000" />
+      <workItem from="1704635391739" duration="5803000" />
+      <workItem from="1704731329708" duration="1351000" />
+      <workItem from="1704733004592" duration="633000" />
+      <workItem from="1704819200802" duration="45000" />
+      <workItem from="1704819258379" duration="799000" />
+      <workItem from="1704892190824" duration="9690000" />
+      <workItem from="1704904246098" duration="73000" />
+      <workItem from="1704969928712" duration="139000" />
+      <workItem from="1704970269104" duration="6855000" />
+      <workItem from="1704983629567" duration="2134000" />
+      <workItem from="1705048700419" duration="234000" />
+      <workItem from="1705055853299" duration="171000" />
+      <workItem from="1705078376983" duration="871000" />
+      <workItem from="1705079387988" duration="105000" />
+      <workItem from="1705159206218" duration="1509000" />
+      <workItem from="1705164126574" duration="424000" />
+      <workItem from="1705164773540" duration="1675000" />
+    </task>
+    <task id="LOCAL-00001" summary="New CKB banner and tests for creating, joining and leaving battles">
+      <option name="closed" value="true" />
+      <created>1704901996652</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1704901996652</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Other test for creating, joining and leaving battles">
+      <option name="closed" value="true" />
+      <created>1704987859426</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1704987859426</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="battle" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="New CKB banner and tests for creating, joining and leaving battles" />
+    <MESSAGE value="Other test for creating, joining and leaving battles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Other test for creating, joining and leaving battles" />
+  </component>
+</project>
