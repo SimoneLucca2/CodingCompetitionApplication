@@ -1,5 +1,6 @@
 package com.polimi.ckb.battleService.service;
 
+import com.polimi.ckb.battleService.dto.ChangeBattleStatusDto;
 import com.polimi.ckb.battleService.dto.CreateBattleDto;
 import com.polimi.ckb.battleService.dto.StudentJoinBattleDto;
 import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
@@ -13,4 +14,6 @@ public interface BattleService {
     StudentGroup joinBattle(StudentJoinBattleDto studentDto);
 
     StudentGroup leaveBattle(StudentLeaveBattleDto studentDto);
+
+    Battle changeBattleStatus(ChangeBattleStatusDto changeBattleStatusDto);
 }

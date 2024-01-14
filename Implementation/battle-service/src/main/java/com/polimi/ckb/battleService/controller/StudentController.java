@@ -1,6 +1,7 @@
 package com.polimi.ckb.battleService.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.polimi.ckb.battleService.dto.ErrorResponse;
 import com.polimi.ckb.battleService.dto.StudentJoinBattleDto;
 import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
 import com.polimi.ckb.battleService.entity.Student;
@@ -30,16 +31,16 @@ public class StudentController {
     public ResponseEntity<Object> joinBattle(@RequestBody StudentJoinBattleDto studentDto) {
         log.info("A student is trying to join a battle with message: {" + studentDto + "}");
         try {
-            battleservice.joinBattle(studentDto);
+            StudentGroup group = battleservice.joinBattle(studentDto);
             studentJoinBattleProducer.sendStudentJoinsBattleMessage(studentDto);
             log.info("Student joined battle successfully");
             return ResponseEntity.ok().build();
         } catch (StudentDoesNotExistException | BattleDoesNotExistException | BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         } catch (JsonProcessingException e) {
             log.error("Error processing JSON: {}", e.getMessage());
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
         }
     }
 
@@ -67,10 +68,10 @@ public class StudentController {
             return ResponseEntity.ok().build();
         } catch (StudentDoesNotExistException | BattleDoesNotExistException | StudentNotRegisteredInBattleException | BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         } catch (JsonProcessingException e) {
             log.error("Error processing JSON: {}", e.getMessage());
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
         }
     }
 }
