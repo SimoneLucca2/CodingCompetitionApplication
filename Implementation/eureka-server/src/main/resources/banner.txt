@@ -1,0 +1,16 @@
+        CCCCCCCCCCCCKKKKKKKKK    KKKKKKBBBBBBBBBBBBBBBBB   
+     CCC::::::::::::K:::::::K    K:::::B::::::::::::::::B  
+   CC:::::::::::::::K:::::::K    K:::::B::::::BBBBBB:::::B 
+  C:::::CCCCCCCC::::K:::::::K   K::::::BB:::::B     B:::::B
+ C:::::C       CCCCCKK::::::K  K:::::KKK B::::B     B:::::B
+C:::::C               K:::::K K:::::K    B::::B     B:::::B
+C:::::C               K::::::K:::::K     B::::BBBBBB:::::B 
+C:::::C               K:::::::::::K      B:::::::::::::BB  
+C:::::C               K:::::::::::K      B::::BBBBBB:::::B 
+C:::::C               K::::::K:::::K     B::::B     B:::::B
+C:::::C               K:::::K K:::::K    B::::B     B:::::B
+ C:::::C       CCCCCKK::::::K  K:::::KKK B::::B     B:::::B
+  C:::::CCCCCCCC::::K:::::::K   K::::::BB:::::BBBBBB::::::B
+   CC:::::::::::::::K:::::::K    K:::::B:::::::::::::::::B 
+     CCC::::::::::::K:::::::K    K:::::B::::::::::::::::B  
+        CCCCCCCCCCCCKKKKKKKKK    KKKKKKBBBBBBBBBBBBBBBBB   

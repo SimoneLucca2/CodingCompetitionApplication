@@ -1,6 +1,7 @@
 package com.polimi.ckb.battleService.service.impl;
 
 import com.polimi.ckb.battleService.config.BattleStatus;
+import com.polimi.ckb.battleService.dto.ChangeBattleStatusDto;
 import com.polimi.ckb.battleService.dto.CreateBattleDto;
 import com.polimi.ckb.battleService.dto.StudentJoinBattleDto;
 import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
@@ -172,5 +173,42 @@ public class BattleServiceImpl implements BattleService {
 
         //if null, group still exists, otherwise it has been deleted but caller needs their ids to tell kafka
         return leavingStudentGroup;
+    }
+
+    @Override
+    public Battle changeBattleStatus(ChangeBattleStatusDto changeBattleStatusDto) {
+        Battle battle = battleRepository.findById(changeBattleStatusDto.getBattleId())
+                .orElseThrow(BattleDoesNotExistException::new);
+
+        switch(battle.getStatus()){
+            case PRE_BATTLE:
+                if(changeBattleStatusDto.getStatus().equals(BattleStatus.BATTLE)){
+                    battle.setStatus(BattleStatus.BATTLE);
+                    //TODO: check group constraints
+                } else {
+                    throw new BattleChangingStatusException("Cannot switch from PRE_BATTLE to " + changeBattleStatusDto.getStatus());
+                }
+                break;
+
+            case BATTLE:
+                if(changeBattleStatusDto.getStatus().equals(BattleStatus.CONSOLIDATION))
+                    battle.setStatus(BattleStatus.CONSOLIDATION);
+                //TODO: code evaluation and score update
+                else
+                    throw new BattleChangingStatusException("Cannot switch from BATTLE to " + changeBattleStatusDto.getStatus());
+                break;
+
+            case CONSOLIDATION:
+                if(changeBattleStatusDto.getStatus().equals(BattleStatus.CLOSED))
+                    battle.setStatus(BattleStatus.CLOSED);
+                //TODO: idk
+                else
+                    throw new BattleChangingStatusException("Cannot switch from CONSOLIDATION to " + changeBattleStatusDto.getStatus());
+                break;
+
+            default: throw new BattleChangingStatusException("Cannot switch status");
+        }
+
+        return battleRepository.save(battle);
     }
 }

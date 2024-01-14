@@ -49,5 +49,6 @@ public class AddUserKafkaConsumer {
             throw new IllegalArgumentException("Unsupported user type: " + userDto.getType());
         }
         userService.addNewUser(userDto);
+        log.info("New " + userDto.getType().toString().toLowerCase() + " \"" + userDto.getName() + "\" added successfully");
     }
 }

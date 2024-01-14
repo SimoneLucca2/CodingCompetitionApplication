@@ -13,8 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-//TODO: delete this class
 public class Educator {
     @Id
     @Column(name = "educator_id")
