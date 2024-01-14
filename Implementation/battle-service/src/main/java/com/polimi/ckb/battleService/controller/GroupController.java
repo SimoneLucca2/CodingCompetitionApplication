@@ -1,10 +1,7 @@
 package com.polimi.ckb.battleService.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.polimi.ckb.battleService.dto.StudentInvitesToGroupDto;
-import com.polimi.ckb.battleService.dto.StudentJoinsGroupDto;
-import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
-import com.polimi.ckb.battleService.dto.StudentLeavesGroupDto;
+import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.*;
@@ -37,10 +34,10 @@ public class GroupController {
             return ResponseEntity.ok().build();
         } catch (JsonProcessingException e) {
             log.error("Error processing JSON: {}", e.getMessage());
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
         } catch (BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }
 
@@ -48,12 +45,12 @@ public class GroupController {
     public ResponseEntity<Object> joinGroup(@RequestBody StudentJoinsGroupDto studentDto){
         log.info("A student is trying to join a group with message: {" + studentDto + "}");
         try {
-            groupService.joinGroup(studentDto);
+            StudentGroup group = groupService.joinGroup(studentDto);
             log.info("Student joined group successfully");
             return ResponseEntity.ok().build();
         } catch (BattleStateTooAdvancedException | GroupIsFullException | StudentAlreadyInAnotherGroupException e) {
             log.error("Bad request: {}", e.getMessage());
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }
 
@@ -86,10 +83,10 @@ public class GroupController {
         } catch (BattleStateTooAdvancedException | StudentNotRegisteredInBattleException |
                  StudentNotMemberOfGroupException e) {
             log.error("Bad request: {}", e.getMessage());
-            return ResponseEntity.badRequest().build();
-    } catch (JsonProcessingException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+        } catch (JsonProcessingException e) {
             log.error("Error processing JSON: {}", e.getMessage());
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
         }
         return ResponseEntity.ok().build();
     }
