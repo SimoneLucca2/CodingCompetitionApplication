@@ -1,10 +1,8 @@
 package com.polimi.ckb.user.entity;
 
+import com.polimi.ckb.user.utility.UserType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -16,10 +14,15 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
     private String email;
+    private String password;
     private String name;
+    private String surname;
+    private String nickname;
+    private UserType type;
 
 }
 
