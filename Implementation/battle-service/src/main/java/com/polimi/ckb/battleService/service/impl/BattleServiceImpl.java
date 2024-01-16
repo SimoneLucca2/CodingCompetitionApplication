@@ -29,13 +29,16 @@ public class BattleServiceImpl implements BattleService {
     private final GroupRepository groupRepository;
     private final StudentRepository studentRepository;
 
+    @Override
     @Transactional
     public Battle createBattle(CreateBattleDto createBattleDto) throws RuntimeException {
-        List<Battle> battleWithinSameTournament = battleRepository.findByTournamentId(createBattleDto.getTournamentId());
-
+        //check that tournament exists and its status is not CLOSING or CLOSED
+        //check that battle creator has access to the tournament
         //TODO: check the existence of the creator and of the tournament with HTTP request to TournamentService
 
-        //check if it already exists a battle with the same name in the tournament
+        //check if battle already exists within the same tournament
+        List<Battle> battleWithinSameTournament = battleRepository.findByTournamentId(createBattleDto.getTournamentId());
+
         if(battleWithinSameTournament != null){
             for(Battle battle : battleWithinSameTournament) {
                 if (battle.getName().equals(createBattleDto.getName())) {
@@ -43,6 +46,7 @@ public class BattleServiceImpl implements BattleService {
                 }
             }
 
+            //check if deadlines are ok with other battles' ones (battles cannot overlap)
             for(Battle battle : battleWithinSameTournament) {
                 if(battle.getStatus().equals(BattleStatus.PRE_BATTLE) || battle.getStatus().equals(BattleStatus.BATTLE)){
                     final boolean check1 = createBattleDto.getRegistrationDeadline().compareTo(battle.getRegistrationDeadline()) < 0 &&
@@ -79,12 +83,14 @@ public class BattleServiceImpl implements BattleService {
                 .minGroupSize(createBattleDto.getMinGroupSize())
                 .build();
     }
+
     @Override
     @Transactional
     public StudentGroup joinBattle(@Valid StudentJoinBattleDto studentDto) {
         Battle battle = battleRepository.findById(studentDto.getBattleId())
                 .orElseThrow(BattleDoesNotExistException::new);
 
+        //battle can be joined only if its status is PRE_BATTLE
         if(battle.getStatus() != BattleStatus.PRE_BATTLE){
             throw new BattleStateTooAdvancedException();
         }
@@ -92,14 +98,15 @@ public class BattleServiceImpl implements BattleService {
         Student student = studentRepository.findById(studentDto.getStudentId())
                 .orElseThrow(StudentDoesNotExistException::new);
 
+        //check if student is already registered to the battle
         List<StudentGroup> registeredGroups = groupRepository.findByBattle(battle);
         for (StudentGroup group : registeredGroups) {
             if (group.getStudents().contains(student)) {
                 throw new StudentAlreadyRegisteredToBattleException();
             }
         }
-        //validator for status check so it should be ok
 
+        //student joins the battle as singleton group
         StudentGroup newStudentGroup = StudentGroup.builder()
                 .battle(battle)
                 .score(0)
@@ -123,6 +130,7 @@ public class BattleServiceImpl implements BattleService {
         Student student = studentRepository.findById(studentDto.getStudentId())
                 .orElseThrow(StudentDoesNotExistException::new);
 
+        //find the group the student is member of
         List<StudentGroup> registeredGroups = groupRepository.findByBattle(battle);
         StudentGroup leavingStudentGroup = null;
         boolean check = false;
@@ -130,67 +138,79 @@ public class BattleServiceImpl implements BattleService {
             if (group.getStudents().contains(student)) {
                 check = true;
                 leavingStudentGroup = group;
+                //when first group is found, the system can move on (student cannot be member of more than one group in the same battle)
                 break;
             }
         }
+
+        //if check is false, student is not member of any group, hence is not registered to the battle
         if (!check) {
             throw new StudentNotRegisteredInBattleException();
         }
 
+
+        /*  Check battle's status:
+            PRE_BATTLE -> if group size is not greater than minGroupSize, no problem for now
+                          if group size is zero then delete the group
+            BATTLE -> if group size is not greater than minGroupSize, group must be disjointed
+                      if group size is zero then delete the group
+            other -> throw exception
+         */
+        if(battle.getStatus().equals(BattleStatus.CONSOLIDATION) || battle.getStatus().equals(BattleStatus.CLOSED)) {
+            throw new BattleStateTooAdvancedException();
+        }
+
+        //remove student from the group
         leavingStudentGroup.getStudents().remove(student);
         student.getStudentGroups().remove(leavingStudentGroup);
         studentRepository.save(student);
 
-        //check battle's status
-        switch (battle.getStatus()) {
-            case BATTLE:
-                if(leavingStudentGroup.getStudents().size() < battle.getMinGroupSize()) {
-                    for(Student leftStudent : leavingStudentGroup.getStudents()){
-                        //leavingStudentGroup.getStudents().remove(leftStudent);
-                        student.getStudentGroups().remove(leavingStudentGroup);
-                        studentRepository.save(leftStudent);
-                    }
-                } else {
-                    leavingStudentGroup = null;
-                    break;
+        if(battle.getStatus().equals(BattleStatus.PRE_BATTLE)){
+            //need only to check if group is now empty and delete it
+            if(leavingStudentGroup.getStudents().isEmpty()){
+                battle.getStudentGroups().remove(leavingStudentGroup);
+                battleRepository.save(battle);
+                groupRepository.delete(leavingStudentGroup);
+                leavingStudentGroup = null;
+            }
+        } else if(battle.getStatus().equals(BattleStatus.BATTLE)){
+            //need to check group constraints and eventually kick the entire group from the battle
+            if(leavingStudentGroup.getStudents().size() < battle.getMinGroupSize()){
+                for(Student studentInLeavingGroup: leavingStudentGroup.getStudents()){
+                    studentInLeavingGroup.getStudentGroups().remove(leavingStudentGroup);
+                    studentRepository.save(studentInLeavingGroup);
                 }
-
-                //continue: the next case has also to be executed in order to complete the operation
-            case PRE_BATTLE:
-                if(leavingStudentGroup.getStudents().isEmpty()){
-                    battle.getStudentGroups().remove(leavingStudentGroup);
-                    battleRepository.save(battle);
-                    groupRepository.delete(leavingStudentGroup);
-                    leavingStudentGroup = null;
-                } else {
-                    leavingStudentGroup = null;
-                }
-                break;
-
-            default:
-                throw new BattleStateTooAdvancedException();
+            } else {
+                leavingStudentGroup = null;
+            }
         }
 
-        //if null, group still exists, otherwise it has been deleted but caller needs their ids to tell kafka
+        //if null, group still exists (without the leaving student)
+        //if not null, the group has been deleted but caller needs student info to send kafka messages
         return leavingStudentGroup;
     }
 
     @Override
+    @Transactional
     public Battle changeBattleStatus(ChangeBattleStatusDto changeBattleStatusDto) {
         Battle battle = battleRepository.findById(changeBattleStatusDto.getBattleId())
                 .orElseThrow(BattleDoesNotExistException::new);
 
         switch(battle.getStatus()){
             case PRE_BATTLE:
+                //from PRE_BATTLE only BATTLE status is allowed
                 if(changeBattleStatusDto.getStatus().equals(BattleStatus.BATTLE)){
                     battle.setStatus(BattleStatus.BATTLE);
-                    //TODO: check group constraints
+
+                    //check if every group satisfies the constraints, if not kick its student from the battle and delete it
+                    checkGroupsConstraints(battle);
                 } else {
                     throw new BattleChangingStatusException("Cannot switch from PRE_BATTLE to " + changeBattleStatusDto.getStatus());
                 }
                 break;
 
             case BATTLE:
+                //from BATTLE only CONSOLIDATION status is allowed
                 if(changeBattleStatusDto.getStatus().equals(BattleStatus.CONSOLIDATION))
                     battle.setStatus(BattleStatus.CONSOLIDATION);
                 //TODO: code evaluation and score update
@@ -199,6 +219,7 @@ public class BattleServiceImpl implements BattleService {
                 break;
 
             case CONSOLIDATION:
+                //from CONSOLIDATION only CLOSED status is allowed
                 if(changeBattleStatusDto.getStatus().equals(BattleStatus.CLOSED))
                     battle.setStatus(BattleStatus.CLOSED);
                 //TODO: idk
@@ -206,9 +227,31 @@ public class BattleServiceImpl implements BattleService {
                     throw new BattleChangingStatusException("Cannot switch from CONSOLIDATION to " + changeBattleStatusDto.getStatus());
                 break;
 
-            default: throw new BattleChangingStatusException("Cannot switch status");
+            default:
+                //from CLOSED no status change is allowed
+                throw new BattleChangingStatusException("Cannot switch status");
         }
 
+        //save new status
         return battleRepository.save(battle);
+    }
+
+    private void checkGroupsConstraints(Battle battle){
+        //list of groups registered to the given battle
+        List<StudentGroup> registeredGroups = groupRepository.findByBattle(battle);
+        for(StudentGroup group: registeredGroups){
+            //if group size is less than minGroupSize, kick all its students from the battle and delete the group
+            if(group.getStudents().size() < battle.getMinGroupSize()){
+                for(Student studentInGroup: group.getStudents()){
+                    studentInGroup.getStudentGroups().remove(group);
+                    studentRepository.save(studentInGroup);
+                }
+                battle.getStudentGroups().remove(group);
+                battleRepository.save(battle);
+                groupRepository.delete(group);
+            }
+        }
+
+        //TODO: TO BE FINISHED (kafka messages about kicking students is missing)
     }
 }

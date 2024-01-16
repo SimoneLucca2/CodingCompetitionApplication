@@ -50,6 +50,4 @@ public class BattleController {
            return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
        }
     }
-
-
 }
