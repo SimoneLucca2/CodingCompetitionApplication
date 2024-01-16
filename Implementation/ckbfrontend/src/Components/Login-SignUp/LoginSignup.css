@@ -26,7 +26,7 @@
 }
 
 .underline {
-    width: 69px;
+    width: 600px;
     height: 6px;
     background: #000000;
     border-radius: 9px;
@@ -35,6 +35,7 @@
 
 .inputs{
     margin-top: 55px;
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -67,7 +68,7 @@
 .submit-container {
     display:flex;
     gap: 30px;
-    margin-top: 60px;
+    margin-left: 20px;
     justify-content: left;
     align-items: center;
 }
@@ -97,6 +98,7 @@
     display:flex;
     gap: 30px;
     margin-top: 60px;
+    margin-left: 160px;
     justify-content: left;
     align-items: center;
 }
@@ -118,8 +120,61 @@
 }
 
 .Centro {
-    margin-top: 55px;
     display: flex;
     flex-direction: row;
-    gap: 25px;
+    gap: 180px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.immagine {
+    margin-right: 60px;
+    margin-top: 160px;
+}
+
+.immagine img{
+
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text2 {
+    color: black; /* Imposta il colore del testo a nero */
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.centro2 {
+    display: flex;
+    flex-direction: row;
+    gap: 180px;
+    justify-content: center;
+    width: 100%;
+}
+
+.immagine2 {
+    display: flex;
+    justify-content: center; /* Allinea l'elemento a destra */
+    align-items: center; /* Allinea verticalmente */
+    margin-top: 60px;
+    margin-right: 20px;
+    background-color: white;
+    margin-left: 150px;
+}
+
+.immagine2 img {
+    width: 60%; /* Larghezza dell'immagine */
+    height: auto; /* Altezza automatica per mantenere le proporzioni */
 }
