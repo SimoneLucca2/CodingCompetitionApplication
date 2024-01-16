@@ -3,7 +3,7 @@
     flex-direction: column;
     margin: auto;
     margin-top: 100px;
- 
+    background-color: gainsboro;
     padding-bottom: 15px;
     width: 80%;
 }
@@ -185,11 +185,5 @@
 .immagine2 img {
     width: 60%; /* Larghezza dell'immagine */
     height: auto; /* Altezza automatica per mantenere le proporzioni */
-}
-=======
-    margin-top: 55px;
-    display: flex;
-    flex-direction: row;
-    gap: 25px;
 }
 
