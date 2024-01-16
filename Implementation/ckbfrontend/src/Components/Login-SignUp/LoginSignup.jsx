@@ -1,38 +1,104 @@
-import React  from "react";
-import './LoginSignup.css'
-import user_icon from '../Assets/person.png'
-import email_icon from '../Assets/email.png'
-import password_icon from '../Assets/password.png'
+import React, { useState } from "react";
+import './LoginSignup.css';
+import user_icon from '../Assets/person.png';
+import email_icon from '../Assets/email.png';
+import password_icon from '../Assets/password.png';
+import immagine from '../Assets/immagine.png';
 
 const LoginSignup = () => {
-    const [action, setAction] = React.useState("Sign Up");
+    const [action, setAction] = useState("Sign Up");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-  return (
-    <div className='container'>
-        <div className="header">
-            <div className="text">{action}</div>
-            <div className="underline"></div>
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        // Basic validation
+        if (!email || !password) {
+            setErrorMessage('Email and password are required');
+            return;
+        }
+
+        try {
+            const url = action === 'Login' ? 'https://your-backend-api/login' : 'https://your-backend-api/signup';
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    String: 'application/json',
+                },
+                body: JSON.stringify({email, password}),
+            });
+
+            if (!response.ok) {
+                throw new Error(`${action} failed`);
+            }
+
+            const data = await response.json();
+            console.log(`${action} successful:`, data);
+
+            // Handle successful login/signup
+            // ...
+
+        } catch (error) {
+            console.error(`${action} error:`, error);
+            setErrorMessage(`${action} failed. Please try again.`);
+        }
+    };
+
+    return (
+        <div className='container'>
+            <form onSubmit={handleSubmit}>
+                <div className="header">
+                    <div className="text">{action}</div>
+                    <div className="underline"></div>
+                </div>
+                <div className="submit-container">
+                    <div className={action === "Login" ? "submit" : "submit gray"}
+                         onClick={() => setAction("Sign Up")}>Sign Up
+                    </div>
+                    <div className={action === "Sign Up" ? "submit" : "submit gray"}
+                         onClick={() => setAction("Login")}>Login
+                    </div>
+                </div>
+                <div className="Centro">
+                 <div className="inputs">
+                    {action === "Login" ? <div></div> :
+                        <div className="input">
+                            <img src={user_icon} alt=""/>
+                            {/* Include name handling if needed */}
+                            <input type="text" placeholder="Name"/>
+                        </div>
+                    }
+                    <div className="input">
+                        <img src={email_icon} alt=""/>
+                        <input
+                            type="email"
+                            placeholder="Email Id"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="input">
+                        <img src={password_icon} alt=""/>
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                 </div>
+                </div>
+
+                <div className="button">
+                    <button type="submit" className="ButtonforSubmit">Submit</button>
+                </div>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+            </form>
         </div>
-        <div className="inputs">
-            {action==="Login"? <div></div>: <div className="input">
-                    <img src={user_icon} alt=""/>
-                    <input type="text" placeholder="Name"/>
-                </div>}
-            <div className="input">
-                <img src={email_icon} alt=""/>
-                <input type="email" placeholder="Email Id"/>
-            </div>
-            <div className="input">
-                <img src={password_icon} alt=""/>
-                <input type="password" placeholder="Password"/>
-            </div>
-        </div>
-        <div className="submit-container">
-            <div className={action==="Login"?"submit gray":"submit"} onClick={()=>{setAction("Sign Up")}}>Sign Up</div>
-            <div className={action==="Sign Up"?"submit gray":"submit"} onClick={()=>{setAction("Login")}}>Login</div>
-        </div>
-    </div>
-  );
+    );
 }
 
 export default LoginSignup;

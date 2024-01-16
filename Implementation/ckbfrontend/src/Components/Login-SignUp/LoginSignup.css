@@ -65,9 +65,11 @@
 }
 
 .submit-container {
-    display: flex;
+    display:flex;
     gap: 30px;
-    margin: 60px auto;
+    margin-top: 60px;
+    justify-content: left;
+    align-items: center;
 }
 
 .submit {
@@ -85,7 +87,39 @@
     cursor: pointer;
 }
 
+
 .gray {
     color: #d5d9d5;
     background: #ffffff;
+}
+
+.button {
+    display:flex;
+    gap: 30px;
+    margin-top: 60px;
+    justify-content: left;
+    align-items: center;
+}
+
+.ButtonforSubmit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 60px;
+    color: #000000;
+    background: white;
+    border:5px solid white;
+    border-radius:50px;
+    font-size: 19px;
+    font-family: 'Arial';
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.Centro {
+    margin-top: 55px;
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
 }
