@@ -30,6 +30,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public void inviteStudentToGroup(@Valid StudentInvitesToGroupDto studentInvitesToGroupDto) {
+        //only check if the battle is in PRE_BATTLE state
         StudentGroup group = groupRepository.findById(studentInvitesToGroupDto.getGroupId()).orElse(null);
         //group is never null thanks to the @Valid annotation
         assert group != null;
@@ -44,6 +45,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public StudentGroup joinGroup(@Valid StudentJoinsGroupDto studentJoinsGroupDto) {
+        //a group can be joined if it is not full and if the battle is in PRE_BATTLE state
         StudentGroup group = groupRepository.findById(studentJoinsGroupDto.getGroupId()).orElse(null);
         //group is never null thanks to the @Valid annotation
         assert group != null;
@@ -56,7 +58,6 @@ public class GroupServiceImpl implements GroupService {
         if(group.getStudents().size() == battle.getMaxGroupSize()){
             throw new GroupIsFullException();
         }
-
 
         //student cannot join the group if he is not registered to the battle
         Student student = studentRepository.findById(studentJoinsGroupDto.getStudentId()).orElseThrow(StudentNotRegisteredInBattleException::new);
@@ -71,8 +72,12 @@ public class GroupServiceImpl implements GroupService {
             }
         }
 
-        assert groupToDelete != null;
-        //if groupToDelete size is 1 then the group must be deleted otherwise the student must leave it before joining the new one
+        //if no group is found, the student is not registered to the battle
+        if(groupToDelete == null){
+            throw new StudentNotRegisteredInBattleException();
+        }
+
+        //student need to leave the old group before joining the new one
         if(groupToDelete.getStudents().size() == 1){
             groupRepository.delete(groupToDelete);
             battle.getStudentGroups().remove(groupToDelete);
@@ -81,6 +86,7 @@ public class GroupServiceImpl implements GroupService {
             throw new StudentAlreadyInAnotherGroupException();
         }
 
+        //apply and save changes in the db
         group.getStudents().add(student);
         student.getStudentGroups().remove(groupToDelete);
         student.getStudentGroups().add(group);
@@ -100,6 +106,8 @@ public class GroupServiceImpl implements GroupService {
         Battle battle = battleRepository.findById(group.getBattle().getBattleId()).orElse(null);
         //battle is never null otherwise the group would not exist
         assert battle != null;
+
+        //student can leave group only if the battle is in PRE_BATTLE or BATTLE state
         if(!((battle.getStatus().equals(BattleStatus.PRE_BATTLE)) || (battle.getStatus().equals(BattleStatus.BATTLE)))){
             throw new BattleStateTooAdvancedException();
         }
@@ -107,6 +115,8 @@ public class GroupServiceImpl implements GroupService {
         Student student = studentRepository.findById(studentLeavesGroupDto.getStudentId()).orElse(null);
         //student is never null thanks to the @Valid annotation
         assert student != null;
+
+        //the student must be member of the group in order to leave it
         if(!group.getStudents().contains(student)){
             throw new StudentNotMemberOfGroupException();
         }
@@ -120,9 +130,9 @@ public class GroupServiceImpl implements GroupService {
         if(battle.getStatus().equals(BattleStatus.PRE_BATTLE)){
             groupRepository.save(group);
             group = null;
-        }else if(battle.getStatus().equals(BattleStatus.BATTLE)){
+        } else if(battle.getStatus().equals(BattleStatus.BATTLE)){
             if(group.getStudents().size() < battle.getMinGroupSize()){
-                //every other student in the group must be removed both from the group (see for loop) and from the battle (the caller will do it)
+                //every other student in the group must be removed both from the group (see for loop) and from the battle (the caller will do this)
                 for(Student studentInGroup : group.getStudents()){
                     studentInGroup.getStudentGroups().remove(group);
                     studentRepository.save(studentInGroup);
@@ -135,7 +145,8 @@ public class GroupServiceImpl implements GroupService {
             }
         }
 
-        //if null, group still exists, otherwise it has been deleted but caller needs their ids to tell kafka
+        //if null, the group still exists but without the student that left
+        //if not null, the group has been kicked from the battle (group size was < minGroupSize) and the caller needs student ids to kick them from the battle
         return group;
     }
 }
