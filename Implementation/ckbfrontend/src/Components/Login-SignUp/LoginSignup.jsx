@@ -3,40 +3,38 @@ import './LoginSignup.css';
 import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
-import immagine from '../Assets/immagine.png';
 
 const LoginSignup = () => {
     const [action, setAction] = useState("Sign Up");
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState(''); // Added for name handling
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Basic validation
-        if (!email || !password) {
-            setErrorMessage('Email and password are required');
+        if (!email || !password || (action === "Sign Up" && !name)) {
+            setErrorMessage('All fields are required');
             return;
         }
 
+        const url = action === 'Login' ? 'http://localhost:8080/login' : 'http://localhost:8080/signup';
         try {
-            const url = action === 'Login' ? 'https://your-backend-api/login' : 'https://your-backend-api/signup';
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    String: 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({email, password}),
+                body: JSON.stringify(action === 'Login' ? { email, password } : { name, email, password }),
             });
 
             if (!response.ok) {
-                throw new Error(`${action} failed`);
+                throw new Error(`Server responded with status: ${response.status}`);
             }
 
             const data = await response.json();
             console.log(`${action} successful:`, data);
-
             // Handle successful login/signup
             // ...
 
