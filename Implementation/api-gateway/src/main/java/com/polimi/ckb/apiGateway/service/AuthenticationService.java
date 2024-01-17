@@ -31,7 +31,7 @@ public class AuthenticationService {
                 .name(request.getName())
                 .surname(request.getSurname())
                 .nickname(request.getNickname())
-                .accountType(request.getAccountType())
+                .accountType(request.getType())
                 .build();
 
         newUserKafkaProducer.sendNewUser(user);

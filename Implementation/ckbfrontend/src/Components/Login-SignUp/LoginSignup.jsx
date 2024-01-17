@@ -32,7 +32,7 @@ const LoginSignup = () => {
 
         try {
 
-            const url = action === 'Login' ? 'https://localhost:8080' : 'https://your-backend-api/signup';
+            const url = action === 'Login' ? 'http://localhost:8080/login' : 'http://localhost:8080/signup';
             const bodyData = action === 'Login' ? {email, password} : {email, password, name, surname, nickname, type};
 
             const response = await fetch(url, {

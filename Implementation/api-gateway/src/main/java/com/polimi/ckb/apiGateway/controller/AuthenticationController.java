@@ -24,7 +24,6 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.register(request));
         } catch (Exception e) {
-            // Returning the exception message and a Bad Request status
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body("Error during registration: " + e.getMessage());
@@ -32,9 +31,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authenticate(
+    public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
+
         System.out.println("received login request");
         return ResponseEntity.ok(service.authenticate(request));
     }

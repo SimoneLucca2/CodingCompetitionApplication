@@ -19,6 +19,6 @@ public class RegisterRequest {
     private String name;
     private String surname;
     private String nickname;
-    private UserType accountType;
+    private UserType type;
 
 }
