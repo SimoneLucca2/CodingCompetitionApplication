@@ -25,7 +25,7 @@ public class AuthenticationService {
     private final NewUserKafkaProducer newUserKafkaProducer;
 
     public AuthenticationResponse register(@Valid RegisterRequest request) throws JsonProcessingException {
-        var user = User.builder()
+        User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())

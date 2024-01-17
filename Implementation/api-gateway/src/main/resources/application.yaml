@@ -32,6 +32,8 @@ spring:
   application:
     name: api-gateway
 
+
+
 application:
   security:
     jwt:
