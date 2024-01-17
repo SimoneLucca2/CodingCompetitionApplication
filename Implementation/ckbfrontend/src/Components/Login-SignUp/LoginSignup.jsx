@@ -3,11 +3,8 @@ import './LoginSignup.css';
 import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
-
-import immagine_icon from '../Assets/immagine3.png';
+import immagine_icon from '../Assets/guy.png';
 import logo_icon from '../Assets/Logo.png';
-
-import immagine from '../Assets/immagine.png';
 
 
 const LoginSignup = () => {
@@ -27,12 +24,12 @@ const LoginSignup = () => {
         // Basic validation
         if (!email || !password) {
             setErrorMessage('Email and password are required');
+            console.log("Email and password are required")
             return;
         }
 
         try {
-
-            const url = action === 'Login' ? 'https://localhost:8080' : 'https://your-backend-api/signup';
+            const url = action === 'Login' ? 'http://192.168.232.18:8080/login' : 'http://192.168.232.18:8080/signup';
             const bodyData = action === 'Login' ? {email, password} : {email, password, name, surname, nickname, type};
 
             const response = await fetch(url, {
@@ -42,6 +39,7 @@ const LoginSignup = () => {
                 },
                 body: JSON.stringify(bodyData),
             });
+            console.log("Added");
 
 
 
