@@ -23,7 +23,7 @@ public class StudentServiceImpl implements StudentService {
                 },
                 () -> {
                     Student user = new Student();
-                    user.setId(msg.getUserId());
+                    user.setUserId(msg.getUserId());
                     user.setEmail(msg.getEmail());
                     user.setName(msg.getName());
 

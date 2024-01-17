@@ -30,7 +30,7 @@ public class EducatorServiceImpl implements EducatorService {
                 },
                 () -> {
                     Educator educator = new Educator();
-                    educator.setId(msg.getUserId());
+                    educator.setUserId(msg.getUserId());
                     educator.setEmail(msg.getEmail());
                     educator.setName(msg.getName());
 

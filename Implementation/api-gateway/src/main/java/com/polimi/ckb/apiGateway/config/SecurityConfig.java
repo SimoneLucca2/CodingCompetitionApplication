@@ -27,7 +27,8 @@ public class SecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {
             "/login",
-            "/signup"
+            "/signup",
+            "/**"
     }; //todo
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
