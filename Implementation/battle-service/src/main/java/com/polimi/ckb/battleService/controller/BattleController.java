@@ -39,6 +39,9 @@ public class BattleController {
                return ResponseEntity.badRequest().body(new ErrorResponse("Max group size is less than min group size"));
            }
            Battle createdBattle = battleService.createBattle(createBattleDto);
+
+           //TODO: create github repository for the battle using GitHub API
+
            kafkaProducer.sendBattleCreationMessage(createBattleDto);
            log.info("Battle created successfully");
            return ResponseEntity.ok().body(createdBattle);

@@ -1,10 +1,7 @@
 package com.polimi.ckb.battleService.service.impl;
 
 import com.polimi.ckb.battleService.config.BattleStatus;
-import com.polimi.ckb.battleService.dto.ChangeBattleStatusDto;
-import com.polimi.ckb.battleService.dto.CreateBattleDto;
-import com.polimi.ckb.battleService.dto.StudentJoinBattleDto;
-import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
+import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
@@ -252,6 +249,11 @@ public class BattleServiceImpl implements BattleService {
             }
         }
 
-        //TODO: TO BE FINISHED (kafka messages about kicking students is missing)
+        //TODO: TO BE FINISHED (kafka messages about kicking students are missing)
+    }
+
+    @Override
+    public void calculateTemporaryScore(NewPushDto newPushDto) {
+        //every time the system gets a notification about a new push on the main branch of a group's repo, solution is assigned a temporary score
     }
 }
