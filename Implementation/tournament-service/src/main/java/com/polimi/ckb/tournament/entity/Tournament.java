@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class Tournament {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tournament_id")
     private Long tournamentId;
 
