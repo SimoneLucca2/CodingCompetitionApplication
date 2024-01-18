@@ -1,6 +1,7 @@
 package com.polimi.ckb.tournament.service.kafkaConsumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.polimi.ckb.tournament.config.TournamentStatus;
 import com.polimi.ckb.tournament.dto.InternalChangeTournamentStatusDto;
 import com.polimi.ckb.tournament.service.TournamentService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class ActivateTournamentKafkaConsumer {
     }
 
     private void processMessage(InternalChangeTournamentStatusDto userDto) {
-        tournamentService.updateTournamentStatus(userDto.getTournamentId(), userDto.getStatus());
+        tournamentService.updateTournamentStatus(userDto.getTournamentId(), TournamentStatus.ACTIVE);
     }
 
 }

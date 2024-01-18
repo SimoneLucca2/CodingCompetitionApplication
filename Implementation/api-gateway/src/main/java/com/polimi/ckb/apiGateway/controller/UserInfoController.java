@@ -16,7 +16,7 @@ public class UserInfoController {
 
     private final UserRepository userRepository;
 
-    @GetMapping("/getId/{mail]")
+    @GetMapping("/getId/{mail}")
     public ResponseEntity<?> getIdFromMail(@PathVariable String mail) {
 
         try {
