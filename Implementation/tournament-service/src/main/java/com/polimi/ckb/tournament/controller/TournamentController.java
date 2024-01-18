@@ -6,6 +6,7 @@ import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.service.TournamentService;
 import com.polimi.ckb.tournament.service.kafkaProducer.TournamentCreationKafkaProducer;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -48,11 +49,11 @@ public class TournamentController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<Object> getTournament(@Valid @RequestBody GetTournamentDto msg) {
+    @GetMapping("/{tournamentId}")
+    public ResponseEntity<Object> getTournament(@PathVariable Long tournamentId) {
         try {
-            log.info("Getting tournament with id: {}", msg.getTournamentId());
-            Tournament tournament = tournamentService.getTournament(msg.getTournamentId());
+            log.info("Getting tournament with id: {}", tournamentId);
+            Tournament tournament = tournamentService.getTournament(tournamentId);
             log.info("Tournament retrieved successfully");
             return ResponseEntity.ok(TournamentDto.fromEntity(tournament));
         } catch (Exception e) {

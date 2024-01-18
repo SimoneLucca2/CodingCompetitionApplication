@@ -14,6 +14,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class NewUserDto implements Serializable {
 
+    @NotBlank(message = "userId cannot be blank")
+    private Long userId;
+
     @NotBlank(message = "email cannot be blank")
     private String email;
 
