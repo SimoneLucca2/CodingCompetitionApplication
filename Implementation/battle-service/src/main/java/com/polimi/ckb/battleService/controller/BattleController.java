@@ -6,20 +6,25 @@ import com.polimi.ckb.battleService.dto.ErrorResponse;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.exception.BattleAlreadyExistException;
 import com.polimi.ckb.battleService.exception.BattleDeadlinesOverlapException;
+import com.polimi.ckb.battleService.exception.EducatorNotAuthorizedException;
+import com.polimi.ckb.battleService.exception.TournamentNotActiveException;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.kafkaProducer.BattleCreationKafkaProducer;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping(path = "/battle")
 @Slf4j
 public class BattleController {
@@ -42,10 +47,12 @@ public class BattleController {
 
            //TODO: create github repository for the battle using GitHub API
 
+
            kafkaProducer.sendBattleCreationMessage(createBattleDto);
            log.info("Battle created successfully");
            return ResponseEntity.ok().body(createdBattle);
-       } catch (BattleAlreadyExistException | BattleDeadlinesOverlapException e){
+       } catch (BattleAlreadyExistException | BattleDeadlinesOverlapException | TournamentNotActiveException |
+                EducatorNotAuthorizedException e){
            log.error("Bad request: {}", e.getMessage());
            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
        } catch (JsonProcessingException e) {

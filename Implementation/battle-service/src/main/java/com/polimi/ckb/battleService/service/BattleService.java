@@ -1,12 +1,13 @@
 package com.polimi.ckb.battleService.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.BattleAlreadyExistException;
 
 public interface BattleService {
-    Battle createBattle(CreateBattleDto msg) throws BattleAlreadyExistException;
+    Battle createBattle(CreateBattleDto msg) throws BattleAlreadyExistException, JsonProcessingException;
 
     StudentGroup joinBattle(StudentJoinBattleDto studentDto);
 
