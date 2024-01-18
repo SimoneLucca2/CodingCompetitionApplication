@@ -1,5 +1,6 @@
 package com.polimi.ckb.tournament.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.polimi.ckb.tournament.entity.Student;
 import com.polimi.ckb.tournament.utility.UserType;
 import lombok.*;
@@ -15,11 +16,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NewUserDto implements Serializable{
     @NotBlank(message = "userId cannot be blank")
     private Long userId;
 
-    private String name;
-    private String email;
     private UserType type;
 }

@@ -28,11 +28,11 @@ public class User implements UserDetails {
     private String name;
     private String surname;
     private String nickname;
-    private UserType accountType;
+    private UserType type;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(accountType.toString()));
+        return List.of(new SimpleGrantedAuthority(type.toString()));
     }
 
     @Override

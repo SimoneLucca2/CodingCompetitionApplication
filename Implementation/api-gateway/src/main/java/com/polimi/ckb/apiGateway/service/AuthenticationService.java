@@ -3,6 +3,7 @@ package com.polimi.ckb.apiGateway.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.apiGateway.dto.AuthenticationRequest;
 import com.polimi.ckb.apiGateway.dto.AuthenticationResponse;
+import com.polimi.ckb.apiGateway.dto.NewUserDto;
 import com.polimi.ckb.apiGateway.dto.RegisterRequest;
 import com.polimi.ckb.apiGateway.entity.User;
 import com.polimi.ckb.apiGateway.repository.UserRepository;
@@ -31,12 +32,15 @@ public class AuthenticationService {
                 .name(request.getName())
                 .surname(request.getSurname())
                 .nickname(request.getNickname())
-                .accountType(request.getType())
+                .type(request.getType())
                 .build();
 
-        newUserKafkaProducer.sendNewUser(user);
+        User newUser = repository.save(user);
 
-        repository.save(user);
+        NewUserDto newUserDto = NewUserDto.buildFromUser(newUser);
+
+        newUserKafkaProducer.sendNewUser(newUserDto);
+
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

@@ -1,6 +1,5 @@
 package com.polimi.ckb.user.service.impl;
 
-
 import com.polimi.ckb.user.dto.NewUserDto;
 import com.polimi.ckb.user.entity.Educator;
 import com.polimi.ckb.user.repository.EducatorRepository;
@@ -21,7 +20,6 @@ public class EducatorServiceImpl implements EducatorService {
         return educatorRepository.findById(id);
     }
 
-
     @Override
     public void addNewEducator(NewUserDto msg) {
         educatorRepository.findById(msg.getUserId()).ifPresentOrElse(
@@ -30,9 +28,12 @@ public class EducatorServiceImpl implements EducatorService {
                 },
                 () -> {
                     Educator educator = new Educator();
-                    educator.setUserId(msg.getUserId());
                     educator.setEmail(msg.getEmail());
                     educator.setName(msg.getName());
+                    educator.setSurname(msg.getSurname());
+                    educator.setNickname(msg.getNickname());
+                    educator.setType(msg.getType());
+                    educator.setUserId(msg.getUserId());
 
                     educatorRepository.save(educator);
                 }
