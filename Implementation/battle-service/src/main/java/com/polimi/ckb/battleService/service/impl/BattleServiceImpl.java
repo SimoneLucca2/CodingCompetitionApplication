@@ -1,10 +1,10 @@
 package com.polimi.ckb.battleService.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polimi.ckb.battleService.config.BattleStatus;
-import com.polimi.ckb.battleService.dto.ChangeBattleStatusDto;
-import com.polimi.ckb.battleService.dto.CreateBattleDto;
-import com.polimi.ckb.battleService.dto.StudentJoinBattleDto;
-import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
+import com.polimi.ckb.battleService.config.TournamentStatus;
+import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
@@ -15,26 +15,48 @@ import com.polimi.ckb.battleService.repository.GroupRepository;
 import com.polimi.ckb.battleService.repository.StudentRepository;
 import com.polimi.ckb.battleService.service.BattleService;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Slf4j
 public class BattleServiceImpl implements BattleService {
     private final BattleRepository battleRepository;
     private final EducatorRepository educatorRepository;
     private final GroupRepository groupRepository;
     private final StudentRepository studentRepository;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+    //@Value("${eureka.client.service-url.defaultZone}")
+    private final String TOURNAMENT_SERVICE_URL = "http://tournament-service";
 
     @Override
     @Transactional
     public Battle createBattle(CreateBattleDto createBattleDto) throws RuntimeException {
         //check that tournament exists and its status is not CLOSING or CLOSED
         //check that battle creator has access to the tournament
-        //TODO: check the existence of the creator and of the tournament with HTTP request to TournamentService
+        TournamentDto tournamentDto;
+        try {
+            tournamentDto = checkTournamentStats(createBattleDto.getTournamentId());
+        } catch (JsonProcessingException e) {
+            throw new TournamentDoesNotExistException();
+        }
+        if(!tournamentDto.getStatus().equals(TournamentStatus.ACTIVE)){
+            throw new TournamentNotActiveException();
+        }
+
+        if(!createBattleDto.getCreatorId().getEducatorId().equals(tournamentDto.getCreatorId()) ||
+                !tournamentDto.getOrganizerIds().contains(createBattleDto.getCreatorId().getEducatorId())){
+            throw new EducatorNotAuthorizedException();
+        }
 
         //check if battle already exists within the same tournament
         List<Battle> battleWithinSameTournament = battleRepository.findByTournamentId(createBattleDto.getTournamentId());
@@ -252,6 +274,17 @@ public class BattleServiceImpl implements BattleService {
             }
         }
 
-        //TODO: TO BE FINISHED (kafka messages about kicking students is missing)
+        //TODO: TO BE FINISHED (kafka messages about kicking students are missing)
+    }
+
+    @Override
+    public void calculateTemporaryScore(NewPushDto newPushDto) {
+        //every time the system gets a notification about a new push on the main branch of a group's repo, solution is assigned a temporary score
+    }
+
+    private TournamentDto checkTournamentStats(Long tournamentId) throws JsonProcessingException {
+        log.info("Checking tournament existence and status and creator's access to it");
+        String response = restTemplate.getForObject(TOURNAMENT_SERVICE_URL + "/tournament/" + tournamentId, String.class);
+        return objectMapper.readValue(response, TournamentDto.class);
     }
 }
