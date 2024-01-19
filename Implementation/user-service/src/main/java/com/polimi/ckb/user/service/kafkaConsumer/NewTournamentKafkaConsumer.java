@@ -41,7 +41,7 @@ public class NewTournamentKafkaConsumer {
         Tournament tournament = convertToEntity(msg);
 
         Educator educator = educatorService.getEducatorById(
-                msg.getEducatorId()).orElseThrow(() -> new RuntimeException("Educator must exist")
+                msg.getCreatorId()).orElseThrow(() -> new RuntimeException("Educator must exist")
         ); //educator must exist
 
         //save the creator of the tournament

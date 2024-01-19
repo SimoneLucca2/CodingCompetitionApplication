@@ -14,7 +14,7 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NewTournamentDto implements Serializable {
     @NotBlank(message = "EducatorId cannot be null")
-    private Long educatorId; //id of the educator who is creating the tournament
+    private Long creatorId; //id of the educator who is creating the tournament
 
     @NotBlank(message = "registration deadline cannot be blank")
     private String registrationDeadline;
