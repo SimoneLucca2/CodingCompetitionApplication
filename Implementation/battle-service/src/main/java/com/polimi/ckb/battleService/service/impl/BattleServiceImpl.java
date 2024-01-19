@@ -17,9 +17,8 @@ import com.polimi.ckb.battleService.service.BattleService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
@@ -40,22 +39,25 @@ public class BattleServiceImpl implements BattleService {
 
     @Override
     @Transactional
-    public Battle createBattle(CreateBattleDto createBattleDto) throws RuntimeException {
+    public Battle createBattle(CreateBattleDto createBattleDto, boolean isTest) throws RuntimeException {
         //check that tournament exists and its status is not CLOSING or CLOSED
         //check that battle creator has access to the tournament
-        TournamentDto tournamentDto;
-        try {
-            tournamentDto = checkTournamentStats(createBattleDto.getTournamentId());
-        } catch (JsonProcessingException e) {
-            throw new TournamentDoesNotExistException();
-        }
-        if(!tournamentDto.getStatus().equals(TournamentStatus.ACTIVE)){
-            throw new TournamentNotActiveException();
-        }
+        //If isTest is false, skip tournament checks (performing unit tests)
+        if(!isTest){
+            TournamentDto tournamentDto;
+            try {
+                tournamentDto = checkTournamentStats(createBattleDto.getTournamentId());
+            } catch (JsonProcessingException e) {
+                throw new TournamentDoesNotExistException();
+            }
+            if(!tournamentDto.getStatus().equals(TournamentStatus.ACTIVE)){
+                throw new TournamentNotActiveException();
+            }
 
-        if(!createBattleDto.getCreatorId().getEducatorId().equals(tournamentDto.getCreatorId()) ||
-                !tournamentDto.getOrganizerIds().contains(createBattleDto.getCreatorId().getEducatorId())){
-            throw new EducatorNotAuthorizedException();
+            if(!createBattleDto.getCreatorId().getEducatorId().equals(tournamentDto.getCreatorId()) ||
+                    !tournamentDto.getOrganizerIds().contains(createBattleDto.getCreatorId().getEducatorId())){
+                throw new EducatorNotAuthorizedException();
+            }
         }
 
         //check if battle already exists within the same tournament
@@ -287,4 +289,27 @@ public class BattleServiceImpl implements BattleService {
         String response = restTemplate.getForObject(TOURNAMENT_SERVICE_URL + "/tournament/" + tournamentId, String.class);
         return objectMapper.readValue(response, TournamentDto.class);
     }
+
+    @Transactional
+    @Override
+    public List<Battle> getBattlesByTournamentId(@RequestBody GetBattleDto getBattleDto){
+        return battleRepository.findByTournamentId(getBattleDto.getTournamentId());
+    }
+
+    @Transactional
+    @Override
+    public void saveRepositoryUrl(@RequestBody SaveRepositoryLinkDto saveRepositoryUrlDto){
+        Battle battle = battleRepository.findById(saveRepositoryUrlDto.getBattleId())
+                .orElseThrow(BattleDoesNotExistException::new);
+
+        battle.setRepoLink(saveRepositoryUrlDto.getRepositoryUrl());
+        battleRepository.save(battle);
+    }
+
+    @Transactional
+    @Override
+    public void deleteBattle(DeleteBattleDto deleteBattleDto){
+        battleRepository.deleteById(deleteBattleDto.getBattleId());
+    }
+
 }
