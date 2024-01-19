@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -22,6 +24,14 @@ public class Tournament {
     @ManyToOne
     @JoinColumn(name="creator_id")
     private Educator creator;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tournament_organizers",
+            joinColumns = @JoinColumn(name = "tournament_id"),
+            inverseJoinColumns = @JoinColumn(name = "educator_id")
+    )
+    private List<Educator> organizers = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
