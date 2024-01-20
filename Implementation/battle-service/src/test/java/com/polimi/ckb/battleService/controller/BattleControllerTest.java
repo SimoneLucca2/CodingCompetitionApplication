@@ -62,7 +62,7 @@ public class BattleControllerTest {
                 .educatorId(1L)
                 .build();
         educatorRepository.save(educator);
-        battle.setCreatorId(educator);
+        battle.setCreator(educator);
         String battleJson = objectMapper.writeValueAsString(battle);
 
         mockMvc.perform(
@@ -83,7 +83,7 @@ public class BattleControllerTest {
                 .build();
         educatorRepository.save(educator);
         Battle overlappingBattle = BattleTestUtil.createTestOverlappingBattle();
-        overlappingBattle.setCreatorId(educator);
+        overlappingBattle.setCreator(educator);
 
         String overlappingBattleJson = objectMapper.writeValueAsString(overlappingBattle);
 
@@ -109,7 +109,7 @@ public class BattleControllerTest {
                 .educatorId(1L)
                 .build();
         educatorRepository.save(educator);
-        secondBattle.setCreatorId(educator);
+        secondBattle.setCreator(educator);
         secondBattle.setRegistrationDeadline("2024-02-01");
         secondBattle.setSubmissionDeadline("2024-02-10");
         String secondBattleJson = objectMapper.writeValueAsString(secondBattle);
@@ -137,7 +137,7 @@ public class BattleControllerTest {
                 .educatorId(1L)
                 .build();
         educatorRepository.save(educator);
-        battle.setCreatorId(educator);
+        battle.setCreator(educator);
         String battleJson = objectMapper.writeValueAsString(battle);
 
         mockMvc.perform(
@@ -158,7 +158,7 @@ public class BattleControllerTest {
                 .educatorId(1L)
                 .build();
         educatorRepository.save(educator);
-        battle.setCreatorId(educator);
+        battle.setCreator(educator);
         battle.setSubmissionDeadline("2024-01-01");
         String battleJson = objectMapper.writeValueAsString(battle);
 

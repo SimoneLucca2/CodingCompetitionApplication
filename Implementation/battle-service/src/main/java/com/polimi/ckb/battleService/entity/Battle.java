@@ -17,11 +17,11 @@ import java.util.List;
 public class Battle {
 
     @Builder
-    public Battle(Long battleId, String name, String description, Educator creatorId, String registrationDeadline, String submissionDeadline, String repoLink, Long tournamentId, BattleStatus status, List<StudentGroup> studentGroups, int maxGroupSize, int minGroupSize) {
+    public Battle(Long battleId, String name, String description, Educator creator, String registrationDeadline, String submissionDeadline, String repoLink, Long tournamentId, BattleStatus status, List<StudentGroup> studentGroups, int maxGroupSize, int minGroupSize) {
         this.battleId = battleId;
         this.name = name;
         this.description = description;
-        this.creatorId = creatorId;
+        this.creator = creator;
         this.registrationDeadline = registrationDeadline;
         this.submissionDeadline = submissionDeadline;
         this.repoLink = repoLink;
@@ -43,7 +43,7 @@ public class Battle {
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
-    private Educator creatorId;
+    private Educator creator; //TODO: change the dto to avoid infinite json files
 
     private String registrationDeadline;
 

@@ -11,6 +11,7 @@ import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.exception.*;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.kafkaProducer.BattleCreationKafkaProducer;
+import com.polimi.ckb.battleService.utility.CreateBattleFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -38,15 +39,8 @@ public class BattleController {
     @PostMapping
     public ResponseEntity<Object> createBattle(@RequestBody @Valid CreateBattleDto createBattleDto) {
         try {
-            log.info("Creating battle with message: {" + createBattleDto + "}");
-            if (createBattleDto.getSubmissionDeadline().compareTo(createBattleDto.getRegistrationDeadline()) <= 0) {
-                log.error("Submission deadline is before registration deadline or they are the same");
-                return ResponseEntity.badRequest().body(new ErrorResponse("Submission deadline is before registration deadline or they are the same"));
-            }
-            if (createBattleDto.getMaxGroupSize() < createBattleDto.getMinGroupSize()) {
-                log.error("Max group size is less than min group size");
-                return ResponseEntity.badRequest().body(new ErrorResponse("Max group size is less than min group size"));
-            }
+
+            CreateBattleFilter.check(createBattleDto);
 
             //If battle name is "TEST" then the caller is a test method (i.e. isTest = true)
             //Otherwise, the caller is a real user (i.e. isTest = false)
@@ -79,6 +73,9 @@ public class BattleController {
         } catch (ErrorWhileCreatingRepositoryException e) {
             log.error("Error while creating repository {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Error while creating repository: " + e.getMessage()));
+        } catch (RuntimeException e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
         }
     }
 
