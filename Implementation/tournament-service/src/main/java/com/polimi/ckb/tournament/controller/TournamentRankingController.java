@@ -28,4 +28,14 @@ public class TournamentRankingController {
         }
     }
 
+    @GetMapping("/{tournamentId}")
+    public ResponseEntity<Object> getTournamentRankingPV(@PathVariable Long tournamentId) {
+        try {
+            List<RankingEntryDto> ranking = rankingService.getTournamentRanking(tournamentId, null, null);
+            return ResponseEntity.ok(ranking);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
 }
