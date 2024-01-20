@@ -22,7 +22,7 @@ public class StartBattleKafkaConsumer {
         this.battleService = battleService;
     }
 
-    @KafkaListener(topics = "battle.lifecycle.battle", groupId = "battle-service")
+    @KafkaListener(topics = "battle.lifecycle.change", groupId = "battle-service")
     public void listener(ConsumerRecord<String, String> record) {
         try {
             String message = record.value();

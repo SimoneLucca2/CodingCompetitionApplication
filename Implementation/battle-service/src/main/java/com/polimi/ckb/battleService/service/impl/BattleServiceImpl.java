@@ -54,8 +54,8 @@ public class BattleServiceImpl implements BattleService {
                 throw new TournamentNotActiveException();
             }
 
-            if(!createBattleDto.getCreatorId().getEducatorId().equals(tournamentDto.getCreatorId()) ||
-                    !tournamentDto.getOrganizerIds().contains(createBattleDto.getCreatorId().getEducatorId())){
+            if(!createBattleDto.getCreatorId().equals(tournamentDto.getCreatorId()) ||
+                    !tournamentDto.getOrganizerIds().contains(createBattleDto.getCreatorId())){
                 throw new EducatorNotAuthorizedException();
             }
         }
@@ -99,8 +99,8 @@ public class BattleServiceImpl implements BattleService {
                 .registrationDeadline(createBattleDto.getRegistrationDeadline())
                 .submissionDeadline(createBattleDto.getSubmissionDeadline())
                 .status(BattleStatus.PRE_BATTLE)
-                .creatorId(educatorRepository
-                        .findById(createBattleDto.getCreatorId().getEducatorId())
+                .creator(educatorRepository
+                        .findById(createBattleDto.getCreatorId())
                         .orElseThrow(() -> new RuntimeException("Educator not found")))
                 .tournamentId(createBattleDto.getTournamentId())
                 .maxGroupSize(createBattleDto.getMaxGroupSize())
