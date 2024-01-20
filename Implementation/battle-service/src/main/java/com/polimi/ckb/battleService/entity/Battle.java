@@ -43,7 +43,7 @@ public class Battle {
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
-    private Educator creator; //TODO: change the dto to avoid infinite json files
+    private Educator creator;
 
     private String registrationDeadline;
 

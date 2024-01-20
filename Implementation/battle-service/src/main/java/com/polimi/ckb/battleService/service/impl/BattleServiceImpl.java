@@ -312,4 +312,9 @@ public class BattleServiceImpl implements BattleService {
     public void deleteBattle(DeleteBattleDto deleteBattleDto){
         battleRepository.deleteById(deleteBattleDto.getBattleId());
     }
+
+    @Override
+    public void uploadYamlFileForNotifications(){
+
+    }
 }
