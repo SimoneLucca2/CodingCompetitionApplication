@@ -88,7 +88,7 @@ public class BattleControllerTest {
         String overlappingBattleJson = objectMapper.writeValueAsString(overlappingBattle);
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         battleService.createBattle(battleDto, true);
 
         mockMvc.perform(
@@ -115,7 +115,7 @@ public class BattleControllerTest {
         String secondBattleJson = objectMapper.writeValueAsString(secondBattle);
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         battleService.createBattle(battleDto, true);
 
         mockMvc.perform(
@@ -184,7 +184,7 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto dto = BattleTestUtil.createTestStudentJoinBattleDto();
@@ -214,7 +214,7 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
         battle.setStatus(BattleStatus.BATTLE);
         battleRepository.save(battle);
@@ -246,7 +246,7 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
         battleRepository.save(battle);
 
@@ -280,7 +280,7 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto dto = BattleTestUtil.createTestStudentJoinBattleDto();
@@ -315,7 +315,7 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto dto = BattleTestUtil.createTestStudentJoinBattleDto();
@@ -350,7 +350,7 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto dto = BattleTestUtil.createTestStudentJoinBattleDto();
@@ -385,7 +385,7 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
 
         StudentLeaveBattleDto leaveDto = BattleTestUtil.createTestStudentQuitBattleDto();
@@ -415,7 +415,7 @@ public class BattleControllerTest {
         );
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto firstDto = BattleTestUtil.createTestStudentJoinBattleDto();
@@ -463,7 +463,7 @@ public class BattleControllerTest {
         );
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto firstDto = BattleTestUtil.createTestStudentJoinBattleDto();
@@ -511,7 +511,7 @@ public class BattleControllerTest {
         );
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto firstDto = BattleTestUtil.createTestStudentJoinBattleDto();
@@ -562,7 +562,7 @@ public class BattleControllerTest {
         );
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         battleDto.setMinGroupSize(1);
         battleDto.setMaxGroupSize(1);
         Battle battle = battleService.createBattle(battleDto, true);
