@@ -1,8 +1,11 @@
 import React from 'react';
 
-const UserProfile = () => {
+function UserProfile() {
     return (
-        <div className="text">"USER PROFILE"</div>
+        <>
+            <tournamentCard />
+            <tournamentCard />
+        </>
     );
 
 }
