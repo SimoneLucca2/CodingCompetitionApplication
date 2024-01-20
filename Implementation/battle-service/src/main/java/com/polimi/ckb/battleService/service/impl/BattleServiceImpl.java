@@ -6,6 +6,7 @@ import com.polimi.ckb.battleService.config.BattleStatus;
 import com.polimi.ckb.battleService.config.TournamentStatus;
 import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
+import com.polimi.ckb.battleService.entity.Educator;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.*;
@@ -311,5 +312,4 @@ public class BattleServiceImpl implements BattleService {
     public void deleteBattle(DeleteBattleDto deleteBattleDto){
         battleRepository.deleteById(deleteBattleDto.getBattleId());
     }
-
 }

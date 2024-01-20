@@ -23,18 +23,4 @@ public class CreateBattleDto implements Serializable {
     Long tournamentId;
     int maxGroupSize;
     int minGroupSize;
-
-    public static CreateBattleDto from(Battle battle) {
-        return CreateBattleDto.builder()
-                .name(battle.getName())
-                .description(battle.getDescription())
-                .creatorId(battle.getCreator().getEducatorId())
-                .registrationDeadline(battle.getRegistrationDeadline())
-                .submissionDeadline(battle.getSubmissionDeadline())
-                .tournamentId(battle.getTournamentId())
-                .maxGroupSize(battle.getMaxGroupSize())
-                .minGroupSize(battle.getMinGroupSize())
-                .build();
-    }
-
 }
