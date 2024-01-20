@@ -45,7 +45,8 @@ public class BattleController {
                 createdBattle = battleService.createBattle(createBattleDto, true);
             else{
                 createdBattle = battleService.createBattle(createBattleDto, false);
-                if(createGitHubRepository(createBattleDto) == null){
+                String repositoryUrl = createGitHubRepository(createBattleDto);
+                if(repositoryUrl == null){
                     //if repository creation fails, delete the battle
                     battleService.deleteBattle(
                             DeleteBattleDto.builder()
@@ -53,10 +54,20 @@ public class BattleController {
                                     .build()
                     );
                     throw new ErrorWhileCreatingRepositoryException(createBattleDto.getName());
+                } else {
+                    //save the link in battle entity
+                    battleService.saveRepositoryUrl(
+                            SaveRepositoryLinkDto.builder()
+                                    .repositoryUrl(repositoryUrl)
+                                    .build()
+                    );
+
+                    //push and commit a file yaml to set up an action that informs the system about new pushes on main branch
+                    battleService.uploadYamlFileForNotifications();
                 }
             }
 
-            kafkaProducer.sendBattleCreationMessage(createBattleDto);
+            kafkaProducer.sendBattleCreationMessage(CreatedBattleDto.from(createdBattle));
             log.info("Battle created successfully");
             return ResponseEntity.ok().body(CreatedBattleDto.from(createdBattle));
         } catch (BattleAlreadyExistException | BattleDeadlinesOverlapException | TournamentNotActiveException |
@@ -88,6 +99,7 @@ public class BattleController {
 
     private String createGitHubRepository(CreateBattleDto createBattleDto) {
         try {
+            log.info("Creating new GitHub repository named {}", createBattleDto.getName());
             final String requestBody = "{\"name\":\"" + createBattleDto.getName() + "\",\"description\":\"" + createBattleDto.getDescription() + "\"}";
 
             //get connection with GitHub api
@@ -104,7 +116,6 @@ public class BattleController {
                 throw new ErrorWhileCreatingRepositoryException(createBattleDto.getName());
             }
 
-            //TODO: save repo link;
             //get response
             String repositoryUrl = null;
             try (InputStream inputStream = connection.getInputStream()){
