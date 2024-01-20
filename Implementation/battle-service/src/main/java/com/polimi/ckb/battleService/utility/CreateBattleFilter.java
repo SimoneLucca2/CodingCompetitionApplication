@@ -1,9 +1,7 @@
 package com.polimi.ckb.battleService.utility;
 
 import com.polimi.ckb.battleService.dto.CreateBattleDto;
-import com.polimi.ckb.battleService.dto.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 
 @Slf4j
 public class CreateBattleFilter {
@@ -19,7 +17,5 @@ public class CreateBattleFilter {
             log.error("Max group size is less than min group size");
             throw new RuntimeException("Max group size is less than min group size");
         }
-
     }
-
 }

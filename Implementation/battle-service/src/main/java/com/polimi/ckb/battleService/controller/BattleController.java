@@ -3,10 +3,7 @@ package com.polimi.ckb.battleService.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.polimi.ckb.battleService.dto.CreateBattleDto;
-import com.polimi.ckb.battleService.dto.DeleteBattleDto;
-import com.polimi.ckb.battleService.dto.ErrorResponse;
-import com.polimi.ckb.battleService.dto.GetBattleDto;
+import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.exception.*;
 import com.polimi.ckb.battleService.service.BattleService;
@@ -39,7 +36,6 @@ public class BattleController {
     @PostMapping
     public ResponseEntity<Object> createBattle(@RequestBody @Valid CreateBattleDto createBattleDto) {
         try {
-
             CreateBattleFilter.check(createBattleDto);
 
             //If battle name is "TEST" then the caller is a test method (i.e. isTest = true)
@@ -62,7 +58,7 @@ public class BattleController {
 
             kafkaProducer.sendBattleCreationMessage(createBattleDto);
             log.info("Battle created successfully");
-            return ResponseEntity.ok().body(createdBattle);
+            return ResponseEntity.ok().body(CreatedBattleDto.from(createdBattle));
         } catch (BattleAlreadyExistException | BattleDeadlinesOverlapException | TournamentNotActiveException |
                  EducatorNotAuthorizedException e) {
             log.error("Bad request: {}", e.getMessage());
@@ -74,8 +70,8 @@ public class BattleController {
             log.error("Error while creating repository {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Error while creating repository: " + e.getMessage()));
         } catch (RuntimeException e) {
-            log.error("Internal server error: {}", e.getMessage());
-            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+            log.error("Bad request: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }
 

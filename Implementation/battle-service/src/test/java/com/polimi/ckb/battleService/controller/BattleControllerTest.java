@@ -27,6 +27,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -57,13 +59,15 @@ public class BattleControllerTest {
     @Transactional
     @DisplayName("Test successful battle creation")
     public void testThatBattleCanBeCreatedIfEverythingIsOk() throws Exception {
-        Battle battle = BattleTestUtil.createTestBattle();
+        CreateBattleDto battle = BattleTestUtil.createTestBattleDto();
         Educator educator = Educator.builder()
                 .educatorId(1L)
+                .battles(new ArrayList<>())
                 .build();
         educatorRepository.save(educator);
-        battle.setCreator(educator);
+        battle.setCreatorId(educator.getEducatorId());
         String battleJson = objectMapper.writeValueAsString(battle);
+
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/battle")
@@ -131,13 +135,13 @@ public class BattleControllerTest {
     @Transactional
     @DisplayName("maxGroupSize > minGroupSize")
     public void testThatGroupConstraintsCheckingSystemWorksFine() throws Exception{
-        Battle battle = BattleTestUtil.createTestBattle();
+        CreateBattleDto battle = BattleTestUtil.createTestBattleDto();
         battle.setMinGroupSize(10);
         Educator educator = Educator.builder()
                 .educatorId(1L)
                 .build();
         educatorRepository.save(educator);
-        battle.setCreator(educator);
+        battle.setCreatorId(educator.getEducatorId());
         String battleJson = objectMapper.writeValueAsString(battle);
 
         mockMvc.perform(
@@ -153,12 +157,12 @@ public class BattleControllerTest {
     @Transactional
     @DisplayName("registration-deadline < submission-deadline")
     public void testThatDeadlinesAreGivenInTheRightOrder() throws Exception{
-        Battle battle = BattleTestUtil.createTestBattle();
+        CreateBattleDto battle = BattleTestUtil.createTestBattleDto();
         Educator educator = Educator.builder()
                 .educatorId(1L)
                 .build();
         educatorRepository.save(educator);
-        battle.setCreator(educator);
+        battle.setCreatorId(educator.getEducatorId());
         battle.setSubmissionDeadline("2024-01-01");
         String battleJson = objectMapper.writeValueAsString(battle);
 
