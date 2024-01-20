@@ -14,6 +14,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+
 import static com.polimi.ckb.user.utility.entityConverter.NewTournamentDtoToTournament.convertToEntity;
 
 /**
@@ -40,7 +42,7 @@ public class BattleCreationKafkaConsumer {
         }
     }
 
-    private void processMessage(CreateBattleDto msg) {
+    private void processMessage(@Valid CreateBattleDto msg) {
         Battle battle = CreateBattleDtoToBattle.toEntity(msg);
 
         Educator creator = educatorRepository.findById(msg.getCreatorId()).orElseThrow(() -> new RuntimeException("Educator must exist")); //educator must exist

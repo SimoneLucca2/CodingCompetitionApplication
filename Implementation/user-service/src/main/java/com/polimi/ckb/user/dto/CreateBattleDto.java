@@ -19,7 +19,11 @@ import java.io.Serializable;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateBattleDto implements Serializable {
-    Long battleId;
+    @NotBlank(message = "tournament id cannot be null")
     Long tournamentId;
+    @NotBlank(message = "battle id cannot be null")
+    Long battleId;
+
+    @NotBlank(message = "creator id cannot be null")
     Long creatorId;
 }
