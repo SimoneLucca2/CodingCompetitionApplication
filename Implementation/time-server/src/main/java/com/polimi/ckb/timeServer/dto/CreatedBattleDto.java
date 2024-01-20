@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Builder
@@ -15,15 +14,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateBattleDto implements Serializable {
-    String name;
-    String description;
-    String registrationDeadline;
-    String submissionDeadline;
-    Long tournamentId;
-    int maxGroupSize;
-    int minGroupSize;
+public class CreatedBattleDto implements Serializable {
+    private Long battleId;
+    private String name;
+    private String description;
+    private Long creatorId;
+    private String registrationDeadline;
+    private String submissionDeadline;
+    private Long tournamentId;
+    private int maxGroupSize;
+    private int minGroupSize;
 
     // Set upon receiving the message
-    BattleStatus status;
+    private BattleStatus status;
 }

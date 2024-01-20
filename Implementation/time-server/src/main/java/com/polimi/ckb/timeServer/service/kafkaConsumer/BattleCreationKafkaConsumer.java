@@ -4,9 +4,7 @@ package com.polimi.ckb.timeServer.service.kafkaConsumer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polimi.ckb.timeServer.config.BattleStatus;
-import com.polimi.ckb.timeServer.dto.ChangeBattleStatusDto;
-import com.polimi.ckb.timeServer.dto.CreateBattleDto;
-import com.polimi.ckb.timeServer.dto.CreatedTournamentKafkaDto;
+import com.polimi.ckb.timeServer.dto.CreatedBattleDto;
 import com.polimi.ckb.timeServer.service.timeServices.BattleCreationTimeService;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -23,7 +21,7 @@ public class BattleCreationKafkaConsumer {
 
     @KafkaListener(topics = "battle.creation", groupId = "time-server")
     public void listener(String message) throws JsonProcessingException {
-        CreateBattleDto msg = objectMapper.readValue(message, CreateBattleDto.class);
+        CreatedBattleDto msg = objectMapper.readValue(message, CreatedBattleDto.class);
 
         //when the deadline expires, the battle will be set to the status BATTLE
         msg.setStatus(BattleStatus.BATTLE);
