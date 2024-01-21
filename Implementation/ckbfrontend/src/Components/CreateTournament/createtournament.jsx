@@ -1,51 +1,69 @@
 import React, { useState } from 'react';
-import './createtournament.css'; // Importa il foglio di stile CSS
+import './createtournament.css';
+import { useItemList } from "../../Context/ItemListContext";
+import {useNavigate} from "react-router-dom";
 
 const TournamentCreationPage = () => {
     const [tournamentData, setTournamentData] = useState({
         name: '',
+        creatorId: '',
         registrationDeadline: '',
-        description: '',
-        educatorID: '',
-        badges: []
+        status: 'PREPARATION',
     });
+    const navigate = useNavigate();
+
+    const ciao = {
+        name: 'Torneo di prova',
+        creatorId: 1,
+        registrationDeadline: '2021-01-01',
+        status: 'PREPARATION',
+    }
+
+    const { addItem } = useItemList();
+    const { items } = useItemList();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Ensuring creatorId is sent as a number
+        const payload = {
+            ...tournamentData,
+            creatorId: parseInt(tournamentData.creatorId, 10) || 0,
+        };
+
         try {
+            addItem(ciao);
+            console.log(items.map((tournament, index) => (tournament.name)));
             const response = await fetch('http://192.168.232.18:8080/tournament', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Aggiungi qui altri header se necessario, come l'autenticazione
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFREBnbWFpbC5jb20iLCJpYXQiOjE3MDU1OTExNzksImV4cCI6MTcwNjQ1NTE3OX0.JyPIdUmF9JTPc2mp-5z685T267BbhX9HO08yW8mkpHM', //
                 },
-                body: JSON.stringify(tournamentData)
+                body: JSON.stringify(payload),
             });
 
             if (response.ok) {
                 const data = await response.json();
                 console.log('Torneo creato:', data);
-                // Gestisci la risposta del successo qui (es. reindirizzamento, messaggio di successo)
+                addItem(data);
+                navigate('/prova');
             } else {
-                // Gestisci errori di risposta qui
                 console.error('Errore nella creazione del torneo');
             }
         } catch (error) {
-            // Gestisci errori di rete o altri errori qui
             console.error('Errore nella chiamata al backend:', error);
         }
-    }
-
+    };
 
     const handleInputChange = (e) => {
         setTournamentData({ ...tournamentData, [e.target.name]: e.target.value });
-    }
+    };
 
     const handleBadgeSelection = (badge) => {
         setTournamentData({
             ...tournamentData,
-            badges: [...tournamentData.badges, badge]
+            badges: [...tournamentData.badges, badge],
         });
     }
 
@@ -57,34 +75,22 @@ const TournamentCreationPage = () => {
             <h1>Crea il tuo Torneo</h1>
             <form onSubmit={handleSubmit} className="tournament-form">
                 <div className="form-group">
-                    <label>Nome del Torneo</label>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Inserisci il nome"
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div className="form-group">
                     <label>ID educatore</label>
                     <input
-                        type="text"
-                        name="name"
+                        type="number"
+                        name="creatorId"
                         placeholder="Inserisci il tuo ID educatore"
                         onChange={handleInputChange}
                     />
                 </div>
                 <div className="form-group">
-                    <label>Descrizione Opzionale del Torneo</label>
-                    <textarea
-                        name="description"
-                        placeholder="Descrivi il torneo"
+                    <label>Nome Torneo</label>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Inserisci il nome torneo"
                         onChange={handleInputChange}
                     />
-                </div>
-                <div className="form-group">
-                    <label>Badges</label>
-                    {/* Qui inserire il codice per la selezione dei badges */}
                 </div>
                 <div className="form-group">
                     <label>Data Massima di Fine Registrazione</label>
@@ -101,4 +107,3 @@ const TournamentCreationPage = () => {
 }
 
 export default TournamentCreationPage;
-

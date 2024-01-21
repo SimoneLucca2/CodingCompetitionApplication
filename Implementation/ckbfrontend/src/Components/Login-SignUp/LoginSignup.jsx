@@ -35,7 +35,6 @@ const LoginSignup = () => {
         }
 
         try {
-            {goTOuserprofile()};
             const url = action === 'Login' ? 'http://192.168.232.18:8080/login' : 'http://192.168.232.18:8080/signup';
             const bodyData = action === 'Login' ? {email, password} : {email, password, name, surname, nickname, type};
 
@@ -57,8 +56,7 @@ const LoginSignup = () => {
             const data = await response.json();
             console.log(`${action} successful:`, data);
 
-            // Handle successful login/signup
-            // ...
+            {goTOuserprofile()};// Naviga alla userprofile
 
         } catch (error) {
             console.error(`${action} error:`, error);

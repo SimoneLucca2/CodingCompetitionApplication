@@ -1,0 +1,86 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+.create-battle {
+    font-family: 'Roboto', sans-serif;
+    background-color: #000000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.create-battle form {
+    background-color: rgba(50, 55, 62, 0.66);
+    padding: 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgb(255, 204, 0);
+
+}
+
+.create-battle .Title {
+    color: #ffcc00;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.create-battle label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #adbac7;
+}
+.create-battle label  {
+    color: #ffcc00;
+}
+.create-battle input[type="text"],
+.create-battle input[type="number"],
+.create-battle input[type="datetime-local"],
+.create-battle input[type="url"],
+.create-battle textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3c424a;
+    color: #fff;
+    font-size: 16px;
+}
+
+.create-battle textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.create-battle button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffcc00;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-image: linear-gradient(to right, #ffcc00, #000000);
+
+}
+
+.create-battle button:hover {
+    background-color: #ffcc00;
+    transform: scale(1.05);
+    background-image: linear-gradient(to left, #ffcc00, #000000);
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .create-battle form {
+        width: 90%;
+    }
+}
