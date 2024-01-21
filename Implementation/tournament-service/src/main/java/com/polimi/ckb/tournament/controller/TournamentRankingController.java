@@ -6,10 +6,7 @@ import com.polimi.ckb.tournament.dto.RankingEntryDto;
 import com.polimi.ckb.tournament.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,6 +22,16 @@ public class TournamentRankingController {
     public ResponseEntity<Object> getTournamentRanking(@Valid @RequestBody GetTournamentRankingDto msg) {
         try {
             List<RankingEntryDto> ranking = rankingService.getTournamentRanking(msg.getTournamentId(), msg.getFirstIndex(), msg.getLastIndex());
+            return ResponseEntity.ok(ranking);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/{tournamentId}")
+    public ResponseEntity<Object> getTournamentRankingPV(@PathVariable Long tournamentId) {
+        try {
+            List<RankingEntryDto> ranking = rankingService.getTournamentRanking(tournamentId, null, null);
             return ResponseEntity.ok(ranking);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));

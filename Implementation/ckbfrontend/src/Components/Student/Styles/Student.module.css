@@ -1,0 +1,13 @@
+.studentCard {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 200px;
+}
+
+.studentParameter {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+}

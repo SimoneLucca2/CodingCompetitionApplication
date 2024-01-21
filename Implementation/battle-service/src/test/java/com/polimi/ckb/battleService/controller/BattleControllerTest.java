@@ -27,6 +27,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -57,13 +59,15 @@ public class BattleControllerTest {
     @Transactional
     @DisplayName("Test successful battle creation")
     public void testThatBattleCanBeCreatedIfEverythingIsOk() throws Exception {
-        Battle battle = BattleTestUtil.createTestBattle();
+        CreateBattleDto battle = BattleTestUtil.createTestBattleDto();
         Educator educator = Educator.builder()
                 .educatorId(1L)
+                .battles(new ArrayList<>())
                 .build();
         educatorRepository.save(educator);
-        battle.setCreatorId(educator);
+        battle.setCreatorId(educator.getEducatorId());
         String battleJson = objectMapper.writeValueAsString(battle);
+
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/battle")
@@ -83,13 +87,13 @@ public class BattleControllerTest {
                 .build();
         educatorRepository.save(educator);
         Battle overlappingBattle = BattleTestUtil.createTestOverlappingBattle();
-        overlappingBattle.setCreatorId(educator);
+        overlappingBattle.setCreator(educator);
 
         String overlappingBattleJson = objectMapper.writeValueAsString(overlappingBattle);
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        battleService.createBattle(battleDto, true);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/battle")
@@ -109,14 +113,14 @@ public class BattleControllerTest {
                 .educatorId(1L)
                 .build();
         educatorRepository.save(educator);
-        secondBattle.setCreatorId(educator);
+        secondBattle.setCreator(educator);
         secondBattle.setRegistrationDeadline("2024-02-01");
         secondBattle.setSubmissionDeadline("2024-02-10");
         String secondBattleJson = objectMapper.writeValueAsString(secondBattle);
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        battleService.createBattle(battleDto, true);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/battle")
@@ -131,13 +135,13 @@ public class BattleControllerTest {
     @Transactional
     @DisplayName("maxGroupSize > minGroupSize")
     public void testThatGroupConstraintsCheckingSystemWorksFine() throws Exception{
-        Battle battle = BattleTestUtil.createTestBattle();
+        CreateBattleDto battle = BattleTestUtil.createTestBattleDto();
         battle.setMinGroupSize(10);
         Educator educator = Educator.builder()
                 .educatorId(1L)
                 .build();
         educatorRepository.save(educator);
-        battle.setCreatorId(educator);
+        battle.setCreatorId(educator.getEducatorId());
         String battleJson = objectMapper.writeValueAsString(battle);
 
         mockMvc.perform(
@@ -153,12 +157,12 @@ public class BattleControllerTest {
     @Transactional
     @DisplayName("registration-deadline < submission-deadline")
     public void testThatDeadlinesAreGivenInTheRightOrder() throws Exception{
-        Battle battle = BattleTestUtil.createTestBattle();
+        CreateBattleDto battle = BattleTestUtil.createTestBattleDto();
         Educator educator = Educator.builder()
                 .educatorId(1L)
                 .build();
         educatorRepository.save(educator);
-        battle.setCreatorId(educator);
+        battle.setCreatorId(educator.getEducatorId());
         battle.setSubmissionDeadline("2024-01-01");
         String battleJson = objectMapper.writeValueAsString(battle);
 
@@ -184,8 +188,8 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto dto = BattleTestUtil.createTestStudentJoinBattleDto();
         dto.setBattleId(battle.getBattleId());
@@ -214,8 +218,8 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
         battle.setStatus(BattleStatus.BATTLE);
         battleRepository.save(battle);
 
@@ -246,8 +250,8 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
         battleRepository.save(battle);
 
         StudentJoinBattleDto dto = BattleTestUtil.createTestStudentJoinBattleDto();
@@ -280,8 +284,8 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto dto = BattleTestUtil.createTestStudentJoinBattleDto();
         dto.setBattleId(battle.getBattleId());
@@ -315,8 +319,8 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto dto = BattleTestUtil.createTestStudentJoinBattleDto();
         dto.setBattleId(battle.getBattleId());
@@ -350,8 +354,8 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto dto = BattleTestUtil.createTestStudentJoinBattleDto();
         dto.setBattleId(battle.getBattleId());
@@ -385,8 +389,8 @@ public class BattleControllerTest {
                 .build());
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
 
         StudentLeaveBattleDto leaveDto = BattleTestUtil.createTestStudentQuitBattleDto();
         leaveDto.setBattleId(battle.getBattleId());
@@ -415,8 +419,8 @@ public class BattleControllerTest {
         );
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto firstDto = BattleTestUtil.createTestStudentJoinBattleDto();
         firstDto.setBattleId(battle.getBattleId());
@@ -463,8 +467,8 @@ public class BattleControllerTest {
         );
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto firstDto = BattleTestUtil.createTestStudentJoinBattleDto();
         firstDto.setBattleId(battle.getBattleId());
@@ -511,8 +515,8 @@ public class BattleControllerTest {
         );
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
-        Battle battle = battleService.createBattle(battleDto);
+        battleDto.setCreatorId(educator.getEducatorId());
+        Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto firstDto = BattleTestUtil.createTestStudentJoinBattleDto();
         firstDto.setBattleId(battle.getBattleId());
@@ -562,10 +566,10 @@ public class BattleControllerTest {
         );
 
         CreateBattleDto battleDto = BattleTestUtil.createTestBattleDto();
-        battleDto.setCreatorId(educator);
+        battleDto.setCreatorId(educator.getEducatorId());
         battleDto.setMinGroupSize(1);
         battleDto.setMaxGroupSize(1);
-        Battle battle = battleService.createBattle(battleDto);
+        Battle battle = battleService.createBattle(battleDto, true);
 
         StudentJoinBattleDto firstDto = BattleTestUtil.createTestStudentJoinBattleDto();
         firstDto.setBattleId(battle.getBattleId());

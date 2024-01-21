@@ -14,8 +14,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class TournamentCreationTimeService {
+    private final int THREAD_POOL_SIZE = 80;
 
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(80);
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);
     private final TournamentActiveKafkaProducer tournamentActiveKafkaProducer;
 
     @Retryable

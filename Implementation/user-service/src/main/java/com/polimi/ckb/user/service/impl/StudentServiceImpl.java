@@ -22,13 +22,23 @@ public class StudentServiceImpl implements StudentService {
                     throw new IllegalArgumentException("User already exists");
                 },
                 () -> {
-                    Student user = new Student();
-                    user.setId(msg.getUserId());
-                    user.setEmail(msg.getEmail());
-                    user.setName(msg.getName());
 
-                    userRepository.save(user);
+                    Student student = new Student();
+                    student.setEmail(msg.getEmail());
+                    student.setName(msg.getName());
+                    student.setSurname(msg.getSurname());
+                    student.setNickname(msg.getNickname());
+                    student.setType(msg.getType());
+                    student.setUserId(msg.getUserId());
+
+                    studentRepository.save(student);
                 }
         );
     }
+
+    @Override
+    public Student getStudent(Long studentId){
+        return studentRepository.findById(studentId).orElseThrow(() -> new IllegalArgumentException("Student not found"));
+    }
+
 }

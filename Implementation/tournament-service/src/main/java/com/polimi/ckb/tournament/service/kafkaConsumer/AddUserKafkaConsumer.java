@@ -20,15 +20,8 @@ import java.util.Map;
 public class AddUserKafkaConsumer {
 
     private final ObjectMapper objectMapper;
-    private final Map<UserType, UserService> userServicesMap;
-
-    @Autowired
-    public AddUserKafkaConsumer(StudentService studentService, EducatorService educatorService) {
-        this.objectMapper = new ObjectMapper();
-        this.userServicesMap = new HashMap<>();
-        userServicesMap.put(UserType.STUDENT, studentService);
-        userServicesMap.put(UserType.EDUCATOR, educatorService);
-    }
+    private final StudentService studentService;
+    private final EducatorService educatorService;
 
     @KafkaListener(topics = "user.creation", groupId = "tournament-service")
     public void listener(ConsumerRecord<String, String> record) {
@@ -42,10 +35,15 @@ public class AddUserKafkaConsumer {
     }
 
     private void processMessage(NewUserDto userDto) {
-        UserService userService = userServicesMap.get(userDto.getType());
-        if (userService == null) {
-            throw new IllegalArgumentException("Unsupported user type: " + userDto.getType());
+        switch (userDto.getType()) {
+            case STUDENT:
+                studentService.addNewUser(userDto);
+                break;
+            case EDUCATOR:
+                educatorService.addNewUser(userDto);
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported user type: " + userDto.getType());
         }
-        userService.addNewUser(userDto);
     }
 }

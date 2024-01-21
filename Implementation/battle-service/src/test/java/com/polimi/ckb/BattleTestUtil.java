@@ -13,7 +13,7 @@ public final class BattleTestUtil {
     public static Battle createTestBattle(){
         return Battle.builder()
                 .battleId(4L)
-                .name("Test Battle")
+                .name("TEST")
                 .description("Test Battle Description")
                 .maxGroupSize(5)
                 .minGroupSize(1)
@@ -25,7 +25,7 @@ public final class BattleTestUtil {
 
     public static CreateBattleDto createTestBattleDto(){
         return CreateBattleDto.builder()
-                .name("Test Battle")
+                .name("TEST")
                 .description("Test Battle Description")
                 .maxGroupSize(5)
                 .minGroupSize(1)
@@ -38,7 +38,7 @@ public final class BattleTestUtil {
     public static Battle createTestOverlappingBattle(){
         return Battle.builder()
                 .battleId(4L)
-                .name("Overlapping Battle")
+                .name("TEST")
                 .description("Test Battle Description")
                 .maxGroupSize(5)
                 .minGroupSize(1)

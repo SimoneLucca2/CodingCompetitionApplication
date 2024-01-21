@@ -1,3 +1,4 @@
+
 import {BrowserRouter, Route, Routes, } from "react-router-dom";
 import './App.css';
 import LoginSignup from "./Components/Login-SignUp/LoginSignup";
@@ -20,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginSignup />} />
           <Route path="/userprofile" element={<UserProfile />} />
-              <Route path="/createtournament" element={<TournamentCreationPage />} />
+          <Route path="/createtournament" element={<TournamentCreationPage />} />
           <Route path="/addeducatortoatournament" element={<AddEducatorToTournament />} />
           <Route path="/jointournament" element={<Jointournament />} />
           <Route path="/quittournament" element={<QuitTournament />} />
@@ -34,7 +35,15 @@ function App() {
       </ItemListProvider>
 
   );
-}
 
+import StudentProfile from "./Components/Student/StudentProfile";
+import {StudentProfilePage} from "./Components/Student/StudentProfilePage";
+
+function App() {
+    return (
+        <StudentProfilePage studentId={652}/>
+    );
+
+}
 
 export default App;

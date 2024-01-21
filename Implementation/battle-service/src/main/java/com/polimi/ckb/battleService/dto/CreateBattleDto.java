@@ -1,7 +1,6 @@
 package com.polimi.ckb.battleService.dto;
 
 import com.polimi.ckb.battleService.entity.Battle;
-import com.polimi.ckb.battleService.entity.Educator;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -18,7 +17,7 @@ public class CreateBattleDto implements Serializable {
     String name;
     String description;
     @NotBlank(message = "Creator cannot be blank")
-    Educator creatorId;
+    Long creatorId;
     String registrationDeadline;
     String submissionDeadline;
     Long tournamentId;
