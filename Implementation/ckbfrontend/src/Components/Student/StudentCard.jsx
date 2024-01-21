@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Student.module.css';
+import styles from './Styles/Student.module.css';
 import PropTypes from 'prop-types';
 
 function StudentCard(props) {

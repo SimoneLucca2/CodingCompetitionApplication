@@ -1,21 +1,10 @@
-import {BrowserRouter, Route, Routes, } from "react-router-dom";
-import './App.css';
-import LoginSignup from "./Components/Login-SignUp/LoginSignup";
-import UserProfile from "./Components/UserProfile/userprofile";
-import Createtournament from "./Components/CreateTournament/createtournament";
-import TournamentCreationPage from "./Components/CreateTournament/createtournament";
+import StudentProfile from "./Components/Student/StudentProfile";
+import {StudentProfilePage} from "./Components/Student/StudentProfilePage";
 
 function App() {
-  return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginSignup />} />
-          <Route path="/userprofile" element={<UserProfile />} />
-          <Route path="/createtournament" element={<TournamentCreationPage />} />
-        </Routes>
-      </BrowserRouter>
-  );
+    return (
+        <StudentProfilePage studentId={652}/>
+    );
 }
-
 
 export default App;
