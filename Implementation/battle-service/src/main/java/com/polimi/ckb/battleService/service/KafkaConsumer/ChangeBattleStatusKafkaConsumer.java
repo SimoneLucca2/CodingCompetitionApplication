@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class StartBattleKafkaConsumer {
+public class ChangeBattleStatusKafkaConsumer {
     private final ObjectMapper objectMapper;
     private final BattleService battleService;
 
     @Autowired
-    public StartBattleKafkaConsumer(BattleService battleService) {
+    public ChangeBattleStatusKafkaConsumer(BattleService battleService) {
         this.objectMapper = new ObjectMapper();
         this.battleService = battleService;
     }

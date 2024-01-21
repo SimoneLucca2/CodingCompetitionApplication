@@ -14,5 +14,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EducatorDto implements Serializable {
-    Long educatorId;
+    private Long educatorId;
 }
