@@ -1,9 +1,12 @@
-import styles from './Button.module.css';
+import React from 'react';
+import styles from './Styles/Button.module.css';
 
-function Button(){
-    return(
-        <button className={styles.button}>Click Me</button>
-    )
+function Button({ onClick, buttonText }) {
+    return (
+        <button onClick={onClick} className={styles.button}>
+            {buttonText || 'Click Me'}
+        </button>
+    );
 }
 
 export default Button;
