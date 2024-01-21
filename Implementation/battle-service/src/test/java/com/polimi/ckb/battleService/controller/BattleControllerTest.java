@@ -13,7 +13,9 @@ import com.polimi.ckb.battleService.repository.EducatorRepository;
 import com.polimi.ckb.battleService.repository.GroupRepository;
 import com.polimi.ckb.battleService.repository.StudentRepository;
 import com.polimi.ckb.battleService.service.BattleService;
+import com.polimi.ckb.battleService.service.GitService;
 import jakarta.transaction.Transactional;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 @SpringBootTest
@@ -42,17 +45,26 @@ public class BattleControllerTest {
     private final StudentRepository studentRepository;
     private final EducatorRepository educatorRepository;
 
+    private final GitService gitService;
+
     @Autowired
     public BattleControllerTest(MockMvc mockMvc, BattleService battleService, BattleRepository battleRepository,
                                 GroupRepository groupRepository, StudentRepository studentRepository,
-                                EducatorRepository educatorRepository) {
+                                EducatorRepository educatorRepository, GitService gitService) {
         this.mockMvc = mockMvc;
+        this.gitService = gitService;
         this.objectMapper = new ObjectMapper();
         this.battleService = battleService;
         this.battleRepository = battleRepository;
         this.groupRepository = groupRepository;
         this.studentRepository = studentRepository;
         this.educatorRepository = educatorRepository;
+    }
+
+    @Test
+    @Transactional
+    public void testGitUploadYaml() throws GitAPIException, IOException {
+        gitService.uploadYamlFileForNotifications("https://github.com/MarcoF17/AnotherTest");
     }
 
     @Test

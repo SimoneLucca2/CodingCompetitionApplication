@@ -22,6 +22,4 @@ public interface BattleService {
     void saveRepositoryUrl(SaveRepositoryLinkDto saveRepositoryLinkDto);
 
     void deleteBattle(DeleteBattleDto deleteBattleDto);
-
-    void uploadYamlFileForNotifications();
 }
