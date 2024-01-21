@@ -1,0 +1,21 @@
+name: Notify on Push
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  send-notification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send HTML notification
+        run: |
+          - curl -X POST \
+          - -H "Content-Type: application/json" \
+          - -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+          - -d '{"message":"New push to master branch","html_url":"https://github.com/${{ github.repository }}/commit/${{ github.sha }}"}' \
+          - https://your-service-address/battle/score
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
