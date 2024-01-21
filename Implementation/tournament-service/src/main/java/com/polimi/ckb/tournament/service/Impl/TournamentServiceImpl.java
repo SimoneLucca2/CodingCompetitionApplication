@@ -81,11 +81,17 @@ public class TournamentServiceImpl implements TournamentService {
 
     @Transactional @Override
     public Tournament joinTournament(@Valid StudentJoinTournamentDto msg) {
-        Student student = studentRepository.findById(msg.getStudentId())
-                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + msg.getStudentId()));
 
         Tournament tournament = tournamentRepository.findById(msg.getTournamentId())
                 .orElseThrow(() -> new EntityNotFoundException("Tournament not found with id: " + msg.getTournamentId()));
+
+        if(tournament.getStatus() != TournamentStatus.PREPARATION) {
+            throw new IllegalArgumentException("Tournament is not open for registration");
+        }
+
+        Student student = studentRepository.findById(msg.getStudentId())
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + msg.getStudentId()));
+
 
         student.getTournaments().add(tournament);
 
