@@ -1,7 +1,6 @@
 package com.polimi.ckb.user.service.impl;
 
 import com.polimi.ckb.user.dto.NewUserDto;
-import com.polimi.ckb.user.entity.Educator;
 import com.polimi.ckb.user.entity.Student;
 import com.polimi.ckb.user.repository.StudentRepository;
 import com.polimi.ckb.user.repository.UserRepository;
@@ -36,4 +35,10 @@ public class StudentServiceImpl implements StudentService {
                 }
         );
     }
+
+    @Override
+    public Student getStudent(Long studentId){
+        return studentRepository.findById(studentId).orElseThrow(() -> new IllegalArgumentException("Student not found"));
+    }
+
 }

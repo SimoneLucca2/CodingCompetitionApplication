@@ -4,9 +4,9 @@ import com.polimi.ckb.user.dto.GetUserDto;
 import com.polimi.ckb.user.dto.TournamentsForUserDto;
 import com.polimi.ckb.user.dto.UsernameDto;
 import com.polimi.ckb.user.entity.Student;
-import com.polimi.ckb.user.entity.Tournament;
 import com.polimi.ckb.user.entity.User;
 import com.polimi.ckb.user.repository.StudentRepository;
+import com.polimi.ckb.user.service.StudentService;
 import com.polimi.ckb.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,7 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final StudentService studentService;
     private final StudentRepository studentRepository;
 
     @GetMapping
@@ -35,6 +36,15 @@ public class UserController {
     public ResponseEntity<User> getUser(@PathVariable Long userId) {
         try{
             return ResponseEntity.ok(userService.getUser(userId));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<Student> getStudent(@PathVariable Long studentId) {
+        try{
+            return ResponseEntity.ok(studentService.getStudent(studentId));
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
