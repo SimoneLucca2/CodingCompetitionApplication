@@ -10,9 +10,6 @@ import com.polimi.ckb.apiGateway.repository.UserRepository;
 import com.polimi.ckb.apiGateway.service.kafka.NewUserKafkaProducer;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,15 +17,12 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     private final UserRepository repository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
     private final NewUserKafkaProducer newUserKafkaProducer;
 
     public AuthenticationResponse register(@Valid RegisterRequest request) throws JsonProcessingException {
         User user = User.builder()
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .password(request.getPassword()) //TODO encode the password
                 .name(request.getName())
                 .surname(request.getSurname())
                 .nickname(request.getNickname())
@@ -41,25 +35,15 @@ public class AuthenticationService {
 
         newUserKafkaProducer.sendNewUser(newUserDto);
 
-        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .token("jwtToken")
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .token("jwtToken")
                 .build();
     }
 
