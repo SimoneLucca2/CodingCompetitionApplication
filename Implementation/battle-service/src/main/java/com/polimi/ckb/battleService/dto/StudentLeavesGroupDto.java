@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StudentLeavesGroupDto {
     @StudentExists
-    Long studentId;
+    private Long studentId;
 
     @GroupExists
-    Long groupId;
+    private Long groupId;
 }

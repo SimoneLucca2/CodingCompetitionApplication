@@ -54,12 +54,4 @@ public class KafkaConfig {
                 .replicas(1)
                 .build();
     }
-
-    @Bean
-    public NewTopic submissionDeadlineExpiredTopic(){
-        return TopicBuilder.name("battle.lifecycle.expiration")
-                .partitions(1)
-                .replicas(1)
-                .build();
-    }
 }
