@@ -19,7 +19,7 @@ public class Student {
     @Column(name = "student_id")
     private Long studentId;
 
-    @ManyToMany(mappedBy = "participants")
+    @ManyToMany
     @JoinTable(
             name = "student_participate_tournament",
             joinColumns = @JoinColumn(name = "student_id"),

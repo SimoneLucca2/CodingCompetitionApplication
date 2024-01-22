@@ -21,6 +21,9 @@ public class Tournament {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "creator_id")
     private Long creatorId;
 

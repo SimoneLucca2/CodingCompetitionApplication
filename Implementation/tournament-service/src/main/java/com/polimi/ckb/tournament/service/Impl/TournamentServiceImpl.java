@@ -84,6 +84,10 @@ public class TournamentServiceImpl implements TournamentService {
         scoreRepository.save(studentScore);
     }
 
+    public List<Tournament> getAllTournaments() {
+        return tournamentRepository.findAll();
+    }
+
     @Transactional
     @Override
     public List<Tournament> getPreparationTournaments() {

@@ -13,6 +13,7 @@ import java.util.List;
 public interface TournamentService {
     Tournament saveTournament(CreateTournamentDto msg);
     Tournament getTournament(Long id);
+    List<Tournament> getAllTournaments();
     List<Tournament> getPreparationTournaments();
     List<Tournament> getActiveTournaments();
     void updateTournamentScore(UpdateStudentScoreInTournamentDto msg);

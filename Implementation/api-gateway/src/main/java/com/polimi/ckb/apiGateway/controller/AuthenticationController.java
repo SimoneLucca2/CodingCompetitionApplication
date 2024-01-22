@@ -34,7 +34,7 @@ public class AuthenticationController {
     ) {
 
         System.out.println("received login request");
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok("LOGIN SUCCESSFUL");
     }
 
 

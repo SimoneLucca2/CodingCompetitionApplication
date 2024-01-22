@@ -50,6 +50,19 @@ public class TournamentController {
         }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<Object> getAllTournaments() {
+        try {
+            log.info("Getting all tournaments");
+            List<Tournament> tournaments = tournamentService.getAllTournaments();
+            log.info("Tournaments retrieved successfully");
+            return ResponseEntity.ok(tournaments.stream().map(TournamentDto::fromEntity));
+        } catch (Exception e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
     @GetMapping("/{tournamentId}")
     public ResponseEntity<Object> getTournament(@PathVariable Long tournamentId) {
         try {

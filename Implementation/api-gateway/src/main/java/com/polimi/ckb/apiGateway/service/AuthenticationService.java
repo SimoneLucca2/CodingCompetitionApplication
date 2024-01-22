@@ -37,11 +37,14 @@ public class AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .token("jwtToken")
+                .userId(newUser.getUserId())
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
+
+        //TODO
         return AuthenticationResponse.builder()
                 .token("jwtToken")
                 .build();
