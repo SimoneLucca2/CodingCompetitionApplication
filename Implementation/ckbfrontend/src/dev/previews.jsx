@@ -1,4 +1,4 @@
-import {ComponentPreview, Previews} from '@react-buddy/ide-toolbox'
+/*import {ComponentPreview, Previews} from '@react-buddy/ide-toolbox'
 import {PaletteTree} from './palette'
 import TournamentCard from "../Components/Tournament/TournamentCard";
 import StudentProfile from "../Components/Student/StudentProfile";
@@ -58,4 +58,4 @@ const ComponentPreviews = () => {
     )
 }
 
-export default ComponentPreviews
+export default ComponentPreviews*/

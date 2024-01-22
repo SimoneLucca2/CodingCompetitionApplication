@@ -6,6 +6,7 @@ import email_icon from './Assets/email.png';
 import password_icon from './Assets/password.png';
 import immagine_icon from './Assets/guy.png';
 import logo_icon from './Assets/Logo.png';
+import Radiobutton from "../RadioButton/radiobutton";
 
 
 const LoginSignup = () => {
@@ -23,6 +24,10 @@ const LoginSignup = () => {
         navigate('/userprofile'); // Naviga alla userprofile
     }
 
+    const goTOerrorpage = () => {
+        navigate('/errorpage'); // Naviga alla userprofile
+    }
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -36,7 +41,7 @@ const LoginSignup = () => {
 
         try {
             const url = action === 'Login' ? 'http://192.168.232.18:8080/login' : 'http://192.168.232.18:8080/signup';
-            const bodyData = action === 'Login' ? {email, password} : {email, password, name, surname, nickname, type};
+            const bodyData = action === 'Login' ? {email, password,type} : {email, password, name, surname, nickname, type};
 
             const response = await fetch(url, {
                 method: 'POST',
@@ -51,6 +56,7 @@ const LoginSignup = () => {
 
             if (!response.ok) {
                 throw new Error(`${action} failed`);
+                {goTOerrorpage()}
             }
 
             const data = await response.json();
@@ -61,6 +67,7 @@ const LoginSignup = () => {
         } catch (error) {
             console.error(`${action} error:`, error);
             setErrorMessage(`${action} failed. Please try again.`);
+            {goTOerrorpage()}
         }
 
     }
@@ -102,12 +109,6 @@ const LoginSignup = () => {
                                 <input type="text" placeholder="Nickname" value={nickname} onChange={(e) => setNickname(e.target.value)}/>
                             </div>
                         }
-                        {action === "Login" ? <div></div> :
-                            <div className="input">
-                                <img src={user_icon} alt=""/>
-                                <input type="text" placeholder="Type" value={type} onChange={(e) => setType(e.target.value)}/>
-                            </div>
-                        }
                         <div className="input">
                             <img src={email_icon} alt=""/>
                             <input
@@ -126,6 +127,9 @@ const LoginSignup = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
+                        <div className="input2">
+                            <Radiobutton type="text" placeholder="Type" value={type} onChange={(e) => setType(e.target.value)}/>
+                        </div>
                     </div>
                     <div className="immagine"><img src={immagine_icon} alt=""/></div>
                 </div>
@@ -136,13 +140,10 @@ const LoginSignup = () => {
                     <div className="immagine2"><img src={logo_icon} alt=""/>
                     </div>
                 </div>
-
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
-
             </form>
         </div>
     );
-
 };
 
 
