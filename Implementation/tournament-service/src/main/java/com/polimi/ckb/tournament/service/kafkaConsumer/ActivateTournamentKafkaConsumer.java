@@ -16,6 +16,12 @@ public class ActivateTournamentKafkaConsumer {
     private final ObjectMapper objectMapper;
     private final TournamentService tournamentService;
 
+    /**
+     * Kafka listener method that listens for messages on the topic "tournament.lifecycle.active" with the group id "tournament-service".
+     * The time service will send a message on this topic when the timeline expires.
+     * @param record The {@link ConsumerRecord} object that contains the message.
+     * @throws Exception if an error occurs during the processing of the message.
+     */
     @KafkaListener(topics = "tournament.lifecycle.active", groupId = "tournament-service")
     public void listener(ConsumerRecord<String, String> record) {
         try {
