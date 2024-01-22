@@ -1,0 +1,45 @@
+.tournament-form-container {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.tournament-form-container h1 {
+    text-align: center;
+    color: #ffcc00;
+}
+
+.tournament-form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.tournament-form-container label {
+    margin-bottom: 5px;
+}
+
+.tournament-form-container select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ffcc00;
+    background-color: #333;
+    color: white;
+}
+
+.tournament-form-container button {
+    background-color: #ffcc00;
+    color: black;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tournament-form-container button:hover {
+    background-color: #e6b800;
+}

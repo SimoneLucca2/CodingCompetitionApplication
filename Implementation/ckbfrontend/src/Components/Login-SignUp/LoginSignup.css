@@ -1,0 +1,248 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 100px;
+    background-color: #ffffff;
+    padding-bottom: 15px;
+    width: 80%;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Allinea il testo al centro */
+    gap: 9px;
+    font-family: 'Arial'; /* Imposta Times New Roman come font, con dei fallback */
+    font-weight: bold; /* Rende il testo in grassetto */
+    width: 100%;
+    margin-top: 50px;
+}
+
+.text {
+    color: #f51111; /* Imposta il colore del testo a nero */
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.underline {
+    width: 600px;
+    height: 6px;
+    background: #f51111;
+    border-radius: 9px;
+    text-underline-position: right;
+}
+
+.inputs{
+    margin-top: 55px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 80px;
+    background: #d5d9d5;
+    border-radius: 15px;
+}
+
+.input > img {
+    margin: 0px 30px;
+}
+
+.input > input {
+    width: 400px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #000000;
+    font-size: 19px;
+    background: transparent;
+}
+
+.input2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid #a0a0a0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f2f2f2;
+    transition: all 0.3s ease;
+}
+
+.input2:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: #e9e9e9;
+}
+
+.input2 .Radiobutton {
+    margin: 10px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #444;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.input2 .Radiobutton:hover {
+    background-color: #eee;
+    border-color: #bbb;
+    cursor: pointer;
+}
+
+.input2 .Radiobutton:checked {
+    background-color: #ddd;
+    border-color: #888;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input2 .Radiobutton:focus {
+    outline: none;
+    border-color: #ffcc00;
+    box-shadow: 0 0 0 0.2rem rgb(245, 17, 17);
+}
+
+.input2 label {
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+}
+
+
+
+.submit-container {
+    display:flex;
+    gap: 30px;
+
+    margin-left: 20px;
+
+    margin-top: 60px;
+
+    justify-content: left;
+    align-items: center;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 60px;
+    color: #ffffff;
+    background: #000000;
+    border-radius: 50px;
+    font-size: 19px;
+    font-family: 'Arial';
+    font-weight: 700;
+    cursor: pointer;
+    border:5px solid #000000}
+
+
+
+
+.gray {
+    color: #000000;
+    background: #d5d9d5;
+    border:5px solid #000000
+}
+
+.button {
+    display:flex;
+    gap: 30px;
+    margin-top: 60px;
+    margin-left: 160px;
+    justify-content: left;
+    align-items: center;
+}
+
+.ButtonforSubmit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 60px;
+    color: #000000;
+    background: #d5d9d5;
+    border:5px solid #000000;
+    border-radius:50px;
+    font-size: 19px;
+    font-family: 'Arial';
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ButtonforSubmit:hover {
+    background: #ffffff;
+    color: #000000;
+    border:5px solid #000000
+}
+
+.Centro {
+
+    display: flex;
+    flex-direction: row;
+    gap: 180px;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.immagine {
+    margin-right: 60px;
+    margin-top: 160px;
+}
+
+.immagine img{
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text2 {
+    color: black; /* Imposta il colore del testo a nero */
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.centro2 {
+    display: flex;
+    flex-direction: row;
+    gap: 180px;
+    justify-content: center;
+    width: 100%;
+}
+
+.immagine2 {
+    display: flex;
+    justify-content: center; /* Allinea l'elemento a destra */
+    align-items: center; /* Allinea verticalmente */
+    margin-top: 60px;
+    background-color: white;
+    margin-left: 150px;
+}
+
+.immagine2 img {
+    width: 60%; /* Larghezza dell'immagine */
+    height: auto; /* Altezza automatica per mantenere le proporzioni */
+}
+

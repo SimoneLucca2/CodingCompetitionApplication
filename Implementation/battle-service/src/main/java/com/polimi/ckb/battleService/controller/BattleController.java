@@ -7,10 +7,12 @@ import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.exception.*;
 import com.polimi.ckb.battleService.service.BattleService;
+import com.polimi.ckb.battleService.service.GitService;
 import com.polimi.ckb.battleService.service.kafkaProducer.BattleCreationKafkaProducer;
 import com.polimi.ckb.battleService.utility.CreateBattleFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,7 @@ import java.util.List;
 @Slf4j
 public class BattleController {
     private final BattleService battleService;
+    private final GitService gitService;
     private final BattleCreationKafkaProducer kafkaProducer;
     @Value("${github.api.token}")
     private static String gitHubToken;
@@ -63,7 +66,9 @@ public class BattleController {
                     );
 
                     //push and commit a file yaml to set up an action that informs the system about new pushes on main branch
-                    battleService.uploadYamlFileForNotifications();
+                    log.info("Pushing the configuration yaml file into the new repository");
+                    gitService.uploadYamlFileForNotifications(repositoryUrl);
+                    log.info("Repository ready for sharing");
                 }
             }
 
@@ -83,6 +88,10 @@ public class BattleController {
         } catch (RuntimeException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+        } catch (GitAPIException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -161,6 +170,7 @@ public class BattleController {
         connection.setRequestProperty("Authorization", "Bearer " + gitHubToken);
         connection.setRequestProperty("X-GitHub-Api-Version", "2022-11-28");
         connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("default_branch", "main");
 
         connection.setDoOutput(true);
         return connection;

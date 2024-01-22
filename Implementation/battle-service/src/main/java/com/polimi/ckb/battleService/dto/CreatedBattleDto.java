@@ -18,16 +18,16 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class CreatedBattleDto implements Serializable {
-    Long battleId;
-    String name;
-    String description;
+    private Long battleId;
+    private String name;
+    private String description;
     @NotBlank(message = "Creator cannot be blank")
-    Long creatorId;
-    String registrationDeadline;
-    String submissionDeadline;
-    Long tournamentId;
-    int maxGroupSize;
-    int minGroupSize;
+    private Long creatorId;
+    private String registrationDeadline;
+    private String submissionDeadline;
+    private Long tournamentId;
+    private int maxGroupSize;
+    private int minGroupSize;
 
     public static CreatedBattleDto from(Battle battle) {
         return CreatedBattleDto.builder()
