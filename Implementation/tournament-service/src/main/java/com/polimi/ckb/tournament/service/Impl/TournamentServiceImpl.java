@@ -17,10 +17,12 @@ import com.polimi.ckb.tournament.utility.entityConverter.CreateTournamentDtoToTo
 import com.polimi.ckb.tournament.utility.score.InitScore;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,22 +33,25 @@ public class TournamentServiceImpl implements TournamentService {
     private final StudentRepository studentRepository;
     private final ScoreRepository scoreRepository;
 
-    @Transactional @Override
+    @Transactional
+    @Override
     public Tournament saveTournament(CreateTournamentDto msg) {
         Optional<Tournament> maybeTournament = tournamentRepository.findByName(msg.getName());
-        if(maybeTournament.isPresent()) {
+        if (maybeTournament.isPresent()) {
             //tournament already exist
             throw new TournamentAlreadyExistException();
         }
         return tournamentRepository.save(CreateTournamentDtoToTournament.convertToEntity(msg));
     }
 
-    @Transactional(readOnly = true) @Override
+    @Transactional(readOnly = true)
+    @Override
     public Tournament getTournament(Long id) {
         return tournamentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tournament not found"));
     }
 
-    @Transactional @Override
+    @Transactional
+    @Override
     public void updateTournamentScore(UpdateStudentScoreInTournamentDto msg) {
         Long tournamentId = msg.getTournamentId();
         Long studentId = msg.getStudentId();
@@ -79,13 +84,26 @@ public class TournamentServiceImpl implements TournamentService {
         scoreRepository.save(studentScore);
     }
 
-    @Transactional @Override
+    @Transactional
+    @Override
+    public List<Tournament> getPreparationTournaments() {
+        return tournamentRepository.getInPreparationTournaments();
+    }
+
+    @Transactional
+    @Override
+    public List<Tournament> getActiveTournaments() {
+        return tournamentRepository.getActiveTournaments();
+    }
+
+    @Transactional
+    @Override
     public Tournament joinTournament(@Valid StudentJoinTournamentDto msg) {
 
         Tournament tournament = tournamentRepository.findById(msg.getTournamentId())
                 .orElseThrow(() -> new EntityNotFoundException("Tournament not found with id: " + msg.getTournamentId()));
 
-        if(tournament.getStatus() != TournamentStatus.PREPARATION) {
+        if (tournament.getStatus() != TournamentStatus.PREPARATION) {
             throw new IllegalArgumentException("Tournament is not open for registration");
         }
 
@@ -98,7 +116,8 @@ public class TournamentServiceImpl implements TournamentService {
         return tournamentRepository.save(tournament);
     }
 
-    @Override @Transactional
+    @Override
+    @Transactional
     public Tournament leaveTournament(StudentQuitTournamentDto msg) {
         Student student = studentRepository.findById(msg.getStudentId())
                 .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + msg.getStudentId()));
@@ -111,7 +130,8 @@ public class TournamentServiceImpl implements TournamentService {
         return tournamentRepository.save(tournament);
     }
 
-    @Override @Transactional
+    @Override
+    @Transactional
     public void updateTournamentStatus(Long tournamentId, TournamentStatus status) {
         Tournament tournament = tournamentRepository.findById(tournamentId)
                 .orElseThrow(() -> new EntityNotFoundException("Tournament not found with id: " + tournamentId));

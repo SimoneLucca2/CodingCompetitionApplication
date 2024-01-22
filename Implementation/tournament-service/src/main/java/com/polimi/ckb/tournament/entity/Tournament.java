@@ -45,6 +45,6 @@ public class Tournament {
 
     @ManyToMany(mappedBy = "tournaments")
     @ToString.Exclude
-    private List<Student> participant = new ArrayList<>();
+    private List<Student> participants = new ArrayList<>();
 
 }

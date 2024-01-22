@@ -8,10 +8,13 @@ import com.polimi.ckb.tournament.dto.UpdateStudentScoreInTournamentDto;
 import com.polimi.ckb.tournament.entity.Tournament;
 
 import javax.validation.Valid;
+import java.util.List;
 
 public interface TournamentService {
     Tournament saveTournament(CreateTournamentDto msg);
     Tournament getTournament(Long id);
+    List<Tournament> getPreparationTournaments();
+    List<Tournament> getActiveTournaments();
     void updateTournamentScore(UpdateStudentScoreInTournamentDto msg);
     Tournament joinTournament(@Valid StudentJoinTournamentDto msg);
     Tournament leaveTournament(@Valid StudentQuitTournamentDto msg);

@@ -33,8 +33,8 @@ public class TournamentDto {
                 .creatorId(tournament.getCreatorId())
                 .registrationDeadline(tournament.getRegistrationDeadline())
                 .status(tournament.getStatus())
-                .participantsIds(tournament.getParticipant() != null ?
-                                  tournament.getParticipant().stream().map(Student::getStudentId).collect(Collectors.toList())
+                .participantsIds(tournament.getParticipants() != null ?
+                                  tournament.getParticipants().stream().map(Student::getStudentId).collect(Collectors.toList())
                                   : null)
                 .organizerIds(tournament.getOrganizers() != null ?
                               tournament.getOrganizers().stream().map(Educator::getEducatorId).collect(Collectors.toList())
