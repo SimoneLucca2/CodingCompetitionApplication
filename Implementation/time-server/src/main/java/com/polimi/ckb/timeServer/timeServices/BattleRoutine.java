@@ -21,6 +21,12 @@ public class BattleRoutine {
         this.battleRepository = battleRepository;
     }
 
+    /**
+     * Checks the battle registration deadline and updates the battle status accordingly.
+     * This method is scheduled to run at fixed intervals defined by the "battle.polling.rate" property.
+     * It retrieves all battles with registration deadline passed and status set to "PRE_BATTLE".
+     * For each battle, it sets the status to "BATTLE" and saves the updated battle in the repository.
+     */
     @Scheduled(fixedRateString = "#{T(java.lang.Integer).valueOf('${battle.polling.rate}')}")
     @Async
     public void checkBattleRegistrationDeadline() {
@@ -32,6 +38,12 @@ public class BattleRoutine {
         });
     }
 
+    /**
+     * Checks the battle submission deadline and updates the battle status accordingly.
+     * This method is scheduled to run at fixed intervals defined by the "battle.polling.rate" property.
+     * It retrieves all battles with submission deadline passed and status set to "BATTLE".
+     * For each battle, it sets the status to "CONSOLIDATION" and saves the updated battle in the repository.
+     */
     @Scheduled(fixedRateString = "#{T(java.lang.Integer).valueOf('${battle.polling.rate}')}")
     @Async
     public void checkBattleSubmissionDeadline() {

@@ -22,7 +22,15 @@ public class TournamentRoutine {
     }
 
     /**
-     * Polling to tournament database to check the expired deadlines
+     * This method is responsible for checking the deadlines of tournaments and updating their status accordingly.
+     * It is annotated with "@Async" and "@Scheduled" to enable asynchronous execution and scheduling at a fixed rate.
+     * The polling rate is provided through the "tournament.polling.rate" property.
+     * <p>
+     * The method retrieves the current time using a SimpleDateFormat and formats it as a string.
+     * It then calls a method in the tournamentRepository to find all tournaments with a deadline after the current time
+     * and a status of "PREPARATION".
+     * It iterates over the list of tournaments and sets their status to "ACTIVE" using the setStatus method.
+     * The updated tournaments are then saved using the tournamentRepository.
      */
     @Async
     @Scheduled(fixedRateString = "#{T(java.lang.Integer).valueOf('${tournament.polling.rate}')}")
