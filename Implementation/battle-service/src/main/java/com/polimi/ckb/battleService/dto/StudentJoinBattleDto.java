@@ -19,9 +19,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StudentJoinBattleDto {
     @StudentExists
-    Long studentId;
+    private Long studentId;
 
     @BattleExists
     @BattleInPreBattleState
-    Long battleId;
+    private Long battleId;
 }

@@ -24,6 +24,14 @@ public class KafkaConfig {
                 .build();
     }
 
+  @Bean
+    public NewTopic educatorJoinRequestTopic() {
+        return TopicBuilder.name("tournament.educator.join")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
     @Bean
     public NewTopic inputTopicTopic() {
         return TopicBuilder.name("inputTopic")

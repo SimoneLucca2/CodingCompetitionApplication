@@ -10,7 +10,7 @@ import com.polimi.ckb.tournament.exception.TournamentNotFoundException;
 import com.polimi.ckb.tournament.repository.EducatorRepository;
 import com.polimi.ckb.tournament.repository.TournamentRepository;
 import com.polimi.ckb.tournament.service.EducatorService;
-import com.polimi.ckb.tournament.utility.entityConverter.NewUserDtoToUser;
+import com.polimi.ckb.tournament.utility.entityConverter.NewUserDtoToEducator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +50,7 @@ public class EducatorServiceImpl implements EducatorService {
 
     @Override
     public void addNewUser(NewUserDto msg) {
-        educatorRepository.save(NewUserDtoToUser.convertToEntity(msg));
+        educatorRepository.save(NewUserDtoToEducator.convertToEntity(msg));
     }
 
     private Tournament getTournamentById(Long id) {

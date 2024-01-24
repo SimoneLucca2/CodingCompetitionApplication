@@ -6,6 +6,7 @@ import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.service.TournamentService;
 import com.polimi.ckb.tournament.service.kafkaProducer.TournamentCreationKafkaProducer;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,13 +50,52 @@ public class TournamentController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<Object> getTournament(@Valid @RequestBody GetTournamentDto msg) {
+    @GetMapping("/all")
+    public ResponseEntity<Object> getAllTournaments() {
         try {
-            log.info("Getting tournament with id: {}", msg.getTournamentId());
-            Tournament tournament = tournamentService.getTournament(msg.getTournamentId());
+            log.info("Getting all tournaments");
+            List<Tournament> tournaments = tournamentService.getAllTournaments();
+            log.info("Tournaments retrieved successfully");
+            return ResponseEntity.ok(tournaments.stream().map(TournamentDto::fromEntity));
+        } catch (Exception e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/{tournamentId}")
+    public ResponseEntity<Object> getTournament(@PathVariable Long tournamentId) {
+        try {
+            log.info("Getting tournament with id: {}", tournamentId);
+            Tournament tournament = tournamentService.getTournament(tournamentId);
             log.info("Tournament retrieved successfully");
             return ResponseEntity.ok(TournamentDto.fromEntity(tournament));
+        } catch (Exception e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/preparation")
+    public ResponseEntity<Object> getPreparationTournaments() {
+        try {
+            log.info("Getting tournaments in preparation");
+            List<Tournament> tournaments = tournamentService.getPreparationTournaments();
+            log.info("Tournaments retrieved successfully");
+            return ResponseEntity.ok(tournaments.stream().map(TournamentDto::fromEntity));
+        } catch (Exception e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<Object> getActiveTournaments() {
+        try {
+            log.info("Getting tournaments in active state");
+            List<Tournament> tournaments = tournamentService.getActiveTournaments();
+            log.info("Tournaments retrieved successfully");
+            return ResponseEntity.ok(tournaments.stream().map(TournamentDto::fromEntity));
         } catch (Exception e) {
             log.error("Internal server error: {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));

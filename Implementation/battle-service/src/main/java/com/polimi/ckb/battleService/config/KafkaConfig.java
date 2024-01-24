@@ -49,15 +49,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic registrationDeadlineExpiredTopic(){
-        return TopicBuilder.name("battle.lifecycle.battle")
-                .partitions(1)
-                .replicas(1)
-                .build();
-    }
-
-    @Bean
-    public NewTopic submissionDeadlineExpiredTopic(){
-        return TopicBuilder.name("battle.lifecycle.expiration")
+        return TopicBuilder.name("battle.lifecycle.change")
                 .partitions(1)
                 .replicas(1)
                 .build();

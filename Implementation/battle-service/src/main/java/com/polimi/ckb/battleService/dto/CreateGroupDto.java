@@ -17,6 +17,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 public class CreateGroupDto implements Serializable {
-    Long battleId;
-    Long studentId;
+    private Long battleId;
+    private Long studentId;
 }

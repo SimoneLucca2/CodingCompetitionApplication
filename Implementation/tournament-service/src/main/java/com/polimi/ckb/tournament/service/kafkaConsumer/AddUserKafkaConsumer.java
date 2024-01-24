@@ -5,6 +5,7 @@ import com.polimi.ckb.tournament.dto.NewUserDto;
 import com.polimi.ckb.tournament.service.EducatorService;
 import com.polimi.ckb.tournament.service.StudentService;
 import com.polimi.ckb.tournament.service.UserService;
+import com.polimi.ckb.tournament.service.userCreationStrategy.UserCreationStrategy;
 import com.polimi.ckb.tournament.utility.UserType;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -13,21 +14,22 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AddUserKafkaConsumer {
 
     private final ObjectMapper objectMapper;
-    private final Map<UserType, UserService> userServicesMap;
+    private Map<UserType, UserCreationStrategy> userCreationStrategies;
 
     @Autowired
-    public AddUserKafkaConsumer(StudentService studentService, EducatorService educatorService) {
-        this.objectMapper = new ObjectMapper();
-        this.userServicesMap = new HashMap<>();
-        userServicesMap.put(UserType.STUDENT, studentService);
-        userServicesMap.put(UserType.EDUCATOR, educatorService);
+    public void setUserCreationStrategies(List<UserCreationStrategy> strategies){
+        userCreationStrategies = strategies.stream()
+                .collect(Collectors.toMap(UserCreationStrategy::getUserType, Function.identity()));
     }
 
     @KafkaListener(topics = "user.creation", groupId = "tournament-service")
@@ -42,10 +44,10 @@ public class AddUserKafkaConsumer {
     }
 
     private void processMessage(NewUserDto userDto) {
-        UserService userService = userServicesMap.get(userDto.getType());
-        if (userService == null) {
+        UserCreationStrategy userCreationStrategy = userCreationStrategies.get(userDto.getType());
+        if (userCreationStrategy == null) {
             throw new IllegalArgumentException("Unsupported user type: " + userDto.getType());
         }
-        userService.addNewUser(userDto);
+        userCreationStrategy.addNewUser(userDto);
     }
 }

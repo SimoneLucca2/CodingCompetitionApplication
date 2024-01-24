@@ -21,15 +21,17 @@ import java.io.Serializable;
 public class CreateTournamentDto implements Serializable {
 
         @NotBlank(message = "name must not be blank")
-        String name; // name of the tournament
+        private String name; // name of the tournament
 
         @NotBlank(message = "Creator ID must not be blank")
-        Long creatorId;
+        private Long creatorId;
+
+        private String description;
 
         @NotBlank(message = "Registration deadline must not be blank")
         @ValidRegistrationDeadline
-        String registrationDeadline;
+        private String registrationDeadline;
 
         @NotNull
-        TournamentStatus status;
+        private TournamentStatus status;
 }

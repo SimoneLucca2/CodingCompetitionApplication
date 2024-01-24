@@ -8,6 +8,7 @@ public class CreateTournamentDtoToTournament implements EntityConverter {
     public static Tournament convertToEntity(CreateTournamentDto createTournamentDto) {
         return Tournament.builder()
                 .name(createTournamentDto.getName())
+                .description(createTournamentDto.getDescription())
                 .creatorId(createTournamentDto.getCreatorId())
                 .registrationDeadline(createTournamentDto.getRegistrationDeadline())
                 .status(TournamentStatus.PREPARATION)

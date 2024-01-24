@@ -1,0 +1,25 @@
+/* Prova.css */
+.prova-container {
+    background-color: black; /* Imposta lo sfondo nero */
+    color: white; /* Imposta il colore del testo a bianco per un buon contrasto */
+    padding: 20px; /* Aggiunge un po' di spazio intorno al contenuto */
+    font-family: Arial, sans-serif; /* Sceglie un font leggibile */
+    min-height: 100vh; /* Assicura che il container riempia l'altezza della viewport */
+}
+
+.prova-container h2 {
+    text-align: center; /* Centra il titolo */
+    margin-bottom: 20px; /* Distanza dal titolo all'elenco */
+}
+
+.prova-container ul {
+    list-style: none; /* Rimuove i punti dall'elenco */
+    padding: 0; /* Rimuove il padding predefinito dell'elenco */
+    margin: 0; /* Rimuove il margine predefinito dell'elenco */
+}
+
+.prova-container li {
+    border-bottom: 1px solid grey; /* Aggiunge una sottile linea divisoria */
+    padding: 8px 0; /* Aggiunge spazio sopra e sotto il testo dell'elenco */
+    margin-bottom: 10px; /* Distanza tra gli elementi dell'elenco */
+}

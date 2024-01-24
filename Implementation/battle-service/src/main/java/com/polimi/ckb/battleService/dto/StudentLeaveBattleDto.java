@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StudentLeaveBattleDto {
     @StudentExists
-    Long studentId;
+    private Long studentId;
 
     @BattleExists
-    Long battleId;
+    private Long battleId;
 }

@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StudentInvitesToGroupDto {
     @StudentExists
-    Long requesterId;
+    private Long requesterId;
 
     @StudentExists
-    Long invitedId;
+    private Long invitedId;
 
     @GroupExists
-    Long groupId;
+    private Long groupId;
 }
