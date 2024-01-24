@@ -40,6 +40,7 @@ public class TournamentRankingController {
 
     /**
      * Retrieves the full tournament ranking based on the provided tournament ID.
+     * Meaning there is no limit to the number of entries returned.
      *
      * @param tournamentId The ID of the tournament to retrieve the ranking for.
      * @return The full tournament ranking as a ResponseEntity. If successful, the ranking list is returned as the response body.
