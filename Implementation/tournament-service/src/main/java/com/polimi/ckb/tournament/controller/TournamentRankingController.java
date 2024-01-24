@@ -1,14 +1,12 @@
 package com.polimi.ckb.tournament.controller;
 
 import com.polimi.ckb.tournament.dto.ErrorResponse;
-import com.polimi.ckb.tournament.dto.GetTournamentRankingDto;
 import com.polimi.ckb.tournament.dto.RankingEntryDto;
 import com.polimi.ckb.tournament.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -24,14 +22,21 @@ public class TournamentRankingController {
     /**
      * Retrieves the ranking of a tournament based on the provided parameters.
      *
-     * @param msg The request object containing the tournament ID, first index, and last index.
+     * @param tournamentId The ID of the tournament.
+     * @param minIndex The minimum index for the ranking.
+     * @param maxIndex The maximum index for the ranking.
      * @return The ranking list as a ResponseEntity. If successful, the ranking list is returned as the response body.
      *         If an error occurs, an error message is returned as the response body along with an internal server error status.
+     *
+     * Example request: GET /tournament/ranking?tournamentId=1&minIndex=0&maxIndex=10
      */
-    @GetMapping
-    public ResponseEntity<Object> getTournamentRanking(@Valid @RequestBody GetTournamentRankingDto msg) {
+    @GetMapping("/tournamentRanking")
+    public ResponseEntity<Object> getTournamentRanking(
+            @RequestParam("tournamentId") long tournamentId,
+            @RequestParam("minIndex") int minIndex,
+            @RequestParam("maxIndex") int maxIndex) {
         try {
-            List<RankingEntryDto> ranking = rankingService.getTournamentRanking(msg.getTournamentId(), msg.getFirstIndex(), msg.getLastIndex());
+            List<RankingEntryDto> ranking = rankingService.getTournamentRanking(tournamentId, minIndex, maxIndex);
             return ResponseEntity.ok(ranking);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
