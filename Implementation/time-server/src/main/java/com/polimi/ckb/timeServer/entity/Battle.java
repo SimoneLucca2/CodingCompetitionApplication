@@ -3,10 +3,7 @@ package com.polimi.ckb.timeServer.entity;
 
 import com.polimi.ckb.timeServer.config.BattleStatus;
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Setter;
 
 @Entity
 public class Battle {
@@ -28,6 +25,7 @@ public class Battle {
 
     private Long tournamentId;
 
+    @Setter
     private BattleStatus status;
 
     private int maxGroupSize;
