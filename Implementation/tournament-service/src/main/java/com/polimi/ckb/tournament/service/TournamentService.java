@@ -1,6 +1,5 @@
 package com.polimi.ckb.tournament.service;
 
-import com.polimi.ckb.tournament.config.TournamentStatus;
 import com.polimi.ckb.tournament.dto.CreateTournamentDto;
 import com.polimi.ckb.tournament.dto.StudentJoinTournamentDto;
 import com.polimi.ckb.tournament.dto.StudentQuitTournamentDto;
@@ -19,5 +18,5 @@ public interface TournamentService {
     void updateTournamentScore(UpdateStudentScoreInTournamentDto msg);
     Tournament joinTournament(@Valid StudentJoinTournamentDto msg);
     Tournament leaveTournament(@Valid StudentQuitTournamentDto msg);
-    void updateTournamentStatus(Long tournamentId, TournamentStatus status);
+
 }
