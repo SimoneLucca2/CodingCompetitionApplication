@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+//TODO see if it is useful in battle, if not => remove
 public class TournamentCreationKafkaProducer {
 
     private static final String TOPIC = "tournament.creation";
@@ -23,3 +24,4 @@ public class TournamentCreationKafkaProducer {
         kafkaTemplate.send(TOPIC, jsonMessage);
     }
 }
+

@@ -6,13 +6,12 @@ import com.polimi.ckb.apiGateway.dto.AuthenticationResponse;
 import com.polimi.ckb.apiGateway.dto.NewUserDto;
 import com.polimi.ckb.apiGateway.dto.RegisterRequest;
 import com.polimi.ckb.apiGateway.entity.User;
+import com.polimi.ckb.apiGateway.exception.UserNotFoundException;
+import com.polimi.ckb.apiGateway.exception.WrongPasswordException;
 import com.polimi.ckb.apiGateway.repository.UserRepository;
 import com.polimi.ckb.apiGateway.service.kafka.NewUserKafkaProducer;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,15 +19,12 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     private final UserRepository repository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
     private final NewUserKafkaProducer newUserKafkaProducer;
 
     public AuthenticationResponse register(@Valid RegisterRequest request) throws JsonProcessingException {
         User user = User.builder()
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .password(request.getPassword())
                 .name(request.getName())
                 .surname(request.getSurname())
                 .nickname(request.getNickname())
@@ -41,25 +37,26 @@ public class AuthenticationService {
 
         newUserKafkaProducer.sendNewUser(newUserDto);
 
-        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .userType(newUser.getType())
+                .nickname(newUser.getNickname())
+                .userId(newUser.getUserId())
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        User user = repository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UserNotFoundException(request.getEmail()));
+
+        if (!user.getPassword().equals(request.getPassword())) {
+            throw new WrongPasswordException(request.getPassword());
+        }
+
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .userType(user.getType())
+                .nickname(user.getNickname())
+                .userId(user.getUserId())
                 .build();
     }
 
