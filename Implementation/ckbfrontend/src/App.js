@@ -11,25 +11,44 @@ import ErrorPage from "./Components/ErrorPage/errorpage";
 import JoinBattle from "./Components/JoinBattle/joinbattle";
 import QuitBattle from "./Components/QuitBattle/quitbattle";
 import {ItemListProvider} from "./Context/ItemListContext";
-import TournamentsPage  from "./Components/Tournament2/TournamentsPage";
-import BattlesPage  from "./Components/Battle/BattlesPage";
+import TournamentsPageStudent  from "./Components/TournamentStudent/TournamentsPageStudent";
+import TournamentsPageEducator  from "./Components/TournamentEducator/TournamentsPageEducator";
+import BattlesPageStudent  from "./Components/BattleStudent/BattlesPageStudent";
+import BattlesPageEducator  from "./Components/BattleEducator/BattlesPageEducator";
+import TournamentsPageEducatormysection from "./Components/TournamentEducatormysection/TournamentsPageEducatormysection";
+import TournamentsPageStudentmysection from "./Components/TournamentStudentmysection/TournamentsPageStudentmysection";
+import BattlesPageEducatormysection from "./Components/BattleEducatormysection/BattlesPageEducatormysection";
+import BattlesPageStudentmysection from "./Components/BattleStudentmysection/BattlesPageStudentmysection";
+import CloseTournament from "./Components/CloseTournament/closetournament";
+
+import StudentProfile from "./Components/StudentProfile/StudentProfile";
+import Educatorprofile from "./Components/EducatorProfile/educatorprofile";
+
 function App() {
   return (
       <ItemListProvider>
         <BrowserRouter>
           <Routes>
-
             <Route path="/" element={<LoginSignup/>}/>
             <Route path="/createtournament" element={<TournamentCreationPage/>}/>
-            <Route path="/addeducatortoatournament" element={<AddEducatorToTournament/>}/>
-            <Route path="/jointournament/:tournamentId" element={<Jointournament/>}/>
+            <Route path="/addeducatortoatournament/:tournamentId" element={<AddEducatorToTournament/>}/>
+            <Route path="/jointournament" element={<Jointournament/>}/>
             <Route path="/quittournament" element={<QuitTournament/>}/>
             <Route path="/createbattle" element={<CreateBattle/>}/>
             <Route path="/errorpage" element={<ErrorPage/>}/>
             <Route path="/joinbattle" element={<JoinBattle/>}/>
             <Route path="/quitbattle" element={<QuitBattle/>}/>
-            <Route path="/tournaments" element={<TournamentsPage/>}/>
-            <Route path="/tournaments/:tournamentId/battles" element={<BattlesPage/>}/>
+            <Route path="/tournamentspagestudent" element={<TournamentsPageStudent/>}/>
+            <Route path="/tournamentspageeducator" element={<TournamentsPageEducator/>}/>
+            <Route path="/battlespagestudent" element={<BattlesPageStudent/>}/>
+            <Route path="/battlespageeducator" element={<BattlesPageEducator/>}/>
+            <Route path="/studentprofile" element={<StudentProfile/>}/>
+            <Route path="/educatorprofile" element={<Educatorprofile/>}/>
+            <Route path="/mysectiontournamentspageeducator" element={<TournamentsPageEducatormysection/>}/>
+            <Route path="/mysectiontournamentspagestudent" element={<TournamentsPageStudentmysection/>}/>
+            <Route path="/mysectiontbattlespagestudent" element={<BattlesPageStudentmysection/>}/>
+            <Route path="/mysectionbattlespageeducator" element={<BattlesPageEducatormysection/>}/>
+            <Route path="/closetournament" element={<CloseTournament/>}/>
 
           </Routes>
         </BrowserRouter>

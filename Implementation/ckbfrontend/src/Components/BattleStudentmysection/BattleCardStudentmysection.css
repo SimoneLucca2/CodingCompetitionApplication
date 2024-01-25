@@ -1,0 +1,32 @@
+/* BattleCardStudentmysection.css */
+.battle-card {
+    background: linear-gradient(135deg, #e6e6e6, #ffffff);
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2),
+    -5px -5px 15px rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    width: 300px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.battle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.battle-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.battle-card p {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.5;
+    position: relative;
+}

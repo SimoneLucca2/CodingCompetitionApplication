@@ -1,0 +1,77 @@
+.create-tournament {
+    background-color: #000000;
+    color: white;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.create-tournament form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.create-tournament label {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.create-tournament input[type="text"],
+.create-tournament textarea,
+.create-tournament input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+    outline: none;
+}
+
+.create-tournament input[type="text"]:focus,
+.create-tournament textarea:focus,
+.create-tournament input[type="date"]:focus {
+    border-color: #f51111;
+}
+
+.create-tournament textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.create-tournament button {
+    background-color: #ffcc00;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.create-tournament button:hover {
+    background-color: #a88700;
+    transform: scale(1.05);
+}
+
+/* Add some cool animations or effects if desired */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.create-tournament {
+    animation: fadeIn 1s ease-out;
+}

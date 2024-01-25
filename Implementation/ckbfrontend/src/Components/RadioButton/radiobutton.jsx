@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
-function RadioButton() {
+function RadioButton({onChange}) {
     const [choice, setChoice] = useState('');
 
     const handleChange = (event) => {
         setChoice(event.target.value);
+        onChange(event.target.value);
     };
 
     return (

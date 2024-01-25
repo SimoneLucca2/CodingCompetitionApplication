@@ -1,6 +1,6 @@
 /*import {ComponentPreview, Previews} from '@react-buddy/ide-toolbox'
 import {PaletteTree} from './palette'
-import TournamentCard from "../Components/Tournament/TournamentCard";
+import TournamentCardEducatormysection from "../Components/Tournament/TournamentCardEducatormysection";
 import StudentProfile from "../Components/Student/StudentProfile";
 import Button from "../Components/Button/Button";
 import App from "../App";
@@ -18,8 +18,8 @@ const ComponentPreviews = () => {
             <ComponentPreview path="/PaletteTree">
                 <PaletteTree/>
             </ComponentPreview>
-            <ComponentPreview path="/TournamentCard">
-                <TournamentCard/>
+            <ComponentPreview path="/TournamentCardEducatormysection">
+                <TournamentCardEducatormysection/>
             </ComponentPreview>
             <ComponentPreview path="/StudentProfile">
                 <StudentProfile/>
