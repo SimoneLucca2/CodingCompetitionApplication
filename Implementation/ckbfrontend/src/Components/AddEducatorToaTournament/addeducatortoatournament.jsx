@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import './addeducatortoatournament.css';
-import {useNavigate} from "react-router-dom";
-
+import {useNavigate, useParams} from "react-router-dom";
+import API_URL from "../../config";
 function AddEducatorToTournament() {
-    const [requesterId, setRequesterId] = useState('');
     const [educatorId, setEducatorId] = useState('');
-    const [tournamentId, setTournamentId] = useState('');
+    const [email, setEmail] = useState('');
+
 
     const navigate = useNavigate();
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const userId = oggettoSalvato.userId;
+    const params = useParams();
+    const tournament = params.tournamentId;
+    const tournamentId = parseInt(tournament, 10);
 
     const goTOuserprofile = () => {
-        navigate('/userprofile'); // Naviga alla userprofile
+        navigate('/educatorprofile'); // Naviga alla userprofile
     }
     const goTOerrorpage = () => {
         navigate('/errorpage'); // Naviga alla userprofile
@@ -19,16 +24,32 @@ function AddEducatorToTournament() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Configura i dati che desideri inviare
-        const dataToSend = {
-            requesterID: requesterId,
-            educatorID: educatorId,
-            tournamentID: tournamentId
-        };
-
         try {
             // Invia i dati al tuo endpoint API
-            const response = await fetch('http://192.168.232.18:8080/tournament', {
+            const response2 = await fetch(`${API_URL}/tournament/educator`, {
+                method: 'POST', // o 'PUT' se appropriato
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(email),
+            });
+
+            if (!response2.ok) {
+                throw new Error(`HTTP error! status: ${response2.status}`);
+            }
+
+            {goTOuserprofile()};// Naviga alla userprofile
+            const responseData2 = await response2.json();
+            console.log(responseData2);
+
+            // Configura i dati che desideri inviare
+            const dataToSend = {
+                requesterId: userId,
+                tournamentId: tournamentId,
+                educatorId: responseData2.educatorId
+            };
+            // Invia i dati al tuo endpoint API
+            const response = await fetch(`${API_URL}/tournament/educator`, {
                 method: 'POST', // o 'PUT' se appropriato
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,7 +64,6 @@ function AddEducatorToTournament() {
             {goTOuserprofile()};// Naviga alla userprofile
             const responseData = await response.json();
             console.log(responseData);
-            alert('Educator Added to Tournament Successfully!');
         } catch (error) {
             console.error('There was an error!', error);
             {goTOerrorpage()};
@@ -54,36 +74,17 @@ function AddEducatorToTournament() {
 
     return (
         <div className="add-educator-container">
-            <h2>Aggiungi un Educatore al Torneo</h2>
+            <h2>Add an educator to the tournament</h2>
             <form onSubmit={handleSubmit} className="educator-form">
                 <div className="form-group">
-                    <label>ID Educator (Requester): </label>
+                    <label>Email of the Educator To Add: </label>
                     <input
                         type="text"
-                        value={requesterId}
-                        onChange={(e) => setRequesterId(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-
-                <div className="form-group">
-                    <label>ID Educator (To Add): </label>
-                    <input
-                        type="text"
-                        value={educatorId}
-                        onChange={(e) => setEducatorId(e.target.value)}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label>ID Torneo: </label>
-                    <input
-                        type="text"
-                        value={tournamentId}
-                        onChange={(e) => setTournamentId(e.target.value)}
-                    />
-                </div>
-
-                <button type="submit">Aggiungi Educator</button>
+                <button type="submit">Add Educator</button>
             </form>
         </div>
     );

@@ -8,7 +8,7 @@ function ErrorPage({ message }) {
             <img src={errorImage} alt="Error" />
             <h1>Oops! Something went wrong...</h1>
             <p>{message || "We're sorry, but something went wrong. Please try again later."}</p>
-            <button onClick={() => window.location.href = '/userprofile'}>Go Back Home</button>
+            <button onClick={() => window.location.href = '/'}>Go Back Home</button>
         </div>
     );
 }

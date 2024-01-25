@@ -1,0 +1,63 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import './TournamentCardStudentmysection.css';
+import API_URL from "../../config";
+import axios from "axios";
+function TournamentCardStudentmysection({ tournament }) {
+    const navigate = useNavigate();
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const userId = oggettoSalvato.userId;
+
+    function deleteSubscription(studentId, tournamentId) {        // Define the URL of your backend endpoint
+        const url = `${API_URL}/tournament/student`;
+
+        // Prepare the data to be sent
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                // Aggiungi qui eventuali header richiesti, come Content-Type o token di autenticazione
+                'Content-Type': 'application/json',
+                // 'Authorization': 'Bearer tuoToken'
+            },
+            // Se necessario, includi il corpo della richiesta
+            body: JSON.stringify({ tournamentId, studentId })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Errore HTTP: ${response.status}`);
+                }
+                return response.json(); // o response.text() se la risposta non è in JSON
+            })
+            .then(data => {
+                console.log('Cancellazione avvenuta con successo:', data);
+                navigate(`/quittournament`)
+            })
+            .catch(error => {
+                console.error('Si è verificato un errore:', error);
+                navigate(`/errorpage`);
+            });
+    }
+
+    const goToTournamentBattles = () => {
+        navigate(`/mysectiontbattlespagestudent`);
+    };
+
+
+
+    const quitTournament = (e) => {
+        e.stopPropagation(); // Impedisce al click sul bottone di attivare il click sulla card
+        deleteSubscription(userId, tournament.tournamentId);
+    };
+
+    return (
+        <div className="tournament-card" onClick={goToTournamentBattles}>
+            <h3>{tournament.name}</h3>
+            <p>{tournament.description}</p>
+            <p>Registration Deadline:{tournament.registrationDeadline}</p>
+            <button className="join-button" onClick={quitTournament}>Quit the Tournament</button>
+
+        </div>
+    );
+}
+
+export default TournamentCardStudentmysection;
