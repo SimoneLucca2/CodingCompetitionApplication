@@ -3,6 +3,7 @@ package com.polimi.ckb.tournament.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.tournament.dto.*;
 import com.polimi.ckb.tournament.entity.Tournament;
+import com.polimi.ckb.tournament.repository.TournamentRepository;
 import com.polimi.ckb.tournament.service.TournamentService;
 import com.polimi.ckb.tournament.service.kafkaProducer.TournamentCreationKafkaProducer;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class TournamentController {
     private final TournamentCreationKafkaProducer kafkaProducer;
 
     private static final Logger log = LoggerFactory.getLogger(TournamentController.class);
+    private final TournamentRepository tournamentRepository;
 
     @PostMapping
     public ResponseEntity<Object> createTournament(@Valid @RequestBody CreateTournamentDto msg) {
@@ -55,6 +57,58 @@ public class TournamentController {
         try {
             log.info("Getting all tournaments");
             List<Tournament> tournaments = tournamentService.getAllTournaments();
+            log.info("Tournaments retrieved successfully");
+            return ResponseEntity.ok(tournaments.stream().map(TournamentDto::fromEntity));
+        } catch (Exception e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/enrolled/{studentId}")
+    public ResponseEntity<Object> getTournamentsOfStudent(@PathVariable Long studentId) {
+        try {
+            log.info("Getting all tournaments");
+            List<Tournament> tournaments = tournamentRepository.getTournamentsOfStudent(studentId);
+            log.info("Tournaments retrieved successfully");
+            return ResponseEntity.ok(tournaments.stream().map(TournamentDto::fromEntity));
+        } catch (Exception e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/notEnrolled/{studentId}")
+    public ResponseEntity<Object> getTournamentsWithoutStudent(@PathVariable Long studentId) {
+        try {
+            log.info("Getting tournaments without student: {}", studentId);
+            List<Tournament> tournaments = tournamentRepository.getTournamentsWithoutStudent(studentId);
+            log.info("Tournaments retrieved successfully");
+            return ResponseEntity.ok(tournaments.stream().map(TournamentDto::fromEntity));
+        } catch (Exception e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/administrated/{educatorId}")
+    public ResponseEntity<Object> getTournamentsAdministratedBy(@PathVariable Long educatorId) {
+        try {
+            log.info("Getting tournaments administrated by educator: {}", educatorId);
+            List<Tournament> tournaments = tournamentRepository.getTournamentsAdministratedBy(educatorId);
+            log.info("Tournaments retrieved successfully");
+            return ResponseEntity.ok(tournaments.stream().map(TournamentDto::fromEntity));
+        } catch (Exception e) {
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/notAdministrated/{educatorId}")
+    public ResponseEntity<Object> getTournamentsNotAdministratedBy(@PathVariable Long educatorId) {
+        try {
+            log.info("Getting tournaments administrated by educator: {}", educatorId);
+            List<Tournament> tournaments = tournamentRepository.getTournamentsNotAdministratedBy(educatorId);
             log.info("Tournaments retrieved successfully");
             return ResponseEntity.ok(tournaments.stream().map(TournamentDto::fromEntity));
         } catch (Exception e) {

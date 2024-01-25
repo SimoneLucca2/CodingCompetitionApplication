@@ -6,6 +6,8 @@ import com.polimi.ckb.apiGateway.dto.AuthenticationResponse;
 import com.polimi.ckb.apiGateway.dto.NewUserDto;
 import com.polimi.ckb.apiGateway.dto.RegisterRequest;
 import com.polimi.ckb.apiGateway.entity.User;
+import com.polimi.ckb.apiGateway.exception.UserNotFoundException;
+import com.polimi.ckb.apiGateway.exception.WrongPasswordException;
 import com.polimi.ckb.apiGateway.repository.UserRepository;
 import com.polimi.ckb.apiGateway.service.kafka.NewUserKafkaProducer;
 import jakarta.validation.Valid;
@@ -45,10 +47,10 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
         User user = repository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(request.getEmail()));
 
-        if (user.getPassword().equals(request.getPassword())) {
-            throw new RuntimeException("User not found");
+        if (!user.getPassword().equals(request.getPassword())) {
+            throw new WrongPasswordException(request.getPassword());
         }
 
         return AuthenticationResponse.builder()

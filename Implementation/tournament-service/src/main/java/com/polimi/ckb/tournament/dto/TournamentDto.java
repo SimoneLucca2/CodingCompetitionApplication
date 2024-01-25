@@ -23,6 +23,7 @@ public class TournamentDto {
     private Long creatorId;
     private String registrationDeadline;
     private TournamentStatus status;
+    private String description;
     private List<Long> organizerIds;
     private List<Long> participantsIds;
 
@@ -31,6 +32,7 @@ public class TournamentDto {
                 .tournamentId(tournament.getTournamentId())
                 .name(tournament.getName())
                 .creatorId(tournament.getCreatorId())
+                .description(tournament.getDescription())
                 .registrationDeadline(tournament.getRegistrationDeadline())
                 .status(tournament.getStatus())
                 .participantsIds(tournament.getParticipants() != null ?
