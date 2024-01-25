@@ -5,11 +5,13 @@ import com.polimi.ckb.tournament.utility.messageValidator.annotation.StudentInSp
 import com.polimi.ckb.tournament.utility.messageValidator.annotation.TournamentExists;
 import com.polimi.ckb.tournament.utility.messageValidator.annotation.TournamentInPrepareState;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Getter
+@Setter
 @StudentInSpecifiedTournament
 public class StudentJoinTournamentDto implements Serializable {
 

@@ -17,7 +17,6 @@ import com.polimi.ckb.tournament.utility.entityConverter.CreateTournamentDtoToTo
 import com.polimi.ckb.tournament.utility.score.InitScore;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -132,16 +131,6 @@ public class TournamentServiceImpl implements TournamentService {
         student.getTournaments().remove(tournament);
 
         return tournamentRepository.save(tournament);
-    }
-
-    @Override
-    @Transactional
-    public void updateTournamentStatus(Long tournamentId, TournamentStatus status) {
-        Tournament tournament = tournamentRepository.findById(tournamentId)
-                .orElseThrow(() -> new EntityNotFoundException("Tournament not found with id: " + tournamentId));
-
-        tournament.setStatus(status);
-        tournamentRepository.save(tournament);
     }
 
 }
