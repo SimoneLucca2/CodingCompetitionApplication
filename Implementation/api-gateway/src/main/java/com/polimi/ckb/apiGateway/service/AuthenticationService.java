@@ -22,7 +22,7 @@ public class AuthenticationService {
     public AuthenticationResponse register(@Valid RegisterRequest request) throws JsonProcessingException {
         User user = User.builder()
                 .email(request.getEmail())
-                .password(request.getPassword()) //TODO encode the password
+                .password(request.getPassword())
                 .name(request.getName())
                 .surname(request.getSurname())
                 .nickname(request.getNickname())
@@ -36,17 +36,25 @@ public class AuthenticationService {
         newUserKafkaProducer.sendNewUser(newUserDto);
 
         return AuthenticationResponse.builder()
-                .token("jwtToken")
+                .userType(newUser.getType())
+                .nickname(newUser.getNickname())
                 .userId(newUser.getUserId())
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
+        User user = repository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        //TODO
+        if (user.getPassword().equals(request.getPassword())) {
+            throw new RuntimeException("User not found");
+        }
+
         return AuthenticationResponse.builder()
-                .token("jwtToken")
+                .userType(user.getType())
+                .nickname(user.getNickname())
+                .userId(user.getUserId())
                 .build();
     }
 

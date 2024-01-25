@@ -4,11 +4,11 @@ import com.polimi.ckb.apiGateway.dto.AuthenticationRequest;
 import com.polimi.ckb.apiGateway.dto.RegisterRequest;
 import com.polimi.ckb.apiGateway.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
 
 
 @RestController
@@ -32,9 +32,7 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
-
-        System.out.println("received login request");
-        return ResponseEntity.ok("LOGIN SUCCESSFUL");
+        return ResponseEntity.ok(service.authenticate(request));
     }
 
 
