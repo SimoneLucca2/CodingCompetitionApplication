@@ -17,10 +17,10 @@ import java.nio.file.Paths;
 @Service
 public class GitServiceImpl implements GitService {
     //@Value("${github.api.token}")
-    private String gitHubToken = "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";
+    private final String gitHubToken = "";
 
     //@Value("${github.api.username}")
-    private String gitHubUsername = "MarcoF17";
+    private final String gitHubUsername = "MarcoF17";
     @Override
     public void uploadYamlFileForNotifications(final String repositoryUrl) throws GitAPIException, IOException {
         //clone the repository
