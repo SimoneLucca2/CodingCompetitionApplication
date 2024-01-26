@@ -20,7 +20,6 @@ import TournamentsPageStudentmysection from "./Components/TournamentStudentmysec
 import BattlesPageEducatormysection from "./Components/BattleEducatormysection/BattlesPageEducatormysection";
 import BattlesPageStudentmysection from "./Components/BattleStudentmysection/BattlesPageStudentmysection";
 import CloseTournament from "./Components/CloseTournament/closetournament";
-
 import StudentProfile from "./Components/StudentProfile/StudentProfile";
 import Educatorprofile from "./Components/EducatorProfile/educatorprofile";
 
@@ -34,7 +33,7 @@ function App() {
             <Route path="/addeducatortoatournament/:tournamentId" element={<AddEducatorToTournament/>}/>
             <Route path="/jointournament" element={<Jointournament/>}/>
             <Route path="/quittournament" element={<QuitTournament/>}/>
-            <Route path="/createbattle" element={<CreateBattle/>}/>
+            <Route path="/createbattle/:tournamentId" element={<CreateBattle/>}/>
             <Route path="/errorpage" element={<ErrorPage/>}/>
             <Route path="/joinbattle" element={<JoinBattle/>}/>
             <Route path="/quitbattle" element={<QuitBattle/>}/>
@@ -46,10 +45,9 @@ function App() {
             <Route path="/educatorprofile" element={<Educatorprofile/>}/>
             <Route path="/mysectiontournamentspageeducator" element={<TournamentsPageEducatormysection/>}/>
             <Route path="/mysectiontournamentspagestudent" element={<TournamentsPageStudentmysection/>}/>
-            <Route path="/mysectiontbattlespagestudent" element={<BattlesPageStudentmysection/>}/>
-            <Route path="/mysectionbattlespageeducator" element={<BattlesPageEducatormysection/>}/>
+            <Route path="/mysectiontbattlespagestudent/:tournamentId" element={<BattlesPageStudentmysection/>}/>
+            <Route path="/mysectionbattlespageeducator/:tournamentId" element={<BattlesPageEducatormysection/>}/>
             <Route path="/closetournament" element={<CloseTournament/>}/>
-
           </Routes>
         </BrowserRouter>
       </ItemListProvider>
