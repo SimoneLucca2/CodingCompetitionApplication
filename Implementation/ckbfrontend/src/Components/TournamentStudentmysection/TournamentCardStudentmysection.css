@@ -7,9 +7,11 @@
     padding: 20px;
     width: 300px;
     cursor: pointer;
-    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.6s, opacity 0.6s;
+    transform-origin: center;
 }
 
 .tournament-card::before {
@@ -52,6 +54,16 @@
 .tournament-card:hover {
     transform: translateY(-5px);
     box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.tournament-card.flipped {
+    transform: rotateY(180deg) scale(1.2);
+}
+
+.tournament-card.vanished {
+    opacity: 0;
+    transform: scale(0);
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
 
 
