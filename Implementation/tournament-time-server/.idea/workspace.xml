@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c9622205-b91b-4312-a01f-ead62a32173a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/dto/BattleListDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/dto/RepoLinkDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/controller/BattleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/controller/BattleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/controller/GroupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/controller/GroupController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/entity/Battle.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/entity/Battle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/BattleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/BattleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/GroupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/GroupService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/BattleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/BattleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/GroupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/GroupServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/test/java/com/polimi/ckb/battleService/controller/BattleControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/test/java/com/polimi/ckb/battleService/controller/BattleControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-time-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../eureka-server/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/src/main/resources/application.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2bUUS5GJAS6xQaouZPLx2XnWDNs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/marcolino/Documenti/FeraboliFilippiniLucca/Implementation/tournament-time-server",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="tournament-time-server" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="tournament-time-server" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TimeServerStarter" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ckb" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.polimi.ckb.timeServer.TimeServerStarter" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-20.0.2-corretto-20.0.2.1-f644763e9732-05769f21" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c9622205-b91b-4312-a01f-ead62a32173a" name="Changes" comment="" />
+      <created>1706269147682</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706269147682</updated>
+      <workItem from="1706269148735" duration="13000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

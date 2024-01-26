@@ -1,28 +1,23 @@
 import React, { useState } from 'react';
 import './createbattle.css';
-import {useNavigate, useParams} from "react-router-dom";
-import API_URL from "../../config";
+import {useNavigate} from "react-router-dom";
 
 function CreateBattle() {
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
-    const params = useParams();
-    const tournament = params.tournamentId;
-    const tournamentId = parseInt(tournament, 10);
     const [battleData, setBattleData] = useState({
         name: '',
         description: '',
         registrationDeadline: '',
         submissionDeadline: '',
-        minGroupSize: 1,
-        maxGroupSize: 10,
-        creatorId: userId,
-        tournamentId: tournamentId,
+        minMembers: 1,
+        maxMembers: 10,
+        educatorId: '',
+        tournamentId: '',
+        githubLink: ''
     });
 
     const navigate = useNavigate();
     const goTOuserprofile = () => {
-        navigate('/mysectiontournamentspageeducator'); // Naviga alla userprofile
+        navigate('/userprofile'); // Naviga alla userprofile
     }
 
     const goTOerrorpage = () => {
@@ -36,7 +31,7 @@ function CreateBattle() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const apiEndpoint = `${API_URL}/battle`; // Replace with your actual API endpoint
+        const apiEndpoint = 'http://192.168.232.18:8080/battle'; // Replace with your actual API endpoint
         const options = {
             method: 'POST',
             headers: {
@@ -81,10 +76,19 @@ function CreateBattle() {
                 <input type="datetime-local" id="submissionDeadline" name="submissionDeadline" value={battleData.submissionDeadline} onChange={handleChange} />
 
                 <label htmlFor="minMembers">Minimum Members:</label>
-                <input type="number" id="minGroupSize" name="minGroupSize" value={battleData.minGroupSize} onChange={handleChange} />
+                <input type="number" id="minMembers" name="minMembers" value={battleData.minMembers} onChange={handleChange} />
 
                 <label htmlFor="maxMembers">Maximum Members:</label>
-                <input type="number" id="maxGroupSize" name="maxGroupSize" value={battleData.maxGroupSize} onChange={handleChange} />
+                <input type="number" id="maxMembers" name="maxMembers" value={battleData.maxMembers} onChange={handleChange} />
+
+                <label htmlFor="educatorId">Educator ID:</label>
+                <input type="text" id="educatorId" name="educatorId" value={battleData.educatorId} onChange={handleChange} />
+
+                <label htmlFor="tournamentId">Tournament ID:</label>
+                <input type="text" id="tournamentId" name="tournamentId" value={battleData.tournamentId} onChange={handleChange} />
+
+                <label htmlFor="githubLink">GitHub Repository Link:</label>
+                <input type="url" id="githubLink" name="githubLink" value={battleData.githubLink} onChange={handleChange} />
 
                 <button type="submit">Create Battle</button>
             </form>
