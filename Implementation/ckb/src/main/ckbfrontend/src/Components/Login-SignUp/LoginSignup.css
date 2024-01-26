@@ -1,0 +1,91 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 100px;
+    background: gainsboro;
+    padding-bottom: 15px;
+    width: 80%;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Allinea il testo al centro */
+    gap: 9px;
+    font-family: 'Arial'; /* Imposta Times New Roman come font, con dei fallback */
+    font-weight: bold; /* Rende il testo in grassetto */
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text {
+    color: black; /* Imposta il colore del testo a nero */
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.underline {
+    width: 69px;
+    height: 6px;
+    background: #000000;
+    border-radius: 9px;
+    text-underline-position: right;
+}
+
+.inputs{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 80px;
+    background: white;
+    border-radius: 15px;
+}
+
+.input > img {
+    margin: 0px 30px;
+}
+
+.input > input {
+    width: 400px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #000000;
+    font-size: 19px;
+    background: transparent;
+}
+
+.submit-container {
+    display: flex;
+    gap: 30px;
+    margin: 60px auto;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 60px;
+    color: #000000;
+    background: white;
+    border-radius: 50px;
+    font-size: 19px;
+    font-family: 'Arial';
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.gray {
+    color: #d5d9d5;
+    background: #ffffff;
+}
