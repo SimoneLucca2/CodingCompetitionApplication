@@ -34,8 +34,8 @@ public class EducatorController {
     public ResponseEntity<Object> addEducator(@Valid @RequestBody AddEducatorDto msg) {
         try {
             Tournament response = educatorService.addEducatorToTournament(msg);
-            kafkaProducer.sendAddedEducatorMessage(msg);
-            return ResponseEntity.ok(TournamentDto.fromEntity(response)); //TODO debug
+            kafkaProducer.sendAddedEducatorMessage(msg); //TODO probably remove
+            return ResponseEntity.ok(TournamentDto.fromEntity(response));
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }

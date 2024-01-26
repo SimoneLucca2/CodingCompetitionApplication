@@ -21,6 +21,9 @@ public class Tournament {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "creator_id")
     private Long creatorId;
 
@@ -30,7 +33,7 @@ public class Tournament {
     @Enumerated(EnumType.STRING)
     private TournamentStatus status;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tournament_organizers",
             joinColumns = @JoinColumn(name = "tournament_id"),
@@ -42,5 +45,9 @@ public class Tournament {
     @OneToMany(mappedBy = "tournament")
     @ToString.Exclude
     private List<Score> scores = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "tournaments")
+    @ToString.Exclude
+    private List<Student> participants = new ArrayList<>();
 
 }

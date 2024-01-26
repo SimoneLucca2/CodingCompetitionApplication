@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+//TODO to remove
 public class AddEducatorKafkaProducer {
     private static final String TOPIC = "tournament.educator.add";
     private final KafkaTemplate<String, Object> kafkaTemplate;
