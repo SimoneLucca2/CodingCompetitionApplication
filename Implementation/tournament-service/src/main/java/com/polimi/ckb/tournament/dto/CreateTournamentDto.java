@@ -32,6 +32,6 @@ public class CreateTournamentDto implements Serializable {
         @ValidRegistrationDeadline
         private String registrationDeadline;
 
-        @NotNull
+        @NotNull(message = "Status must not be null")
         private TournamentStatus status;
 }

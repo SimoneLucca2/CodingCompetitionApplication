@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "Tournament", indexes = {@Index(name = "idx_registration_deadline", columnList = "registration_deadline")})
 @Builder
 public class Tournament {
     @Id
@@ -49,5 +50,4 @@ public class Tournament {
     @ManyToMany(mappedBy = "tournaments")
     @ToString.Exclude
     private List<Student> participants = new ArrayList<>();
-
 }
