@@ -6,7 +6,7 @@ function TournamentCardEducatormysection({ tournament }) {
     const navigate = useNavigate();
 
     const goToTournamentBattles = () => {
-        navigate(`/mysectionbattlespageeducator/${tournament.tournamentId}`);
+        navigate(`/mysectionbattlespageeducator`);
     };
 
     function joinAddEducatortoaTournament(e) {
@@ -22,7 +22,7 @@ function TournamentCardEducatormysection({ tournament }) {
 
     function joinCreateBattle(e) {
         e.stopPropagation();
-        navigate(`/createbattle/${tournament.tournamentId}`);
+        navigate(`/createbattle`);
     }
 
     return (

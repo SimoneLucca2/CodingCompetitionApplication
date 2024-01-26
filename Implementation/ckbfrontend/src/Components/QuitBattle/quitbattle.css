@@ -1,34 +1,71 @@
-.subscription-success {
-    text-align: center;
-    background-color: rgb(255, 255, 255); /* Green background */
-    color: #f51111;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgb(0, 0, 0); /* Slight shadow for depth */
-    max-width: 400px;
-    margin: 50px auto;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 
-.subscription-success h1 {
-    margin: 0 0 10px 0;
-}
-
-.subscription-success p {
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.subscription-success button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #f44336; /* Red button */
+.quit-battle-container {
+    background: #121212; /* Fallback for older browsers */
+    background: linear-gradient(to right, #0f0c29, #000000, #000000);
     color: white;
-    font-size: 1rem;
-    cursor: pointer;
+    padding: 40px;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.subscription-success button:hover {
-    background-color: #d32f2f; /* Darker shade on hover */
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgb(255, 204, 0);
+    max-width: 400px;
+    width: 100%;
+}
+
+.header h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ffcc00;
+}
+
+.input-field input {
+    width: calc(100% - 20px);
+    padding: 12px 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #222;
+    color: white;
+    transition: box-shadow 0.3s ease;
+}
+
+.input-field input:focus {
+    outline: none;
+    box-shadow: 0 0 10px #ffcc00;
+}
+
+.submit-button button {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    background-image: linear-gradient(to right, #ffcc00, #000000);
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button button:hover {
+    background-image: linear-gradient(to left, #ffcc00, #000000);
+    transform: translateY(-2px);
+    transform: scale(1.05);
+
+
+}
+
+@media (max-width: 600px) {
+    .card {
+        width: 90%;
+    }
 }
