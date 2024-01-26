@@ -26,6 +26,6 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "tournament_id"))
     private List<Tournament> tournaments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Score> scores = new ArrayList<>();
 }

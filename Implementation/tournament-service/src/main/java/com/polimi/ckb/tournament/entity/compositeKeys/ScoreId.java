@@ -1,4 +1,4 @@
-package com.polimi.ckb.tournament.entity;
+package com.polimi.ckb.tournament.entity.compositeKeys;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

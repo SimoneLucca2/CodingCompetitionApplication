@@ -1,6 +1,8 @@
 package com.polimi.ckb.tournament.entity;
 
+import com.polimi.ckb.tournament.entity.compositeKeys.ScoreId;
 import jakarta.persistence.*;
+import jakarta.ws.rs.DefaultValue;
 import lombok.Data;
 import lombok.ToString;
 
@@ -22,5 +24,6 @@ public class Score {
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
 
+    @DefaultValue("0")
     private Integer scoreValue;
 }

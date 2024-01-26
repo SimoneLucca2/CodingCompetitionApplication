@@ -32,9 +32,11 @@ public class Educator {
     private Long educatorId;
 
     @ManyToMany(mappedBy = "organizers")
+    @OrderBy("registrationDeadline DESC")
     private List<Tournament> tournaments;
 
     @ManyToMany(mappedBy = "organizers")
+    @OrderBy("registrationDeadline DESC")
     private List<Tournament> organizedTournaments;
 
 }

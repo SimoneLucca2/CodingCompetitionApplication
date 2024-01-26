@@ -1,7 +1,7 @@
 package com.polimi.ckb.tournament.utility.score;
 
 import com.polimi.ckb.tournament.entity.Score;
-import com.polimi.ckb.tournament.entity.ScoreId;
+import com.polimi.ckb.tournament.entity.compositeKeys.ScoreId;
 import com.polimi.ckb.tournament.entity.Student;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.repository.ScoreRepository;

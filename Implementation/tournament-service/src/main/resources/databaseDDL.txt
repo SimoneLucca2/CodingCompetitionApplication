@@ -1,0 +1,62 @@
+CREATE TABLE score
+(
+    score_value   INT    NULL,
+    student_id    BIGINT NOT NULL,
+    tournament_id BIGINT NOT NULL,
+    CONSTRAINT pk_score PRIMARY KEY (student_id, tournament_id)
+);
+
+CREATE TABLE educator
+(
+    educator_id BIGINT NOT NULL,
+    CONSTRAINT pk_educator PRIMARY KEY (educator_id)
+);
+
+CREATE TABLE student
+(
+    student_id BIGINT NOT NULL,
+    CONSTRAINT pk_student PRIMARY KEY (student_id)
+);
+
+CREATE TABLE student_participate_tournament
+(
+    student_id    BIGINT NOT NULL,
+    tournament_id BIGINT NOT NULL
+);
+
+CREATE TABLE tournament
+(
+    tournament_id         BIGINT AUTO_INCREMENT NOT NULL,
+    name                  VARCHAR(255)          NULL,
+    `description`         VARCHAR(255)          NULL,
+    creator_id            BIGINT                NULL,
+    registration_deadline VARCHAR(255)          NULL,
+    status                VARCHAR(255)          NULL,
+    CONSTRAINT pk_tournament PRIMARY KEY (tournament_id)
+);
+
+CREATE TABLE tournament_organizers
+(
+    educator_id   BIGINT NOT NULL,
+    tournament_id BIGINT NOT NULL
+);
+
+CREATE INDEX idx_registration_deadline ON tournament (registration_deadline);
+
+ALTER TABLE tournament_organizers
+    ADD CONSTRAINT fk_touorg_on_educator FOREIGN KEY (educator_id) REFERENCES educator (educator_id);
+
+ALTER TABLE tournament_organizers
+    ADD CONSTRAINT fk_touorg_on_tournament FOREIGN KEY (tournament_id) REFERENCES tournament (tournament_id);
+
+ALTER TABLE student_participate_tournament
+    ADD CONSTRAINT fk_stupartou_on_student FOREIGN KEY (student_id) REFERENCES student (student_id);
+
+ALTER TABLE student_participate_tournament
+    ADD CONSTRAINT fk_stupartou_on_tournament FOREIGN KEY (tournament_id) REFERENCES tournament (tournament_id);
+
+ALTER TABLE score
+    ADD CONSTRAINT FK_SCORE_ON_STUDENT FOREIGN KEY (student_id) REFERENCES student (student_id);
+
+ALTER TABLE score
+    ADD CONSTRAINT FK_SCORE_ON_TOURNAMENT FOREIGN KEY (tournament_id) REFERENCES tournament (tournament_id);
