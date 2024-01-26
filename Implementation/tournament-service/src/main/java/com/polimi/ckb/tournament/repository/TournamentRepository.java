@@ -42,17 +42,19 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
 
     @Query(value =
             "SELECT * FROM tournament t " +
-                    "WHERE tournament_id IN " +
+                    "WHERE (tournament_id IN " +
                     "(SELECT tournament_id FROM tournament_organizers " +
-                    "WHERE tournament_organizers.educator_id = :educatorId)"
+                    "WHERE tournament_organizers.educator_id = :educatorId)) OR " +
+                    "t.creator_id = :educatorId"
             , nativeQuery = true)
     List<Tournament> getTournamentsAdministratedBy(@Param("educatorId") Long studentId);
 
     @Query(value =
             "SELECT * FROM tournament t " +
-                    "WHERE tournament_id IN " +
+                    "WHERE (tournament_id IN " +
                     "(SELECT tournament_id FROM tournament_organizers " +
-                    "WHERE tournament_organizers.educator_id <> :educatorId)"
+                    "WHERE tournament_organizers.educator_id <> :educatorId)) AND " +
+                    "t.creator_id <> :educatorId"
             , nativeQuery = true)
     List<Tournament> getTournamentsNotAdministratedBy(@Param("educatorId") Long studentId);
 
