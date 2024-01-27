@@ -48,7 +48,7 @@ services:
       context: ./api-gateway
       dockerfile: Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/authentication
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 9DbqDeR^zT$x&W8v
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
@@ -72,7 +72,7 @@ services:
       context: ./tournament-time-server
       dockerfile: Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/ckbDB/tournament_schema
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tournament_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 9DbqDeR^zT$x&W8v
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -86,7 +86,7 @@ services:
       context: ./battle-time-server
       dockerfile: Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/battle_schema
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/battle_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 9DbqDeR^zT$x&W8v
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -99,8 +99,11 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: 9DbqDeR^zT$x&W8v
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: lucca
+      MYSQL_PASSWORD: 9DbqDeR^zT$x&W8v
     ports:
-      - "3307:3307" # Host port:Container port
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql

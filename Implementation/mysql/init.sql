@@ -1,3 +1,7 @@
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '9DbqDeR^zT$x&W8v' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'lucca'@'%' IDENTIFIED BY '9DbqDeR^zT$x&W8v' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
 CREATE DATABASE IF NOT EXISTS tournament_schema;
 USE tournament_schema;
 
@@ -47,7 +51,7 @@ create table IF NOT EXISTS tournament_schema.student_participate_tournament
         foreign key (tournament_id) references tournament_schema.tournament (tournament_id)
 );
 
-create index IF NOT EXISTS idx_registration_deadline
+create index idx_registration_deadline
     on tournament_schema.tournament (registration_deadline);
 
 create table IF NOT EXISTS tournament_schema.tournament_organizers
