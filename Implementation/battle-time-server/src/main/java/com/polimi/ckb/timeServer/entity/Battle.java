@@ -3,9 +3,13 @@ package com.polimi.ckb.timeServer.entity;
 
 import com.polimi.ckb.timeServer.config.BattleStatus;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Battle {
 
     @Id
