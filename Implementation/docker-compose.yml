@@ -86,7 +86,7 @@ services:
       context: ./battle-time-server
       dockerfile: Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/ckbDB/battle_schema
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/battle_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 9DbqDeR^zT$x&W8v
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -99,9 +99,8 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: 9DbqDeR^zT$x&W8v
-      MYSQL_DATABASE: ckbDB
     ports:
-      - "3307:3307"
+      - "3307:3307" # Host port:Container port
     volumes:
       - mysql_data:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
