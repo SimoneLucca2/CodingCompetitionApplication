@@ -22,8 +22,5 @@ FROM openjdk:17
 # Copy the jar from the previous stage
 COPY --from=build /usr/src/app/target/*.jar /usr/app/app.jar
 
-# Expose the port the app runs on
-EXPOSE 8761
-
 # Run the jar file
 ENTRYPOINT ["java","-jar","/usr/app/app.jar"]

@@ -17,7 +17,7 @@ public interface BattleService {
 
     void calculateTemporaryScore(NewPushDto newPushDto);
 
-    List<Battle> getBattlesByTournamentId(GetBattleDto getBattleDto);
+    List<Battle> getBattlesByTournamentId(Long tournamentId);
 
     void saveRepositoryUrl(SaveRepositoryLinkDto saveRepositoryLinkDto);
 

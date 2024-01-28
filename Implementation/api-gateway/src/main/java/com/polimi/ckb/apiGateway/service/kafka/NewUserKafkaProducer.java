@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class NewUserKafkaProducer {
-    private static final String TOPIC = "user.creation"; //TODO add topic
+    private static final String TOPIC = "user.creation";
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
