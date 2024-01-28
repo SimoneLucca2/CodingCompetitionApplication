@@ -2,6 +2,37 @@ version: "3.7"
 
 services:
 
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: pw
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
+
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING_JPA_DATABASE: MYSQL
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_0_ID: battle-service
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_0_URI: lb://battle-service
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_0_PREDICATES_0: Path=/battle/**
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_1_ID: user-service
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_1_URI: lb://user-service
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_1_PREDICATES_0: Path=/user/**
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_2_ID: tournament-service
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_2_URI: lb://tournament-service
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_2_PREDICATES_0: Path=/tournament/**
+      SPRING_APPLICATION_NAME: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - kafka
+      - eureka-server
+
+
   tournament-service:
     build:
       context: ./tournament-service
@@ -40,7 +71,6 @@ services:
       - mysql
       - kafka
 
-
   battle-service:
     build:
       context: ./battle-service
@@ -56,21 +86,6 @@ services:
     depends_on:
       - mysql
       - kafka
-      - eureka-server
-
-  api-gateway:
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: pw
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
-    ports:
-      - "8080:8080"
-    depends_on:
-      - mysql
       - eureka-server
 
 
@@ -91,7 +106,6 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       TOURNAMENT_POLLING_RATE: 5000
     depends_on:
       - mysql
@@ -105,7 +119,6 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       TOURNAMENT_POLLING_RATE: 5000
     depends_on:
       - mysql
