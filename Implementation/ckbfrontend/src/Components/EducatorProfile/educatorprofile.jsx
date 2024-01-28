@@ -4,9 +4,8 @@ import sfondo from './sfondo.jpg';
 const EducatorProfile = () => {
     const [profilePic, setProfilePic] = useState(sfondo);
 
-    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    //const nickname = oggettoSalvato.nickname;
-    const nickname = 'nickname';
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const nickname = oggettoSalvato.nickname;
     const handleProfilePicChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setProfilePic(URL.createObjectURL(event.target.files[0]));
