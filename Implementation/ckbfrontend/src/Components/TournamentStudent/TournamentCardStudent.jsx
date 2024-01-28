@@ -54,7 +54,7 @@ function TournamentCardStudent({ tournament }) {
     }
 
     const goToTournamentBattles = () => {
-        navigate(`/battlespagestudent`);
+        navigate(`/battlespagestudent/${tournament.tournamentId}`);
     };
 
     const joinTournament = (e) => {

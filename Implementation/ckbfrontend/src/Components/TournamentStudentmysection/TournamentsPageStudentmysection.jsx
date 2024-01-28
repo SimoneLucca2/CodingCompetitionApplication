@@ -7,7 +7,7 @@ import API_URL from "../../config";
 
 function TournamentsPageStudentmysection() {
     const [tournaments, setTournaments] = useState([
-        {
+        /*{
             id: 1,
             name: "Torneo di calcio",
             description: "Torneo di calcio a 5"
@@ -46,11 +46,10 @@ function TournamentsPageStudentmysection() {
             id: 2,
             name: "Torneo di calcio2",
             description: "Torneo di calcio a 10"
-        }
+        }*/
     ]);
-    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    //const userId = oggettoSalvato.userId;
-    const userId = 1;
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const userId = oggettoSalvato.userId;
     const navigate = useNavigate();
 
     const goToerrorpage = () => {

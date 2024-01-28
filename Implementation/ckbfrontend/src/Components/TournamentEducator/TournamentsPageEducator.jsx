@@ -7,7 +7,7 @@ import API_URL from "../../config";
 
 function TournamentsPageEducator() {
     const [tournaments, setTournaments] = useState([
-        {
+        /*{
             id: 1,
             name: "Torneo di calcio",
             description: "Torneo di calcio a 5"
@@ -46,7 +46,7 @@ function TournamentsPageEducator() {
             id: 2,
             name: "Torneo di calcio2",
             description: "Torneo di calcio a 10"
-        }
+        }*/
     ]);
 
     const navigate = useNavigate();
