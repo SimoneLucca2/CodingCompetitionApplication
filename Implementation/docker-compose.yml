@@ -1,14 +1,6 @@
 version: "3.7"
 
 services:
-  user-service:
-    build:
-      context: ./user-service
-      dockerfile: Dockerfile
-    depends_on:
-      - mysql
-      - kafka
-      - eureka-server
 
   tournament-service:
     build:
