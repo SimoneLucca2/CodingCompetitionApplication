@@ -68,7 +68,7 @@ function TournamentCardStudent({ tournament }) {
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
-            <button className="join-button" onClick={joinTournament}>JOIN THE TOURNAMENT</button>
+            <button className="join-button-3" onClick={joinTournament}>JOIN THE TOURNAMENT</button>
         </div>
     );
 }
