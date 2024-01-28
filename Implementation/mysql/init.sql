@@ -1,7 +1,3 @@
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '9DbqDeR^zT$x&W8v' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'lucca'@'%' IDENTIFIED BY '9DbqDeR^zT$x&W8v' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-
 CREATE DATABASE IF NOT EXISTS tournament_schema;
 USE tournament_schema;
 
@@ -19,8 +15,7 @@ create table IF NOT EXISTS tournament_schema.student
 
 create table IF NOT EXISTS tournament_schema.tournament
 (
-    tournament_id         bigint auto_increment
-        primary key,
+    tournament_id bigint auto_increment primary key,
     registration_deadline varchar(255)                                        null,
     status                enum ('PREPARATION', 'ACTIVE', 'CLOSING', 'CLOSED') null,
     creator_id            bigint                                              not null,
@@ -74,6 +69,58 @@ create table IF NOT EXISTS tournament_schema.tournament_seq
 CREATE DATABASE IF NOT EXISTS battle_schema;
 USE battle_schema;
 
+CREATE TABLE IF NOT EXISTS battle
+(
+    battle_id             bigint auto_increment primary key,
+    creator_id            bigint       not null,
+    name                  varchar(30)  not null,
+    description           varchar(100) not null,
+    tournament_id         bigint       not null,
+    registration_deadline varchar(255) null,
+    submission_deadline   varchar(255) null,
+    max_group_size        int          not null,
+    min_group_size        int          not null,
+    status                tinyint      null,
+    repo_link             varchar(255) null,
+    constraint battle_educator_educator_id_fk
+        foreign key (creator_id) references educator (educator_id)
+);
+
+CREATE TABLE IF NOT EXISTS educator
+(
+    educator_id bigint not null primary key
+);
+
+CREATE TABLE IF NOT EXISTS student
+(
+    student_id bigint not null primary key
+);
+
+CREATE TABLE IF NOT EXISTS student_group
+(
+    group_id               bigint      not null primary key,
+    battle_id              bigint      not null,
+    score                  int         null,
+    cloned_repository_link varchar(100) null,
+    constraint FK
+        foreign key (battle_id) references battle (battle_id)
+);
+
+CREATE TABLE IF NOT EXISTS student_group_join
+(
+    group_id   bigint not null,
+    student_id bigint not null,
+    constraint FK_GROUP
+        foreign key (group_id) references student_group (group_id),
+    constraint FK_STUDENT
+        foreign key (student_id) references student (student_id)
+);
+
+CREATE TABLE IF NOT EXISTS student_group_seq
+(
+    next_val bigint null
+);
+
 CREATE DATABASE IF NOT EXISTS authentication;
 USE authentication;
 
@@ -105,3 +152,5 @@ ALTER TABLE token
 
 ALTER TABLE token
     ADD CONSTRAINT FK_TOKEN_ON_USER FOREIGN KEY (user_id) REFERENCES user (user_id);
+
+

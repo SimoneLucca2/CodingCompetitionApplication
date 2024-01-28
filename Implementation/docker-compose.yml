@@ -17,7 +17,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/tournament_schema
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 9DbqDeR^zT$x&W8v
+      SPRING_DATASOURCE_PASSWORD: pw
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
@@ -33,7 +33,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/battle_schema
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: WHFBaLn@ZpbWRgzSVY$sB4nDT
+      SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
@@ -50,7 +50,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 9DbqDeR^zT$x&W8v
+      SPRING_DATASOURCE_PASSWORD: pw
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
     ports:
       - "8080:8080"
@@ -74,7 +74,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tournament_schema
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 9DbqDeR^zT$x&W8v
+      SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       TOURNAMENT_POLLING_RATE: 5000
@@ -88,20 +88,27 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/battle_schema
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 9DbqDeR^zT$x&W8v
+      SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       TOURNAMENT_POLLING_RATE: 5000
     depends_on:
       - mysql
 
+  client:
+    build:
+      context: ./ckbfrontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
   mysql:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: 9DbqDeR^zT$x&W8v
+      MYSQL_ROOT_PASSWORD: pw
       MYSQL_DATABASE: mydatabase
       MYSQL_USER: lucca
-      MYSQL_PASSWORD: 9DbqDeR^zT$x&W8v
+      MYSQL_PASSWORD: pw
     ports:
       - "3307:3306"
     volumes:
