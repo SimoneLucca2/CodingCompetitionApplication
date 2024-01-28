@@ -5,7 +5,7 @@ import './BattlesPageEducator.css';
 
 function BattlesPageEducator({ match }) {
     const [battles, setBattles] = useState([
-        {
+        /*{
             id: 1,
             name: "Torneo di calcio",
             details: "Torneo di calcio a 5"
@@ -14,17 +14,18 @@ function BattlesPageEducator({ match }) {
             id: 2,
             name: "Torneo di calcio2",
             details: "Torneo di calcio a 10"
-        }
+        }*/
     ]);
-    //const tournamentId = match.params.tournamentId; // Assumendo che stai usando react-router
 
-    /*useEffect(() => {
+    const tournamentId = match.params.tournamentId; // Assumendo che stai usando react-router
+
+    useEffect(() => {
         axios.get(`/api/tournaments/${tournamentId}/battles`)
             .then(response => {
                 setBattles(response.data);
             })
             .catch(error => console.error('Error fetching battles:', error));
-    }, [tournamentId]);*/
+    }, [tournamentId]);
 
     return (
         <div className="battles-page">
