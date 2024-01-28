@@ -50,8 +50,8 @@ const LoginSignup = () => {
             });
             sessionStorage.setItem('utente', JSON.stringify(response.data));
             const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-            const nickname = oggettoSalvato.nickname;
-            console.log(nickname);
+            const nickname2 = oggettoSalvato.nickname;
+            console.log(nickname2);
             goTOuserprofile(response.data.userType);
         } catch (error) {
             console.error('Error:', error);
