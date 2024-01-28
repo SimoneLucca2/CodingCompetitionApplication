@@ -49,9 +49,9 @@ function TournamentCardEducatormysection({ tournament }) {
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
-            <button className="join-button" onClick={joinAddEducatortoaTournament}>ADD EDUCATOR</button>
-            <button className="join-button" onClick={joinCloseTournament}>CLOSE TOURNAMENT</button>
-            <button className="join-button" onClick={joinCreateBattle}>CREATE BATTLE</button>
+            <button className="join-button-1" onClick={joinAddEducatortoaTournament}>ADD EDUCATOR</button>
+            <button className="quit-button" onClick={joinCloseTournament}>CLOSE TOURNAMENT</button>
+            <button className="join-button-2" onClick={joinCreateBattle}>CREATE BATTLE</button>
 
         </div>
     );
