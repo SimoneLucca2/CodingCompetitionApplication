@@ -21,8 +21,8 @@ public class ChangeBattleStatusDto implements Serializable {
         @BattleExists
         private Long battleId;
 
-        @EducatorExists
-        private Long educatorId;
+        //@EducatorExists
+        //private Long educatorId;
 
         private BattleStatus status;
 }

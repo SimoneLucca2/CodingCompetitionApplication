@@ -36,7 +36,7 @@ public class BattleServiceImpl implements BattleService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     //@Value("${eureka.client.service-url.defaultZone}")
-    private final String TOURNAMENT_SERVICE_URL = "http://tournament-service";
+    private final String TOURNAMENT_SERVICE_URL = "http://localhost:8080";//"http://tournament-service";
 
     @Override
     @Transactional
@@ -55,7 +55,7 @@ public class BattleServiceImpl implements BattleService {
                 throw new TournamentNotActiveException();
             }
 
-            if(!createBattleDto.getCreatorId().equals(tournamentDto.getCreatorId()) ||
+            if(!createBattleDto.getCreatorId().equals(tournamentDto.getCreatorId()) &&
                     !tournamentDto.getOrganizerIds().contains(createBattleDto.getCreatorId())){
                 throw new EducatorNotAuthorizedException();
             }
@@ -247,7 +247,7 @@ public class BattleServiceImpl implements BattleService {
                 //from CONSOLIDATION only CLOSED status is allowed
                 if(changeBattleStatusDto.getStatus().equals(BattleStatus.CLOSED))
                     battle.setStatus(BattleStatus.CLOSED);
-                //TODO: idk
+                //TODO: manual evaluation or score confirmation
                 else
                     throw new BattleChangingStatusException("Cannot switch from CONSOLIDATION to " + changeBattleStatusDto.getStatus());
                 break;
@@ -293,8 +293,8 @@ public class BattleServiceImpl implements BattleService {
 
     @Transactional
     @Override
-    public List<Battle> getBattlesByTournamentId(@RequestBody GetBattleDto getBattleDto){
-        return battleRepository.findByTournamentId(getBattleDto.getTournamentId());
+    public List<Battle> getBattlesByTournamentId(Long tournamentId){
+        return battleRepository.findByTournamentId(tournamentId);
     }
 
     @Transactional
