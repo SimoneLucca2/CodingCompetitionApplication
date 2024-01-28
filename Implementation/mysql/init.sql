@@ -121,6 +121,21 @@ CREATE TABLE IF NOT EXISTS student_group_seq
     next_val bigint null
 );
 
+CREATE DATABASE IF NOT EXISTS user_schema;
+USE authentication;
+
+CREATE TABLE if not exists user
+(
+    user_id   BIGINT       NOT NULL,
+    user_type VARCHAR(31)  NULL,
+    email     VARCHAR(255) NULL,
+    name      VARCHAR(255) NULL,
+    surname   VARCHAR(255) NULL,
+    nickname  VARCHAR(255) NULL,
+    type      SMALLINT     NULL,
+    CONSTRAINT pk_user PRIMARY KEY (user_id)
+);
+
 CREATE DATABASE IF NOT EXISTS authentication;
 USE authentication;
 

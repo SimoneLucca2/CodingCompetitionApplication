@@ -18,6 +18,29 @@ services:
       - eureka-server
 
 
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/user_schema
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: pw
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
+
+      SPRING_MAIL_HOST: smtps.aruba.it
+      SPRING_MAIL_PORT: 465
+      SPRING_MAIL_USERNAME: nodered@neslab.it
+      SPRING_MAIL_PASSWORD: Node22$$
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+    depends_on:
+      - mysql
+      - kafka
+
+
   battle-service:
     build:
       context: ./battle-service
