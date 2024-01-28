@@ -34,7 +34,7 @@ function BattlesPageEducatormysection({ match }) {
 
     return (
         <div className="battles-page">
-            <h1 className="page-title2">BATTLES OF THE TOURNAMENT: ${}</h1>
+            <h1 className="page-title2">BATTLES OF THE TOURNAMENT</h1>
             <div className="battles-container">
             {battles.map(battle => (
                 <BattleCardEducatormysection key={battle.id} battle={battle}/>

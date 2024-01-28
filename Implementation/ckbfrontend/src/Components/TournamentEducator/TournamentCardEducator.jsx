@@ -9,7 +9,7 @@ function TournamentCardEducator({ tournament }) {
     const [isVanished, setIsVanished] = useState(false);
 
     const goToTournamentBattles = () => {
-        navigate(`/battlespageeducator`);
+        navigate(`/battlespageeducator/${tournament.tournamentId}`);
     };
 
     const handleCardClick = () => {

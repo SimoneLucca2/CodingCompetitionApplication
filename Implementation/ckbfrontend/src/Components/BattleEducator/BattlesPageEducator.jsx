@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BattleCardEducator from './BattleCardEducator';
 import './BattlesPageEducator.css';
+import {useParams} from "react-router-dom";
+import API_URL from "../../config";
 
 function BattlesPageEducator({ match }) {
     const [battles, setBattles] = useState([
@@ -17,10 +19,12 @@ function BattlesPageEducator({ match }) {
         }*/
     ]);
 
-    const tournamentId = match.params.tournamentId; // Assumendo che stai usando react-router
+    const params = useParams();
+    const tournament = params.tournamentId;
+    const tournamentId = parseInt(tournament, 10);
 
     useEffect(() => {
-        axios.get(`/api/tournaments/${tournamentId}/battles`)
+        axios.get(`${API_URL}/battle/all/${tournamentId}`)
             .then(response => {
                 setBattles(response.data);
             })
@@ -29,7 +33,7 @@ function BattlesPageEducator({ match }) {
 
     return (
         <div className="battles-page">
-            <h1 className="page-title2">BATTLES OF THE TOURNAMENT: ${}</h1>
+            <h1 className="page-title2">BATTLES OF THE TOURNAMENT</h1>
             <div className="battles-container">
             {battles.map(battle => (
                 <BattleCardEducator key={battle.id} battle={battle}/>
