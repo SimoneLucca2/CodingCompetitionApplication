@@ -33,7 +33,7 @@ const LoginSignup = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!email || !password) {
+        if (!email || !password ) {
             setErrorMessage('Email and password are required');
             console.log('Email and password are required');
             return;
@@ -55,7 +55,7 @@ const LoginSignup = () => {
             goTOuserprofile(response.data.userType);
         } catch (error) {
             console.error('Error:', error);
-            setErrorMessage('An error occurred during login/signup.');
+            setErrorMessage('An error occurred during login/signup. Please try again');
             goTOerrorpage();
         }
     };

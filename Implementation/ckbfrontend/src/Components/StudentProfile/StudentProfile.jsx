@@ -3,8 +3,9 @@ import './StudentProfile.css';
 import sfondo from './sfondo.jpg';
 const StudentProfile = () => {
     const [profilePic, setProfilePic] = useState(sfondo);
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const nickname = oggettoSalvato.nickname;
+    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    //const nickname = oggettoSalvato.nickname;
+    const nickname = 'nickname';
     const handleProfilePicChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setProfilePic(URL.createObjectURL(event.target.files[0]));
@@ -23,7 +24,7 @@ const StudentProfile = () => {
                 </div>
                 <div className="bottom-section">
                     <h2 className="nickname">{nickname}</h2>
-                    <p className="welcome-message">Welcome to your student profile!</p>
+                    <p className="welcome-message">Welcome to your CKB HOME page!</p>
                     <div className="action-buttons">
                         <button onClick={() => window.location.href = '/tournamentspagestudent'}>View All Tournaments</button>
                         <button onClick={() => window.location.href = `/mysectiontournamentspagestudent`}>My Section</button>

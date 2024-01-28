@@ -4,9 +4,9 @@ import sfondo from './sfondo.jpg';
 const EducatorProfile = () => {
     const [profilePic, setProfilePic] = useState(sfondo);
 
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const nickname = oggettoSalvato.nickname;
-
+    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    //const nickname = oggettoSalvato.nickname;
+    const nickname = 'nickname';
     const handleProfilePicChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setProfilePic(URL.createObjectURL(event.target.files[0]));
@@ -23,8 +23,8 @@ const EducatorProfile = () => {
                     <label htmlFor="file-input" className="image-change-button">Change Photo</label>
                 </div>
                 <div className="bottom-section">
-                    <h2 className="educator-name">{nickname}</h2>
-                    <p className="welcome-message">Welcome to your educator profile!</p>
+                    <h2 className="nickname">{nickname}</h2>
+                    <p className="welcome-message">Welcome to your CKB HOME page!</p>
                     <div className="action-buttons">
                         <button onClick={() => window.location.href = '/tournamentspageeducator'}>View All Tournaments</button>
                         <button onClick={() => window.location.href = '/createtournament'}>Create a Tournament</button>
