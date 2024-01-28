@@ -8,6 +8,8 @@ public class CreateBattleFilter {
 
     public static void check(CreateBattleDto createBattleDto) throws RuntimeException {
 
+        //TODO: change thrown exceptions
+
         log.info("Creating battle with message: {" + createBattleDto + "}");
         if (createBattleDto.getSubmissionDeadline().compareTo(createBattleDto.getRegistrationDeadline()) <= 0) {
             log.error("Submission deadline is before registration deadline or they are the same");

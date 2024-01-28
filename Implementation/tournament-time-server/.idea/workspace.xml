@@ -5,19 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9622205-b91b-4312-a01f-ead62a32173a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/dto/BattleListDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/dto/RepoLinkDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/controller/BattleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/controller/BattleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/controller/GroupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/controller/GroupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/entity/Battle.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/entity/Battle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/BattleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/BattleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/GroupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/GroupService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/BattleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/BattleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/GroupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/GroupServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/GitServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/java/com/polimi/ckb/battleService/service/impl/GitServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../battle-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-service/src/test/java/com/polimi/ckb/battleService/controller/BattleControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/test/java/com/polimi/ckb/battleService/controller/BattleControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../battle-time-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../eureka-server/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../eureka-server/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-time-server/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-time-server/target/classes/com/polimi/ckb/timeServer/entity/Battle.class" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/target/classes/com/polimi/ckb/timeServer/entity/Battle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-time-server/target/classes/com/polimi/ckb/timeServer/timeServices/BattleRoutine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +24,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="MavenImportPreferences">
@@ -34,24 +38,25 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2bUUS5GJAS6xQaouZPLx2XnWDNs" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/marcolino/Documenti/FeraboliFilippiniLucca/Implementation/tournament-time-server",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.TimeServerStarter.executor&quot;: &quot;Run&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/marcolino/Documenti/FeraboliFilippiniLucca/Implementation/tournament-time-server&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="tournament-time-server" />
@@ -90,10 +95,15 @@
       <option name="presentableId" value="Default" />
       <updated>1706269147682</updated>
       <workItem from="1706269148735" duration="13000" />
+      <workItem from="1706350638840" duration="20000" />
+      <workItem from="1706352147110" duration="62000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>

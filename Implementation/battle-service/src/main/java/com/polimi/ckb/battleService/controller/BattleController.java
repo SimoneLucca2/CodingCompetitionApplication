@@ -48,7 +48,7 @@ public class BattleController {
                 createdBattle = battleService.createBattle(createBattleDto, true);
             else{
                 createdBattle = battleService.createBattle(createBattleDto, false);
-                String repositoryUrl = createGitHubRepository(createBattleDto);
+                String repositoryUrl = gitService.createGitHubRepository(createBattleDto);
                 if(repositoryUrl == null){
                     //if repository creation fails, delete the battle
                     battleService.deleteBattle(
@@ -68,7 +68,15 @@ public class BattleController {
 
                     //push and commit a file yaml to set up an action that informs the system about new pushes on main branch
                     log.info("Pushing the configuration yaml file into the new repository");
-                    gitService.uploadYamlFileForNotifications(repositoryUrl);
+                    gitService.uploadSetupFiles(repositoryUrl, createdBattle.getName());
+                    gitService.createSonarCloudProject(createBattleDto);
+                    gitService.createSecrets(
+                            CreatedBattleDto.builder()
+                                    .name(createBattleDto.getName())
+                                    .build()
+                            , null
+                            );
+                    //TODO: if upload goes wrong, delete the battle just created
                     log.info("Repository ready for sharing");
                 }
             }
@@ -105,76 +113,6 @@ public class BattleController {
             return ResponseEntity.noContent().build();
         else
             return ResponseEntity.ok().body(battles);
-    }
-
-    private String createGitHubRepository(CreateBattleDto createBattleDto) {
-        try {
-            log.info("Creating new GitHub repository named {}", createBattleDto.getName());
-            final String requestBody = "{\"name\":\"" + createBattleDto.getName() + "\",\"description\":\"" + createBattleDto.getDescription() + "\"}";
-
-            //get connection with GitHub api
-            HttpURLConnection connection = getHttpURLConnection();
-
-            DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-            //send request
-            outputStream.write(requestBody.getBytes(StandardCharsets.UTF_8));
-            outputStream.flush();
-
-            //check response code
-            int responseCode = connection.getResponseCode();
-            if(responseCode != HttpURLConnection.HTTP_CREATED){
-                throw new ErrorWhileCreatingRepositoryException(createBattleDto.getName());
-            }
-
-            //get response
-            String repositoryUrl = null;
-            try (InputStream inputStream = connection.getInputStream()){
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                //read response line by line
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    response.append(line);
-                }
-
-                //map the request body to a JsonNode object
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode rootNode = objectMapper.readTree(response.toString());
-
-                //get repository url
-                repositoryUrl = rootNode.get("html_url").asText();
-                log.info("Repository created successfully at: " + repositoryUrl);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            //close connection
-            connection.disconnect();
-            return repositoryUrl;
-        } catch (Exception e) {
-            return null;//e.printStackTrace();
-        }
-    }
-
-    @NotNull
-    private static HttpURLConnection getHttpURLConnection() throws IOException {
-        URL url = new URL("https://api.github.com/user/repos");
-
-        //open a HttpURLConnection connection
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        //set POST as request method
-        connection.setRequestMethod("POST");
-
-        //set request headers
-        connection.setRequestProperty("Authorization", "Bearer " + gitHubToken);
-        connection.setRequestProperty("X-GitHub-Api-Version", "2022-11-28");
-        connection.setRequestProperty("Content-Type", "application/json");
-        //connection.setRequestProperty("default_branch", "main");
-
-        connection.setDoOutput(true);
-        return connection;
     }
 }
 
