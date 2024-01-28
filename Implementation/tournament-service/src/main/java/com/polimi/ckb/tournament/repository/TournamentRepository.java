@@ -47,7 +47,7 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
                     "WHERE tournament_organizers.educator_id = :educatorId)) OR " +
                     "t.creator_id = :educatorId"
             , nativeQuery = true)
-    List<Tournament> getTournamentsAdministratedBy(@Param("educatorId") Long studentId);
+    List<Tournament> getTournamentsAdministratedBy(@Param("educatorId") Long educatorId);
 
     @Query(value =
             "SELECT * FROM tournament t " +
@@ -56,7 +56,7 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
                     "WHERE tournament_organizers.educator_id <> :educatorId)) AND " +
                     "t.creator_id <> :educatorId"
             , nativeQuery = true)
-    List<Tournament> getTournamentsNotAdministratedBy(@Param("educatorId") Long studentId);
+    List<Tournament> getTournamentsNotAdministratedBy(@Param("educatorId") Long educatorId);
 
 
 
