@@ -33,7 +33,7 @@ const LoginSignup = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!email || !password) {
+        if (!email || !password ) {
             setErrorMessage('Email and password are required');
             console.log('Email and password are required');
             return;
@@ -50,12 +50,12 @@ const LoginSignup = () => {
             });
             sessionStorage.setItem('utente', JSON.stringify(response.data));
             const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-            const nickname = oggettoSalvato.nickname;
-            console.log(nickname);
+            const nickname2 = oggettoSalvato.nickname;
+            console.log(nickname2);
             goTOuserprofile(response.data.userType);
         } catch (error) {
             console.error('Error:', error);
-            setErrorMessage('An error occurred during login/signup.');
+            setErrorMessage('An error occurred during login/signup. Please try again');
             goTOerrorpage();
         }
     };

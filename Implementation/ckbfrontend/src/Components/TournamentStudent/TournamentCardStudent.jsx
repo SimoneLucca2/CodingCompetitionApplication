@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TournamentCardStudent.css';
 import API_URL from "../../config";
@@ -6,8 +6,27 @@ import axios from "axios";
 
 function TournamentCardStudent({ tournament }) {
     const navigate = useNavigate();
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    //const userId = oggettoSalvato.userId;
+    const userId = 1;
+
+    const [isFlipped, setIsFlipped] = useState(false);
+    const [isVanished, setIsVanished] = useState(false);
+
+    const handleCardClick = () => {
+        setIsFlipped(true);
+
+        // Dopo un breve ritardo, applica l'effetto di svanimento e poi resetta
+        setTimeout(() => {
+            setIsVanished(true);
+
+            setTimeout(() => {
+                setIsFlipped(false);
+                setIsVanished(false);
+                goToTournamentBattles();
+            }, 600); // Tempo per il reset dell'animazione
+        }, 600); // Tempo prima che la carta svanisca
+    };
 
     function sendRequest(studentId, tournamentId) {
         // Define the URL of your backend endpoint
@@ -35,7 +54,7 @@ function TournamentCardStudent({ tournament }) {
     }
 
     const goToTournamentBattles = () => {
-        navigate(`/battlespagestudent`);
+        navigate(`/battlespagestudent/${tournament.tournamentId}`);
     };
 
     const joinTournament = (e) => {
@@ -44,11 +63,12 @@ function TournamentCardStudent({ tournament }) {
     };
 
     return (
-        <div className="tournament-card" onClick={goToTournamentBattles}>
+        <div className={`tournament-card ${isFlipped ? 'flipped' : ''} ${isVanished ? 'vanished' : ''}`}
+             onClick={handleCardClick}>
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
-            <button className="join-button" onClick={joinTournament}>Join the Tournament</button>
+            <button className="join-button-3" onClick={joinTournament}>JOIN THE TOURNAMENT</button>
         </div>
     );
 }

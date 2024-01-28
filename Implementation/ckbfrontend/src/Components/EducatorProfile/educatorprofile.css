@@ -1,83 +1,110 @@
+/* Reset di base e transizioni */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+/* Stile del container principale con sfondo scuro */
 .profile-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #000000, #ffffff);
+    background-color: #121212; /* Sfondo nero */
 }
 
+/* Stile della card del profilo */
 .profile-card {
-    background: #d5d9d5;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
-    box-shadow: 0px 10px 20px rgb(0, 0, 0);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px;
-    width: 80%;
-    max-width: 800px;
+    padding: 20px;
+    width: 95%;
+    max-width: 1000px; /* Card più grande */
+    backdrop-filter: blur(10px);
 }
 
 .top-section {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; /* Cambia la direzione a colonna */
+    align-items: center; /* Centra gli elementi */
     margin-bottom: 20px;
 }
 
+/* Stile per la foto del profilo */
 .profile-pic {
-    width: 200px;
-    height: 200px;
+    width: 250px; /* Dimensione più grande */
+    height: 250px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #ffffff;
-    box-shadow: 0 4px 8px rgb(255, 255, 255);
+    border: 3px solid #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    margin-bottom: 15px;
+    transition: transform 0.5s ease-in-out;
+}
+.profile-pic:hover {
+    transform: rotate(360deg); /* Rotazione completa */
 }
 
+/* Stile per il bottone di cambio foto */
 .image-change-button {
-    background-color: #000000;
+    background-color: #333333;
     color: white;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 10px 20px;
-    margin-top: 20px;
+    margin-top: 15px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.2s;
 }
-
 .image-change-button:hover {
-    background-color: rgba(50, 55, 62, 0.66);
+    background-color: #555555;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
+/* Stile per la sezione inferiore */
 .bottom-section {
-    width: 100%;
     text-align: center;
+    width: 100%;
 }
 
+/* Stile per il nickname */
 .nickname {
-    font-size: 28px;
-    color: #000000;
-    margin: 20px 0;
+    font-size: 36px; /* Dimensione più grande */
+    font-weight: bold;
+    color: #333333;
+    margin: 30px 0 10px 0;
 }
 
+/* Stile per il messaggio di benvenuto */
 .welcome-message {
-    color: #000000;
-    margin-bottom: 20px;
+    color: #555555;
+    margin-bottom: 30px;
+    font-size: 20px;
 }
 
+/* Stile dei bottoni azione */
 .action-buttons button {
-    background-color: #000000;
+    background-color: #333333;
     color: white;
     border: none;
-    border-radius: 20px;
-    padding: 12px 25px;
-    margin: 5px;
+    border-radius: 10px;
+    padding: 15px 30px;
+    margin: 10px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
 }
-
 .action-buttons button:hover {
-    background-color: #f51111;
-    transform: translateY(-2px);
+    background-color: #555555;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px);
 }

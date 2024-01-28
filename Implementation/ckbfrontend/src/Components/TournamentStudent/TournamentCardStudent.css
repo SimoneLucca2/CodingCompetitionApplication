@@ -7,9 +7,11 @@
     padding: 20px;
     width: 300px;
     cursor: pointer;
-    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.6s, opacity 0.6s;
+    transform-origin: center;
 }
 
 .tournament-card::before {
@@ -54,12 +56,22 @@
     box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.25);
 }
 
+.tournament-card.flipped {
+    transform: rotateY(180deg) scale(1.2);
+}
 
-.join-button {
+.tournament-card.vanished {
+    opacity: 0;
+    transform: scale(0);
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+}
+
+
+.join-button-3 {
     padding: 15px 30px; /* Più ampio per un aspetto più elegante */
-    background-color: #FFD700; /* Un giallo brillante */
+    background-color: #3c8613; /* Un giallo brillante */
     color: black; /* Contrasto con il giallo per leggibilità */
-    border: 2px solid #FFD700; /* Bordo del colore dello sfondo */
+    border: 2px solid rgba(60, 134, 19, 0.85); /* Bordo del colore dello sfondo */
     border-radius: 10px; /* Bordi più arrotondati per un aspetto morbido */
     cursor: pointer;
     font-size: 1.2rem; /* Dimensione del testo leggermente più grande */
@@ -71,31 +83,9 @@
     margin-top: 10px;
 }
 
-.join-button:hover {
-    background-color: #FFC107; /* Un giallo più chiaro al passaggio del mouse */
+.join-button-3:hover {
+    background-color: rgba(60, 134, 19, 0.85); /* Un giallo più chiaro al passaggio del mouse */
     transform: translateY(-2px); /* Effetto di sollevamento al passaggio del mouse */
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25); /* Ombra più pronunciata al passaggio del mouse */
 }
 
-
-.quit-button {
-    padding: 15px 30px; /* Più ampio per un aspetto più elegante */
-    background-color: rgb(245, 17, 17); /* Un giallo brillante */
-    color: black; /* Contrasto con il giallo per leggibilità */
-    border: 2px solid #f51111; /* Bordo del colore dello sfondo */
-    border-radius: 10px; /* Bordi più arrotondati per un aspetto morbido */
-    cursor: pointer;
-    font-size: 1.2rem; /* Dimensione del testo leggermente più grande */
-    font-weight: bold; /* Testo in grassetto per un aspetto deciso */
-    transition: background-color 0.3s, transform 0.3s; /* Transizione fluida per hover */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Ombra leggera per profondità */
-    position: relative;
-    z-index: 10;
-    margin-top: 10px;
-}
-
-.quit-button:hover {
-    background-color: rgba(245, 17, 17, 0.74); /* Un giallo più chiaro al passaggio del mouse */
-    transform: translateY(-2px); /* Effetto di sollevamento al passaggio del mouse */
-    box-shadow: 0px 6px 12px rgba(234, 114, 15, 0.63); /* Ombra più pronunciata al passaggio del mouse */
-}

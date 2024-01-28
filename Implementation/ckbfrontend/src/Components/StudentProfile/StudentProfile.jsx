@@ -23,7 +23,7 @@ const StudentProfile = () => {
                 </div>
                 <div className="bottom-section">
                     <h2 className="nickname">{nickname}</h2>
-                    <p className="welcome-message">Welcome to your student profile!</p>
+                    <p className="welcome-message">Welcome to your CKB HOME page!</p>
                     <div className="action-buttons">
                         <button onClick={() => window.location.href = '/tournamentspagestudent'}>View All Tournaments</button>
                         <button onClick={() => window.location.href = `/mysectiontournamentspagestudent`}>My Section</button>

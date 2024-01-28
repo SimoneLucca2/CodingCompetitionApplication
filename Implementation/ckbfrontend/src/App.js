@@ -39,8 +39,8 @@ function App() {
             <Route path="/quitbattle" element={<QuitBattle/>}/>
             <Route path="/tournamentspagestudent" element={<TournamentsPageStudent/>}/>
             <Route path="/tournamentspageeducator" element={<TournamentsPageEducator/>}/>
-            <Route path="/battlespagestudent" element={<BattlesPageStudent/>}/>
-            <Route path="/battlespageeducator" element={<BattlesPageEducator/>}/>
+            <Route path="/battlespagestudent/:tournamentId" element={<BattlesPageStudent/>}/>
+            <Route path="/battlespageeducator/:tournamentId" element={<BattlesPageEducator/>}/>
             <Route path="/studentprofile" element={<StudentProfile/>}/>
             <Route path="/educatorprofile" element={<Educatorprofile/>}/>
             <Route path="/mysectiontournamentspageeducator" element={<TournamentsPageEducatormysection/>}/>

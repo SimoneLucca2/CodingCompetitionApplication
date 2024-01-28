@@ -46,7 +46,7 @@ function TournamentsPageEducator() {
             id: 2,
             name: "Torneo di calcio2",
             description: "Torneo di calcio a 10"
-        },*/
+        }*/
     ]);
 
     const navigate = useNavigate();
@@ -66,7 +66,7 @@ function TournamentsPageEducator() {
 
     return (
         <div className="tournaments-page">
-            <h1 className="page-title">TOURNAMENTS</h1>
+            <h1 className="page-title">ALL TOURNAMENTS</h1>
             <div className="tournaments-container">
                 {tournaments.map(tournament => (
                     <TournamentCardEducator key={tournament.tournamentId} tournament={tournament} />
