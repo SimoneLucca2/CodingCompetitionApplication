@@ -7,7 +7,7 @@ import API_URL from "../../config";
 
 function TournamentsPageStudent() {
     const [tournaments, setTournaments] = useState([
-       /* {
+       {
             id: 1,
             name: "Torneo di calcio",
             description: "Torneo di calcio a 5"
@@ -46,12 +46,13 @@ function TournamentsPageStudent() {
             id: 2,
             name: "Torneo di calcio2",
             description: "Torneo di calcio a 10"
-        }*/
+        }
     ]);
 
     const navigate = useNavigate();
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    //const userId = oggettoSalvato.userId;
+    const userId = 1;
     const goToerrorpage = () => {
         navigate(`/errorpage`);
     };
@@ -67,7 +68,7 @@ function TournamentsPageStudent() {
 
     return (
         <div className="tournaments-page">
-            <h1 className="page-title">TOURNAMENTS</h1>
+            <h1 className="page-title">ALL TOURNAMENTS</h1>
             <div className="tournaments-container">
                 {tournaments.map(tournament => (
                     <TournamentCardStudent key={tournament.tournamentId} tournament={tournament} />

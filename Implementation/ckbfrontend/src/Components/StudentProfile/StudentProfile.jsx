@@ -3,8 +3,9 @@ import './StudentProfile.css';
 import sfondo from './sfondo.jpg';
 const StudentProfile = () => {
     const [profilePic, setProfilePic] = useState(sfondo);
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const nickname = oggettoSalvato.nickname;
+    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    //const nickname = oggettoSalvato.nickname;
+    const nickname = "Student";
     const handleProfilePicChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setProfilePic(URL.createObjectURL(event.target.files[0]));

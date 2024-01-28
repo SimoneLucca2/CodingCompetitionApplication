@@ -7,16 +7,6 @@ import API_URL from "../../config";
 
 function TournamentsPageEducatormysection() {
     const [tournaments, setTournaments] = useState([
-        /*{
-            tournamentId: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            tournamentId: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
         {
             tournamentId: 1,
             name: "Torneo di calcio",
@@ -46,12 +36,23 @@ function TournamentsPageEducatormysection() {
             tournamentId: 2,
             name: "Torneo di calcio2",
             description: "Torneo di calcio a 10"
-        }*/
+        },
+        {
+            tournamentId: 1,
+            name: "Torneo di calcio",
+            description: "Torneo di calcio a 5"
+        },
+        {
+            tournamentId: 2,
+            name: "Torneo di calcio2",
+            description: "Torneo di calcio a 10"
+        }
     ]);
 
     const navigate = useNavigate();
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    //const userId = oggettoSalvato.userId;
+    const userId = 1;
     const goToerrorpage = () => {
         navigate(`/errorpage`);
     };
@@ -67,7 +68,7 @@ function TournamentsPageEducatormysection() {
 
     return (
         <div className="tournaments-page">
-            <h1 className="page-title">TOURNAMENTS</h1>
+            <h1 className="page-title">MY TOURNAMENTS</h1>
             <div className="tournaments-container">
                 {tournaments.map(tournament => (
                     <TournamentCardEducatormysection key={tournament.tournamentId} tournament={tournament} />
