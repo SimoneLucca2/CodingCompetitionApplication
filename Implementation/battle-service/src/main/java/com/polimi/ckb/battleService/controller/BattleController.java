@@ -33,8 +33,8 @@ public class BattleController {
     private final BattleService battleService;
     private final GitService gitService;
     private final BattleCreationKafkaProducer kafkaProducer;
-    @Value("${github.api.token}")
-    private static String gitHubToken;
+    //@Value("${github.api.token}")
+    private static final String gitHubToken = "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";
 
     @PostMapping
     public ResponseEntity<Object> createBattle(@RequestBody @Valid CreateBattleDto createBattleDto) {
@@ -62,6 +62,7 @@ public class BattleController {
                     battleService.saveRepositoryUrl(
                             SaveRepositoryLinkDto.builder()
                                     .repositoryUrl(repositoryUrl)
+                                    .battleId(createdBattle.getBattleId())
                                     .build()
                     );
 
@@ -95,10 +96,10 @@ public class BattleController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<Object> getBattle(@RequestBody @Valid GetBattleDto getBattleDto) {
-        log.info("Getting battle with message: {" + getBattleDto + "}");
-        List<Battle> battles = battleService.getBattlesByTournamentId(getBattleDto);
+    @GetMapping(path = "/all/{tournamentId}")
+    public ResponseEntity<Object> getBattle(@PathVariable Long tournamentId) {
+        log.info("Getting battles with message from tournament: {" + tournamentId + "}");
+        List<Battle> battles = battleService.getBattlesByTournamentId(tournamentId);
         log.info("Battle retrieved successfully");
         if(battles.isEmpty())
             return ResponseEntity.noContent().build();
@@ -170,7 +171,7 @@ public class BattleController {
         connection.setRequestProperty("Authorization", "Bearer " + gitHubToken);
         connection.setRequestProperty("X-GitHub-Api-Version", "2022-11-28");
         connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("default_branch", "main");
+        //connection.setRequestProperty("default_branch", "main");
 
         connection.setDoOutput(true);
         return connection;

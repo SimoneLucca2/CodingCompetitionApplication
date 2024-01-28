@@ -23,14 +23,9 @@ public class EmailRequestKafkaConsumer {
         try {
             String message = record.value();
             @Valid EmailDto parsedMessage = objectMapper.readValue(message, EmailDto.class);
-            processMessage(parsedMessage);
+            emailService.sendEmail(parsedMessage);
         } catch (Exception e) {
             System.err.println("Error processing message: " + e.getMessage());
         }
-    }
-
-    private void processMessage(EmailDto msg) {
-        //send email
-        emailService.sendEmail(msg);
     }
 }

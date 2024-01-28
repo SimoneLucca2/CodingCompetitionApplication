@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 @Service
 public class GitServiceImpl implements GitService {
     //@Value("${github.api.token}")
-    private final String gitHubToken = "";
+    private final String gitHubToken = "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";
 
     //@Value("${github.api.username}")
     private final String gitHubUsername = "MarcoF17";
@@ -39,7 +39,7 @@ public class GitServiceImpl implements GitService {
         git.add().addFilepattern(".").call();
 
         //commit changes
-        git.commit().setMessage("Add notify-on-push.yaml daiii").call();
+        git.commit().setMessage("Add notify-on-push.yaml").call();
 
         //push changes
         git.push().setRemote("origin").setCredentialsProvider(new UsernamePasswordCredentialsProvider(gitHubUsername, gitHubToken)).call();

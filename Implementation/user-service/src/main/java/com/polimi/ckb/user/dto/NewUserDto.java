@@ -1,7 +1,6 @@
 package com.polimi.ckb.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.polimi.ckb.user.entity.Educator;
 import com.polimi.ckb.user.utility.UserType;
 import jakarta.persistence.Column;
 import lombok.*;
