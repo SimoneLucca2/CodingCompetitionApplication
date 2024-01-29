@@ -129,8 +129,9 @@ public class TournamentServiceImpl implements TournamentService {
                 .orElseThrow(() -> new EntityNotFoundException("Tournament not found with id: " + msg.getTournamentId()));
 
         student.getTournaments().remove(tournament);
+        studentRepository.save(student);
 
-        return tournamentRepository.save(tournament);
+        return tournament;
     }
 
 }
