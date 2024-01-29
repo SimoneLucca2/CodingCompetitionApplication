@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class StudentQuitTournamentKafkaProducer {
     private final ObjectMapper objectMapper;
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 1000, multiplier = 1.5))
+    @Async
     public void sendStudentQuitMessage(StudentQuitTournamentDto msg) throws JsonProcessingException {
         String jsonMessage = objectMapper.writeValueAsString(msg);
         kafkaTemplate.send(TOPIC, jsonMessage);

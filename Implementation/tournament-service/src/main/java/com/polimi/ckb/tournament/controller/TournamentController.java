@@ -64,7 +64,7 @@ public class TournamentController {
     }
 
     @GetMapping("/enrolled/{studentId}")
-    public ResponseEntity<Object> getTournamentsOfStudent(@PathVariable Long studentId) {
+    public ResponseEntity<Object> getTournamentsOfStudent(@PathVariable(name = "studentId") Long studentId) {
         try {
             log.info("Getting all tournaments");
             List<Tournament> tournaments = tournamentRepository.getTournamentsOfStudent(studentId);
@@ -77,7 +77,7 @@ public class TournamentController {
     }
 
     @GetMapping("/notEnrolled/{studentId}")
-    public ResponseEntity<Object> getTournamentsWithoutStudent(@PathVariable Long studentId) {
+    public ResponseEntity<Object> getTournamentsWithoutStudent(@PathVariable(name = "studentId") Long studentId) {
         try {
             log.info("Getting tournaments without student: {}", studentId);
             List<Tournament> tournaments = tournamentRepository.getTournamentsWithoutStudent(studentId);
@@ -90,7 +90,7 @@ public class TournamentController {
     }
 
     @GetMapping("/administrated/{educatorId}")
-    public ResponseEntity<Object> getTournamentsAdministratedBy(@PathVariable Long educatorId) {
+    public ResponseEntity<Object> getTournamentsAdministratedBy(@PathVariable(name = "educatorId") Long educatorId) {
         try {
             log.info("Getting tournaments administrated by educator: {}", educatorId);
             List<Tournament> tournaments = tournamentRepository.getTournamentsAdministratedBy(educatorId);
@@ -103,7 +103,7 @@ public class TournamentController {
     }
 
     @GetMapping("/notAdministrated/{educatorId}")
-    public ResponseEntity<Object> getTournamentsNotAdministratedBy(@PathVariable Long educatorId) {
+    public ResponseEntity<Object> getTournamentsNotAdministratedBy(@PathVariable(name = "educatorId") Long educatorId) {
         try {
             log.info("Getting tournaments administrated by educator: {}", educatorId);
             List<Tournament> tournaments = tournamentRepository.getTournamentsNotAdministratedBy(educatorId);
@@ -116,7 +116,7 @@ public class TournamentController {
     }
 
     @GetMapping("/{tournamentId}")
-    public ResponseEntity<Object> getTournament(@PathVariable Long tournamentId) {
+    public ResponseEntity<Object> getTournament(@PathVariable(name = "tournamentId") Long tournamentId) {
         try {
             log.info("Getting tournament with id: {}", tournamentId);
             Tournament tournament = tournamentService.getTournament(tournamentId);

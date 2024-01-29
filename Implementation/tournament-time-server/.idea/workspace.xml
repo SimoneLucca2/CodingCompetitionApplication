@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9622205-b91b-4312-a01f-ead62a32173a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-time-server/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-time-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../battle-time-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battle-time-server/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/controller/TournamentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/controller/TournamentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/AddEducatorKafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/AddEducatorKafkaProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentJoinTournamentKafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentJoinTournamentKafkaProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentQuitTournamentKafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentQuitTournamentKafkaProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/TournamentStatusKafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/TournamentStatusKafkaProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,11 +54,20 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "Spring Boot.TimeServerStarter.executor": "Run",
+    "git-widget-placeholder": "docker",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/marcolino/Documenti/FeraboliFilippiniLucca/Implementation/tournament-time-server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
@@ -73,13 +95,6 @@
       </method>
     </configuration>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-19.0.2-corretto-19.0.2-249ae16d76d6-36550cda" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -90,6 +105,7 @@
       <updated>1706269147682</updated>
       <workItem from="1706269148735" duration="13000" />
       <workItem from="1706463922485" duration="89000" />
+      <workItem from="1706544407687" duration="659000" />
     </task>
     <servers />
   </component>
