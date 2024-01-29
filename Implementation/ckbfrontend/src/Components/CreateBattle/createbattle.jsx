@@ -66,27 +66,27 @@ function CreateBattle() {
     return (
         <div className="create-battle">
             <form onSubmit={handleSubmit}>
-                <h2 className="Title">Create a New Battle</h2>
+                <h2 className="Title">CREATE NEW BATTLE</h2>
 
-                <label htmlFor="name">Battle Name:</label>
+                <label htmlFor="name">BATTLE NAME:</label>
                 <input type="text" id="name" name="name" value={battleData.name} onChange={handleChange} />
 
-                <label htmlFor="description">Description:</label>
+                <label htmlFor="description">DESCRIPTION:</label>
                 <textarea id="description" name="description" value={battleData.description} onChange={handleChange} />
 
-                <label htmlFor="registrationDeadline">Registration Deadline:</label>
+                <label htmlFor="registrationDeadline">REGISTRATION DEADLINE:</label>
                 <input type="datetime-local" id="registrationDeadline" name="registrationDeadline" value={battleData.registrationDeadline} onChange={handleChange} />
 
-                <label htmlFor="submissionDeadline">Submission Deadline:</label>
+                <label htmlFor="submissionDeadline">SUBMISSION DEADLINE:</label>
                 <input type="datetime-local" id="submissionDeadline" name="submissionDeadline" value={battleData.submissionDeadline} onChange={handleChange} />
 
-                <label htmlFor="minMembers">Minimum Members:</label>
+                <label htmlFor="minMembers">MINIMUM MEMBERS:</label>
                 <input type="number" id="minGroupSize" name="minGroupSize" value={battleData.minGroupSize} onChange={handleChange} />
 
-                <label htmlFor="maxMembers">Maximum Members:</label>
+                <label htmlFor="maxMembers">MAXIMUM MEMBERS</label>
                 <input type="number" id="maxGroupSize" name="maxGroupSize" value={battleData.maxGroupSize} onChange={handleChange} />
 
-                <button type="submit">Create Battle</button>
+                <button type="submit">CREATE BATTLE</button>
             </form>
         </div>
     );

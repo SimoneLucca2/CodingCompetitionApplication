@@ -12,24 +12,25 @@
     align-items: center;
     text-align: center;
     padding: 20px;
+    transition: all 0.3s ease-in-out; /* Aggiungi transizione */
 }
 
 .error-page img {
     max-width: 250px;
     margin-bottom: 30px;
+    transition: transform 0.3s ease; /* Transizione per l'immagine */
 }
 
-.error-page h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #ffcc00;
+.error-page img:hover {
+    transform: scale(1.05); /* Effetto zoom al passaggio del mouse */
 }
 
-.error-page p {
-    font-size: 1rem;
-    margin-bottom: 30px;
-    color: #ffcc00;
-    max-width: 500px;
+.error-page h1, .error-page p {
+    transition: color 0.3s ease; /* Transizione per testi */
+}
+
+.error-page h1:hover, .error-page p:hover {
+    color: #a88700; /* Cambio colore al passaggio del mouse */
 }
 
 .error-page button {
@@ -40,16 +41,14 @@
     color: #000000;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: all 0.3s ease; /* Transizione per il pulsante */
     background-image: linear-gradient(to right, #ffcc00, #a88700);
-
 }
 
 .error-page button:hover {
     background-color: #ffffff;
-    transform: scale(1.05);
-    transform: translateY(-2px);
-    background-image: linear-gradient(to left, #ffcc00, #a88700);
+    transform: scale(1.1); /* Effetto zoom e cambio colore per hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Aggiungi ombra */
 }
 
 /* Responsive Design */

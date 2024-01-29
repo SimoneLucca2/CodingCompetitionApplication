@@ -74,17 +74,17 @@ function AddEducatorToTournament() {
 
     return (
         <div className="add-educator-container">
-            <h2>Add an educator to the tournament</h2>
+            <h2>ADD AN EDUCATOR TO THE TOURNAMENT</h2>
             <form onSubmit={handleSubmit} className="educator-form">
                 <div className="form-group">
-                    <label>Email of the Educator To Add: </label>
+                    <label>EMAIL OF THE EDUCATOR TO ADD:</label>
                     <input
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <button type="submit">Add Educator</button>
+                <button type="submit">ADD EDUCATOR</button>
             </form>
         </div>
     );

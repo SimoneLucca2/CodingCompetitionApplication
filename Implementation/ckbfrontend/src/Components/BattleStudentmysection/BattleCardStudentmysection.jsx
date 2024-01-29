@@ -81,7 +81,9 @@ function BattleCardStudentmysection({ battle}) {
     return (
         <div className="battle-card">
             <h3>{battle.name}</h3>
-            <p>Dettagli: {battle.details}</p>
+            <p>Description: {battle.description}</p>
+            <p>Registration Deadline:{battle.registrationDeadline}</p>
+            <p>Registration Deadline:{battle.submissionDeadline}</p>
             <button className="join-button" onClick={joinBattle}>Join the Battle</button>
             <button className="join-button" onClick={quitBattle}>Quit the Battle</button>
 

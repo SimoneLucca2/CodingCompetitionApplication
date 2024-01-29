@@ -5,8 +5,9 @@ function BattleCardEducator({ battle}) {
     return (
         <div className="battle-card">
             <h3>{battle.name}</h3>
-            <p>Dettagli: {battle.details}</p>
-            {/* Altri dettagli della battaglia possono essere aggiunti qui */}
+            <p>Description: {battle.description}</p>
+            <p>Registration Deadline:{battle.registrationDeadline}</p>
+            <p>Registration Deadline:{battle.submissionDeadline}</p>
         </div>
     );
 }

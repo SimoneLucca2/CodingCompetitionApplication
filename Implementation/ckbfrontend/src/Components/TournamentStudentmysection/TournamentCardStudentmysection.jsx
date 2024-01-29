@@ -33,7 +33,7 @@ function TournamentCardStudentmysection({ tournament }) {
             })
             .then(data => {
                 console.log('Cancellazione avvenuta con successo:', data);
-                navigate(`/quittournament`)
+                navigate(`/successpage`);
             })
             .catch(error => {
                 console.error('Si è verificato un errore:', error);

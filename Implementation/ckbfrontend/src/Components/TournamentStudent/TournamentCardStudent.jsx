@@ -43,7 +43,7 @@ function TournamentCardStudent({ tournament }) {
             .then(response => {
                 // Handle the response here
                 console.log('Response received:', response.data);
-                navigate(`/jointournament`);
+                navigate(`/successpage`);
 
             })
             .catch(error => {

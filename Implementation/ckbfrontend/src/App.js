@@ -5,7 +5,7 @@ import LoginSignup from "./Components/Login-SignUp/LoginSignup";
 import TournamentCreationPage from "./Components/CreateTournament/createtournament";
 import AddEducatorToTournament from "./Components/AddEducatorToaTournament/addeducatortoatournament";
 import Jointournament from "./Components/JoinTournament/jointournament";
-import QuitTournament from "./Components/QuitTournament/quittournament";
+import QuitTournament from "./Components/SuccessPage/SuccessPage";
 import CreateBattle from "./Components/CreateBattle/createbattle";
 import ErrorPage from "./Components/ErrorPage/errorpage";
 import JoinBattle from "./Components/JoinBattle/joinbattle";
@@ -22,6 +22,7 @@ import BattlesPageStudentmysection from "./Components/BattleStudentmysection/Bat
 import CloseTournament from "./Components/CloseTournament/closetournament";
 import StudentProfile from "./Components/StudentProfile/StudentProfile";
 import Educatorprofile from "./Components/EducatorProfile/educatorprofile";
+import SuccessPage  from "./Components/SuccessPage/SuccessPage";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
             <Route path="/mysectiontbattlespagestudent/:tournamentId" element={<BattlesPageStudentmysection/>}/>
             <Route path="/mysectionbattlespageeducator/:tournamentId" element={<BattlesPageEducatormysection/>}/>
             <Route path="/closetournament" element={<CloseTournament/>}/>
+            <Route path="/successpage" element={<SuccessPage/>}/>
           </Routes>
         </BrowserRouter>
       </ItemListProvider>
