@@ -35,7 +35,7 @@ function TournamentCardEducatormysection({ tournament }) {
 
     function joinCloseTournament(e) {
         e.stopPropagation();
-        navigate(`/closetournament`);
+        navigate(`/successpage`);
     }
 
     function joinCreateBattle(e) {

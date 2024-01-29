@@ -1,50 +1,97 @@
+/* Importo il font Google */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Stile del container principale */
 .add-educator-container {
-    background-color: black;
+    background-color: #000000;
     color: white;
-    font-family: 'Arial', sans-serif;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    margin: 50px auto;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    max-width: 500px; /* Adatta la larghezza secondo le tue esigenze */
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    font-family: 'Roboto', sans-serif;
+    animation: fadeIn 1s ease-out;
 }
 
+/* Stile per il titolo */
 .add-educator-container h2 {
     text-align: center;
-    color: #ffcc00;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ffffff;
 }
 
+/* Stile per il form */
 .educator-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
-.form-group label {
-    display: block;
+/* Stile per i label */
+.educator-form label {
+    font-size: 1.2em;
     margin-bottom: 5px;
-    font-weight: bold;
+    color: #ffffff;
 }
 
-.form-group input {
+/* Stile per gli input */
+.educator-form input[type="text"] {
     width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #333;
-    background-color: #222;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
     color: white;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-button {
-    padding: 10px 15px;
+.educator-form input[type="text"]:focus {
+    border-color: #f51111;
+    box-shadow: 0 0 8px rgba(245, 17, 17, 0.5);
+}
+
+/* Stile per il bottone */
+.educator-form button {
+    background-color: #ffcc00;
+    color: black;
+    padding: 12px 25px;
     border: none;
-    border-radius: 4px;
-    background-color: #ffcc00;
-    color: white;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-weight: bold;
+    background-image: linear-gradient(to right, #ffcc00, #ffcc00);
 }
 
-button:hover {
-    background-color: #ffcc00;
+.educator-form button:hover {
+    background-color: #e6b800;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(230, 184, 0, 0.5);
+    background-image: linear-gradient(to left, #ffcc00, #ffcc00);
+    transform: translateY(-2px);
+}
+
+/* Animazione fadeIn */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .add-educator-container {
+        width: 90%;
+    }
 }

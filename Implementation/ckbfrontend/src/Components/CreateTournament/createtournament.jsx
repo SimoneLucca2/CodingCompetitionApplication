@@ -9,7 +9,6 @@ const CreateTournament = () => {
 
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
     const creatorId = oggettoSalvato.userId;
-
     const navigate = useNavigate();
 
 

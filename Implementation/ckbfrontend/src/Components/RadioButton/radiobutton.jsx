@@ -10,7 +10,7 @@ function RadioButton({onChange}) {
 
     return (
         <div>
-            <label>
+            <label className="radioButton-label">
                 STUDENT
                 <input
                     type="radio"
@@ -19,7 +19,7 @@ function RadioButton({onChange}) {
                     onChange={handleChange}
                 />
             </label>
-            <label>
+            <label className="radioButton-label">
                 EDUCATOR
                 <input
                     type="radio"

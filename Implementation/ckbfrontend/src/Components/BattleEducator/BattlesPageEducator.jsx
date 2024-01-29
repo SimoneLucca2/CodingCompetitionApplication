@@ -20,16 +20,17 @@ function BattlesPageEducator({ match }) {
     ]);
 
     const params = useParams();
-    const tournament = params.tournamentId;
-    const tournamentId = parseInt(tournament, 10);
+    //const tournament = params.tournamentId;
+    //const tournamentId = parseInt(tournament, 10);
+    const tournamentId = 1;
 
-    useEffect(() => {
+    /*useEffect(() => {
         axios.get(`${API_URL}/battle/all/${tournamentId}`)
             .then(response => {
                 setBattles(response.data);
             })
             .catch(error => console.error('Error fetching battles:', error));
-    }, [tournamentId]);
+    }, [tournamentId]);*/
 
     return (
         <div className="battles-page">

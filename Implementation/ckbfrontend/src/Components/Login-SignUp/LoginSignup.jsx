@@ -102,7 +102,7 @@ const LoginSignup = () => {
                         </div>
                         {action === 'Login' ? null : (
                             <>
-                                <div className="input2">
+                                <div className="inputx">
                                     <Radiobutton onChange={(value) => setType(value)}/>
                                 </div>
 
