@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,9 +44,6 @@ public class TournamentController {
             kafkaProducer.sendTournamentCreationMessage(kafkaMsg);
             log.info("Tournament created successfully");
             return ResponseEntity.ok(TournamentDto.fromEntity(createdTournament));
-        } catch (JsonProcessingException e) {
-            log.error("Error processing JSON: {}", e.getMessage());
-            return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
         } catch (Exception e) {
             log.error("Internal server error: {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));

@@ -12,7 +12,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://localhost:8761/eureka
+      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
     ports:
       - "8080:8080"
     depends_on:
@@ -70,7 +70,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
-      GITHUB_API_TOKEN: <Your GitHub token>
+      #GITHUB_API_TOKEN: <Your GitHub token>
     depends_on:
       - mysql
       - kafka
@@ -113,15 +113,9 @@ services:
     depends_on:
       - mysql
 
-# client:
-#   build:
-#     context: ./ckbfrontend
-#     dockerfile: Dockerfile
-#   ports:
-#     - "3000:3000"
-
   mysql:
     image: mysql:8.0
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: pw
       MYSQL_DATABASE: mydatabase
@@ -131,7 +125,9 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      #- ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
 
   zookeeper:
     image: docker.io/bitnami/zookeeper:3.8

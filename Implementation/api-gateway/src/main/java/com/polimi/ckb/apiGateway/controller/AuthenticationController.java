@@ -36,11 +36,6 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<?> test() {
-        return ResponseEntity.ok("Hello World");
-    }
-
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request
@@ -54,11 +49,5 @@ public class AuthenticationController {
 
         }
     }
-
-    @GetMapping
-    public ResponseEntity<?> test() {
-        return ResponseEntity.ok("Hello World");
-    }
-
 
 }
