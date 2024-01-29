@@ -1,0 +1,57 @@
+/* SuccessPage.css */
+.success-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f4f8;
+    background-image: linear-gradient(120deg, #061b4d 0%, #000000 100%);
+    animation: backgroundMove 20s linear infinite;
+}
+
+.success-card {
+    padding: 20px;
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.success-card:hover {
+    transform: translateY(-10px);
+}
+
+.success-icon {
+    font-size: 50px;
+    color: green;
+    animation: popIn 0.5s ease;
+}
+
+button {
+    margin-top: 20px;
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background-color: darkgreen;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes backgroundMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

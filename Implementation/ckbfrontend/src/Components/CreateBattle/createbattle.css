@@ -2,41 +2,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 .create-battle {
-    font-family: 'Roboto', sans-serif;
     background-color: #000000;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+    color: white;
+    max-width: 500px; /* Ridotto da 600px per meglio adattarsi allo stile originale */
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.create-battle:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 .create-battle form {
-    background-color: rgba(50, 55, 62, 0.66);
-    padding: 40px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 5px 15px rgb(255, 204, 0);
-
-}
-
-.create-battle .Title {
-    color: #ffcc00;
-    margin-bottom: 30px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .create-battle label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #adbac7;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #adbac7; /* Mantenuto il colore originale */
 }
-.create-battle label  {
-    color: #ffcc00;
-}
+
 .create-battle input[type="text"],
 .create-battle input[type="number"],
 .create-battle input[type="datetime-local"],
@@ -44,43 +40,83 @@
 .create-battle textarea {
     width: 100%;
     padding: 12px;
-    margin-bottom: 20px;
-    border: none;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 5px;
-    background-color: #3c424a;
-    color: #fff;
-    font-size: 16px;
+    color: white;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.create-battle input[type="text"]:focus,
+.create-battle textarea:focus,
+.create-battle input[type="datetime-local"]:focus {
+    border-color: #f51111;
+    box-shadow: 0 0 8px rgba(245, 17, 17, 0.5);
 }
 
 .create-battle textarea {
-    min-height: 100px;
+    min-height: 120px;
     resize: vertical;
 }
 
 .create-battle button {
-    width: 100%;
-    padding: 15px;
+    background-color: #ffcc00;
+    color: black;
+    padding: 12px 25px;
     border: none;
     border-radius: 5px;
-    background-color: #ffcc00;
-    color: #fff;
-    font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    background-image: linear-gradient(to right, #ffcc00, #000000);
-
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-weight: bold;
+    background-image: linear-gradient(to right, #ffcc00, #ffcc00);
 }
 
 .create-battle button:hover {
-    background-color: #ffcc00;
+    background-color: #e6b800;
     transform: scale(1.05);
-    background-image: linear-gradient(to left, #ffcc00, #000000);
+    box-shadow: 0 4px 15px rgba(230, 184, 0, 0.5);
+    background-image: linear-gradient(to left, #ffcc00, #ffcc00);
     transform: translateY(-2px);
+}
+
+.create-battle h2 {
+    text-align: center;
+    /* Altre regole di stile se necessarie */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.create-battle {
+    animation: fadeIn 1s ease-out;
+}
+
+/* Aggiungere un effetto di sfondo dinamico */
+.create-battle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(50, 50, 50, 0.5));
+    z-index: -1;
+    border-radius: 15px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .create-battle form {
+    .create-battle {
         width: 90%;
     }
 }
