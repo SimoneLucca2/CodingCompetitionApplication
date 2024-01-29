@@ -8,9 +8,8 @@ function AddEducatorToTournament() {
 
 
     const navigate = useNavigate();
-    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    //const userId = oggettoSalvato.userId;
-    const userId = 1;
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const userId = oggettoSalvato.userId;
     const params = useParams();
     const tournament = params.tournamentId;
     const tournamentId = parseInt(tournament, 10);
