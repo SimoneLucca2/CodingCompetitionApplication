@@ -50,7 +50,7 @@ const CreateTournament = () => {
         <div className="create-tournament">
             <form onSubmit={handleSubmit}>
                 <label>
-                    Tournament Name:
+                    TOURNAMENT NAME:
                     <input
                         type="text"
                         value={name}
@@ -58,21 +58,21 @@ const CreateTournament = () => {
                     />
                 </label>
                 <label>
-                    Description:
+                    DESCRIPTION:
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
                 </label>
                 <label>
-                    Submission Deadline:
+                    SUBMISSION DEADLINE:
                     <input
                         type="datetime-local"
                         value={registrationDeadline}
                         onChange={(e) => setregistrationDeadline(e.target.value)}
                     />
                 </label>
-                <button type="submit">Create Tournament</button>
+                <button type="submit">CREATE TOURNAMENT</button>
             </form>
         </div>
     );

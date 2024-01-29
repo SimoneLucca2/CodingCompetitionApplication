@@ -55,5 +55,10 @@ public class AuthenticationController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<?> test() {
+        return ResponseEntity.ok("Hello World");
+    }
+
 
 }

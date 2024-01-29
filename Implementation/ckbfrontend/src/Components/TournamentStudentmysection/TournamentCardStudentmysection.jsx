@@ -4,8 +4,9 @@ import './TournamentCardStudentmysection.css';
 import API_URL from "../../config";
 function TournamentCardStudentmysection({ tournament }) {
     const navigate = useNavigate();
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    //const userId = oggettoSalvato.userId;
+    const userId = 1;
 
     const [isFlipped, setIsFlipped] = useState(false);
     const [isVanished, setIsVanished] = useState(false);
@@ -72,7 +73,7 @@ function TournamentCardStudentmysection({ tournament }) {
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
-            <button className="join-button" onClick={quitTournament}>Quit the Tournament</button>
+            <button className="join-button" onClick={quitTournament}>QUIT THE TOURNAMENT</button>
 
         </div>
     );

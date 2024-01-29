@@ -67,7 +67,7 @@ function TournamentsPageEducatormysection() {
 
     return (
         <div className="tournaments-page">
-            <h1 className="page-title">TOURNAMENTS</h1>
+            <h1 className="page-title">MY TOURNAMENTS</h1>
             <div className="tournaments-container">
                 {tournaments.map(tournament => (
                     <TournamentCardEducatormysection key={tournament.tournamentId} tournament={tournament} />

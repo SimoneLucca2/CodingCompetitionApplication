@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS student_group_seq
 );
 
 CREATE DATABASE IF NOT EXISTS user_schema;
-USE authentication;
+USE user_schema;
 
 CREATE TABLE if not exists user
 (
