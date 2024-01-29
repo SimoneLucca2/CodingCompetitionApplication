@@ -7,6 +7,7 @@ import com.polimi.ckb.apiGateway.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +34,11 @@ public class AuthenticationController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body("Error during registration: " + e.getMessage());
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> test() {
+        return ResponseEntity.ok("Hello World");
     }
 
     @PostMapping("/login")

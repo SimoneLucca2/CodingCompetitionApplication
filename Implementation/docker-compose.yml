@@ -2,6 +2,25 @@ version: "3.7"
 
 services:
 
+  api-gateway:
+
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: pw
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://localhost:8761/eureka
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - eureka-server
+      - kafka
+
+
   tournament-service:
     build:
       context: ./tournament-service
@@ -26,7 +45,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/user_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
 
@@ -40,7 +59,6 @@ services:
       - mysql
       - kafka
 
-
   battle-service:
     build:
       context: ./battle-service
@@ -49,28 +67,13 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/battle_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
       GITHUB_API_TOKEN: <Your GitHub token>
     depends_on:
       - mysql
       - kafka
-      - eureka-server
-
-  api-gateway:
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: pw
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
-    ports:
-      - "8080:8080"
-    depends_on:
-      - mysql
       - eureka-server
 
 
@@ -90,7 +93,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tournament_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       TOURNAMENT_POLLING_RATE: 5000
     depends_on:
@@ -104,18 +107,18 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/battle_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
       TOURNAMENT_POLLING_RATE: 5000
     depends_on:
       - mysql
 
-  client:
-    build:
-      context: ./ckbfrontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+# client:
+#   build:
+#     context: ./ckbfrontend
+#     dockerfile: Dockerfile
+#   ports:
+#     - "3000:3000"
 
   mysql:
     image: mysql:8.0
@@ -161,5 +164,3 @@ volumes:
   zookeeper_data:
   kafka_data:
   mysql_data:
-
-
