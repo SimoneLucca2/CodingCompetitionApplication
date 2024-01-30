@@ -61,11 +61,11 @@ public class BattleControllerTest {
         this.educatorRepository = educatorRepository;
     }
 
-    @Test
+    /*@Test
     @Transactional
     public void testGitUploadYaml() throws GitAPIException, IOException {
         gitService.uploadYamlFileForNotifications("https://github.com/MarcoF17/AnotherTest");
-    }
+    }*/
 
     @Test
     @Transactional

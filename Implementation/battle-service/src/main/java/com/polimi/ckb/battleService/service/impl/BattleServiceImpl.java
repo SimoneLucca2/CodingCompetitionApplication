@@ -225,8 +225,6 @@ public class BattleServiceImpl implements BattleService {
             case PRE_BATTLE:
                 //from PRE_BATTLE only BATTLE status is allowed
                 if(changeBattleStatusDto.getStatus().equals(BattleStatus.BATTLE)){
-                    battle.setStatus(BattleStatus.BATTLE);
-
                     //check if every group satisfies the constraints, if not kick its student from the battle and delete it
                     checkGroupsConstraints(battle);
                 } else {
@@ -236,19 +234,14 @@ public class BattleServiceImpl implements BattleService {
 
             case BATTLE:
                 //from BATTLE only CONSOLIDATION status is allowed
-                if(changeBattleStatusDto.getStatus().equals(BattleStatus.CONSOLIDATION))
-                    battle.setStatus(BattleStatus.CONSOLIDATION);
-                //TODO: code evaluation and score update
-                else
+                if(!changeBattleStatusDto.getStatus().equals(BattleStatus.CONSOLIDATION))
                     throw new BattleChangingStatusException("Cannot switch from BATTLE to " + changeBattleStatusDto.getStatus());
                 break;
 
             case CONSOLIDATION:
                 //from CONSOLIDATION only CLOSED status is allowed
-                if(changeBattleStatusDto.getStatus().equals(BattleStatus.CLOSED))
-                    battle.setStatus(BattleStatus.CLOSED);
+                if(!changeBattleStatusDto.getStatus().equals(BattleStatus.CLOSED))
                 //TODO: manual evaluation or score confirmation
-                else
                     throw new BattleChangingStatusException("Cannot switch from CONSOLIDATION to " + changeBattleStatusDto.getStatus());
                 break;
 
@@ -278,11 +271,6 @@ public class BattleServiceImpl implements BattleService {
         }
 
         //TODO: TO BE FINISHED (kafka messages about kicking students are missing)
-    }
-
-    @Override
-    public void calculateTemporaryScore(NewPushDto newPushDto) {
-        //every time the system gets a notification about a new push on the main branch of a group's repo, solution is assigned a temporary score
     }
 
     private TournamentDto checkTournamentStats(Long tournamentId) throws JsonProcessingException {

@@ -90,4 +90,17 @@ public class GroupController {
         }
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping(path = "/repo")
+    public ResponseEntity<Object> uploadClonedRepoLink(@RequestBody SaveRepositoryLinkDto saveRepositoryLinkDto){ //Argument to be changed
+        log.info("A student is trying to upload a cloned repo link with message: {" + saveRepositoryLinkDto + "}");
+        try {
+            groupService.saveRepositoryUrl(saveRepositoryLinkDto);
+            log.info("Cloned repo link uploaded successfully");
+            return ResponseEntity.ok().build();
+        } catch (BattleStateTooAdvancedException e) {
+            log.error("Bad request: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+        }
+    }
 }

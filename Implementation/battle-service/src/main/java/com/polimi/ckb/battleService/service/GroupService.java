@@ -1,5 +1,6 @@
 package com.polimi.ckb.battleService.service;
 
+import com.polimi.ckb.battleService.dto.SaveRepositoryLinkDto;
 import com.polimi.ckb.battleService.dto.StudentInvitesToGroupDto;
 import com.polimi.ckb.battleService.dto.StudentJoinsGroupDto;
 import com.polimi.ckb.battleService.dto.StudentLeavesGroupDto;
@@ -9,4 +10,7 @@ public interface GroupService {
     void inviteStudentToGroup(StudentInvitesToGroupDto studentInvitesToGroupDto);
     StudentGroup joinGroup(StudentJoinsGroupDto studentJoinsGroupDto);
     StudentGroup leaveGroup(StudentLeavesGroupDto studentLeavesGroupDto);
+    Object getAllGroupsRepoLinksByBattle(String battleId);
+
+    void saveRepositoryUrl(SaveRepositoryLinkDto saveRepositoryLinkDto);
 }

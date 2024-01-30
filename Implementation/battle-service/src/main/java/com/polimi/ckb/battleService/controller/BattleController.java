@@ -69,13 +69,13 @@ public class BattleController {
                     //push and commit a file yaml to set up an action that informs the system about new pushes on main branch
                     log.info("Pushing the configuration yaml file into the new repository");
                     gitService.uploadSetupFiles(repositoryUrl, createdBattle.getName());
-                    gitService.createSonarCloudProject(createBattleDto);
+                    /*gitService.createSonarCloudProject(createBattleDto);
                     gitService.createSecrets(
                             CreatedBattleDto.builder()
                                     .name(createBattleDto.getName())
                                     .build()
                             , null
-                            );
+                            );*/
                     //TODO: if upload goes wrong, delete the battle just created
                     log.info("Repository ready for sharing");
                 }
@@ -85,22 +85,15 @@ public class BattleController {
             log.info("Battle created successfully");
             return ResponseEntity.ok().body(CreatedBattleDto.from(createdBattle));
         } catch (BattleAlreadyExistException | BattleDeadlinesOverlapException | TournamentNotActiveException |
-                 EducatorNotAuthorizedException e) {
+                 EducatorNotAuthorizedException | BattleDeadlineException | BattleGroupConstraintException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         } catch (JsonProcessingException e) {
             log.error("Error processing JSON: {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
-        } catch (ErrorWhileCreatingRepositoryException e) {
+        } catch (ErrorWhileCreatingRepositoryException | GitAPIException | IOException e) {
             log.error("Error while creating repository {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Error while creating repository: " + e.getMessage()));
-        } catch (RuntimeException e) {
-            log.error("Bad request: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
-        } catch (GitAPIException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

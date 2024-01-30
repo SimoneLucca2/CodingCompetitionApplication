@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polimi.ckb.battleService.dto.CreateBattleDto;
 import com.polimi.ckb.battleService.dto.CreatedBattleDto;
+import com.polimi.ckb.battleService.dto.NewPushDto;
 import com.polimi.ckb.battleService.exception.ErrorWhileCreatingRepositoryException;
 import com.polimi.ckb.battleService.service.GitService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -35,7 +37,10 @@ public class GitServiceImpl implements GitService {
     //@Value("${github.api.username}")
     private final String gitHubUsername = "MarcoF17";
     private final String sonarCloudOrgName = "marcof17";
+
+    //TODO: generate a valid sonarQUBE token
     private final String sonarCloudToken = "0a95732fbb06e15705af12c72052952bdac41525";
+    private final String sonarProjectKey = "ckb";
     @Override
     public void uploadSetupFiles(final String repositoryUrl, final String repoName) throws GitAPIException, IOException {
         //clone the repository
@@ -51,7 +56,7 @@ public class GitServiceImpl implements GitService {
         copyDirectory(sourceDirectory, destinationDirectory);
 
         //create the sonar-project.properties file
-        createSonarProjectPropertiesFile(repoName);
+        //createSonarProjectPropertiesFile(repoName);
 
         //add the yaml file
         git.add().addFilepattern(".").call();
@@ -71,19 +76,6 @@ public class GitServiceImpl implements GitService {
 
     private void copyDirectory(Path source, Path destination) throws IOException {
         FileUtils.copyDirectory(source.toFile(), destination.toFile());
-    }
-
-    private void createSonarProjectPropertiesFile(final String repoName) throws IOException {
-        File file = new File("./temp/sonar-project.properties");
-
-        if(!file.createNewFile())
-            throw new IOException("Error while creating sonar-project.properties file");
-
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write("sonar.projectKey=" + gitHubUsername + "_" + repoName + "\n");
-        fileWriter.write("sonar.organization=" + sonarCloudOrgName + "\n");
-
-        fileWriter.close();
     }
 
     private void deleteRepository() throws IOException {
@@ -219,29 +211,82 @@ public class GitServiceImpl implements GitService {
     }
 
     @Override
-    public void createSonarCloudProject(final CreateBattleDto dto) throws IOException {
-        String sonarCloudURL = "https://sonarcloud.io/api/projects/create";
-        final String projectKey = gitHubUsername + "_" + dto.getName();
-        String requestBody = "{\"name\":" + dto.getName() + ", \"organization\":" + sonarCloudOrgName +
-                ", \"project\":" + projectKey + "}";
+    public void calculateTemporaryScore(NewPushDto newPushDto) throws GitAPIException, IOException, InterruptedException {
+        //every time the system gets a notification about a new push on the main branch of a group's repo, solution is assigned a temporary score
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(sonarCloudURL))
-                .header("Authorization", "Basic " + sonarCloudToken)
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+        //TODO: verify github token
+        Git git = Git.cloneRepository()
+                .setURI(newPushDto.getRepositoryUrl())
+                .setCredentialsProvider(new UsernamePasswordCredentialsProvider(newPushDto.getGithubName(), newPushDto.getGithubToken()))
+                .setDirectory(new File("./analysis"))
+                .call();
+
+
+        createSonarProjectPropertiesFile();
+        createSonarQubeProject();
+
+        //execute sonar-scanner script
+        final String scriptPath = "./src/main/resources/sonar-scanner.sh";
+        ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", scriptPath);
+        //processBuilder.environment().put("PATH", "/home/marcolino/Documenti/SonarQube/sonar-scanner-cli-5.0.1.3006-linux/bin:" + System.getenv("PATH"));
+        //processBuilder.environment().put("SONAR_RUNNER_HOME", "/home/marcolino/Documenti/SonarQube/sonar-scanner-cli-5.0.1.3006-linux/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner");
+        log.info("Starting analysis with sonar-scanner");
+        Process process = processBuilder.start();
+        BufferedReader readerOutput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        BufferedReader readerError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+        int exitCode = process.waitFor();
+        if(exitCode != 0) //TODO: create an ad hoc exception
+            throw new RuntimeException("Error while executing sonar-scanner");
+
+        //Get the temporary score from sonarqube and save it in the database
+        //TODO: use this -> GET api/measures/component?component=ckb&metricKeys=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density&additionalFields=metrics
+
+        //Delete the cloned repository
+
+        //Delete sonarqube project through API
+    }
+
+    private void createSonarQubeProject() throws IOException {
+        final String sonarCloudURL = "http://localhost:9000/api/projects/create";
+        final String encodedProjectName = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
+        final String encodedProjectKey = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
+        final String urlWithParams = sonarCloudURL + "?name=" + encodedProjectName + "&project=" + encodedProjectKey;
+
+        final HttpClient client = HttpClient.newHttpClient();
+        final HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(urlWithParams))
+                .header("Authorization", "Bearer " + "sqa_c4f04e0210ce47711da0af97bfc49a1f251ca9ae")
+                //.header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
         try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            log.info(String.valueOf(response.statusCode()));
+            log.info(response.body());
 
             if (response.statusCode() == HttpURLConnection.HTTP_CREATED) {
-               log.info("SonarCloud project successfully created");
+                log.info("SonarQube project successfully created");
             } else {
                 //TODO: create an ad hoc exception
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void createSonarProjectPropertiesFile() throws IOException {
+        File file = new File("./analysis/sonar-project.properties");
+
+        if(!file.createNewFile())
+            throw new IOException("Error while creating sonar-project.properties file");
+
+        FileWriter fileWriter = new FileWriter(file);
+        fileWriter.write("sonar.projectKey=" + sonarProjectKey + "\n");
+        fileWriter.write("sonar.name=" + sonarProjectKey + "\n");
+        log.info("SSS");
+
+        fileWriter.close();
     }
 }
