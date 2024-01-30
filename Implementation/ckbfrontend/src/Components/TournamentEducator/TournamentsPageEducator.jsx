@@ -4,8 +4,10 @@ import TournamentCardEducator from './TournamentCardEducator';
 import './TournamentsPageEducator.css';
 import {useNavigate} from "react-router-dom";
 import API_URL from "../../config";
+import TournamentLeaderboard from "../TournamentLeaderBoard/TournamentLeaderBoard";
 
 function TournamentsPageEducator() {
+    const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
     const [tournaments, setTournaments] = useState([
         /*{
             id: 1,
@@ -55,6 +57,10 @@ function TournamentsPageEducator() {
         navigate(`/errorpage`);
     };
 
+    const handleTournamentSelectForLeaderboard = (tournament) => {
+        setSelectedTournament(tournament);
+    };
+
     useEffect(() => {
         axios.get(`${API_URL}/tournament/all`)
             .then(response => {
@@ -67,10 +73,20 @@ function TournamentsPageEducator() {
     return (
         <div className="tournaments-page">
             <h1 className="page-title">ALL TOURNAMENTS</h1>
-            <div className="tournaments-container">
-                {tournaments.map(tournament => (
-                    <TournamentCardEducator key={tournament.tournamentId} tournament={tournament} />
-                ))}
+            <div className="tournaments-layout">
+                <div className="tournaments-container">
+                    {tournaments.map(tournament => (
+                        <TournamentCardEducator key={tournament.tournamentId} tournament={tournament}
+                                                onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
+                    ))}
+                </div>
+                <div className="tournament-leaderboard">
+                    {selectedTournament ? (
+                        <TournamentLeaderboard tournament={selectedTournament}/>
+                    ) : (
+                        <p className="select-tournament-message">Select a tournament to view the rankings.</p>
+                    )}
+                </div>
             </div>
         </div>
     );

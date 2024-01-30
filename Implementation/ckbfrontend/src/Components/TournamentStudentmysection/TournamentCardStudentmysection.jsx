@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TournamentCardStudentmysection.css';
 import API_URL from "../../config";
-function TournamentCardStudentmysection({ tournament }) {
+function TournamentCardStudentmysection({ tournament, onLeaderboardSelect }) {
     const navigate = useNavigate();
     //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
     //const userId = oggettoSalvato.userId;
@@ -67,6 +67,11 @@ function TournamentCardStudentmysection({ tournament }) {
         }, 600); // Tempo prima che la carta svanisca
     };
 
+    const handleLeaderboardClick = (e) => {
+        e.stopPropagation(); // Previene il click sull'intera carta
+        onLeaderboardSelect(tournament);
+    };
+
     return (
         <div className={`tournament-card ${isFlipped ? 'flipped' : ''} ${isVanished ? 'vanished' : ''}`}
              onClick={handleCardClick}>
@@ -74,7 +79,9 @@ function TournamentCardStudentmysection({ tournament }) {
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
             <button className="join-button" onClick={quitTournament}>QUIT THE TOURNAMENT</button>
-
+            <button className="leaderboard-button" onClick={handleLeaderboardClick}>
+                View Leaderboard
+            </button>
         </div>
     );
 }

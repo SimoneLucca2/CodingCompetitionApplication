@@ -18,7 +18,7 @@ const SuccessPage = () => {
                     <h1>Action Completed!</h1>
                     <p>Your process has been successfully completed.</p>
                 </animated.div>
-                <animated.button style={buttonAnimation} onClick={() => navigate(-1)}>Go Back</animated.button>
+                <animated.button style={buttonAnimation} onClick={() => navigate(-2)}>Go Back</animated.button>
             </animated.div>
         </div>
     );

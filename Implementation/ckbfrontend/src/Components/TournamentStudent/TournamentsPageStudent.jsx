@@ -4,8 +4,10 @@ import TournamentCardStudent from './TournamentCardStudent';
 import './TournamentsPageStudent.css';
 import {useNavigate} from "react-router-dom";
 import API_URL from "../../config";
+import TournamentLeaderboard from "../TournamentLeaderBoard/TournamentLeaderBoard";
 
 function TournamentsPageStudent() {
+    const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
     const [tournaments, setTournaments] = useState([
        /*{
             id: 1,
@@ -51,9 +53,14 @@ function TournamentsPageStudent() {
 
     const navigate = useNavigate();
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    const userID = oggettoSalvato.userId;
+    const userId = parseInt(userID, 10);
     const goToerrorpage = () => {
         navigate(`/errorpage`);
+    };
+
+    const handleTournamentSelectForLeaderboard = (tournament) => {
+        setSelectedTournament(tournament);
     };
 
     useEffect(() => {
@@ -68,10 +75,19 @@ function TournamentsPageStudent() {
     return (
         <div className="tournaments-page">
             <h1 className="page-title">ALL TOURNAMENTS</h1>
+            <div className="tournaments-layout">
             <div className="tournaments-container">
                 {tournaments.map(tournament => (
-                    <TournamentCardStudent key={tournament.tournamentId} tournament={tournament} />
+                    <TournamentCardStudent key={tournament.tournamentId} tournament={tournament} onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
                 ))}
+            </div>
+            <div className="tournament-leaderboard">
+                {selectedTournament ? (
+                    <TournamentLeaderboard tournament={selectedTournament}/>
+                ) : (
+                    <p className="select-tournament-message">Select a tournament to view the rankings.</p>
+                )}
+            </div>
             </div>
         </div>
     );
