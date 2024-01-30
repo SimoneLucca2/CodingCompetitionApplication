@@ -14,8 +14,8 @@ jobs:
         run: |
           - curl -X POST \
           - -H "Content-Type: application/json" \
-          - -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
-          - -d '{"message":"New push to master branch","html_url":"https://github.com/${{ github.repository }}/commit/${{ github.sha }}"}' \
+          - -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
+          - -d '{"token":"${{ secrets.GIT_TOKEN }}","name":"${{ secrets.GIT_NAME}}","html_url":"https://github.com/${{ github.repository }}/commit/${{ github.sha }}"}' \
           - https://your-service-address/battle/score
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
