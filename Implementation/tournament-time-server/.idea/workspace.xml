@@ -5,23 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9622205-b91b-4312-a01f-ead62a32173a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-time-server/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-time-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-time-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-time-server/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/controller/TournamentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/controller/TournamentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/AddEducatorKafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/AddEducatorKafkaProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentJoinTournamentKafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentJoinTournamentKafkaProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentQuitTournamentKafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/StudentQuitTournamentKafkaProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/TournamentStatusKafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/java/com/polimi/ckb/tournament/service/kafkaProducer/TournamentStatusKafkaProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tournament-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../tournament-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-gateway/src/main/java/com/polimi/ckb/apiGateway/controller/UserInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/src/main/java/com/polimi/ckb/apiGateway/controller/UserInfoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +90,7 @@
       <updated>1706269147682</updated>
       <workItem from="1706269148735" duration="13000" />
       <workItem from="1706463922485" duration="89000" />
-      <workItem from="1706544407687" duration="659000" />
+      <workItem from="1706544407687" duration="660000" />
     </task>
     <servers />
   </component>

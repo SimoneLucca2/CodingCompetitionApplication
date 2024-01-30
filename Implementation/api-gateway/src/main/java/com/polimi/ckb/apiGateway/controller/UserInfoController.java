@@ -17,7 +17,7 @@ public class UserInfoController {
     private final UserRepository userRepository;
 
     @GetMapping("/getId/{mail}")
-    public ResponseEntity<?> getIdFromMail(@PathVariable String mail) {
+    public ResponseEntity<?> getIdFromMail(@PathVariable(name = "mail") String mail) {
 
         try {
             User user = userRepository.findByEmail(mail).orElseThrow(() -> new RuntimeException("User not found"));
