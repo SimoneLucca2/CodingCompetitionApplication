@@ -23,7 +23,6 @@ import CloseTournament from "./Components/CloseTournament/closetournament";
 import StudentProfile from "./Components/StudentProfile/StudentProfile";
 import Educatorprofile from "./Components/EducatorProfile/educatorprofile";
 import SuccessPage  from "./Components/SuccessPage/SuccessPage";
-import AA from "./Components/A/AA";
 
 function App() {
   return (
@@ -51,7 +50,6 @@ function App() {
             <Route path="/mysectionbattlespageeducator/:tournamentId" element={<BattlesPageEducatormysection/>}/>
             <Route path="/closetournament" element={<CloseTournament/>}/>
             <Route path="/successpage" element={<SuccessPage/>}/>
-            <Route path="/aa" element={<AA/>}/>
           </Routes>
         </BrowserRouter>
       </ItemListProvider>
