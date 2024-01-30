@@ -67,6 +67,10 @@
     cursor: pointer;
 }
 
+.inputx {
+    margin-top: 20px;
+}
+
 .submit-container {
     display: flex;
     gap: 20px;

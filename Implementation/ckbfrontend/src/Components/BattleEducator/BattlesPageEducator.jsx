@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BattleCardEducator from './BattleCardEducator';
 import './BattlesPageEducator.css';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import API_URL from "../../config";
 
 function BattlesPageEducator({ match }) {
@@ -20,17 +20,18 @@ function BattlesPageEducator({ match }) {
     ]);
 
     const params = useParams();
-    //const tournament = params.tournamentId;
-    //const tournamentId = parseInt(tournament, 10);
-    const tournamentId = 1;
+    const tournament = params.tournamentId;
+    const tournamentId = parseInt(tournament, 10);
+    const navigate = useNavigate();
 
-    /*useEffect(() => {
+
+    useEffect(() => {
         axios.get(`${API_URL}/battle/all/${tournamentId}`)
             .then(response => {
                 setBattles(response.data);
             })
-            .catch(error => console.error('Error fetching battles:', error));
-    }, [tournamentId]);*/
+            .catch(error => navigate(`/errorpage`));
+    }, [tournamentId]);
 
     return (
         <div className="battles-page">

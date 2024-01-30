@@ -4,8 +4,11 @@ import TournamentCardStudentmysection from './TournamentCardStudentmysection';
 import './TournamentsPageStudentmysection.css';
 import {useNavigate} from "react-router-dom";
 import API_URL from "../../config";
+import TournamentLeaderboard from "../TournamentLeaderBoard/TournamentLeaderBoard";
+
 
 function TournamentsPageStudentmysection() {
+    const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
     const [tournaments, setTournaments] = useState([
         /*{
             id: 1,
@@ -49,7 +52,8 @@ function TournamentsPageStudentmysection() {
         }*/
     ]);
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    const userID = oggettoSalvato.userId;
+    const userId = parseInt(userID, 10);
     const navigate = useNavigate();
 
     const goToerrorpage = () => {
@@ -64,14 +68,26 @@ function TournamentsPageStudentmysection() {
             .catch(error => {goToerrorpage()} );
     }, []);
 
+    const handleTournamentSelectForLeaderboard = (tournament) => {
+        setSelectedTournament(tournament);
+    };
 
     return (
         <div className="tournaments-page">
             <h1 className="page-title">MY TOURNAMENTS</h1>
+            <div className="tournaments-layout">
             <div className="tournaments-container">
                 {tournaments.map(tournament => (
-                    <TournamentCardStudentmysection key={tournament.tournamentId} tournament={tournament} />
+                    <TournamentCardStudentmysection key={tournament.tournamentId} tournament={tournament} onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
                 ))}
+            </div>
+            <div className="tournament-leaderboard">
+                {selectedTournament ? (
+                    <TournamentLeaderboard tournament={selectedTournament}/>
+                ) : (
+                    <p className="select-tournament-message">Select a tournament to view the rankings.</p>
+                )}
+            </div>
             </div>
         </div>
     );

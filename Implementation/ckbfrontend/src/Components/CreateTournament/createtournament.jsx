@@ -38,7 +38,7 @@ const CreateTournament = () => {
 
             const data = await response.json();
             console.log('Success:', data);
-            navigate('/educatorprofile');
+            navigate('/successpage');
         } catch (error) {
             console.error('Error:', error);
         }
