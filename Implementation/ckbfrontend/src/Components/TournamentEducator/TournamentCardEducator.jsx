@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TournamentCardEducator.css';
 
-function TournamentCardEducator({ tournament }) {
+function TournamentCardEducator({ tournament, onLeaderboardSelect }) {
     const navigate = useNavigate();
 
     const [isFlipped, setIsFlipped] = useState(false);
@@ -27,12 +27,21 @@ function TournamentCardEducator({ tournament }) {
         }, 600); // Tempo prima che la carta svanisca
     };
 
+
+    const handleLeaderboardClick = (e) => {
+        e.stopPropagation(); // Previene il click sull'intera carta
+        onLeaderboardSelect(tournament);
+    };
+
     return (
         <div className={`tournament-card ${isFlipped ? 'flipped' : ''} ${isVanished ? 'vanished' : ''}`}
              onClick={handleCardClick}>
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
+            <button className="leaderboard-button" onClick={handleLeaderboardClick}>
+                View Leaderboard
+            </button>
         </div>
     );
 }

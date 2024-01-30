@@ -4,7 +4,7 @@ import './TournamentCardStudent.css';
 import API_URL from "../../config";
 import axios from "axios";
 
-function TournamentCardStudent({ tournament }) {
+function TournamentCardStudent({ tournament, onLeaderboardSelect }) {
     const navigate = useNavigate();
     //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
     //const userId = oggettoSalvato.userId;
@@ -62,6 +62,11 @@ function TournamentCardStudent({ tournament }) {
         sendRequest(userId, tournament.tournamentId);
     };
 
+    const handleLeaderboardClick = (e) => {
+        e.stopPropagation(); // Previene il click sull'intera carta
+        onLeaderboardSelect(tournament);
+    };
+
     return (
         <div className={`tournament-card ${isFlipped ? 'flipped' : ''} ${isVanished ? 'vanished' : ''}`}
              onClick={handleCardClick}>
@@ -69,6 +74,9 @@ function TournamentCardStudent({ tournament }) {
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
             <button className="join-button-3" onClick={joinTournament}>JOIN THE TOURNAMENT</button>
+            <button className="leaderboard-button" onClick={handleLeaderboardClick}>
+                View Leaderboard
+            </button>
         </div>
     );
 }

@@ -4,8 +4,10 @@ import TournamentCardEducatormysection from './TournamentCardEducatormysection';
 import './TournamentsPageEducatormysection.css';
 import {useNavigate} from "react-router-dom";
 import API_URL from "../../config";
+import TournamentLeaderboard from "../TournamentLeaderBoard/TournamentLeaderBoard";
 
 function TournamentsPageEducatormysection() {
+    const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
     const [tournaments, setTournaments] = useState([
         /*{
             tournamentId: 1,
@@ -52,8 +54,13 @@ function TournamentsPageEducatormysection() {
     const navigate = useNavigate();
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
     const userId = oggettoSalvato.userId;
+
     const goToerrorpage = () => {
         navigate(`/errorpage`);
+    };
+
+    const handleTournamentSelectForLeaderboard = (tournament) => {
+        setSelectedTournament(tournament);
     };
 
     useEffect(() => {
@@ -68,10 +75,20 @@ function TournamentsPageEducatormysection() {
     return (
         <div className="tournaments-page">
             <h1 className="page-title">MY TOURNAMENTS</h1>
-            <div className="tournaments-container">
-                {tournaments.map(tournament => (
-                    <TournamentCardEducatormysection key={tournament.tournamentId} tournament={tournament} />
-                ))}
+            <div className="tournaments-layout">
+                <div className="tournaments-container">
+                    {tournaments.map(tournament => (
+                        <TournamentCardEducatormysection key={tournament.tournamentId} tournament={tournament}
+                                                         onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
+                    ))}
+                </div>
+                <div className="tournament-leaderboard">
+                    {selectedTournament ? (
+                        <TournamentLeaderboard tournament={selectedTournament}/>
+                    ) : (
+                        <p className="select-tournament-message">Select a tournament to view the rankings.</p>
+                    )}
+                </div>
             </div>
         </div>
     );

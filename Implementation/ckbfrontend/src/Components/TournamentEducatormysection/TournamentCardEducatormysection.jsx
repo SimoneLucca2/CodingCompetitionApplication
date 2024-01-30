@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TournamentCardEducatormysection.css';
 
-function TournamentCardEducatormysection({ tournament }) {
+function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
     const navigate = useNavigate();
 
     const [isFlipped, setIsFlipped] = useState(false);
@@ -43,6 +43,11 @@ function TournamentCardEducatormysection({ tournament }) {
         navigate(`/createbattle/${tournament.tournamentId}`);
     }
 
+    const handleLeaderboardClick = (e) => {
+        e.stopPropagation(); // Previene il click sull'intera carta
+        onLeaderboardSelect(tournament);
+    };
+
     return (
         <div className={`tournament-card ${isFlipped ? 'flipped' : ''} ${isVanished ? 'vanished' : ''}`}
              onClick={handleCardClick}>
@@ -52,7 +57,9 @@ function TournamentCardEducatormysection({ tournament }) {
             <button className="join-button-1" onClick={joinAddEducatortoaTournament}>ADD EDUCATOR</button>
             <button className="quit-button" onClick={joinCloseTournament}>CLOSE TOURNAMENT</button>
             <button className="join-button-2" onClick={joinCreateBattle}>CREATE BATTLE</button>
-
+            <button className="leaderboard-button" onClick={handleLeaderboardClick}>
+                View Leaderboard
+            </button>
         </div>
     );
 }
