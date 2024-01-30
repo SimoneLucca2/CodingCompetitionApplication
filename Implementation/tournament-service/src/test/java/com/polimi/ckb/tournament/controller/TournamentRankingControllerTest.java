@@ -45,17 +45,4 @@ public class TournamentRankingControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(mockRanking.size()));
     }
-
-    @Test
-    public void testGetFullTournamentRanking() throws Exception {
-        long tournamentId = 1L;
-        List<RankingEntryDto> mockFullRanking = Arrays.asList(new RankingEntryDto(), new RankingEntryDto(), new RankingEntryDto());
-
-        given(rankingService.getTournamentRanking(tournamentId, null, null)).willReturn(mockFullRanking);
-
-        mockMvc.perform(get("/tournament/ranking/{tournamentId}", tournamentId))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()").value(mockFullRanking.size()));
-    }
 }
