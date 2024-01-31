@@ -14,7 +14,6 @@ services:
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
-
     ports:
       - "8080:8080"
     depends_on:
@@ -77,8 +76,6 @@ services:
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
-
-
       #GITHUB_API_TOKEN: <Your GitHub token>
     depends_on:
       - mysql
