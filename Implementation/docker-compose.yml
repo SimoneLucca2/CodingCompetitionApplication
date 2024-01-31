@@ -11,7 +11,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
     ports:
       - "8080:8080"
@@ -29,7 +29,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tournament_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
     depends_on:
       - mysql
@@ -46,15 +46,15 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
 
       SPRING_MAIL_HOST: smtps.aruba.it
       SPRING_MAIL_PORT: 465
       SPRING_MAIL_USERNAME: nodered@neslab.it
       SPRING_MAIL_PASSWORD: Node22$$
-      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
-      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+      #SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+      #SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
     depends_on:
       - mysql
       - kafka
@@ -68,7 +68,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
       #GITHUB_API_TOKEN: <Your GitHub token>
     depends_on:
@@ -94,7 +94,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       TOURNAMENT_POLLING_RATE: 5000
     depends_on:
       - mysql
@@ -108,7 +108,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       TOURNAMENT_POLLING_RATE: 5000
     depends_on:
       - mysql
@@ -125,7 +125,7 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      #- ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 
 

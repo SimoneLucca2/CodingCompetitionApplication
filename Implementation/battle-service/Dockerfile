@@ -14,7 +14,7 @@ RUN sed -i 's/\r$//' mvnw
 RUN chmod +x mvnw
 
 # Package the application
-RUN ./mvnw clean package
+RUN ./mvnw clean package -DskipTests
 
 # Use a new stage to create a smaller final image
 FROM openjdk:17

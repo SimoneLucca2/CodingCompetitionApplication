@@ -29,6 +29,8 @@ public class ScoreController {
             gitService.calculateTemporaryScore(newPushDto);
         } catch (GitAPIException | IOException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
