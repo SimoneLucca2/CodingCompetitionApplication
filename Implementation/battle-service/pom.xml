@@ -112,6 +112,10 @@
 			<artifactId>json</artifactId>
 			<version>20230618</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway-mvc</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
