@@ -69,6 +69,11 @@ create table IF NOT EXISTS tournament_schema.tournament_seq
 CREATE DATABASE IF NOT EXISTS battle_schema;
 USE battle_schema;
 
+CREATE TABLE IF NOT EXISTS educator
+(
+    educator_id bigint not null primary key
+);
+
 CREATE TABLE IF NOT EXISTS battle
 (
     battle_id             bigint auto_increment primary key,
@@ -84,11 +89,6 @@ CREATE TABLE IF NOT EXISTS battle
     repo_link             varchar(255) null,
     constraint battle_educator_educator_id_fk
         foreign key (creator_id) references educator (educator_id)
-);
-
-CREATE TABLE IF NOT EXISTS educator
-(
-    educator_id bigint not null primary key
 );
 
 CREATE TABLE IF NOT EXISTS student
