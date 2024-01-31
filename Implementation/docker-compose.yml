@@ -13,6 +13,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+
     ports:
       - "8080:8080"
     depends_on:
@@ -31,6 +33,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+
     depends_on:
       - mysql
       - kafka
@@ -48,6 +52,8 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+
 
       SPRING_MAIL_HOST: smtps.aruba.it
       SPRING_MAIL_PORT: 465
@@ -67,9 +73,12 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/battle_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+
+
       #GITHUB_API_TOKEN: <Your GitHub token>
     depends_on:
       - mysql
@@ -96,6 +105,8 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       TOURNAMENT_POLLING_RATE: 5000
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+
     depends_on:
       - mysql
 
@@ -109,6 +120,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       TOURNAMENT_POLLING_RATE: 5000
     depends_on:
       - mysql
