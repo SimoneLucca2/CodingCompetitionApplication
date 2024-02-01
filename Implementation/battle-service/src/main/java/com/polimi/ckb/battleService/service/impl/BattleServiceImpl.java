@@ -2,6 +2,7 @@ package com.polimi.ckb.battleService.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.discovery.DiscoveryClient;
 import com.polimi.ckb.battleService.config.BattleStatus;
 import com.polimi.ckb.battleService.config.TournamentStatus;
 import com.polimi.ckb.battleService.dto.*;
@@ -35,7 +36,7 @@ public class BattleServiceImpl implements BattleService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     //@Value("${eureka.client.service-url.defaultZone}")
-    private final String TOURNAMENT_SERVICE_URL = "http://localhost:8080";//"http://tournament-service";
+    private final String TOURNAMENT_SERVICE_URL = "http://TOURNAMENT_SERVICE";
 
     @Override
     @Transactional
@@ -90,6 +91,14 @@ public class BattleServiceImpl implements BattleService {
 
         return battleRepository.save(convertToEntity(createBattleDto));
     }
+
+    /*private String getTournamentServiceUrl() {
+        List<ServiceInstance> instances = discoveryClient.getInstances("TOURNAMENT-SERVICE");
+        if (instances.isEmpty()) {
+            throw new RuntimeException("No instances of tournament service found");
+        }
+        return instances.get(0).getUri().toString();
+    }*/
 
     //TODO: maybe put this inside a mapper class
     private Battle convertToEntity(CreateBattleDto createBattleDto){
@@ -273,6 +282,7 @@ public class BattleServiceImpl implements BattleService {
 
     private TournamentDto checkTournamentStats(Long tournamentId) throws JsonProcessingException {
         log.info("Checking tournament existence and status and creator's access to it");
+        //String tournamentServiceUrl = getTournamentServiceUrl();
         String response = restTemplate.getForObject(TOURNAMENT_SERVICE_URL + "/tournament/" + tournamentId, String.class);
         return objectMapper.readValue(response, TournamentDto.class);
     }

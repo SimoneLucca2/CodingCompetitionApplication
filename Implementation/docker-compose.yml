@@ -34,6 +34,9 @@ services:
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
 
+    ports:
+      - "8083:8083"
+
     depends_on:
       - mysql
       - kafka
@@ -60,6 +63,9 @@ services:
       SPRING_MAIL_PASSWORD: Node22$$
       #SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
       #SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+
+    ports:
+      - "8081:8081"
     depends_on:
       - mysql
       - kafka
@@ -81,6 +87,9 @@ services:
       - mysql
       - kafka
       - eureka-server
+
+    ports:
+        - "8084:8084"
 
 
   eureka-server:
@@ -104,6 +113,8 @@ services:
       TOURNAMENT_POLLING_RATE: 5000
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
 
+    ports:
+      - "8090:8090"
     depends_on:
       - mysql
 
@@ -119,6 +130,10 @@ services:
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       TOURNAMENT_POLLING_RATE: 5000
+
+    ports:
+        - "8089:8089"
+
     depends_on:
       - mysql
 
