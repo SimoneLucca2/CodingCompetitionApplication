@@ -1,10 +1,7 @@
 package com.polimi.ckb.battleService.service.impl;
 
 import com.polimi.ckb.battleService.config.BattleStatus;
-import com.polimi.ckb.battleService.dto.SaveRepositoryLinkDto;
-import com.polimi.ckb.battleService.dto.StudentInvitesToGroupDto;
-import com.polimi.ckb.battleService.dto.StudentJoinsGroupDto;
-import com.polimi.ckb.battleService.dto.StudentLeavesGroupDto;
+import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
@@ -152,12 +149,16 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Object getAllGroupsRepoLinksByBattle(String battleId) {
-        return null;
+    public List<StudentGroup> getAllGroupsRepoLinksByBattle(Long battleId) {
+        Battle battle = battleRepository.findById(battleId).orElseThrow(BattleDoesNotExistException::new);
+        return groupRepository.findScoreByBattle(battle);
     }
 
     @Override
-    public void saveRepositoryUrl(SaveRepositoryLinkDto saveRepositoryLinkDto) {
+    public void saveRepositoryUrl(SaveGroupRepositoryLinkDto saveGroupRepositoryLinkDto) {
+        StudentGroup group = groupRepository.findById(saveGroupRepositoryLinkDto.getGroupId()).orElseThrow(GroupDoesNotExistsException::new);
 
+        group.setClonedRepositoryLink(saveGroupRepositoryLinkDto.getClonedRepositoryLink());
+        groupRepository.save(group);
     }
 }

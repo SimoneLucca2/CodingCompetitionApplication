@@ -6,7 +6,6 @@ import com.polimi.ckb.battleService.config.BattleStatus;
 import com.polimi.ckb.battleService.config.TournamentStatus;
 import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
-import com.polimi.ckb.battleService.entity.Educator;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.*;
@@ -134,7 +133,7 @@ public class BattleServiceImpl implements BattleService {
         //student joins the battle as singleton group
         StudentGroup newStudentGroup = StudentGroup.builder()
                 .battle(battle)
-                .score(0)
+                .score(Float.intBitsToFloat(0))
                 .build();
         newStudentGroup.getStudents().add(student);
         battle.getStudentGroups().add(newStudentGroup);
@@ -234,14 +233,17 @@ public class BattleServiceImpl implements BattleService {
 
             case BATTLE:
                 //from BATTLE only CONSOLIDATION status is allowed
+
                 if(!changeBattleStatusDto.getStatus().equals(BattleStatus.CONSOLIDATION))
                     throw new BattleChangingStatusException("Cannot switch from BATTLE to " + changeBattleStatusDto.getStatus());
+
+                //TODO: manual evaluation or score confirmation
+
                 break;
 
             case CONSOLIDATION:
                 //from CONSOLIDATION only CLOSED status is allowed
                 if(!changeBattleStatusDto.getStatus().equals(BattleStatus.CLOSED))
-                //TODO: manual evaluation or score confirmation
                     throw new BattleChangingStatusException("Cannot switch from CONSOLIDATION to " + changeBattleStatusDto.getStatus());
                 break;
 

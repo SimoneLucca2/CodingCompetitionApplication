@@ -12,7 +12,5 @@ public interface GitService {
 
     String createGitHubRepository(CreateBattleDto createBattleDto);
 
-    void createSecrets(final CreatedBattleDto dto, final String sonarCloudProjectToken) throws IOException;
-
     void calculateTemporaryScore(NewPushDto newPushDto) throws GitAPIException, IOException, InterruptedException;
 }

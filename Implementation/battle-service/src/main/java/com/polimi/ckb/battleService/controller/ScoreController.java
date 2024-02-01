@@ -1,8 +1,10 @@
 package com.polimi.ckb.battleService.controller;
 
-import com.polimi.ckb.battleService.dto.ErrorResponse;
+import com.polimi.ckb.battleService.dto.GroupScoreDto;
 import com.polimi.ckb.battleService.dto.NewPushDto;
-import com.polimi.ckb.battleService.service.BattleService;
+import com.polimi.ckb.battleService.entity.StudentGroup;
+import com.polimi.ckb.battleService.exception.BattleDoesNotExistException;
+import com.polimi.ckb.battleService.exception.ErrorWhileExecutingScannerException;
 import com.polimi.ckb.battleService.service.GitService;
 import com.polimi.ckb.battleService.service.GroupService;
 import lombok.AllArgsConstructor;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -27,16 +31,30 @@ public class ScoreController {
         log.info("A new push on the main branch has been performed on: " + newPushDto.getRepositoryUrl());
         try {
             gitService.calculateTemporaryScore(newPushDto);
-        } catch (GitAPIException | IOException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (GitAPIException | IOException | ErrorWhileExecutingScannerException | InterruptedException e) {
+            log.error("Internal server error: " + e.getMessage());
         }
     }
 
     @GetMapping(path = "/all")
-    public ResponseEntity<Object> getAllGroupsRepoLinksByBattle(@RequestParam("battleId") String battleId){
+    public ResponseEntity<Object> getAllGroupsRepoLinksByBattle(@RequestParam("battleId") Long battleId){
         log.info("A request to get all the groups repo links has been performed");
-        return ResponseEntity.ok(groupService.getAllGroupsRepoLinksByBattle(battleId));
+        try{
+            List<StudentGroup> groups = groupService.getAllGroupsRepoLinksByBattle(battleId);
+            List<GroupScoreDto> dtos = new ArrayList<>();
+            for(StudentGroup group : groups){
+                dtos.add(
+                        GroupScoreDto.builder()
+                                .groupId(group.getGroupId())
+                                .clonedRepositoryLink(group.getClonedRepositoryLink())
+                                .score(group.getScore())
+                                .build()
+                );
+            }
+            return ResponseEntity.ok(dtos);
+        } catch (BattleDoesNotExistException e){
+            log.error("Bad request: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

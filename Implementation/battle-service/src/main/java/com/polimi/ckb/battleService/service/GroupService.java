@@ -1,16 +1,15 @@
 package com.polimi.ckb.battleService.service;
 
-import com.polimi.ckb.battleService.dto.SaveRepositoryLinkDto;
-import com.polimi.ckb.battleService.dto.StudentInvitesToGroupDto;
-import com.polimi.ckb.battleService.dto.StudentJoinsGroupDto;
-import com.polimi.ckb.battleService.dto.StudentLeavesGroupDto;
+import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.StudentGroup;
+
+import java.util.List;
 
 public interface GroupService {
     void inviteStudentToGroup(StudentInvitesToGroupDto studentInvitesToGroupDto);
     StudentGroup joinGroup(StudentJoinsGroupDto studentJoinsGroupDto);
     StudentGroup leaveGroup(StudentLeavesGroupDto studentLeavesGroupDto);
-    Object getAllGroupsRepoLinksByBattle(String battleId);
+    List<StudentGroup> getAllGroupsRepoLinksByBattle(Long battleId);
 
-    void saveRepositoryUrl(SaveRepositoryLinkDto saveRepositoryLinkDto);
+    void saveRepositoryUrl(SaveGroupRepositoryLinkDto saveGroupRepositoryLinkDto);
 }

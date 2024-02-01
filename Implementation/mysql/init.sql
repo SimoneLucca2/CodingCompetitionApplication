@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS battle_schema.student_group
 (
     group_id               bigint      not null primary key,
     battle_id              bigint      not null,
-    score                  int         null,
+    score                  float       null,
     cloned_repository_link varchar(100) null,
     constraint FK
         foreign key (battle_id) references battle (battle_id)
