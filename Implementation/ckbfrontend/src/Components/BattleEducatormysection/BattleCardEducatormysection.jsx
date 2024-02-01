@@ -52,6 +52,7 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
             <p>Description: {battle.description}</p>
             <p>Registration Deadline:{battle.registrationDeadline}</p>
             <p>Registration Deadline:{battle.submissionDeadline}</p>
+            <p>Status:{battle.status}</p>
 
             {battle.status === 'CONSOLDIDATION' && (
                 <button className="quit-button" onClick={joinCloseTournament}>CLOSE BATTLE</button>
