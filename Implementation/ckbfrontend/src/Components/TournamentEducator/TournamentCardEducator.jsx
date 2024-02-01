@@ -39,6 +39,7 @@ function TournamentCardEducator({ tournament, onLeaderboardSelect }) {
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
+            <p>Status:{tournament.status}</p>
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
                 View Leaderboard
             </button>

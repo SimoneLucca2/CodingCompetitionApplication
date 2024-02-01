@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './TournamentLeaderBoard.css';
+import './BattleLeaderBoard.css';
 import API_URL from "../../config";
 
-function TournamentLeaderboard({ tournament }) {
+function BattleLeaderBoard({ battle }) {
     const [leaderboard, setLeaderboard] = useState([]);
     const [isLeaderboardAvailable, setIsLeaderboardAvailable] = useState(true);
 
     useEffect(() => {
-        if (tournament) {
-            axios.get(`${API_URL}/tournament/ranking?tournamentid=${tournament.tournamentId}&minIndex=0&maxIndex=10`)
+        if (battle) {
+            axios.get(`${API_URL}/battle/${battle.battleId}/all`)
                 .then(response => {
                     setLeaderboard(response.data);
                     setIsLeaderboardAvailable(true);
@@ -19,7 +19,7 @@ function TournamentLeaderboard({ tournament }) {
                     setIsLeaderboardAvailable(false);
                 });
         }
-    }, [tournament]);
+    }, [battle]);
 
 
     const renderLeaderboard = () => {
@@ -27,7 +27,7 @@ function TournamentLeaderboard({ tournament }) {
             <ul>
                 {leaderboard.map((entry, index) => (
                     <li key={index}>
-                        {index + 1}{getOrdinalSuffix(index + 1)} Position - {entry.groupId} - Points: {entry.scoreValue}
+                        {index + 1}{getOrdinalSuffix(index + 1)} Position - {entry.groupId} - Points: {entry.scoreValue} - LinkRepo: {entry.link}
                     </li>
                 ))}
             </ul>
@@ -42,15 +42,15 @@ function TournamentLeaderboard({ tournament }) {
 
     return (
         <div className="tournament-leaderboard">
-            {tournament && (
+            {battle && (
                 <>
                     <h2>
-                        {tournament.status === 'CLOSED' ?
+                        {battle.status === 'CLOSED' ?
                             'FINAL RANKING: ' : 'TEMPORARY RANKING: '}
-                        {tournament.name}
+                        {battle.name}
                     </h2>
-                    {tournament.status === 'PREPARATION' && <p>The ranking is not available.</p>}
-                    {(tournament.status === 'ACTIVE' || tournament.status === 'CLOSED' || tournament.status === 'CLOSING') && isLeaderboardAvailable ?
+                    {battle.status === 'PRE-BATTLE' && <p>The ranking is not available.</p>}
+                    {(battle.status === 'ACTIVE' || battle.status === 'CLOSED' || battle.status === 'CLOSING') && isLeaderboardAvailable ?
                         renderLeaderboard():
                         <p>The ranking is not currently available.</p>
                     }
@@ -60,7 +60,7 @@ function TournamentLeaderboard({ tournament }) {
     );
 }
 
-export default TournamentLeaderboard;
+export default BattleLeaderBoard;
 
 
 

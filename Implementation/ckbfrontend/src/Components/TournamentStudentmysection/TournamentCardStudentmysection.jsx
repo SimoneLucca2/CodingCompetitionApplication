@@ -4,9 +4,8 @@ import './TournamentCardStudentmysection.css';
 import API_URL from "../../config";
 function TournamentCardStudentmysection({ tournament, onLeaderboardSelect }) {
     const navigate = useNavigate();
-    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    //const userId = oggettoSalvato.userId;
-    const userId = 1;
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const userId = oggettoSalvato.userId;
 
     const [isFlipped, setIsFlipped] = useState(false);
     const [isVanished, setIsVanished] = useState(false);
@@ -78,6 +77,7 @@ function TournamentCardStudentmysection({ tournament, onLeaderboardSelect }) {
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
+            <p>Status:{tournament.status}</p>
             <button className="join-button" onClick={quitTournament}>QUIT THE TOURNAMENT</button>
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
                 View Leaderboard
