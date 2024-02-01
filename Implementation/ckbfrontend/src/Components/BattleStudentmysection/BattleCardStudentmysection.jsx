@@ -87,6 +87,8 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
             <p>Description: {battle.description}</p>
             <p>Registration Deadline:{battle.registrationDeadline}</p>
             <p>Registration Deadline:{battle.submissionDeadline}</p>
+            <p>Status:{battle.status}</p>
+
             <button className="join-button" onClick={joinBattle}>Join the Battle</button>
             <button className="join-button" onClick={quitBattle}>Quit the Battle</button>
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
