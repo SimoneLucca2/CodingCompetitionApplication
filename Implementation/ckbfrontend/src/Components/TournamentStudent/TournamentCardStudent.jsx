@@ -6,9 +6,8 @@ import axios from "axios";
 
 function TournamentCardStudent({ tournament, onLeaderboardSelect }) {
     const navigate = useNavigate();
-    //const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    //const userId = oggettoSalvato.userId;
-    const userId = 1;
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const userId = oggettoSalvato.userId;
 
     const [isFlipped, setIsFlipped] = useState(false);
     const [isVanished, setIsVanished] = useState(false);

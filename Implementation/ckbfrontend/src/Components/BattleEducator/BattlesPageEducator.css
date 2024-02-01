@@ -1,4 +1,15 @@
-/* BattlesPageStudentmysection.css */
+.battles-layout {
+    display: flex;
+    justify-content: space-between;
+    /* Assicurati che il layout si estenda per tutta l'altezza del suo contenitore */
+    height: 100%;
+}
+
+.battles-container, .battles-leaderboard {
+    flex: 1; /* Ogni colonna ora si adatta per riempire lo spazio disponibile */
+    /* Altre proprietà CSS se necessario */
+}
+
 .battles-container {
     display: flex;
     flex-wrap: wrap;

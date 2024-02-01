@@ -11,42 +11,47 @@ function TournamentsPageStudentmysection() {
     const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
     const [tournaments, setTournaments] = useState([
         /*{
-            id: 1,
+            tournamentId: 1,
+            name: "Torneo di calcio",
+            description: "Torneo di calcio a 5",
+            status: "PREPARATION"
+        },
+        {
+            tournamentId: 2,
+            name: "Torneo di calcio2",
+            description: "Torneo di calcio a 10",
+            status: "ACTIVE"
+        },
+        {
+            tournamentId: 3,
+            name: "Torneo di calcio",
+            description: "Torneo di calcio a 5",
+            status: "CLOSING"
+        },
+        {
+            tournamentId: 4,
+            name: "Torneo di calcio2",
+            description: "Torneo di calcio a 10",
+            status: "CLOSED"
+
+        },
+        {
+            tournamentId: 5,
             name: "Torneo di calcio",
             description: "Torneo di calcio a 5"
         },
         {
-            id: 2,
+            tournamentId: 6,
             name: "Torneo di calcio2",
             description: "Torneo di calcio a 10"
         },
         {
-            id: 1,
+            tournamentId: 7,
             name: "Torneo di calcio",
             description: "Torneo di calcio a 5"
         },
         {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
+            tournamentId: 8,
             name: "Torneo di calcio2",
             description: "Torneo di calcio a 10"
         }*/

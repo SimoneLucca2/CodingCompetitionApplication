@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TournamentCardEducatormysection.css';
+import API_URL from "../../config";
 
 function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
     const navigate = useNavigate();
+
+    const tournamentId = tournament.tournamentId;
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const userId = oggettoSalvato.userId;
 
     const [isFlipped, setIsFlipped] = useState(false);
     const [isVanished, setIsVanished] = useState(false);
@@ -34,8 +39,34 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
     }
 
     function joinCloseTournament(e) {
-        e.stopPropagation();
-        navigate(`/successpage`);
+        const url = `${API_URL}/tournament/educator`;
+
+        // Prepare the data to be sent
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                // Aggiungi qui eventuali header richiesti, come Content-Type o token di autenticazione
+                'Content-Type': 'application/json',
+                // 'Authorization': 'Bearer tuoToken'
+            },
+            // Se necessario, includi il corpo della richiesta
+            body: JSON.stringify({ tournamentId, userId })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    alert('Error: ' + response.status);
+                    throw new Error(`Errore HTTP: ${response.status}`);
+                }
+                return response.json(); // o response.text() se la risposta non è in JSON
+            })
+            .then(data => {
+                console.log('Chiusura avvenuta con successo:', data);
+                navigate(`/successpage`);
+            })
+            .catch(error => {
+                console.error('Si è verificato un errore:', error);
+                navigate(`/errorpage`);
+            });
     }
 
     function joinCreateBattle(e) {
