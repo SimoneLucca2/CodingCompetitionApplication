@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './BattleCardStudentmysection.css';
 import API_URL from "../../config";
 
-function BattleCardStudentmysection({ battle}) {
+function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
     const navigate = useNavigate();
 
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
@@ -77,7 +77,10 @@ function BattleCardStudentmysection({ battle}) {
         }
     }
 
-
+    const handleLeaderboardClick = (e) => {
+        e.stopPropagation(); // Previene il click sull'intera carta
+        onLeaderboardSelect(battle);
+    };
     return (
         <div className="battle-card">
             <h3>{battle.name}</h3>
@@ -86,6 +89,9 @@ function BattleCardStudentmysection({ battle}) {
             <p>Registration Deadline:{battle.submissionDeadline}</p>
             <button className="join-button" onClick={joinBattle}>Join the Battle</button>
             <button className="join-button" onClick={quitBattle}>Quit the Battle</button>
+            <button className="leaderboard-button" onClick={handleLeaderboardClick}>
+                View Leaderboard
+            </button>
 
             {/* Altri dettagli della battaglia possono essere aggiunti qui */}
         </div>

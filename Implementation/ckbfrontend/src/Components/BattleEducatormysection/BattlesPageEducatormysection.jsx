@@ -4,8 +4,10 @@ import BattleCardEducatormysection from './BattleCardEducatormysection';
 import './BattlesPageEducatormysection.css';
 import {useParams} from "react-router-dom";
 import API_URL from "../../config";
+import BattleLeaderBoard from "../BattleLeaderBoard/BattleLeaderBoard";
 
 function BattlesPageEducatormysection({ match }) {
+    const [selectedBattle, setSelectedBattle] = useState(null); // Torneo selezionato per la classifica
     const [battles, setBattles] = useState([
         /*{
             id: 1,
@@ -32,13 +34,27 @@ function BattlesPageEducatormysection({ match }) {
             .catch(error => console.error('Error fetching battles:', error));
     }, []);
 
+    const handleBattleSelectForLeaderboard = (battle) => {
+        setSelectedBattle(battle);
+    };
+
     return (
         <div className="battles-page">
             <h1 className="page-title2">BATTLES OF THE TOURNAMENT</h1>
-            <div className="battles-container">
-            {battles.map(battle => (
-                <BattleCardEducatormysection key={battle.id} battle={battle}/>
-            ))}
+            <div className="battles-layout">
+
+                <div className="battles-container">
+                    {battles.map(battle => (
+                        <BattleCardEducatormysection key={battle.id} battle={battle} onLeaderboardSelect={handleBattleSelectForLeaderboard()}/>
+                    ))}
+                </div>
+                <div className="battles-leaderboard">
+                    {selectedBattle ? (
+                        <BattleLeaderBoard tournament={selectedBattle}/>
+                    ) : (
+                        <p className="select-battle-message">Select a battle to view the rankings.</p>
+                    )}
+                </div>
             </div>
         </div>
     );
