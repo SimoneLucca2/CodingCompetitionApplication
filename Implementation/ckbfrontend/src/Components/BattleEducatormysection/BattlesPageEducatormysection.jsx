@@ -45,7 +45,7 @@ function BattlesPageEducatormysection({ match }) {
 
                 <div className="battles-container">
                     {battles.map(battle => (
-                        <BattleCardEducatormysection key={battle.id} battle={battle} onLeaderboardSelect={handleBattleSelectForLeaderboard()}/>
+                        <BattleCardEducatormysection key={battle.id} battle={battle} onLeaderboardSelect={() => handleBattleSelectForLeaderboard(battle)}/>
                     ))}
                 </div>
                 <div className="battles-leaderboard">
