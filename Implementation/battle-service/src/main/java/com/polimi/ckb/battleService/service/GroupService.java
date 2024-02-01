@@ -12,4 +12,6 @@ public interface GroupService {
     List<StudentGroup> getAllGroupsRepoLinksByBattle(Long battleId);
 
     void saveRepositoryUrl(SaveGroupRepositoryLinkDto saveGroupRepositoryLinkDto);
+
+    StudentGroup manuallyEvaluateGroup(Long groupId, float score, Long battleId);
 }

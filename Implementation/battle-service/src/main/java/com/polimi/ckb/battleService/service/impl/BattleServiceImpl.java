@@ -233,12 +233,8 @@ public class BattleServiceImpl implements BattleService {
 
             case BATTLE:
                 //from BATTLE only CONSOLIDATION status is allowed
-
                 if(!changeBattleStatusDto.getStatus().equals(BattleStatus.CONSOLIDATION))
                     throw new BattleChangingStatusException("Cannot switch from BATTLE to " + changeBattleStatusDto.getStatus());
-
-                //TODO: manual evaluation or score confirmation
-
                 break;
 
             case CONSOLIDATION:
@@ -301,5 +297,29 @@ public class BattleServiceImpl implements BattleService {
     @Override
     public void deleteBattle(DeleteBattleDto deleteBattleDto){
         battleRepository.deleteById(deleteBattleDto.getBattleId());
+    }
+
+    @Override
+    public void quitEntireTournament(StudentQuitTournamentDto studentQuitTournamentDto) {
+        List<Battle> battles = battleRepository.findByTournamentId(studentQuitTournamentDto.getTournamentId());
+        if(battles.isEmpty())
+            return;
+
+        for(Battle battle : battles){
+            List<StudentGroup> groups = groupRepository.findByBattle(battle);
+            if(groups.isEmpty())
+                continue;
+
+            for(StudentGroup group : groups){
+                if(group.getStudents().contains(studentQuitTournamentDto.getStudentId())){
+                    this.leaveBattle(
+                            StudentLeaveBattleDto.builder()
+                                    .battleId(battle.getBattleId())
+                                    .studentId(studentQuitTournamentDto.getStudentId())
+                                    .build()
+                    );
+                }
+            }
+        }
     }
 }

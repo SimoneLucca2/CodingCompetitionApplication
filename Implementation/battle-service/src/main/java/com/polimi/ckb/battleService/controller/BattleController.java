@@ -1,6 +1,7 @@
 package com.polimi.ckb.battleService.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.polimi.ckb.battleService.config.BattleStatus;
 import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.exception.*;
@@ -11,7 +12,6 @@ import com.polimi.ckb.battleService.utility.CreateBattleFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -86,6 +86,23 @@ public class BattleController {
             return ResponseEntity.noContent().build();
         else
             return ResponseEntity.ok().body(battles);
+    }
+
+    @DeleteMapping(path = "/{battleId}")
+    public ResponseEntity<Object> closeBattle(@PathVariable Long battleId) {
+        log.info("An educator is trying to close battle " + battleId);
+        try{
+            Battle battle = battleService.changeBattleStatus(
+                    ChangeBattleStatusDto.builder()
+                            .battleId(battleId)
+                            .status(BattleStatus.CLOSED)
+                            .build()
+            );
+            return ResponseEntity.ok().body(battle);
+        } catch (BattleChangingStatusException e){
+            log.error("Bad request: {}", e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
 

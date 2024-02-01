@@ -4,7 +4,9 @@ import com.polimi.ckb.battleService.dto.GroupScoreDto;
 import com.polimi.ckb.battleService.dto.NewPushDto;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.BattleDoesNotExistException;
+import com.polimi.ckb.battleService.exception.CannotEvaluateGroupSolutionException;
 import com.polimi.ckb.battleService.exception.ErrorWhileExecutingScannerException;
+import com.polimi.ckb.battleService.exception.GroupDoesNotExistsException;
 import com.polimi.ckb.battleService.service.GitService;
 import com.polimi.ckb.battleService.service.GroupService;
 import lombok.AllArgsConstructor;
@@ -33,11 +35,13 @@ public class ScoreController {
             gitService.calculateTemporaryScore(newPushDto);
         } catch (GitAPIException | IOException | ErrorWhileExecutingScannerException | InterruptedException e) {
             log.error("Internal server error: " + e.getMessage());
+        } catch (CannotEvaluateGroupSolutionException e){
+            log.error("Bad request {}: ", e.getMessage());
         }
     }
 
-    @GetMapping(path = "/all")
-    public ResponseEntity<Object> getAllGroupsRepoLinksByBattle(@RequestParam("battleId") Long battleId){
+    @GetMapping(path = "/{battleId}/all")
+    public ResponseEntity<Object> getAllGroupsRepoLinksByBattle(@PathVariable Long battleId){
         log.info("A request to get all the groups repo links has been performed");
         try{
             List<StudentGroup> groups = groupService.getAllGroupsRepoLinksByBattle(battleId);
@@ -53,6 +57,19 @@ public class ScoreController {
             }
             return ResponseEntity.ok(dtos);
         } catch (BattleDoesNotExistException e){
+            log.error("Bad request: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping(path = "/{battleId}/{groupId}/{score}")
+    public ResponseEntity<Object> manuallyEvaluateGroup(@PathVariable Long groupId, @PathVariable float score, @PathVariable Long battleId){
+        log.info("A request to manually evaluate a group has been performed");
+        try{
+            StudentGroup group = groupService.manuallyEvaluateGroup(groupId, score, battleId);
+            log.info("New score registered");
+            return ResponseEntity.ok().body(group);
+        } catch (GroupDoesNotExistsException | CannotEvaluateGroupSolutionException e){
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }

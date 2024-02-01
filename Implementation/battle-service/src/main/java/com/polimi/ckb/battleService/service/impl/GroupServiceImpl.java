@@ -161,4 +161,15 @@ public class GroupServiceImpl implements GroupService {
         group.setClonedRepositoryLink(saveGroupRepositoryLinkDto.getClonedRepositoryLink());
         groupRepository.save(group);
     }
+
+    @Override
+    public StudentGroup manuallyEvaluateGroup(Long groupId, float score, Long battleId) {
+        Battle battle = battleRepository.findById(battleId).orElseThrow(BattleDoesNotExistException::new);
+        if(!battle.getStatus().equals(BattleStatus.CONSOLIDATION))
+            throw new CannotEvaluateGroupSolutionException();
+
+        StudentGroup group = groupRepository.findById(groupId).orElseThrow(GroupDoesNotExistsException::new);
+        group.setScore(score);
+        return groupRepository.save(group);
+    }
 }

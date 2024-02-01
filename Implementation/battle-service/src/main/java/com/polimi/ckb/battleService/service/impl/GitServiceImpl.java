@@ -2,9 +2,12 @@ package com.polimi.ckb.battleService.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.polimi.ckb.battleService.config.BattleStatus;
 import com.polimi.ckb.battleService.dto.CreateBattleDto;
 import com.polimi.ckb.battleService.dto.NewPushDto;
+import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.StudentGroup;
+import com.polimi.ckb.battleService.exception.CannotEvaluateGroupSolutionException;
 import com.polimi.ckb.battleService.exception.ErrorWhileCreatingRepositoryException;
 import com.polimi.ckb.battleService.exception.ErrorWhileCreatingSonarQubeProjectException;
 import com.polimi.ckb.battleService.exception.ErrorWhileExecutingScannerException;
@@ -31,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -170,6 +174,12 @@ public class GitServiceImpl implements GitService {
     @Override
     public void calculateTemporaryScore(NewPushDto newPushDto) throws GitAPIException, IOException, InterruptedException {
         //every time the system gets a notification about a new push on the main branch of a group's repo, solution is assigned a temporary score
+        //Only if battle status is BATTLE
+        StudentGroup g = groupRepository.findByClonedRepositoryLink(newPushDto.getRepositoryUrl());
+        Battle battle = g.getBattle();
+        if(!battle.getStatus().equals(BattleStatus.BATTLE)){
+            throw new CannotEvaluateGroupSolutionException();
+        }
 
         //TODO: verify github token
         Git git = Git.cloneRepository()
