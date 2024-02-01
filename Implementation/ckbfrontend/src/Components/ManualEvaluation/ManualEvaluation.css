@@ -1,0 +1,58 @@
+.manual-evaluation {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    max-width: 400px;
+    margin: 40px auto;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.evaluation-query, .evaluation-form {
+    margin-top: 20px;
+}
+
+.buttony, .yes-button, .no-button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    color: white;
+    background-color: #007bff;
+    font-weight: bold;
+}
+
+.buttony:hover, .yes-button:hover, .no-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.buttony:active, .yes-button:active, .no-button:active {
+    transform: scale(0.95);
+}
+
+.score-input {
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background-color: #2c2c2c;
+    color: #f0f0f0;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.score-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}

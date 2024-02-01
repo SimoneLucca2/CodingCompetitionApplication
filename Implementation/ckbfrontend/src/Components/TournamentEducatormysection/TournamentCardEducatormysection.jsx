@@ -85,6 +85,7 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
+            <p>Status:{tournament.status}</p>
             <button className="join-button-1" onClick={joinAddEducatortoaTournament}>ADD EDUCATOR</button>
             <button className="quit-button" onClick={joinCloseTournament}>CLOSE TOURNAMENT</button>
             <button className="join-button-2" onClick={joinCreateBattle}>CREATE BATTLE</button>
