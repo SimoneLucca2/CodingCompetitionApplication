@@ -72,6 +72,7 @@ function TournamentCardStudent({ tournament, onLeaderboardSelect }) {
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
+            <p>Status:{tournament.status}</p>
             <button className="join-button-3" onClick={joinTournament}>JOIN THE TOURNAMENT</button>
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
                 View Leaderboard
