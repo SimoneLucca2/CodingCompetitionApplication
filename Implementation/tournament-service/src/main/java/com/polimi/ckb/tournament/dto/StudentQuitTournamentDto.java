@@ -15,7 +15,6 @@ public class StudentQuitTournamentDto implements Serializable {
 
     @NotBlank(message = "the tournament id cannot be blank")
     @TournamentExists
-    @TournamentInPrepareState
     private Long tournamentId;
 
     @NotBlank(message = "the student id cannot be blank")
