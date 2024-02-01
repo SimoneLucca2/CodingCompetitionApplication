@@ -49,7 +49,7 @@ function BattleLeaderBoard({ battle }) {
                             'FINAL RANKING: ' : 'TEMPORARY RANKING: '}
                         {battle.name}
                     </h2>
-                    {battle.status === 'PREPARATION' && <p>The ranking is not available.</p>}
+                    {battle.status === 'PRE-BATTLE' && <p>The ranking is not available.</p>}
                     {(battle.status === 'ACTIVE' || battle.status === 'CLOSED' || battle.status === 'CLOSING') && isLeaderboardAvailable ?
                         renderLeaderboard():
                         <p>The ranking is not currently available.</p>
