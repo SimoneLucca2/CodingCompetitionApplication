@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -26,6 +27,7 @@ public class TournamentStatusKafkaProducer {
     private final ObjectMapper objectMapper;
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 1000, multiplier = 1.5))
+    @Async
     public void sendTournamentMessage(ChangeTournamentStatusDto msg) throws JsonProcessingException {
         String TOPIC = TOPIC_MAP.getOrDefault(msg.getStatus(), "");
 

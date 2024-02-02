@@ -22,6 +22,7 @@ public class EmailRequestKafkaConsumer {
     public void listener(ConsumerRecord<String, String> record) {
         try {
             String message = record.value();
+
             @Valid EmailDto parsedMessage = objectMapper.readValue(message, EmailDto.class);
             emailService.sendEmail(parsedMessage);
         } catch (Exception e) {

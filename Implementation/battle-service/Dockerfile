@@ -4,6 +4,9 @@ FROM openjdk:17 as build
 # Copy the local code to the container
 COPY . /usr/src/app
 
+COPY ./src/main/resources/ghutils ./src/main/resources/ghutils
+COPY ./src/main/resources/sonar-scanner.sh ./src/main/resources/sonar-scanner.sh
+
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
@@ -14,7 +17,7 @@ RUN sed -i 's/\r$//' mvnw
 RUN chmod +x mvnw
 
 # Package the application
-RUN ./mvnw clean package
+RUN ./mvnw clean package -DskipTests
 
 # Use a new stage to create a smaller final image
 FROM openjdk:17

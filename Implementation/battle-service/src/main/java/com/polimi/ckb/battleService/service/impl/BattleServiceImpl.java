@@ -2,11 +2,11 @@ package com.polimi.ckb.battleService.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.discovery.DiscoveryClient;
 import com.polimi.ckb.battleService.config.BattleStatus;
 import com.polimi.ckb.battleService.config.TournamentStatus;
 import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
-import com.polimi.ckb.battleService.entity.Educator;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.*;
@@ -36,7 +36,7 @@ public class BattleServiceImpl implements BattleService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     //@Value("${eureka.client.service-url.defaultZone}")
-    private final String TOURNAMENT_SERVICE_URL = "http://localhost:8080";//"http://tournament-service";
+    private final String TOURNAMENT_SERVICE_URL = "http://TOURNAMENT-SERVICE";
 
     @Override
     @Transactional
@@ -92,6 +92,14 @@ public class BattleServiceImpl implements BattleService {
         return battleRepository.save(convertToEntity(createBattleDto));
     }
 
+    /*private String getTournamentServiceUrl() {
+        List<ServiceInstance> instances = discoveryClient.getInstances("TOURNAMENT-SERVICE");
+        if (instances.isEmpty()) {
+            throw new RuntimeException("No instances of tournament service found");
+        }
+        return instances.get(0).getUri().toString();
+    }*/
+
     //TODO: maybe put this inside a mapper class
     private Battle convertToEntity(CreateBattleDto createBattleDto){
         return Battle.builder()
@@ -134,7 +142,7 @@ public class BattleServiceImpl implements BattleService {
         //student joins the battle as singleton group
         StudentGroup newStudentGroup = StudentGroup.builder()
                 .battle(battle)
-                .score(0)
+                .score(Float.intBitsToFloat(0))
                 .build();
         newStudentGroup.getStudents().add(student);
         battle.getStudentGroups().add(newStudentGroup);
@@ -225,8 +233,6 @@ public class BattleServiceImpl implements BattleService {
             case PRE_BATTLE:
                 //from PRE_BATTLE only BATTLE status is allowed
                 if(changeBattleStatusDto.getStatus().equals(BattleStatus.BATTLE)){
-                    battle.setStatus(BattleStatus.BATTLE);
-
                     //check if every group satisfies the constraints, if not kick its student from the battle and delete it
                     checkGroupsConstraints(battle);
                 } else {
@@ -236,19 +242,13 @@ public class BattleServiceImpl implements BattleService {
 
             case BATTLE:
                 //from BATTLE only CONSOLIDATION status is allowed
-                if(changeBattleStatusDto.getStatus().equals(BattleStatus.CONSOLIDATION))
-                    battle.setStatus(BattleStatus.CONSOLIDATION);
-                //TODO: code evaluation and score update
-                else
+                if(!changeBattleStatusDto.getStatus().equals(BattleStatus.CONSOLIDATION))
                     throw new BattleChangingStatusException("Cannot switch from BATTLE to " + changeBattleStatusDto.getStatus());
                 break;
 
             case CONSOLIDATION:
                 //from CONSOLIDATION only CLOSED status is allowed
-                if(changeBattleStatusDto.getStatus().equals(BattleStatus.CLOSED))
-                    battle.setStatus(BattleStatus.CLOSED);
-                //TODO: manual evaluation or score confirmation
-                else
+                if(!changeBattleStatusDto.getStatus().equals(BattleStatus.CLOSED))
                     throw new BattleChangingStatusException("Cannot switch from CONSOLIDATION to " + changeBattleStatusDto.getStatus());
                 break;
 
@@ -280,13 +280,9 @@ public class BattleServiceImpl implements BattleService {
         //TODO: TO BE FINISHED (kafka messages about kicking students are missing)
     }
 
-    @Override
-    public void calculateTemporaryScore(NewPushDto newPushDto) {
-        //every time the system gets a notification about a new push on the main branch of a group's repo, solution is assigned a temporary score
-    }
-
     private TournamentDto checkTournamentStats(Long tournamentId) throws JsonProcessingException {
         log.info("Checking tournament existence and status and creator's access to it");
+        //String tournamentServiceUrl = getTournamentServiceUrl();
         String response = restTemplate.getForObject(TOURNAMENT_SERVICE_URL + "/tournament/" + tournamentId, String.class);
         return objectMapper.readValue(response, TournamentDto.class);
     }
@@ -311,5 +307,29 @@ public class BattleServiceImpl implements BattleService {
     @Override
     public void deleteBattle(DeleteBattleDto deleteBattleDto){
         battleRepository.deleteById(deleteBattleDto.getBattleId());
+    }
+
+    @Override
+    public void quitEntireTournament(StudentQuitTournamentDto studentQuitTournamentDto) {
+        List<Battle> battles = battleRepository.findByTournamentId(studentQuitTournamentDto.getTournamentId());
+        if(battles.isEmpty())
+            return;
+
+        for(Battle battle : battles){
+            List<StudentGroup> groups = groupRepository.findByBattle(battle);
+            if(groups.isEmpty())
+                continue;
+
+            for(StudentGroup group : groups){
+                if(group.getStudents().contains(studentQuitTournamentDto.getStudentId())){
+                    this.leaveBattle(
+                            StudentLeaveBattleDto.builder()
+                                    .battleId(battle.getBattleId())
+                                    .studentId(studentQuitTournamentDto.getStudentId())
+                                    .build()
+                    );
+                }
+            }
+        }
     }
 }

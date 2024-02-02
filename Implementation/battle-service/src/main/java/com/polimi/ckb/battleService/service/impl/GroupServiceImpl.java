@@ -1,9 +1,7 @@
 package com.polimi.ckb.battleService.service.impl;
 
 import com.polimi.ckb.battleService.config.BattleStatus;
-import com.polimi.ckb.battleService.dto.StudentInvitesToGroupDto;
-import com.polimi.ckb.battleService.dto.StudentJoinsGroupDto;
-import com.polimi.ckb.battleService.dto.StudentLeavesGroupDto;
+import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
@@ -148,5 +146,30 @@ public class GroupServiceImpl implements GroupService {
         //if null, the group still exists but without the student that left
         //if not null, the group has been kicked from the battle (group size was < minGroupSize) and the caller needs student ids to kick them from the battle
         return group;
+    }
+
+    @Override
+    public List<StudentGroup> getAllGroupsRepoLinksByBattle(Long battleId) {
+        Battle battle = battleRepository.findById(battleId).orElseThrow(BattleDoesNotExistException::new);
+        return groupRepository.findScoreByBattle(battle);
+    }
+
+    @Override
+    public void saveRepositoryUrl(SaveGroupRepositoryLinkDto saveGroupRepositoryLinkDto) {
+        StudentGroup group = groupRepository.findById(saveGroupRepositoryLinkDto.getGroupId()).orElseThrow(GroupDoesNotExistsException::new);
+
+        group.setClonedRepositoryLink(saveGroupRepositoryLinkDto.getClonedRepositoryLink());
+        groupRepository.save(group);
+    }
+
+    @Override
+    public StudentGroup manuallyEvaluateGroup(Long groupId, float score, Long battleId) {
+        Battle battle = battleRepository.findById(battleId).orElseThrow(BattleDoesNotExistException::new);
+        if(!battle.getStatus().equals(BattleStatus.CONSOLIDATION))
+            throw new CannotEvaluateGroupSolutionException();
+
+        StudentGroup group = groupRepository.findById(groupId).orElseThrow(GroupDoesNotExistsException::new);
+        group.setScore(score);
+        return groupRepository.save(group);
     }
 }

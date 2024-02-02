@@ -69,7 +69,12 @@ create table IF NOT EXISTS tournament_schema.tournament_seq
 CREATE DATABASE IF NOT EXISTS battle_schema;
 USE battle_schema;
 
-CREATE TABLE IF NOT EXISTS battle
+CREATE TABLE IF NOT EXISTS battle_schema.educator
+(
+    educator_id bigint not null primary key
+);
+
+CREATE TABLE IF NOT EXISTS battle_schema.battle
 (
     battle_id             bigint auto_increment primary key,
     creator_id            bigint       not null,
@@ -86,27 +91,22 @@ CREATE TABLE IF NOT EXISTS battle
         foreign key (creator_id) references educator (educator_id)
 );
 
-CREATE TABLE IF NOT EXISTS educator
-(
-    educator_id bigint not null primary key
-);
-
-CREATE TABLE IF NOT EXISTS student
+CREATE TABLE IF NOT EXISTS battle_schema.student
 (
     student_id bigint not null primary key
 );
 
-CREATE TABLE IF NOT EXISTS student_group
+CREATE TABLE IF NOT EXISTS battle_schema.student_group
 (
     group_id               bigint      not null primary key,
     battle_id              bigint      not null,
-    score                  int         null,
+    score                  float       null,
     cloned_repository_link varchar(100) null,
     constraint FK
         foreign key (battle_id) references battle (battle_id)
 );
 
-CREATE TABLE IF NOT EXISTS student_group_join
+CREATE TABLE IF NOT EXISTS battle_schema.student_group_join
 (
     group_id   bigint not null,
     student_id bigint not null,
@@ -116,13 +116,13 @@ CREATE TABLE IF NOT EXISTS student_group_join
         foreign key (student_id) references student (student_id)
 );
 
-CREATE TABLE IF NOT EXISTS student_group_seq
+CREATE TABLE IF NOT EXISTS battle_schema.student_group_seq
 (
     next_val bigint null
 );
 
 CREATE DATABASE IF NOT EXISTS user_schema;
-USE authentication;
+USE user_schema;
 
 CREATE TABLE if not exists user
 (

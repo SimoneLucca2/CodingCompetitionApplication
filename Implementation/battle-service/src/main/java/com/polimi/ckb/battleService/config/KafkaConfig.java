@@ -54,4 +54,12 @@ public class KafkaConfig {
                 .replicas(1)
                 .build();
     }
+
+    @Bean
+    public NewTopic tournamentStudentQuitTopic() {
+        return TopicBuilder.name("tournament.student.quit")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 }

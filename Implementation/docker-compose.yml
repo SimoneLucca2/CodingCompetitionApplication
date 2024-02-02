@@ -2,6 +2,26 @@ version: "3.7"
 
 services:
 
+  api-gateway:
+
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: pw
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
+      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - eureka-server
+      - kafka
+
+
   tournament-service:
     build:
       context: ./tournament-service
@@ -10,8 +30,13 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tournament_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+
+    ports:
+      - "8083:8083"
+
     depends_on:
       - mysql
       - kafka
@@ -26,20 +51,24 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/user_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+
 
       SPRING_MAIL_HOST: smtps.aruba.it
       SPRING_MAIL_PORT: 465
       SPRING_MAIL_USERNAME: nodered@neslab.it
       SPRING_MAIL_PASSWORD: Node22$$
-      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
-      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+      #SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+      #SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+
+    ports:
+      - "8081:8081"
     depends_on:
       - mysql
       - kafka
-
 
   battle-service:
     build:
@@ -50,28 +79,21 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
-      GITHUB_API_TOKEN: <Your GitHub token>
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      #GITHUB_API_TOKEN: <Your GitHub token>
+
+    volumes:
+      - ./battle-service/src/main/resources/:/src/main/resources/
+
     depends_on:
       - mysql
       - kafka
       - eureka-server
 
-  api-gateway:
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: pw
-      EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
     ports:
-      - "8080:8080"
-    depends_on:
-      - mysql
-      - eureka-server
+        - "8084:8084"
 
 
   eureka-server:
@@ -90,9 +112,13 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tournament_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       TOURNAMENT_POLLING_RATE: 5000
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+
+    ports:
+      - "8090:8090"
     depends_on:
       - mysql
 
@@ -104,21 +130,20 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/battle_schema
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: pw
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       TOURNAMENT_POLLING_RATE: 5000
+
+    ports:
+        - "8089:8089"
+
     depends_on:
       - mysql
 
-  client:
-    build:
-      context: ./ckbfrontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-
   mysql:
     image: mysql:8.0
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: pw
       MYSQL_DATABASE: mydatabase
@@ -129,6 +154,8 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
 
   zookeeper:
     image: docker.io/bitnami/zookeeper:3.8
@@ -161,5 +188,8 @@ volumes:
   zookeeper_data:
   kafka_data:
   mysql_data:
-
-
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  postgresql:
+  postgresql_data:

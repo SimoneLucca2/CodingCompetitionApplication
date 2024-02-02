@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "student_group")
 public class StudentGroup {
     @Builder
-    public StudentGroup(Long groupId, List<Student> students, Battle battle, Integer score, String clonedRepositoryLink) {
+    public StudentGroup(Long groupId, List<Student> students, Battle battle, Float score, String clonedRepositoryLink) {
         this.groupId = groupId;
         this.students = students == null ? new ArrayList<>() : students;
         this.battle = battle;
@@ -37,7 +37,7 @@ public class StudentGroup {
     @ToString.Exclude
     private Battle battle;
 
-    private Integer score;
+    private Float score;
 
     private String clonedRepositoryLink;
 }

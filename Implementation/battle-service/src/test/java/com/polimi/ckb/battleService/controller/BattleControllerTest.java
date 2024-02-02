@@ -15,7 +15,6 @@ import com.polimi.ckb.battleService.repository.StudentRepository;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.GitService;
 import jakarta.transaction.Transactional;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +28,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 @SpringBootTest
@@ -59,12 +57,6 @@ public class BattleControllerTest {
         this.groupRepository = groupRepository;
         this.studentRepository = studentRepository;
         this.educatorRepository = educatorRepository;
-    }
-
-    @Test
-    @Transactional
-    public void testGitUploadYaml() throws GitAPIException, IOException {
-        gitService.uploadYamlFileForNotifications("https://github.com/MarcoF17/AnotherTest");
     }
 
     @Test

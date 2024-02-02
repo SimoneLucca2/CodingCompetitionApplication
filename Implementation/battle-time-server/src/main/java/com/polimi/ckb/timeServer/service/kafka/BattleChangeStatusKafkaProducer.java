@@ -17,7 +17,7 @@ public class BattleChangeStatusKafkaProducer {
     private final ObjectMapper objectMapper;
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 1000, multiplier = 1.5))
-    public void sendBattleActiveMessage(ChangeBattleStatusDto msg) throws JsonProcessingException {
+    public void sendBattleChangeMessage(ChangeBattleStatusDto msg) throws JsonProcessingException {
         String jsonMessage = objectMapper.writeValueAsString(msg);
         kafkaTemplate.send(TOPIC, jsonMessage);
     }
