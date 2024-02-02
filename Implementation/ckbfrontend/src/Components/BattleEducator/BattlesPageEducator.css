@@ -5,9 +5,17 @@
     height: 100%;
 }
 
-.battles-container, .battles-leaderboard {
+.battles-container, .battle-leaderboard {
     flex: 1; /* Ogni colonna ora si adatta per riempire lo spazio disponibile */
     /* Altre proprietà CSS se necessario */
+}
+
+.battle-leaderboard {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    margin-right: 10px;
+    height: 100%;
 }
 
 .battles-container {

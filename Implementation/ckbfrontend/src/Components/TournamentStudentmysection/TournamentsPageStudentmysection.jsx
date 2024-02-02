@@ -9,7 +9,7 @@ import TournamentCardEducator from "../TournamentEducator/TournamentCardEducator
 
 
 function TournamentsPageStudentmysection() {
-    const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
+    const [selectedTournament, setSelectedTournament] = useState(null);
     const [tournaments, setTournaments] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -44,8 +44,8 @@ function TournamentsPageStudentmysection() {
     };
 
     const renderTournaments = () => {
-        if (loading) return <p className="loading-message">Loadind Tournaments...</p>;
-        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">Al momento non ci sono tornei presenti.</p>;
+        if (loading) return <p className="loading-message">Loading Tournaments...</p>;
+        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">There are no tournaments joined.</p>;
         return tournaments.map(tournament => (
             <TournamentCardStudentmysection key={tournament.tournamentId} tournament={tournament}
                                     onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>

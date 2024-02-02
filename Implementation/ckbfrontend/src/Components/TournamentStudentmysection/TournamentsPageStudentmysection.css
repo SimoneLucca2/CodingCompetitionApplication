@@ -1,13 +1,11 @@
 .tournaments-layout {
     display: flex;
     justify-content: space-between;
-    /* Assicurati che il layout si estenda per tutta l'altezza del suo contenitore */
     height: 100%;
 }
 
 .tournaments-container, .tournament-leaderboard {
-    flex: 1; /* Ogni colonna ora si adatta per riempire lo spazio disponibile */
-    /* Altre proprietà CSS se necessario */
+    flex: 1;
 }
 
 .tournament-leaderboard {
@@ -15,7 +13,6 @@
     padding: 20px;
     border-radius: 10px;
     margin-right: 10px;
-    /* Assicurati che si estenda per tutta l'altezza disponibile */
     height: 100%;
 }
 
@@ -29,7 +26,7 @@
 }
 
 .tournaments-page {
-    text-align: center; /* Centra il contenuto della pagina */
+    text-align: center;
 }
 
 .page-title {
