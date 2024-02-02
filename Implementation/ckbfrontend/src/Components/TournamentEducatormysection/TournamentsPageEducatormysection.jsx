@@ -5,60 +5,30 @@ import './TournamentsPageEducatormysection.css';
 import {useNavigate} from "react-router-dom";
 import API_URL from "../../config";
 import TournamentLeaderboard from "../TournamentLeaderBoard/TournamentLeaderBoard";
+import TournamentCardEducator from "../TournamentEducator/TournamentCardEducator";
 
 function TournamentsPageEducatormysection() {
-    const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
-    const [tournaments, setTournaments] = useState([
-        /*{
-            tournamentId: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            tournamentId: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            tournamentId: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            tournamentId: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            tournamentId: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            tournamentId: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            tournamentId: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            tournamentId: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        }*/
-    ]);
+    const [selectedTournament, setSelectedTournament] = useState(null);
+    const [tournaments, setTournaments] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
+
     useEffect(() => {
         const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
         if (!oggettoSalvato) {
             navigate(`/needauthentication`, { replace: true });
             return;
         }
+        axios.get(`${API_URL}/tournament/administrated/${userId}`)
+            .then(response => {
+                setTournaments(response.data);
+                setLoading(false);
+            })
+            .catch(error => {goToerrorpage()} );
     }, [navigate]);
+
+
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
     const userId = oggettoSalvato?.userId;
 
@@ -70,13 +40,15 @@ function TournamentsPageEducatormysection() {
         setSelectedTournament(tournament);
     };
 
-    useEffect(() => {
-        axios.get(`${API_URL}/tournament/administrated/${userId}`)
-            .then(response => {
-                setTournaments(response.data);
-            })
-            .catch(error => {goToerrorpage()} );
-    }, []);
+    const renderTournaments = () => {
+        if (loading) return <p className="loading-message">Loadind Tournaments...</p>;
+        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">Al momento non ci sono tornei presenti.</p>;
+        return tournaments.map(tournament => (
+            <TournamentCardEducatormysection key={tournament.tournamentId} tournament={tournament}
+                                    onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
+        ));
+    };
+
 
 
     return (
@@ -84,10 +56,7 @@ function TournamentsPageEducatormysection() {
             <h1 className="page-title">MY TOURNAMENTS</h1>
             <div className="tournaments-layout">
                 <div className="tournaments-container">
-                    {tournaments.map(tournament => (
-                        <TournamentCardEducatormysection key={tournament.tournamentId} tournament={tournament}
-                                                         onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
-                    ))}
+                    {renderTournaments()}
                 </div>
                 <div className="tournament-leaderboard">
                     {selectedTournament ? (
