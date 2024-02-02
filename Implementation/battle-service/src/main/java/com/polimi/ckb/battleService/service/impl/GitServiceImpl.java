@@ -7,10 +7,7 @@ import com.polimi.ckb.battleService.dto.CreateBattleDto;
 import com.polimi.ckb.battleService.dto.NewPushDto;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.StudentGroup;
-import com.polimi.ckb.battleService.exception.CannotEvaluateGroupSolutionException;
-import com.polimi.ckb.battleService.exception.ErrorWhileCreatingRepositoryException;
-import com.polimi.ckb.battleService.exception.ErrorWhileCreatingSonarQubeProjectException;
-import com.polimi.ckb.battleService.exception.ErrorWhileExecutingScannerException;
+import com.polimi.ckb.battleService.exception.*;
 import com.polimi.ckb.battleService.repository.GroupRepository;
 import com.polimi.ckb.battleService.service.GitService;
 import lombok.RequiredArgsConstructor;
@@ -269,22 +266,24 @@ public class GitServiceImpl implements GitService {
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(urlWithParams))
-                .header("Authorization", "Bearer " + "sqa_c4f04e0210ce47711da0af97bfc49a1f251ca9ae")        //GLOBAL-PROJECT-TOKEN
+                .header("Authorization", "Bearer " + "squ_a4bb281960f61ae94298b63f2c9077bafab2cce0")        //USER_TOKEN
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
         try {
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             log.info(String.valueOf(response.statusCode()));
-            log.info(response.body());
+            //log.info(response.body());
 
             if (response.statusCode() == HttpURLConnection.HTTP_CREATED) {
                 log.info("SonarQube project successfully created");
             } else {
                 throw new ErrorWhileCreatingSonarQubeProjectException();
             }
-        } catch (InterruptedException | IOException e) {
-            throw new ErrorWhileCreatingSonarQubeProjectException();
+        } catch (IOException | InterruptedException e) {
+            //throw new ErrorWhileCreatingSonarQubeProjectException();
+            //throw new GroupDoesNotExistsException();
+            throw new RuntimeException(e);
         }
     }
 

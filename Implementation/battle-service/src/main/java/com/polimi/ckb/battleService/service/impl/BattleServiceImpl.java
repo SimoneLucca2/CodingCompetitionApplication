@@ -24,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -229,32 +230,9 @@ public class BattleServiceImpl implements BattleService {
         Battle battle = battleRepository.findById(changeBattleStatusDto.getBattleId())
                 .orElseThrow(BattleDoesNotExistException::new);
 
-        switch(battle.getStatus()){
-            case PRE_BATTLE:
-                //from PRE_BATTLE only BATTLE status is allowed
-                if(changeBattleStatusDto.getStatus().equals(BattleStatus.BATTLE)){
-                    //check if every group satisfies the constraints, if not kick its student from the battle and delete it
-                    checkGroupsConstraints(battle);
-                } else {
-                    throw new BattleChangingStatusException("Cannot switch from PRE_BATTLE to " + changeBattleStatusDto.getStatus());
-                }
-                break;
-
-            case BATTLE:
-                //from BATTLE only CONSOLIDATION status is allowed
-                if(!changeBattleStatusDto.getStatus().equals(BattleStatus.CONSOLIDATION))
-                    throw new BattleChangingStatusException("Cannot switch from BATTLE to " + changeBattleStatusDto.getStatus());
-                break;
-
-            case CONSOLIDATION:
-                //from CONSOLIDATION only CLOSED status is allowed
-                if(!changeBattleStatusDto.getStatus().equals(BattleStatus.CLOSED))
-                    throw new BattleChangingStatusException("Cannot switch from CONSOLIDATION to " + changeBattleStatusDto.getStatus());
-                break;
-
-            default:
-                //from CLOSED no status change is allowed
-                throw new BattleChangingStatusException("Cannot switch status");
+        if (Objects.requireNonNull(battle.getStatus()) == BattleStatus.BATTLE) {//from PRE_BATTLE only BATTLE status is allowed
+            //check if every group satisfies the constraints, if not kick its student from the battle and delete it
+            checkGroupsConstraints(battle);
         }
 
         //save new status
