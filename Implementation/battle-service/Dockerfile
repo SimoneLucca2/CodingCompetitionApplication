@@ -4,6 +4,9 @@ FROM openjdk:17 as build
 # Copy the local code to the container
 COPY . /usr/src/app
 
+COPY ./src/main/resources/ghutils ./src/main/resources/ghutils
+COPY ./src/main/resources/sonar-scanner.sh ./src/main/resources/sonar-scanner.sh
+
 # Set the working directory in the container
 WORKDIR /usr/src/app
 

@@ -36,7 +36,7 @@ public class BattleServiceImpl implements BattleService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     //@Value("${eureka.client.service-url.defaultZone}")
-    private final String TOURNAMENT_SERVICE_URL = "http://TOURNAMENT_SERVICE";
+    private final String TOURNAMENT_SERVICE_URL = "http://TOURNAMENT-SERVICE";
 
     @Override
     @Transactional

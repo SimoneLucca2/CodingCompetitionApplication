@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -84,8 +85,24 @@ public class BattleController {
         log.info("Battle retrieved successfully");
         if(battles.isEmpty())
             return ResponseEntity.noContent().build();
-        else
+        else {
+            List<BattleDto> dtos = new ArrayList<>();
+            for(Battle battle : battles){
+                dtos.add(
+                        BattleDto.builder()
+                                .battleId(battle.getBattleId())
+                                .name(battle.getName())
+                                .description(battle.getDescription())
+                                .registrationDeadline(battle.getRegistrationDeadline())
+                                .submissionDeadline(battle.getSubmissionDeadline())
+                                .status(battle.getStatus())
+                                .maxGroupSize(battle.getMaxGroupSize())
+                                .minGroupSize(battle.getMinGroupSize())
+                                .build()
+                );
+            }
             return ResponseEntity.ok().body(battles);
+        }
     }
 
     @DeleteMapping(path = "/{battleId}")
