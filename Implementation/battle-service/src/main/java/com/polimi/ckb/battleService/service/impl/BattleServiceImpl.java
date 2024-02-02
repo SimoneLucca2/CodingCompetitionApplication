@@ -15,6 +15,7 @@ import com.polimi.ckb.battleService.repository.EducatorRepository;
 import com.polimi.ckb.battleService.repository.GroupRepository;
 import com.polimi.ckb.battleService.repository.StudentRepository;
 import com.polimi.ckb.battleService.service.BattleService;
+import com.polimi.ckb.battleService.service.kafkaProducer.BattleScoreKafkaProducer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,8 @@ public class BattleServiceImpl implements BattleService {
     private final StudentRepository studentRepository;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+    private final ScoreServiceImpl scoreService;
+
     //@Value("${eureka.client.service-url.defaultZone}")
     private final String TOURNAMENT_SERVICE_URL = "http://TOURNAMENT-SERVICE";
 
@@ -235,6 +238,11 @@ public class BattleServiceImpl implements BattleService {
             checkGroupsConstraints(battle);
         }
 
+        //if status closed send message to kafka to update the tournament score
+        else if (battle.getStatus() == BattleStatus.CONSOLIDATION){
+            scoreService.sendScoreForEachStudent(battle.getBattleId());
+        }
+
         //save new status
         return battleRepository.save(battle);
     }
@@ -255,7 +263,6 @@ public class BattleServiceImpl implements BattleService {
             }
         }
 
-        //TODO: TO BE FINISHED (kafka messages about kicking students are missing)
     }
 
     private TournamentDto checkTournamentStats(Long tournamentId) throws JsonProcessingException {
