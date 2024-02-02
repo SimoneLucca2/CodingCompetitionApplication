@@ -101,7 +101,7 @@ public class BattleController {
                                 .build()
                 );
             }
-            return ResponseEntity.ok().body(battles);
+            return ResponseEntity.ok().body(dtos);
         }
     }
 
