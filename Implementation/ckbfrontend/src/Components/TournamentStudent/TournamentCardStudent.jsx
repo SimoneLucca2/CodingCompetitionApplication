@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TournamentCardStudent.css';
 import API_URL from "../../config";
@@ -6,8 +6,15 @@ import axios from "axios";
 
 function TournamentCardStudent({ tournament, onLeaderboardSelect }) {
     const navigate = useNavigate();
+    useEffect(() => {
+        const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+        if (!oggettoSalvato) {
+            navigate(`/needauthentication`, { replace: true });
+            return;
+        }
+    }, [navigate]);
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    const userId = oggettoSalvato?.userId;
 
     const [isFlipped, setIsFlipped] = useState(false);
     const [isVanished, setIsVanished] = useState(false);

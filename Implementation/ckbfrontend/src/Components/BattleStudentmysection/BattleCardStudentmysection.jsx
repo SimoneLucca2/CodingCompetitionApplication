@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './BattleCardStudentmysection.css';
 import API_URL from "../../config";
 
 function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
     const navigate = useNavigate();
+    useEffect(() => {
+        const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+        if (!oggettoSalvato) {
+            navigate(`/needauthentication`, { replace: true });
+            return;
+        }
+    }, [navigate]);
 
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    const userId = oggettoSalvato?.userId;
 
     async function joinBattle(e) {
         e.stopPropagation(); // Impedisce al click sul bottone di attivare il click sulla card

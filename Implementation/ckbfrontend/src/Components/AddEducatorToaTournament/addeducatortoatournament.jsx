@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './addeducatortoatournament.css';
 import {useNavigate, useParams} from "react-router-dom";
 import API_URL from "../../config";
@@ -8,8 +8,15 @@ function AddEducatorToTournament() {
 
 
     const navigate = useNavigate();
+    useEffect(() => {
+        const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+        if (!oggettoSalvato) {
+            navigate(`/needauthentication`, { replace: true });
+            return;
+        }
+    }, [navigate]);
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    const userId = oggettoSalvato?.userId;
     const params = useParams();
     const tournament = params.tournamentId;
     const tournamentId = parseInt(tournament, 10);

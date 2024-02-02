@@ -24,6 +24,7 @@ import StudentProfile from "./Components/StudentProfile/StudentProfile";
 import Educatorprofile from "./Components/EducatorProfile/educatorprofile";
 import SuccessPage  from "./Components/SuccessPage/SuccessPage";
 import ManualEvaluation from "./Components/ManualEvaluation/ManualEvaluation";
+import NeedAuthentication from "./Components/NeedAuthentication/NeedAuthentication";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path="/closetournament" element={<CloseTournament/>}/>
             <Route path="/successpage" element={<SuccessPage/>}/>
             <Route path="/manualevaluation/:battleId" element={<ManualEvaluation/>}/>
+            <Route path="/needauthentication" element={<NeedAuthentication/>}/>
           </Routes>
         </BrowserRouter>
       </ItemListProvider>

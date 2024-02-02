@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TournamentCardEducatormysection.css';
 import API_URL from "../../config";
 
 function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
     const navigate = useNavigate();
-
+    useEffect(() => {
+        const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+        if (!oggettoSalvato) {
+            navigate(`/needauthentication`, { replace: true });
+            return;
+        }
+    }, [navigate]);
     const tournamentId = tournament.tournamentId;
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    const userId = oggettoSalvato?.userId;
 
     const [isFlipped, setIsFlipped] = useState(false);
     const [isVanished, setIsVanished] = useState(false);

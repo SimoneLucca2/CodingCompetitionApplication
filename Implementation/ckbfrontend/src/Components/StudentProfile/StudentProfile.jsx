@@ -1,10 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import './StudentProfile.css';
 import sfondo from './sfondo.jpg';
+import {useNavigate} from "react-router-dom";
 const StudentProfile = () => {
     const [profilePic, setProfilePic] = useState(sfondo);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+        if (!oggettoSalvato) {
+            navigate(`/needauthentication`, { replace: true });
+            return;
+        }
+    }, [navigate]);
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const nickname = oggettoSalvato.nickname;
+    const nickname = oggettoSalvato?.nickname;
     const handleProfilePicChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setProfilePic(URL.createObjectURL(event.target.files[0]));
