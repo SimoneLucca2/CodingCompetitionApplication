@@ -25,7 +25,7 @@ function TournamentsPageEducator() {
         axios.get(`${API_URL}/tournament/all`)
             .then(response => {
                 setTournaments(response.data);
-                setLoading(false); // Imposta il caricamento su false dopo il caricamento dei dati
+                setLoading(false);
             })
             .catch(error => {
                 goToerrorpage();
@@ -33,8 +33,8 @@ function TournamentsPageEducator() {
     }, []);
 
     const renderTournaments = () => {
-        if (loading) return <p className="loading-message">Loadind Tournaments...</p>;
-        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">Al momento non ci sono tornei presenti.</p>;
+        if (loading) return <p className="loading-message">Loading Tournaments...</p>;
+        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">There are no tournaments.</p>;
         return tournaments.map(tournament => (
             <TournamentCardEducator key={tournament.tournamentId} tournament={tournament}
                                     onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>

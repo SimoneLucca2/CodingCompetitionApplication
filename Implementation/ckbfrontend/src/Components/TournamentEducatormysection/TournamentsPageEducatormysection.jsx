@@ -41,8 +41,8 @@ function TournamentsPageEducatormysection() {
     };
 
     const renderTournaments = () => {
-        if (loading) return <p className="loading-message">Loadind Tournaments...</p>;
-        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">Al momento non ci sono tornei presenti.</p>;
+        if (loading) return <p className="loading-message">Loading Tournaments...</p>;
+        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">No tournaments created by this educator.</p>;
         return tournaments.map(tournament => (
             <TournamentCardEducatormysection key={tournament.tournamentId} tournament={tournament}
                                     onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>

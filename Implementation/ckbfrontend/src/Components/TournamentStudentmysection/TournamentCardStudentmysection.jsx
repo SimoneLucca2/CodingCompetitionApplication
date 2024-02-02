@@ -13,25 +13,21 @@ function TournamentCardStudentmysection({ tournament, onLeaderboardSelect }) {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isVanished, setIsVanished] = useState(false);
 
-    function deleteSubscription(studentId, tournamentId) {        // Define the URL of your backend endpoint
+    function deleteSubscription(studentId, tournamentId) {
         const url = `${API_URL}/tournament/student`;
 
-        // Prepare the data to be sent
         fetch(url, {
             method: 'DELETE',
             headers: {
-                // Aggiungi qui eventuali header richiesti, come Content-Type o token di autenticazione
                 'Content-Type': 'application/json',
-                // 'Authorization': 'Bearer tuoToken'
             },
-            // Se necessario, includi il corpo della richiesta
             body: JSON.stringify({ tournamentId, studentId })
         })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Errore HTTP: ${response.status}`);
                 }
-                return response.json(); // o response.text() se la risposta non è in JSON
+                return response.json();
             })
             .then(data => {
                 console.log('Cancellazione avvenuta con successo:', data);
@@ -50,14 +46,13 @@ function TournamentCardStudentmysection({ tournament, onLeaderboardSelect }) {
 
 
     const quitTournament = (e) => {
-        e.stopPropagation(); // Impedisce al click sul bottone di attivare il click sulla card
+        e.stopPropagation();
         deleteSubscription(userId, tournament.tournamentId);
     };
 
     const handleCardClick = () => {
         setIsFlipped(true);
 
-        // Dopo un breve ritardo, applica l'effetto di svanimento e poi resetta
         setTimeout(() => {
             setIsVanished(true);
 
@@ -65,12 +60,12 @@ function TournamentCardStudentmysection({ tournament, onLeaderboardSelect }) {
                 setIsFlipped(false);
                 setIsVanished(false);
                 goToTournamentBattles();
-            }, 600); // Tempo per il reset dell'animazione
-        }, 600); // Tempo prima che la carta svanisca
+            }, 600);
+        }, 600);
     };
 
     const handleLeaderboardClick = (e) => {
-        e.stopPropagation(); // Previene il click sull'intera carta
+        e.stopPropagation();
         onLeaderboardSelect(tournament);
     };
 

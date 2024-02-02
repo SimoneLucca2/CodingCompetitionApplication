@@ -1,19 +1,19 @@
-.tournament-leaderboard {
+.battle-leaderboard {
     background-color: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
     margin-right: 10px;
 }
 
-.tournament-leaderboard h2 {
+.battle-leaderboard h2 {
     margin-bottom: 15px;
 }
 
-.tournament-leaderboard ul {
+.battle-leaderboard ul {
     list-style: none;
     padding: 0;
 }
 
-.tournament-leaderboard li {
+.battle-leaderboard li {
     margin-bottom: 10px;
 }

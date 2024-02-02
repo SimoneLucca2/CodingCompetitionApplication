@@ -45,11 +45,11 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
     }
 
     function joinCloseTournament(e) {
-        const url = `${API_URL}/tournament/educator`;
+        const url = `${API_URL}/tournament/status`;
 
         // Prepare the data to be sent
         fetch(url, {
-            method: 'DELETE',
+            method: 'PUT',
             headers: {
                 // Aggiungi qui eventuali header richiesti, come Content-Type o token di autenticazione
                 'Content-Type': 'application/json',
