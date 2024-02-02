@@ -31,7 +31,7 @@ public class TournamentRankingController {
      * @return The ranking list as a ResponseEntity. If successful, the ranking list is returned as the response body.
      *         If an error occurs, an error message is returned as the response body along with an internal server error status.
      *
-     * Example request: GET /tournament/ranking?tournamentId=1&minIndex=0&maxIndex=10
+     * Example request: GET /tournament/ranking/tournamentRanking?tournamentId=1&minIndex=0&maxIndex=10
      */
     @GetMapping("/tournamentRanking")
     public ResponseEntity<Object> getTournamentRanking(
@@ -56,7 +56,7 @@ public class TournamentRankingController {
      *         If an error occurs, an error message is returned as the response body along with an internal server error status.
      */
     @GetMapping("/{tournamentId}")
-    public ResponseEntity<Object> getFullTournamentRanking(@PathVariable Long tournamentId) {
+    public ResponseEntity<Object> getFullTournamentRanking(@PathVariable(name = "tournamentId") Long tournamentId) {
         try {
             log.info("retrieving ranking for {}", tournamentId);
             List<RankingEntryDto> ranking = rankingService.getTournamentRanking(tournamentId, null, null);

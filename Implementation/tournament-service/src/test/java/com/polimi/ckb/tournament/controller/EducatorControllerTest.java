@@ -28,9 +28,6 @@ public class EducatorControllerTest {
     @MockBean
     private EducatorService educatorService;
 
-    @MockBean
-    private AddEducatorKafkaProducer kafkaProducer;
-
     @Autowired
     private MockMvc mockMvc;
 

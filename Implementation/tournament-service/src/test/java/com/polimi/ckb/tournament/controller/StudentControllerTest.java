@@ -28,12 +28,6 @@ public class StudentControllerTest {
     @MockBean
     private TournamentService tournamentService;
 
-    @MockBean
-    private StudentJoinTournamentKafkaProducer joinKafkaProducer;
-
-    @MockBean
-    private StudentQuitTournamentKafkaProducer quitKafkaProducer;
-
     @Autowired
     private MockMvc mockMvc;
 
