@@ -5,8 +5,6 @@ import com.polimi.ckb.tournament.dto.StudentJoinTournamentDto;
 import com.polimi.ckb.tournament.dto.StudentQuitTournamentDto;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.service.TournamentService;
-import com.polimi.ckb.tournament.service.kafkaProducer.StudentJoinTournamentKafkaProducer;
-import com.polimi.ckb.tournament.service.kafkaProducer.StudentQuitTournamentKafkaProducer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

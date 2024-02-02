@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9622205-b91b-4312-a01f-ead62a32173a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../battle-time-server/src/main/java/com/polimi/ckb/timeServer/service/kafka/BattleChangeStatusKafkaProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/src/main/java/com/polimi/ckb/timeServer/service/kafka/BattleChangeStatusKafkaProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../battle-time-server/src/main/java/com/polimi/ckb/timeServer/service/timeServices/BattleRoutine.java" beforeDir="false" afterPath="$PROJECT_DIR$/../battle-time-server/src/main/java/com/polimi/ckb/timeServer/service/timeServices/BattleRoutine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-service/src/main/java/com/polimi/ckb/user/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/polimi/ckb/user/entity/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +93,7 @@
       <workItem from="1706269148735" duration="13000" />
       <workItem from="1706463922485" duration="89000" />
       <workItem from="1706544407687" duration="660000" />
-      <workItem from="1706883429713" duration="416000" />
+      <workItem from="1706883429713" duration="611000" />
     </task>
     <servers />
   </component>

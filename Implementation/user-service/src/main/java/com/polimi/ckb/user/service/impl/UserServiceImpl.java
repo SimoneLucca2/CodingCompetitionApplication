@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addNewUser(NewUserDto msg) {
         User user = User.builder()
+                .userId(msg.getUserId())
                 .name(msg.getName())
                 .surname(msg.getSurname())
                 .email(msg.getEmail())
