@@ -63,7 +63,7 @@ public class ScoreController {
     }
 
     @PutMapping(path = "/{battleId}/{groupId}/{score}")
-    public ResponseEntity<Object> manuallyEvaluateGroup(@PathVariable(name = "groupId") Long groupId, @PathVariable float score, @PathVariable("battleId") Long battleId){
+    public ResponseEntity<Object> manuallyEvaluateGroup(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "score") float score, @PathVariable("battleId") Long battleId){
         log.info("A request to manually evaluate a group has been performed");
         try{
             StudentGroup group = groupService.manuallyEvaluateGroup(groupId, score, battleId);
