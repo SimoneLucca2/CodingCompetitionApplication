@@ -52,8 +52,15 @@ function TournamentsPageEducatormysection() {
     ]);
 
     const navigate = useNavigate();
+    useEffect(() => {
+        const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+        if (!oggettoSalvato) {
+            navigate(`/needauthentication`, { replace: true });
+            return;
+        }
+    }, [navigate]);
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    const userId = oggettoSalvato?.userId;
 
     const goToerrorpage = () => {
         navigate(`/errorpage`);
