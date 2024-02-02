@@ -7,49 +7,9 @@ import API_URL from "../../config";
 import TournamentLeaderboard from "../TournamentLeaderBoard/TournamentLeaderBoard";
 
 function TournamentsPageEducator() {
-    const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
-    const [tournaments, setTournaments] = useState([
-        /*{
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        }*/
-    ]);
+    const [selectedTournament, setSelectedTournament] = useState(null);
+    const [tournaments, setTournaments] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
 
@@ -65,20 +25,28 @@ function TournamentsPageEducator() {
         axios.get(`${API_URL}/tournament/all`)
             .then(response => {
                 setTournaments(response.data);
+                setLoading(false); // Imposta il caricamento su false dopo il caricamento dei dati
             })
-            .catch(error => {goToerrorpage()} );
+            .catch(error => {
+                goToerrorpage();
+            });
     }, []);
 
+    const renderTournaments = () => {
+        if (loading) return <p className="loading-message">Loadind Tournaments...</p>;
+        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">Al momento non ci sono tornei presenti.</p>;
+        return tournaments.map(tournament => (
+            <TournamentCardEducator key={tournament.tournamentId} tournament={tournament}
+                                    onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
+        ));
+    };
 
     return (
         <div className="tournaments-page">
             <h1 className="page-title">ALL TOURNAMENTS</h1>
             <div className="tournaments-layout">
                 <div className="tournaments-container">
-                    {tournaments.map(tournament => (
-                        <TournamentCardEducator key={tournament.tournamentId} tournament={tournament}
-                                                onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
-                    ))}
+                    {renderTournaments()}
                 </div>
                 <div className="tournament-leaderboard">
                     {selectedTournament ? (

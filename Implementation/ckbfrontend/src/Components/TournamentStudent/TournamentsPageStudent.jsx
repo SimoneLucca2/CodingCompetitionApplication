@@ -7,58 +7,26 @@ import API_URL from "../../config";
 import TournamentLeaderboard from "../TournamentLeaderBoard/TournamentLeaderBoard";
 
 function TournamentsPageStudent() {
-    const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
-    const [tournaments, setTournaments] = useState([
-       /*{
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        },
-        {
-            id: 1,
-            name: "Torneo di calcio",
-            description: "Torneo di calcio a 5"
-        },
-        {
-            id: 2,
-            name: "Torneo di calcio2",
-            description: "Torneo di calcio a 10"
-        }*/
-    ]);
+    const [selectedTournament, setSelectedTournament] = useState(null);
+    const [tournaments, setTournaments] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
+
     useEffect(() => {
         const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
         if (!oggettoSalvato) {
             navigate(`/needauthentication`, { replace: true });
             return;
         }
+        axios.get(`${API_URL}/tournament/notEnrolled/${userId}`)
+            .then(response => {
+                setTournaments(response.data);
+                setLoading(false);
+            })
+            .catch(error => {goToerrorpage()} );
     }, [navigate]);
+
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
     const userID = oggettoSalvato?.userId;
     const userId = parseInt(userID, 10);
@@ -70,23 +38,21 @@ function TournamentsPageStudent() {
         setSelectedTournament(tournament);
     };
 
-    useEffect(() => {
-        axios.get(`${API_URL}/tournament/notEnrolled/${userId}`)
-            .then(response => {
-                setTournaments(response.data);
-            })
-            .catch(error => {goToerrorpage()} );
-    }, []);
-
+    const renderTournaments = () => {
+        if (loading) return <p className="loading-message">Loadind Tournaments...</p>;
+        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">Al momento non ci sono tornei presenti.</p>;
+        return tournaments.map(tournament => (
+            <TournamentCardStudent key={tournament.tournamentId} tournament={tournament}
+                                    onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
+        ));
+    };
 
     return (
         <div className="tournaments-page">
             <h1 className="page-title">ALL TOURNAMENTS</h1>
             <div className="tournaments-layout">
             <div className="tournaments-container">
-                {tournaments.map(tournament => (
-                    <TournamentCardStudent key={tournament.tournamentId} tournament={tournament} onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
-                ))}
+                {renderTournaments()}
             </div>
             <div className="tournament-leaderboard">
                 {selectedTournament ? (
