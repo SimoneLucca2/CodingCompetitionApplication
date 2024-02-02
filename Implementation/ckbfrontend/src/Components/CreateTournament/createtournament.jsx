@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './createtournament.css'; // Importing the CSS file
 import {useNavigate} from "react-router-dom";
 import API_URL from "../../config";
@@ -6,10 +6,16 @@ const CreateTournament = () => {
     const [name, setname] = useState('');
     const [description, setDescription] = useState('');
     const [registrationDeadline, setregistrationDeadline] = useState('');
-
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const creatorId = oggettoSalvato.userId;
     const navigate = useNavigate();
+    useEffect(() => {
+        const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+        if (!oggettoSalvato) {
+            navigate(`/needauthentication`, { replace: true });
+            return;
+        }
+    }, [navigate]);
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const creatorId = oggettoSalvato?.userId;
 
 
     const handleSubmit = async (e) => {

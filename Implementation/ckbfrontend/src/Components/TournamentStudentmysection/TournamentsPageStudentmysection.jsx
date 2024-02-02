@@ -8,6 +8,14 @@ import TournamentLeaderboard from "../TournamentLeaderBoard/TournamentLeaderBoar
 
 
 function TournamentsPageStudentmysection() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+        if (!oggettoSalvato) {
+            navigate(`/needauthentication`, { replace: true });
+            return;
+        }
+    }, [navigate]);
     const [selectedTournament, setSelectedTournament] = useState(null); // Torneo selezionato per la classifica
     const [tournaments, setTournaments] = useState([
         /*{
@@ -57,9 +65,8 @@ function TournamentsPageStudentmysection() {
         }*/
     ]);
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userID = oggettoSalvato.userId;
+    const userID = oggettoSalvato?.userId;
     const userId = parseInt(userID, 10);
-    const navigate = useNavigate();
 
     const goToerrorpage = () => {
         navigate(`/errorpage`);

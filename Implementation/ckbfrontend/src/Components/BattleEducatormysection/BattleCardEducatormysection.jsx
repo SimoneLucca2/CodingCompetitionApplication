@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './BattleCardEducatormysection.css';
 import API_URL from "../../config";
 import {useNavigate} from "react-router-dom";
 
 function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
     const navigate = useNavigate();
+    useEffect(() => {
+        const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+        if (!oggettoSalvato) {
+            navigate(`/needauthentication`, { replace: true });
+            return;
+        }
+    }, [navigate]);
 
     const battleId = battle.battleId;
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato.userId;
+    const userId = oggettoSalvato?.userId;
     const handleLeaderboardClick = (e) => {
         e.stopPropagation(); // Previene il click sull'intera carta
         onLeaderboardSelect(battle);
