@@ -41,7 +41,7 @@ public class ScoreController {
     }
 
     @GetMapping(path = "/{battleId}/all")
-    public ResponseEntity<Object> getAllGroupsRepoLinksByBattle(@PathVariable Long battleId){
+    public ResponseEntity<Object> getAllGroupsRepoLinksByBattle(@PathVariable(name = "battleId") Long battleId){
         log.info("A request to get all the groups repo links has been performed");
         try{
             List<StudentGroup> groups = groupService.getAllGroupsRepoLinksByBattle(battleId);
@@ -63,7 +63,7 @@ public class ScoreController {
     }
 
     @PutMapping(path = "/{battleId}/{groupId}/{score}")
-    public ResponseEntity<Object> manuallyEvaluateGroup(@PathVariable Long groupId, @PathVariable float score, @PathVariable Long battleId){
+    public ResponseEntity<Object> manuallyEvaluateGroup(@PathVariable(name = "groupId") Long groupId, @PathVariable float score, @PathVariable("battleId") Long battleId){
         log.info("A request to manually evaluate a group has been performed");
         try{
             StudentGroup group = groupService.manuallyEvaluateGroup(groupId, score, battleId);

@@ -6,9 +6,6 @@ import com.polimi.ckb.timeServer.dto.ChangeBattleStatusDto;
 import com.polimi.ckb.timeServer.entity.Battle;
 import com.polimi.ckb.timeServer.repository.BattleRepository;
 import com.polimi.ckb.timeServer.service.kafka.BattleChangeStatusKafkaProducer;
-import jdk.jfr.Registered;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -46,7 +43,7 @@ public class BattleRoutine {
             battleRepository.save(battle);
 
             try {
-                kafkaProducer.sendBattleActiveMessage(
+                kafkaProducer.sendBattleChangeMessage(
                         ChangeBattleStatusDto.builder()
                                 .battleId(battle.getBattleId())
                                 .status(BattleStatus.BATTLE)
@@ -74,7 +71,7 @@ public class BattleRoutine {
             battleRepository.save(battle);
 
             try {
-                kafkaProducer.sendBattleActiveMessage(
+                kafkaProducer.sendBattleChangeMessage(
                         ChangeBattleStatusDto.builder()
                                 .battleId(battle.getBattleId())
                                 .status(BattleStatus.CONSOLIDATION)

@@ -42,3 +42,17 @@
         justify-content: flex-start;
     }
 }
+
+
+
+.select-tournament-message, .loading-message, .no-tournaments-message {
+    text-align: center; /* Centra il testo */
+    padding: 20px; /* Aggiunge un po' di spazio intorno al testo */
+    font-size: 20px; /* Aumenta la dimensione del font per maggiore leggibilità */
+}
+
+/* Specifica lo stile per i messaggi di caricamento e assenza tornei */
+.loading-message, .no-tournaments-message {
+    color: #FFD700; /* Cambia il colore del testo per maggiore visibilità */
+    font-weight: bold; /* Rende il testo in grassetto */
+}

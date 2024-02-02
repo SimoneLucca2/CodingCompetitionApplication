@@ -4,6 +4,8 @@ import com.polimi.ckb.tournament.dto.ErrorResponse;
 import com.polimi.ckb.tournament.dto.RankingEntryDto;
 import com.polimi.ckb.tournament.service.RankingService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ import java.util.List;
 public class TournamentRankingController {
 
     private final RankingService rankingService;
+    private static final Logger log = LoggerFactory.getLogger(TournamentRankingController.class);
 
     /**
      * Retrieves the ranking of a tournament based on the provided parameters.
@@ -28,7 +31,7 @@ public class TournamentRankingController {
      * @return The ranking list as a ResponseEntity. If successful, the ranking list is returned as the response body.
      *         If an error occurs, an error message is returned as the response body along with an internal server error status.
      *
-     * Example request: GET /tournament/ranking?tournamentId=1&minIndex=0&maxIndex=10
+     * Example request: GET /tournament/ranking/tournamentRanking?tournamentId=1&minIndex=0&maxIndex=10
      */
     @GetMapping("/tournamentRanking")
     public ResponseEntity<Object> getTournamentRanking(
@@ -36,6 +39,7 @@ public class TournamentRankingController {
             @RequestParam("minIndex") int minIndex,
             @RequestParam("maxIndex") int maxIndex) {
         try {
+            log.info("retrieving ranking for {}", tournamentId);
             List<RankingEntryDto> ranking = rankingService.getTournamentRanking(tournamentId, minIndex, maxIndex);
             return ResponseEntity.ok(ranking);
         } catch (Exception e) {
@@ -52,8 +56,9 @@ public class TournamentRankingController {
      *         If an error occurs, an error message is returned as the response body along with an internal server error status.
      */
     @GetMapping("/{tournamentId}")
-    public ResponseEntity<Object> getFullTournamentRanking(@PathVariable Long tournamentId) {
+    public ResponseEntity<Object> getFullTournamentRanking(@PathVariable(name = "tournamentId") Long tournamentId) {
         try {
+            log.info("retrieving ranking for {}", tournamentId);
             List<RankingEntryDto> ranking = rankingService.getTournamentRanking(tournamentId, null, null);
             return ResponseEntity.ok(ranking);
         } catch (Exception e) {
