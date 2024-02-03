@@ -283,7 +283,7 @@ public class BattleServiceImpl implements BattleService {
                 .orElseThrow(BattleDoesNotExistException::new);
 
         if (battle.getStatus() != BattleStatus.CONSOLIDATION) {
-            throw new BattleChangingStatusException();
+            throw new BattleChangingStatusException("Cannot close battle");
         }
 
         battle.setStatus(BattleStatus.CLOSED);

@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @AllArgsConstructor
 public class StudentInvitationEmailKafkaProducer {
-    private static final String TOPIC = "email.send.request";
+    private static final String TOPIC = "email.sending.request";
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final UsernameGetter usernameGetter;
     private final EmailGetter emailGetter;
