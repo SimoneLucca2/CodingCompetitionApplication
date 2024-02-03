@@ -16,6 +16,8 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
     const battleId = battle.battleId;
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
     const userId = oggettoSalvato?.userId;
+    const isEducator = userId === battle.creatorId;
+
     const handleLeaderboardClick = (e) => {
         e.stopPropagation(); // Previene il click sull'intera carta
         onLeaderboardSelect(battle);
@@ -61,7 +63,7 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
             <p>Submission Deadline:{battle.submissionDeadline}</p>
             <p>Status:{battle.status}</p>
 
-            {battle.status === 'CONSOLIDATION' && (
+            {battle.status === 'CONSOLIDATION' && isEducator && (
                 <>
                     <button className="leaderboard-button-2" onClick={handleManualEvaluationClick}>
                         MANUAL EVALUATION
