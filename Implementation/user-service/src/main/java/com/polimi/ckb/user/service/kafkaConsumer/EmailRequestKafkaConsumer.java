@@ -18,7 +18,6 @@ public class EmailRequestKafkaConsumer {
 
     private final ObjectMapper objectMapper;
     private final EmailService emailService;
-    private final UserRepository userRepository;
 
     @KafkaListener(topics = "email.sending.request", groupId = "email-service")
     public void listener(ConsumerRecord<String, String> record) {
