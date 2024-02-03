@@ -156,10 +156,10 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void saveRepositoryUrl(SaveGroupRepositoryLinkDto saveGroupRepositoryLinkDto) {
-        StudentGroup group = groupRepository.findById(saveGroupRepositoryLinkDto.getGroupId()).orElseThrow(GroupDoesNotExistsException::new);
+        //StudentGroup group = groupRepository.findById(saveGroupRepositoryLinkDto.getGroupId()).orElseThrow(GroupDoesNotExistsException::new);
 
-        group.setClonedRepositoryLink(saveGroupRepositoryLinkDto.getClonedRepositoryLink());
-        groupRepository.save(group);
+        //group.setClonedRepositoryLink(saveGroupRepositoryLinkDto.getClonedRepositoryLink());
+        //groupRepository.save(group);
     }
 
     @Override

@@ -101,6 +101,7 @@
 }
 
 .github-link-input {
+    margin-top: 10px;
     flex-grow: 1; /* Permette all'input di espandersi per occupare lo spazio disponibile */
     /* Aggiungi qui ulteriori stili per l'input se necessario */
 }

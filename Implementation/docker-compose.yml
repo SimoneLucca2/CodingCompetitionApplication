@@ -2,6 +2,16 @@ version: "3.7"
 
 services:
 
+  sonarqube:
+    image: sonarqube
+    #environment:
+     # - SONAR_JAVA_PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+    ports:
+      - 9000:9000
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+
   api-gateway:
 
     build:
@@ -184,6 +194,7 @@ services:
       - KAFKA_CFG_MESSAGE_MAX_BYTES=1048588
     depends_on:
       - zookeeper
+
 volumes:
   zookeeper_data:
   kafka_data:
@@ -192,4 +203,6 @@ volumes:
   sonarqube_extensions:
   sonarqube_logs:
   postgresql:
+  sonarqube_data:
+  sonarqube_extensions:
   postgresql_data:

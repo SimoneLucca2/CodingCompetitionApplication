@@ -3,6 +3,8 @@ package com.polimi.ckb.battleService.service;
 import com.polimi.ckb.battleService.dto.CreateBattleDto;
 import com.polimi.ckb.battleService.dto.CreatedBattleDto;
 import com.polimi.ckb.battleService.dto.NewPushDto;
+import com.polimi.ckb.battleService.exception.CannotEvaluateGroupSolutionException;
+import com.polimi.ckb.battleService.exception.GroupDoesNotExistsException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 import java.io.IOException;
@@ -12,5 +14,5 @@ public interface GitService {
 
     String createGitHubRepository(CreateBattleDto createBattleDto);
 
-    void calculateTemporaryScore(NewPushDto newPushDto) throws GitAPIException, IOException, InterruptedException;
+    void calculateTemporaryScore(NewPushDto newPushDto) throws GitAPIException, IOException, InterruptedException, GroupDoesNotExistsException, CannotEvaluateGroupSolutionException;
 }

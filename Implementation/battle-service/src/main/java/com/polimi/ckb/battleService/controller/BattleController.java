@@ -109,7 +109,7 @@ public class BattleController {
     public ResponseEntity<Object> closeBattle(@PathVariable Long battleId) {
         log.info("An educator is trying to close battle " + battleId);
         try{
-            Battle battle = battleService.changeBattleStatus(
+            Battle battle = battleService.closeBattle(
                     ChangeBattleStatusDto.builder()
                             .battleId(battleId)
                             .status(BattleStatus.CLOSED)

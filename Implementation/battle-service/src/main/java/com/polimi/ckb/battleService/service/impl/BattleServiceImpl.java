@@ -278,6 +278,18 @@ public class BattleServiceImpl implements BattleService {
 
     }
 
+    public Battle closeBattle(ChangeBattleStatusDto closeBattleDto) {
+        Battle battle = battleRepository.findById(closeBattleDto.getBattleId())
+                .orElseThrow(BattleDoesNotExistException::new);
+
+        if (battle.getStatus() != BattleStatus.CONSOLIDATION) {
+            throw new BattleChangingStatusException();
+        }
+
+        battle.setStatus(BattleStatus.CLOSED);
+        return battleRepository.save(battle);
+    }
+
     private TournamentDto checkTournamentStats(Long tournamentId) throws JsonProcessingException {
         log.info("Checking tournament existence and status and creator's access to it");
         //String tournamentServiceUrl = getTournamentServiceUrl();

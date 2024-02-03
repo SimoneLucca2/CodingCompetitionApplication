@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS battle_schema.student_group_join
 
 CREATE TABLE IF NOT EXISTS battle_schema.student_group_seq
 (
-    next_val bigint null
+    next_val bigint not null default 1
 );
 
 CREATE DATABASE IF NOT EXISTS user_schema;

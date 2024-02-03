@@ -19,7 +19,7 @@ function ManualEvaluation() {
     const handleScoreSubmit = async () => {
         setSubmitting(true);
         try {
-            const response = await fetch(`${API_URL}/battle/${battleId}/all`, {
+            const response = await fetch(`${API_URL}/battle/score/${battleId}/1/${score}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

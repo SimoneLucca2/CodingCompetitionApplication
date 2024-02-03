@@ -33,7 +33,8 @@ public class ScoreController {
         log.info("A new push on the main branch has been performed on: " + newPushDto.getRepositoryUrl());
         try {
             gitService.calculateTemporaryScore(newPushDto);
-        } catch (GitAPIException | IOException | ErrorWhileExecutingScannerException | InterruptedException e) {
+        } catch (GitAPIException | IOException | ErrorWhileExecutingScannerException | InterruptedException |
+                 GroupDoesNotExistsException e) {
             log.error("Internal server error: " + e.getMessage());
         } catch (CannotEvaluateGroupSolutionException e){
             log.error("Bad request {}: ", e.getMessage());

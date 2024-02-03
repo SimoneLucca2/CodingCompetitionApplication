@@ -22,7 +22,7 @@ function AddEducatorToTournament() {
     const tournamentId = parseInt(tournament, 10);
 
     const goTOuserprofile = () => {
-        navigate('/educatorprofile'); // Naviga alla userprofile
+        navigate('/successpage'); // Naviga alla userprofile
     }
     const goTOerrorpage = () => {
         navigate('/errorpage'); // Naviga alla userprofile
