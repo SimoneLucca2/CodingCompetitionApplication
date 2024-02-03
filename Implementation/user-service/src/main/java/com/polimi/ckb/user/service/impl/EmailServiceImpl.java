@@ -18,7 +18,7 @@ public class EmailServiceImpl implements EmailService {
     @Override @Async
     public void sendEmail(EmailDto msg) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("simone.lucca.00@gmail.com");
+        mailMessage.setFrom(msg.getFrom());
         mailMessage.setTo(msg.getTo());
         mailMessage.setSubject(msg.getSubject());
         mailMessage.setText(msg.getBody());
