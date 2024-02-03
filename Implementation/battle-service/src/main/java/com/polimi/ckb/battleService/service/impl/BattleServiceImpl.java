@@ -19,6 +19,7 @@ import com.polimi.ckb.battleService.service.kafkaProducer.StudentInvitationEmail
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
@@ -97,6 +98,13 @@ public class BattleServiceImpl implements BattleService {
 
         Battle newBattle = battleRepository.save(convertToEntity(createBattleDto));
 
+       sendToRegisteredStudents(newBattle);
+
+        return newBattle;
+    }
+
+    @Async
+    protected void sendToRegisteredStudents(Battle newBattle) {
         //send email to all students registered to the tournament
         newBattle.getStudentGroups().forEach(
                 gr -> gr.getStudents().forEach(
@@ -105,8 +113,6 @@ public class BattleServiceImpl implements BattleService {
                         )
                 )
         );
-
-        return newBattle;
     }
 
     /*private String getTournamentServiceUrl() {

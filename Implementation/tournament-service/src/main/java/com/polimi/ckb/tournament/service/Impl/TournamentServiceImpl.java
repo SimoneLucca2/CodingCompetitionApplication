@@ -39,7 +39,10 @@ public class TournamentServiceImpl implements TournamentService {
     @Override
     public Tournament createTournament(CreateTournamentDto msg) {
 
-        tournamentRepository.findByName(msg.getName()).orElseThrow(TournamentAlreadyExistException::new);
+        tournamentRepository.findByName(msg.getName()).ifPresent(t -> {
+                    throw new TournamentAlreadyExistException();
+                }
+        );
 
         Tournament newTournament = tournamentRepository.save(CreateTournamentDtoToTournament.convertToEntity(msg));
 
