@@ -207,6 +207,4 @@ volumes:
   sonarqube_extensions:
   sonarqube_logs:
   postgresql:
-  sonarqube_data:
-  sonarqube_extensions:
   postgresql_data:
