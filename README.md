@@ -19,7 +19,8 @@ Before you begin, ensure you have met the following requirements:
 ![image](https://github.com/SimoneLucca2/FeraboliFilippiniLucca/assets/106387524/77db9cc5-d7e0-49cf-aa4d-acab7fa40504)
 
 The communication between client and server is RESTful, using json serialized messages through HTTP.
-for more details about the architecture design: https://github.com/SimoneLucca2/FeraboliFilippiniLucca/blob/main/DeliveryFolder/DD-v1.0.pdf
+
+For more details about the architecture design: https://github.com/SimoneLucca2/FeraboliFilippiniLucca/blob/main/DeliveryFolder/DD-v1.0.pdf
 
 ## Setup and Installation
 
