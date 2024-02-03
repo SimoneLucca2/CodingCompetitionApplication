@@ -1,6 +1,34 @@
-# FeraboliFilippiniLucca
-Software engineering 2 project
+# Code Kata Battle
 
-RASD: https://polimi365-my.sharepoint.com/:w:/g/personal/10727778_polimi_it/EW8o7bBsN2pJigk9sg_a7gEBzrWreCyxjZ7b-vxgf2ifuQ
+Code competition application.
 
-DD: https://polimi365-my.sharepoint.com/:w:/g/personal/10727778_polimi_it/ETFPmUDrvPJLoAYi67oa4nABq3BbM22VYkAazMTFL5s_ag?e=6ROGeW
+This web application is built using Spring Boot (backend) and React (frontend), leveraging microservices architecture for scalability and resilience. 
+It utilizes Kafka for messaging and Eureka for service discovery to facilitate communication and management among the microservices.
+For more details about the requirements: 
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+- JDK 11 or newer
+- Node.js and npm
+- Docker and Docker Compose (optional for containerization)
+
+## Architecture Overview
+
+![image](https://github.com/SimoneLucca2/FeraboliFilippiniLucca/assets/106387524/77db9cc5-d7e0-49cf-aa4d-acab7fa40504)
+
+The communication between client and server is RESTful, using json serialized messages through HTTP.
+
+## Setup and Installation
+
+### Backend using docker compose:
+1.	Ensure to have docker installed in your system and the docker daemon running.
+2.	Open the terminal and go in the /implementation directory of the ckb project.
+3.	Run docker-compose up – This will start the backend API with all the services associated to it.
+
+### Web server
+1.	Install node.js.
+2.	Use the terminal to move to the /implementation/ckbfronted directory.
+3.	Run the command “npm install react-scripts”.
+4.	Run “npm start” – this will start the web server on port 3000.
+To use the application just use a browser to connect to <web server ip>:3000.
