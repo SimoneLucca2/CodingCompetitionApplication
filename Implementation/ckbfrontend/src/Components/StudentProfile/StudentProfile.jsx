@@ -15,6 +15,7 @@ const StudentProfile = () => {
     }, [navigate]);
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
     const nickname = oggettoSalvato?.nickname;
+    const email = oggettoSalvato?.email;
     const handleProfilePicChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             setProfilePic(URL.createObjectURL(event.target.files[0]));
@@ -33,10 +34,13 @@ const StudentProfile = () => {
                 </div>
                 <div className="bottom-section">
                     <h2 className="nickname">{nickname}</h2>
+                    <h2 className="nickname">{email}</h2>
                     <p className="welcome-message">Welcome to your CKB HOME page!</p>
                     <div className="action-buttons">
-                        <button onClick={() => window.location.href = '/tournamentspagestudent'}>View All Tournaments</button>
-                        <button onClick={() => window.location.href = `/mysectiontournamentspagestudent`}>My Section</button>
+                        <button onClick={() => window.location.href = '/tournamentspagestudent'}>View All Tournaments
+                        </button>
+                        <button onClick={() => window.location.href = `/mysectiontournamentspagestudent`}>My Section
+                        </button>
                     </div>
                 </div>
             </div>
