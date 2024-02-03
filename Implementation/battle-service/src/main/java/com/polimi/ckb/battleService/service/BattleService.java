@@ -7,7 +7,7 @@ import com.polimi.ckb.battleService.entity.StudentGroup;
 import java.util.List;
 
 public interface BattleService {
-    Battle createBattle(CreateBattleDto createBattleDto) throws RuntimeException;
+    Battle createBattle(CreateBattleDto createBattleDto, boolean isTest) throws RuntimeException;
 
     StudentGroup joinBattle(StudentJoinBattleDto studentDto);
 
