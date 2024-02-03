@@ -15,6 +15,7 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
     const tournamentId = tournament.tournamentId;
     const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
     const userId = oggettoSalvato?.userId;
+    const educatorId = oggettoSalvato?.userId;
     const isEducator = userId === tournament.creatorId;
 
     const [isFlipped, setIsFlipped] = useState(false);
@@ -59,7 +60,7 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
                 // 'Authorization': 'Bearer tuoToken'
             },
             // Se necessario, includi il corpo della richiesta
-            body: JSON.stringify({ tournamentId, userId })
+            body: JSON.stringify({ educatorId, tournamentId, status: 'CLOSED'})
         })
             .then(response => {
                 if (!response.ok) {
