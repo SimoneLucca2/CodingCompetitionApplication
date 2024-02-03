@@ -66,14 +66,12 @@ services:
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
 
-
-      SPRING_MAIL_HOST: smtps.aruba.it
-      SPRING_MAIL_PORT: 465
-      SPRING_MAIL_USERNAME: nodered@neslab.it
-      SPRING_MAIL_PASSWORD: Node22$$
-      #SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
-      #SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
-
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: simone.lucca.00@gmail.com
+      SPRING_MAIL_PASSWORD: aqovysmghchkwlmw
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
     ports:
       - "8081:8081"
     depends_on:
@@ -203,10 +201,8 @@ volumes:
   zookeeper_data:
   kafka_data:
   mysql_data:
-  sonarqube_data:
   sonarqube_extensions:
   sonarqube_logs:
   postgresql:
   sonarqube_data:
-  sonarqube_extensions:
   postgresql_data:
