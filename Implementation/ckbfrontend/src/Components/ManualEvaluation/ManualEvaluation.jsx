@@ -27,14 +27,16 @@ function ManualEvaluation() {
                 body: JSON.stringify({ score }),
             });
             if (response.ok) {
-                // Handle backend response here
+                navigate(`/successpage`);
                 console.log('Score successfully submitted');
             } else {
-                // Handle errors here
+                navigate(`/errorpage`);
                 console.error('Error in submitting score');
             }
         } catch (error) {
             console.error('Error in request:', error);
+            navigate(`/errorpage`);
+
         } finally {
             setSubmitting(false);
         }
