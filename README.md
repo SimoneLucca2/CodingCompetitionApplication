@@ -5,6 +5,7 @@ Code competition application.
 This web application is built using Spring Boot (backend) and React (frontend), leveraging microservices architecture for scalability and resilience. 
 It utilizes Kafka for messaging and Eureka for service discovery to facilitate communication and management among the microservices.
 For more details about the requirements: https://github.com/SimoneLucca2/FeraboliFilippiniLucca/blob/main/DeliveryFolder/RASD-v1.0.pdf
+(exclude the part of handling badges)
 
 ## Prerequisites
 
