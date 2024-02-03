@@ -31,6 +31,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.List;
 
 @Service
@@ -169,10 +170,13 @@ public class GitServiceImpl implements GitService {
     }
 
     @Override
-    public void calculateTemporaryScore(NewPushDto newPushDto) throws GitAPIException, IOException, InterruptedException {
+    public void calculateTemporaryScore(NewPushDto newPushDto) throws GitAPIException, IOException, InterruptedException, GroupDoesNotExistsException, ErrorWhileExecutingScannerException, CannotEvaluateGroupSolutionException{
         //every time the system gets a notification about a new push on the main branch of a group's repo, solution is assigned a temporary score
         //Only if battle status is BATTLE
         StudentGroup g = groupRepository.findByClonedRepositoryLink(newPushDto.getRepositoryUrl());
+        if(g == null)
+            throw new GroupDoesNotExistsException();
+
         Battle battle = g.getBattle();
         if(!battle.getStatus().equals(BattleStatus.BATTLE)){
             throw new CannotEvaluateGroupSolutionException();
@@ -207,14 +211,14 @@ public class GitServiceImpl implements GitService {
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(encodedUrl))
-                .header("Authorization", "Bearer " + "squ_c511b18309ecbd7f29c9970474ced8fa10aa381a")    //USER-TOKEN
+                .header("Authorization", "Bearer " + "squ_d09646df463068536e54996ee42381f14e47e3ff")    //USER-TOKEN
                 .GET()
                 .build();
 
         try {
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            log.info(String.valueOf(response.statusCode()));
-            log.info(response.body());
+            //log.info(String.valueOf(response.statusCode()));
+            //log.info(response.body());
 
             if (response.statusCode() == HttpURLConnection.HTTP_OK) {
                 log.info("SonarQube project successfully created");
@@ -261,18 +265,20 @@ public class GitServiceImpl implements GitService {
         final String sonarCloudURL = "http://localhost:9000/api/projects/create";
         final String encodedProjectName = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
         final String encodedProjectKey = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
-        final String urlWithParams = sonarCloudURL + "?name=" + encodedProjectName + "&project=" + encodedProjectKey;
+        final String urlWithParams = sonarCloudURL + "?name=" + "ckb" + "&project=" + "ckb";
 
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(urlWithParams))
-                .header("Authorization", "Bearer " + "squ_a4bb281960f61ae94298b63f2c9077bafab2cce0")        //USER_TOKEN
+                //.timeout(Duration.ofSeconds(10))
+                .header("Authorization", "Bearer " + "squ_d09646df463068536e54996ee42381f14e47e3ff")        //USER_TOKEN
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
+        HttpResponse<String> response = null;
         try {
-            final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            log.info(String.valueOf(response.statusCode()));
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            //log.info(String.valueOf(response.statusCode()));
             //log.info(response.body());
 
             if (response.statusCode() == HttpURLConnection.HTTP_CREATED) {
@@ -283,6 +289,8 @@ public class GitServiceImpl implements GitService {
         } catch (IOException | InterruptedException e) {
             //throw new ErrorWhileCreatingSonarQubeProjectException();
             //throw new GroupDoesNotExistsException();
+            log.error("Errore while creating sonarqube project" + e);
+            //log.error("COODE: " + response.statusCode());
             throw new RuntimeException(e);
         }
     }
