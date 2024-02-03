@@ -28,11 +28,8 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
         fetch(url, {
             method: 'DELETE',
             headers: {
-                // Aggiungi qui eventuali header richiesti, come Content-Type o token di autenticazione
                 'Content-Type': 'application/json',
-                // 'Authorization': 'Bearer tuoToken'
             },
-            // Se necessario, includi il corpo della richiesta
             body: JSON.stringify({ battleId, userId })
         })
             .then(response => {
@@ -44,7 +41,6 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
             })
             .then(data => {
                 console.log('Chiusura avvenuta con successo:', data);
-                navigate('/manualevaluation/battleId');
             })
             .catch(error => {
                 console.error('Si è verificato un errore:', error);
@@ -52,6 +48,10 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
             });
     }
 
+
+    const handleManualEvaluationClick = () => {
+        navigate(`/manualevaluation/${battleId}`);
+    };
 
     return (
         <div className="battle-card">
@@ -61,8 +61,14 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
             <p>Submission Deadline:{battle.submissionDeadline}</p>
             <p>Status:{battle.status}</p>
 
-            {battle.status === 'CONSOLDIDATION' && (
-                <button className="quit-button" onClick={joinCloseTournament}>CLOSE BATTLE</button>
+            {battle.status === 'CONSOLIDATION' && (
+                <>
+                    <button className="manual-evaluation-button" onClick={handleManualEvaluationClick}>
+                        MANUAL EVALUATION
+                    </button>
+                    <button className="quit-button" onClick={joinCloseTournament}>CLOSE BATTLE</button>
+
+                </>
             )}
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
                 View Leaderboard
