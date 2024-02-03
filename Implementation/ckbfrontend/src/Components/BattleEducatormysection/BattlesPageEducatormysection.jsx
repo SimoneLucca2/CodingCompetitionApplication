@@ -50,7 +50,7 @@ function BattlesPageEducatormysection({ match }) {
                 </div>
                 <div className="battle-leaderboard">
                     {selectedBattle ? (
-                        <BattleLeaderBoard tournament={selectedBattle}/>
+                        <BattleLeaderBoard battle={selectedBattle}/>
                     ) : (
                         <p className="select-battle-message">Select a battle to view the rankings.</p>
                     )}

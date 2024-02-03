@@ -60,3 +60,22 @@
     transform: translateY(-2px);
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
 }
+
+.leaderboard-button-2 {
+    background-color: rgba(60, 134, 19, 0.85); /* Scegli il colore che preferisci */
+    color: #000000; /* Colore del testo */
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.leaderboard-button-2:hover {
+    background-color: rgb(60, 134, 19); /* Colore al passaggio del mouse */
+}

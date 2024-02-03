@@ -63,7 +63,7 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
 
             {battle.status === 'CONSOLIDATION' && (
                 <>
-                    <button className="manual-evaluation-button" onClick={handleManualEvaluationClick}>
+                    <button className="leaderboard-button-2" onClick={handleManualEvaluationClick}>
                         MANUAL EVALUATION
                     </button>
                     <button className="quit-button" onClick={joinCloseTournament}>CLOSE BATTLE</button>
