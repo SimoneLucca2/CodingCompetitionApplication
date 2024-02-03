@@ -95,8 +95,12 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
             <p>{tournament.description}</p>
             <p>Registration Deadline:{tournament.registrationDeadline}</p>
             <p>Status:{tournament.status}</p>
-            <button className="join-button-1" onClick={joinAddEducatortoaTournament}>ADD EDUCATOR</button>
-            <button className="quit-button" onClick={joinCloseTournament}>CLOSE TOURNAMENT</button>
+            {isEducator && (
+                <>
+                    <button className="join-button-1" onClick={joinAddEducatortoaTournament}>ADD EDUCATOR</button>
+                    <button className="quit-button" onClick={joinCloseTournament}>CLOSE TOURNAMENT</button>
+                </>
+            )}
             <button className="join-button-2" onClick={joinCreateBattle}>CREATE BATTLE</button>
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
                 View Leaderboard
