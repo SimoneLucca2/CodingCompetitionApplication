@@ -5,7 +5,6 @@ import com.polimi.ckb.tournament.config.TournamentStatus;
 import com.polimi.ckb.tournament.dto.AddEducatorDto;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.service.EducatorService;
-import com.polimi.ckb.tournament.service.kafkaProducer.AddEducatorKafkaProducer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -14,7 +14,7 @@ import com.polimi.ckb.tournament.repository.ScoreRepository;
 import com.polimi.ckb.tournament.repository.StudentRepository;
 import com.polimi.ckb.tournament.repository.TournamentRepository;
 import com.polimi.ckb.tournament.service.TournamentService;
-import com.polimi.ckb.tournament.service.kafkaProducer.TournamentCreationKafkaProducer;
+import com.polimi.ckb.tournament.service.kafkaProducer.TournamentCreationEmailRequestKafkaProducer;
 import com.polimi.ckb.tournament.utility.entityConverter.CreateTournamentDtoToTournament;
 import com.polimi.ckb.tournament.utility.score.InitScore;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,7 +32,7 @@ public class TournamentServiceImpl implements TournamentService {
     private final TournamentRepository tournamentRepository;
     private final StudentRepository studentRepository;
     private final ScoreRepository scoreRepository;
-    private final TournamentCreationKafkaProducer kafkaProducer;
+    private final TournamentCreationEmailRequestKafkaProducer kafkaProducer;
 
     @Transactional
     @Override

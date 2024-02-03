@@ -4,7 +4,6 @@ import com.polimi.ckb.tournament.dto.AddEducatorDto;
 import com.polimi.ckb.tournament.dto.TournamentDto;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.service.EducatorService;
-import com.polimi.ckb.tournament.service.kafkaProducer.AddEducatorKafkaProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

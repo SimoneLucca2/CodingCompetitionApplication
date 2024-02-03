@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TournamentCreationKafkaProducer {
+public class TournamentCreationEmailRequestKafkaProducer {
 
-    private static final String TOPIC = "tournament.creation";
+    private static final String TOPIC = "email.sending.request";
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final ObjectMapper objectMapper;
     private final EmailGetter emailGetter;
