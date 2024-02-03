@@ -27,4 +27,5 @@ public class BattleDto implements Serializable{
     private BattleStatus status;
     private int maxGroupSize;
     private int minGroupSize;
+    private String repoLink;
 }

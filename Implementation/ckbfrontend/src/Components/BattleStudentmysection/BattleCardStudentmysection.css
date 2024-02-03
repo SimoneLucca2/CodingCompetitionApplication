@@ -49,3 +49,39 @@
 .leaderboard-button:hover {
     background-color: rgb(213, 217, 213); /* Colore al passaggio del mouse */
 }
+
+.battle-card button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10;
+    margin-top: 10px;
+    border: none;
+}
+
+.join-button-3 {
+    background-color: #3c8613;
+    color: black;
+}
+
+.join-button-3:hover {
+    background-color: rgba(60, 134, 19, 0.85);
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.join-button-4 {
+    background-color: #f51111;
+    color: black;
+}
+
+.join-button-4:hover {
+    background-color: rgba(245, 17, 17, 0.74);
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+}
