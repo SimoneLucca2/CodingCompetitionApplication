@@ -2,7 +2,6 @@ package com.polimi.ckb.battleService.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.discovery.DiscoveryClient;
 import com.polimi.ckb.battleService.config.BattleStatus;
 import com.polimi.ckb.battleService.config.TournamentStatus;
 import com.polimi.ckb.battleService.dto.*;
@@ -15,7 +14,8 @@ import com.polimi.ckb.battleService.repository.EducatorRepository;
 import com.polimi.ckb.battleService.repository.GroupRepository;
 import com.polimi.ckb.battleService.repository.StudentRepository;
 import com.polimi.ckb.battleService.service.BattleService;
-import com.polimi.ckb.battleService.service.kafkaProducer.BattleScoreKafkaProducer;
+import com.polimi.ckb.battleService.service.kafkaProducer.NewBattleEmailKafkaProducer;
+import com.polimi.ckb.battleService.service.kafkaProducer.StudentInvitationEmailKafkaProducer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +38,7 @@ public class BattleServiceImpl implements BattleService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final ScoreServiceImpl scoreService;
+    private final NewBattleEmailKafkaProducer newBattleEmailKafkaProducer;
 
     //@Value("${eureka.client.service-url.defaultZone}")
     private final String TOURNAMENT_SERVICE_URL = "http://TOURNAMENT-SERVICE";
@@ -45,6 +46,7 @@ public class BattleServiceImpl implements BattleService {
     @Override
     @Transactional
     public Battle createBattle(CreateBattleDto createBattleDto, boolean isTest) throws RuntimeException {
+
         //check that tournament exists and its status is not CLOSING or CLOSED
         //check that battle creator has access to the tournament
         //If isTest is false, skip tournament checks (performing unit tests)
@@ -93,7 +95,18 @@ public class BattleServiceImpl implements BattleService {
             }
         }
 
-        return battleRepository.save(convertToEntity(createBattleDto));
+        Battle newBattle = battleRepository.save(convertToEntity(createBattleDto));
+
+        //send email to all students registered to the tournament
+        newBattle.getStudentGroups().forEach(
+                gr -> gr.getStudents().forEach(
+                        st -> newBattleEmailKafkaProducer.sendBattleCreationEmail(
+                                st.getStudentId(), newBattle
+                        )
+                )
+        );
+
+        return newBattle;
     }
 
     /*private String getTournamentServiceUrl() {

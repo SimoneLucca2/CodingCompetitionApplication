@@ -51,4 +51,16 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @GetMapping("/email/{userId}")
+    public ResponseEntity<UsernameDto> getEmail(@PathVariable Long userId) {
+        try{
+            log.info("Getting username with id: {}", userId);
+            return ResponseEntity.ok(
+                    UsernameDto.builder().username(userService.getUser(userId).getName()).build()
+            );
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

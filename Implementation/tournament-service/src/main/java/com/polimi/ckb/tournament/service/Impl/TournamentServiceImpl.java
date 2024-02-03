@@ -1,5 +1,6 @@
 package com.polimi.ckb.tournament.service.Impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.tournament.config.TournamentStatus;
 import com.polimi.ckb.tournament.dto.CreateTournamentDto;
 import com.polimi.ckb.tournament.dto.StudentJoinTournamentDto;
@@ -13,6 +14,7 @@ import com.polimi.ckb.tournament.repository.ScoreRepository;
 import com.polimi.ckb.tournament.repository.StudentRepository;
 import com.polimi.ckb.tournament.repository.TournamentRepository;
 import com.polimi.ckb.tournament.service.TournamentService;
+import com.polimi.ckb.tournament.service.kafkaProducer.TournamentCreationKafkaProducer;
 import com.polimi.ckb.tournament.utility.entityConverter.CreateTournamentDtoToTournament;
 import com.polimi.ckb.tournament.utility.score.InitScore;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,16 +32,25 @@ public class TournamentServiceImpl implements TournamentService {
     private final TournamentRepository tournamentRepository;
     private final StudentRepository studentRepository;
     private final ScoreRepository scoreRepository;
+    private final TournamentCreationKafkaProducer kafkaProducer;
 
     @Transactional
     @Override
-    public Tournament saveTournament(CreateTournamentDto msg) {
-        Optional<Tournament> maybeTournament = tournamentRepository.findByName(msg.getName());
-        if (maybeTournament.isPresent()) {
-            //tournament already exist
-            throw new TournamentAlreadyExistException();
-        }
-        return tournamentRepository.save(CreateTournamentDtoToTournament.convertToEntity(msg));
+    public Tournament createTournament(CreateTournamentDto msg) {
+
+        tournamentRepository.findByName(msg.getName()).orElseThrow(TournamentAlreadyExistException::new);
+
+        Tournament newTournament = tournamentRepository.save(CreateTournamentDtoToTournament.convertToEntity(msg));
+
+        studentRepository.findAll().forEach(student -> {
+            try {
+                kafkaProducer.sendTournamentCreationEmailRequest(student.getStudentId(), newTournament);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        return newTournament;
     }
 
     @Transactional(readOnly = true)

@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 public interface TournamentService {
-    Tournament saveTournament(CreateTournamentDto msg);
+    Tournament createTournament(CreateTournamentDto msg);
     Tournament getTournament(Long id);
     List<Tournament> getAllTournaments();
     List<Tournament> getPreparationTournaments();

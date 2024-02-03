@@ -1,13 +1,12 @@
 package com.polimi.ckb.tournament.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.polimi.ckb.tournament.dto.*;
+import com.polimi.ckb.tournament.dto.CreateTournamentDto;
+import com.polimi.ckb.tournament.dto.ErrorResponse;
+import com.polimi.ckb.tournament.dto.TournamentDto;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.repository.TournamentRepository;
 import com.polimi.ckb.tournament.service.TournamentService;
-import com.polimi.ckb.tournament.service.kafkaProducer.TournamentCreationKafkaProducer;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.constraints.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tournament")
 public class TournamentController {
     private final TournamentService tournamentService;
-    private final TournamentCreationKafkaProducer kafkaProducer;
 
     private static final Logger log = LoggerFactory.getLogger(TournamentController.class);
     private final TournamentRepository tournamentRepository;
@@ -32,16 +29,7 @@ public class TournamentController {
     public ResponseEntity<Object> createTournament(@Valid @RequestBody CreateTournamentDto msg) {
         try {
             log.info("Creating tournament with message: {}", msg);
-            Tournament createdTournament = tournamentService.saveTournament(msg);
-
-            CreatedTournamentKafkaDto kafkaMsg = CreatedTournamentKafkaDto.builder()
-                    .creatorId(msg.getCreatorId())
-                    .tournamentId(createdTournament.getTournamentId())
-                    .name(msg.getName())
-                    .registrationDeadline(msg.getRegistrationDeadline())
-                    .build();
-
-            kafkaProducer.sendTournamentCreationMessage(kafkaMsg);
+            Tournament createdTournament = tournamentService.createTournament(msg);
             log.info("Tournament created successfully");
             return ResponseEntity.ok(TournamentDto.fromEntity(createdTournament));
         } catch (Exception e) {

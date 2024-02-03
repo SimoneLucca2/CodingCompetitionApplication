@@ -7,7 +7,7 @@ import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.exception.*;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.GitService;
-import com.polimi.ckb.battleService.service.kafkaProducer.BattleCreationKafkaProducer;
+import com.polimi.ckb.battleService.service.kafkaProducer.NewBattleEmailKafkaProducer;
 import com.polimi.ckb.battleService.utility.CreateBattleFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,6 @@ import java.util.List;
 public class BattleController {
     private final BattleService battleService;
     private final GitService gitService;
-    private final BattleCreationKafkaProducer kafkaProducer;
 
     @PostMapping
     public ResponseEntity<Object> createBattle(@RequestBody @Valid CreateBattleDto createBattleDto) {
@@ -57,9 +56,9 @@ public class BattleController {
                 log.info("Repository ready");
             }
 
-            kafkaProducer.sendBattleCreationMessage(CreatedBattleDto.from(createdBattle));
             log.info("Battle created successfully");
             return ResponseEntity.ok().body(CreatedBattleDto.from(createdBattle));
+
         } catch (BattleAlreadyExistException | BattleDeadlinesOverlapException | TournamentNotActiveException |
                  EducatorNotAuthorizedException | BattleDeadlineException | BattleGroupConstraintException e) {
             log.error("Bad request: {}", e.getMessage());
