@@ -7,7 +7,7 @@ services:
     #environment:
      # - SONAR_JAVA_PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin/java
     ports:
-      - 9000:9000
+      - "9000:9000"
     volumes:
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
@@ -80,6 +80,7 @@ services:
       - mysql
       - kafka
 
+
   battle-service:
     build:
       context: ./battle-service
@@ -92,18 +93,21 @@ services:
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
       EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: http://eureka-server:8761/eureka
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SONARQUBE_URL: http://sonarqube:9000
+      SONARCLOUD_TOKEN: 0a95732fbb06e15705af12c72052952bdac41525
+      SONAR_TOKEN: squ_d09646df463068536e54996ee42381f14e47e3ff
+      GITHUB_API_USERNAME: MarcoF17
       #GITHUB_API_TOKEN: <Your GitHub token>
-
+    ports:
+      - "8084:8084"
     volumes:
       - ./battle-service/src/main/resources/:/src/main/resources/
-
     depends_on:
       - mysql
       - kafka
       - eureka-server
+      - sonarqube
 
-    ports:
-        - "8084:8084"
 
 
   eureka-server:

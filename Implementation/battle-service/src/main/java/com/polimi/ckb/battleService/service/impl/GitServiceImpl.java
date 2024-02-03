@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -31,21 +32,24 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Duration;
-import java.util.List;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class GitServiceImpl implements GitService {
-    //@Value("${github.api.token}")
-    private static final String gitHubToken = "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";
 
-    //@Value("${github.api.username}")
-    private final String gitHubUsername = "MarcoF17";
+    @Value("${github.api.token}")
+    private static String gitHubToken;
+    @Value("${github.api.username}")
+    private String gitHubUsername = "MarcoF17";
 
-    //TODO: generate a valid sonarQUBE token
-    private final String sonarCloudToken = "0a95732fbb06e15705af12c72052952bdac41525";
+    @Value("${sonar.token}")
+    private String sonarToken;
+    @Value("${sonarqube.url}")
+    private String sonarqubeUrl;
+    @Value("${sonarcloud.token}")
+    private String sonarCloudToken;
+
     private final String sonarProjectKey = "ckb";
     private final GroupRepository groupRepository;
     @Override
@@ -206,12 +210,12 @@ public class GitServiceImpl implements GitService {
         //Get the temporary score from sonarqube and save it in the database
         final String encodedComponent = URLEncoder.encode("ckb", StandardCharsets.UTF_8);
         final String encodedMetricKeys = URLEncoder.encode("bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density", StandardCharsets.UTF_8);
-        final String encodedUrl = "http://localhost:9000/api/measures/component?component=" + encodedComponent + "&metricKeys=" + encodedMetricKeys + "&additionalFields=metrics";
+        final String encodedUrl = sonarqubeUrl + "/api/measures/component?component=" + encodedComponent + "&metricKeys=" + encodedMetricKeys + "&additionalFields=metrics";
 
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(encodedUrl))
-                .header("Authorization", "Bearer " + "squ_d09646df463068536e54996ee42381f14e47e3ff")    //USER-TOKEN
+                .header("Authorization", "Bearer " + sonarToken)    //USER-TOKEN
                 .GET()
                 .build();
 
@@ -262,7 +266,7 @@ public class GitServiceImpl implements GitService {
     }
 
     private void createSonarQubeProject() {
-        final String sonarCloudURL = "http://localhost:9000/api/projects/create";
+        final String sonarCloudURL = sonarqubeUrl + "/api/projects/create";
         final String encodedProjectName = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
         final String encodedProjectKey = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
         final String urlWithParams = sonarCloudURL + "?name=" + "ckb" + "&project=" + "ckb";
@@ -271,7 +275,7 @@ public class GitServiceImpl implements GitService {
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(urlWithParams))
                 //.timeout(Duration.ofSeconds(10))
-                .header("Authorization", "Bearer " + "squ_d09646df463068536e54996ee42381f14e47e3ff")        //USER_TOKEN
+                .header("Authorization", "Bearer " + sonarToken)        //USER_TOKEN
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
@@ -289,8 +293,8 @@ public class GitServiceImpl implements GitService {
         } catch (IOException | InterruptedException e) {
             //throw new ErrorWhileCreatingSonarQubeProjectException();
             //throw new GroupDoesNotExistsException();
-            log.error("Errore while creating sonarqube project" + e);
-            //log.error("COODE: " + response.statusCode());
+            log.error("Error while creating sonarqube project" + e);
+            //log.error("CODE: " + response.statusCode());
             throw new RuntimeException(e);
         }
     }
