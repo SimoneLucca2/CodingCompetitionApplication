@@ -98,6 +98,7 @@ public class BattleController {
                                 .maxGroupSize(battle.getMaxGroupSize())
                                 .minGroupSize(battle.getMinGroupSize())
                                 .repoLink(battle.getRepoLink())
+                                .creatorId(battle.getCreator().getEducatorId())
                                 .build()
                 );
             }
