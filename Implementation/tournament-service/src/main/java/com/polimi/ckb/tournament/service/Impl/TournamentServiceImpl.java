@@ -19,6 +19,7 @@ import com.polimi.ckb.tournament.utility.entityConverter.CreateTournamentDtoToTo
 import com.polimi.ckb.tournament.utility.score.InitScore;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,13 @@ public class TournamentServiceImpl implements TournamentService {
 
         Tournament newTournament = tournamentRepository.save(CreateTournamentDtoToTournament.convertToEntity(msg));
 
+        sendToAllStudents(newTournament);
+
+        return newTournament;
+    }
+
+    @Async
+    protected void sendToAllStudents(Tournament newTournament) {
         studentRepository.findAll().forEach(student -> {
             try {
                 kafkaProducer.sendTournamentCreationEmailRequest(student.getStudentId(), newTournament);
@@ -49,8 +57,6 @@ public class TournamentServiceImpl implements TournamentService {
                 throw new RuntimeException(e);
             }
         });
-
-        return newTournament;
     }
 
     @Transactional(readOnly = true)
