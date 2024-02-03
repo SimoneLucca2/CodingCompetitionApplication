@@ -13,7 +13,7 @@ function BattleCardStudent({ battle, onLeaderboardSelect}) {
             <h3>{battle.name}</h3>
             <p>Description: {battle.description}</p>
             <p>Registration Deadline:{battle.registrationDeadline}</p>
-            <p>Registration Deadline:{battle.submissionDeadline}</p>
+            <p>Submission Deadline:{battle.submissionDeadline}</p>
             <p>Status:{battle.status}</p>
 
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
