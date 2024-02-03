@@ -98,6 +98,7 @@ public class BattleController {
                                 .status(battle.getStatus())
                                 .maxGroupSize(battle.getMaxGroupSize())
                                 .minGroupSize(battle.getMinGroupSize())
+                                .repoLink(battle.getRepoLink())
                                 .build()
                 );
             }

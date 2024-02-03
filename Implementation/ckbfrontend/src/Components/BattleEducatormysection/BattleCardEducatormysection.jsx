@@ -58,7 +58,7 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
             <h3>{battle.name}</h3>
             <p>Description: {battle.description}</p>
             <p>Registration Deadline:{battle.registrationDeadline}</p>
-            <p>Registration Deadline:{battle.submissionDeadline}</p>
+            <p>Submission Deadline:{battle.submissionDeadline}</p>
             <p>Status:{battle.status}</p>
 
             {battle.status === 'CONSOLDIDATION' && (
