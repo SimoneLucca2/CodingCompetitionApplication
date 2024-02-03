@@ -1,6 +1,5 @@
 package com.polimi.ckb.tournament.service.Impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.tournament.config.TournamentStatus;
 import com.polimi.ckb.tournament.dto.CreateTournamentDto;
 import com.polimi.ckb.tournament.dto.StudentJoinTournamentDto;
@@ -56,8 +55,7 @@ public class TournamentServiceImpl implements TournamentService {
         studentRepository.findAll().forEach(student -> {
             try {
                 kafkaProducer.sendTournamentCreationEmailRequest(student.getStudentId(), newTournament);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
+            } catch (Exception ignored) {
             }
         });
     }

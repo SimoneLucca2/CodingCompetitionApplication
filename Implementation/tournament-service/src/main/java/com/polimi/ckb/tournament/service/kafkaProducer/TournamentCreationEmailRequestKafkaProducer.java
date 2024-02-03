@@ -8,10 +8,10 @@ import com.polimi.ckb.tournament.utility.informationGetter.EmailGetter;
 import com.polimi.ckb.tournament.utility.informationGetter.UsernameGetter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.io.UnsupportedEncodingException;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +24,8 @@ public class TournamentCreationEmailRequestKafkaProducer {
     private final UsernameGetter usernameGetter;
 
 
-    @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 1000, multiplier = 1.5))
     @Async
-    public void sendTournamentCreationEmailRequest(Long studentId, Tournament newTournament) throws JsonProcessingException {
+    public void sendTournamentCreationEmailRequest(Long studentId, Tournament newTournament) throws JsonProcessingException, UnsupportedEncodingException {
 
         String receiverMail = emailGetter.getEmail(studentId);
         String receiverName = usernameGetter.getUsername(studentId);

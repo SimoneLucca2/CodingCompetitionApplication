@@ -16,6 +16,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
+
 @Service
 @AllArgsConstructor
 public class StudentInvitationEmailKafkaProducer {
@@ -27,7 +29,7 @@ public class StudentInvitationEmailKafkaProducer {
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 1000, multiplier = 1.5))
     @Async
-    public void sendEmailSendingRequestMessage(StudentInvitesToGroupDto studentInvitesToGroupDto) throws JsonProcessingException {
+    public void sendEmailSendingRequestMessage(StudentInvitesToGroupDto studentInvitesToGroupDto) throws JsonProcessingException, UnsupportedEncodingException {
 
         String requester = usernameGetter.getUsername(studentInvitesToGroupDto.getRequesterId());
         String receiver = usernameGetter.getUsername(studentInvitesToGroupDto.getInvitedId());

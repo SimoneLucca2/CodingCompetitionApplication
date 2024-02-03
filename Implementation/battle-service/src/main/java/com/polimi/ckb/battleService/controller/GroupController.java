@@ -38,6 +38,9 @@ public class GroupController {
         } catch (BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+        } catch(Exception e){
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
         }
     }
 
