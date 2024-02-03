@@ -22,7 +22,6 @@ import javax.validation.Valid;
 public class EducatorController {
 
     private final EducatorService educatorService;
-    private final AddEducatorKafkaProducer kafkaProducer;
 
     /**
      * Adds an educator to a tournament.
@@ -34,7 +33,6 @@ public class EducatorController {
     public ResponseEntity<Object> addEducator(@Valid @RequestBody AddEducatorDto msg) {
         try {
             Tournament response = educatorService.addEducatorToTournament(msg);
-            kafkaProducer.sendAddedEducatorMessage(msg); //TODO probably remove
             return ResponseEntity.ok(TournamentDto.fromEntity(response));
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());

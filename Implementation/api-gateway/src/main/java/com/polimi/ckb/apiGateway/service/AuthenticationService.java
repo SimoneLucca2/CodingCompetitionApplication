@@ -31,6 +31,10 @@ public class AuthenticationService {
                 .type(request.getType())
                 .build();
 
+        if(repository.findByEmail(user.getEmail()).isPresent()){
+            throw new RuntimeException("Email already in use");
+        }
+
         User newUser = repository.save(user);
 
         NewUserDto newUserDto = NewUserDto.buildFromUser(newUser);
