@@ -14,7 +14,6 @@ import javax.validation.constraints.NotBlank;
 public class EmailDto {
     @NotBlank(message = "recipient cannot be blank")
     private String to;
-    private Long toId;
     private String from;
     private String[] cc;
     private String[] bcc;
