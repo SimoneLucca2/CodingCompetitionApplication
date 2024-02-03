@@ -28,4 +28,5 @@ public class BattleDto implements Serializable{
     private int maxGroupSize;
     private int minGroupSize;
     private String repoLink;
+    private Long creatorId;
 }
