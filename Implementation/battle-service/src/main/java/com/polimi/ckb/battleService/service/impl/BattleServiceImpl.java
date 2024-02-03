@@ -287,6 +287,7 @@ public class BattleServiceImpl implements BattleService {
         }
 
         battle.setStatus(BattleStatus.CLOSED);
+        scoreService.sendScoreForEachStudent(battle.getBattleId());
         return battleRepository.save(battle);
     }
 

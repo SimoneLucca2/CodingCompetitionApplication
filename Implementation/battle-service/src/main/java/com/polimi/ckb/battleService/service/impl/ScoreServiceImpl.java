@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.battleService.dto.UpdateStudentScoreInTournamentDto;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.entity.StudentGroup;
+import com.polimi.ckb.battleService.exception.BattleDoesNotExistException;
 import com.polimi.ckb.battleService.repository.BattleRepository;
 import com.polimi.ckb.battleService.repository.StudentRepository;
 import com.polimi.ckb.battleService.service.kafkaProducer.BattleScoreKafkaProducer;
@@ -22,7 +23,7 @@ public class ScoreServiceImpl {
 
     @Async
     public void sendScoreForEachStudent(Long battleId){
-        Battle battle = battleRepository.findById(battleId).orElseThrow(() -> new RuntimeException("battle must exist"));
+        Battle battle = battleRepository.findById(battleId).orElseThrow(BattleDoesNotExistException::new);
         List<StudentGroup> group = battle.getStudentGroups();
         group.forEach(g ->
                         g.getStudents()
