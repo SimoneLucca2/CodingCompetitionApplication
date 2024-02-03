@@ -15,7 +15,6 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-//TODO see if it is useful in battle, if not => remove
 public class TournamentStatusKafkaProducer {
 
     private static final Map<TournamentStatus, String> TOPIC_MAP = Map.of(
