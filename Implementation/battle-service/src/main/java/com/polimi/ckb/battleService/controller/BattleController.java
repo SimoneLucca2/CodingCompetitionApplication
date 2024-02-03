@@ -35,27 +35,21 @@ public class BattleController {
         try {
             CreateBattleFilter.check(createBattleDto);
 
-            //If battle name is "TEST" then the caller is a test method (i.e. isTest = true)
-            //Otherwise, the caller is a real user (i.e. isTest = false)
-            if (createBattleDto.getName().equals("TEST"))
-                createdBattle = battleService.createBattle(createBattleDto, true);
-            else {
-                createdBattle = battleService.createBattle(createBattleDto, false);
-                String repositoryUrl = gitService.createGitHubRepository(createBattleDto);
+            createdBattle = battleService.createBattle(createBattleDto);
+            String repositoryUrl = gitService.createGitHubRepository(createBattleDto);
 
-                //save the link in battle entity
-                battleService.saveRepositoryUrl(
-                        SaveRepositoryLinkDto.builder()
-                                .repositoryUrl(repositoryUrl)
-                                .battleId(createdBattle.getBattleId())
-                                .build()
-                );
+            //save the link in battle entity
+            battleService.saveRepositoryUrl(
+                    SaveRepositoryLinkDto.builder()
+                            .repositoryUrl(repositoryUrl)
+                            .battleId(createdBattle.getBattleId())
+                            .build()
+            );
 
-                //push and commit a file yaml to set up an action that informs the system about new pushes on main branch
-                log.info("Pushing the configuration yaml file into the new repository");
-                gitService.uploadSetupFiles(repositoryUrl, createdBattle.getName());
-                log.info("Repository ready");
-            }
+            //push and commit a file yaml to set up an action that informs the system about new pushes on main branch
+            log.info("Pushing the configuration yaml file into the new repository");
+            gitService.uploadSetupFiles(repositoryUrl, createdBattle.getName());
+            log.info("Repository ready");
 
             kafkaProducer.sendBattleCreationMessage(CreatedBattleDto.from(createdBattle));
             log.info("Battle created successfully");

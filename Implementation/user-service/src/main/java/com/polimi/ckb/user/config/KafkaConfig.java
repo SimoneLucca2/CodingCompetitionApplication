@@ -16,6 +16,14 @@ public class KafkaConfig {
     }
 
     @Bean
+    public NewTopic emailTopic() {
+        return TopicBuilder.name("email.sending.request")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
     public NewTopic userCreationTopic() {
         return TopicBuilder.name("user.creation")
                 .partitions(1)
