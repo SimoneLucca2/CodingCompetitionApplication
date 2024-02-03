@@ -2,10 +2,9 @@
 .battle-card {
     background: linear-gradient(135deg, #e6e6e6, #ffffff);
     border-radius: 15px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2),
-    -5px -5px 15px rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    width: 300px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.5);
+    padding: 15px; /* Ridotto da 20px per risparmiare spazio */
+    width: 320px; /* Aumentato da 300px per più spazio */
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -84,4 +83,31 @@
     background-color: rgba(245, 17, 17, 0.74);
     transform: translateY(-2px);
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.github-link-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Ridotto lo spazio tra gli elementi */
+    flex-wrap: wrap; /* Permette agli elementi di andare a capo se necessario */
+}
+
+.github-link-input, .send-github-link-button {
+    height: 35px; /* Ridotto l'altezza per risparmiare spazio */
+    padding: 0 10px; /* Ridotto il padding per risparmiare spazio */
+    font-size: 14px; /* Ridotto il font size per coerenza */
+    flex-grow: 1; /* Assicura che l'input si espanda */
+    flex-basis: 60%; /* Imposta una base per l'input, permettendo al bottone di ridursi */
+}
+
+.github-link-input {
+    flex-grow: 1; /* Permette all'input di espandersi per occupare lo spazio disponibile */
+    /* Aggiungi qui ulteriori stili per l'input se necessario */
+}
+
+.send-github-link-button {
+    flex-grow: 0;
+    flex-basis: 30%; /* Assicura che il bottone non diventi troppo grande */
+    cursor: pointer;
+    font-size: small;
 }

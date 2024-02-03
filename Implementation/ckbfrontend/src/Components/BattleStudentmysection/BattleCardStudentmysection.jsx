@@ -91,7 +91,39 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
         onLeaderboardSelect(battle);
     };
 
-    const showGithubLinkInput = battle.status === 'pre-battle' || battle.status === 'battle';
+    const showGithubLinkInput = battle.status === 'pre-battle' || battle.status === 'battle' || battle.status === 'CONSOLIDATION';
+
+    async function sendGithubLink(e) {
+        e.stopPropagation(); // Previene la propagazione dell'evento
+
+        const requestBody = {
+            studentId: userId,
+            battleId: battle.battleId,
+            clonedRepositoryLink: githubLink,
+        };
+
+        try {
+            const response = await fetch(`${API_URL}/battle/group/repo`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // Qui gestisci la risposta positiva, come un messaggio all'utente
+            alert("GitHub link sent successfully!");
+
+        } catch (error) {
+            console.error("Error sending GitHub link:", error);
+            // Gestisci qui l'errore
+            alert("Failed to send GitHub link.");
+        }
+    }
 
     return (
         <div className="battle-card">
@@ -106,7 +138,10 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
             <button className="join-button-3" onClick={joinBattle}>Join the Battle</button>
             <button className="join-button-4" onClick={quitBattle}>Quit the Battle</button>
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
-                {showGithubLinkInput && (
+                View Leaderboard
+            </button>
+            {showGithubLinkInput && (
+                <div className="github-link-container">
                     <input
                         type="text"
                         placeholder="GitHub Repo Link"
@@ -114,11 +149,10 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
                         onChange={(e) => setGithubLink(e.target.value)}
                         className="github-link-input"
                     />
-                )}
-                View Leaderboard
-            </button>
+                    <button onClick={sendGithubLink} className="send-github-link-button">Send</button>
+                </div>
+            )}
 
-            {/* Altri dettagli della battaglia possono essere aggiunti qui */}
         </div>
     );
 }
