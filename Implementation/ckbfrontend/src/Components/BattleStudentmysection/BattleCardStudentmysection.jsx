@@ -44,10 +44,11 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
 
             // Gestisci qui la risposta in caso di successo
             console.log("Joined battle successfully");
-            navigate(`/joinbattle`);
+            navigate(`/successpage`);
 
         } catch (error) {
             console.error("Error joining battle:", error);
+            navigate(`/errorpage`);
             // Gestisci qui l'errore (ad es., mostrando un messaggio all'utente)
         }
     }
@@ -78,10 +79,11 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
 
             // Gestisci qui la risposta in caso di successo
             console.log("Quitted battle successfully");
-            navigate(`/quitbattle`);
+            navigate(`/successpage`);
 
         } catch (error) {
             console.error("Error Quitting battle:", error);
+            navigate(`/errorpage`);
             // Gestisci qui l'errore (ad es., mostrando un messaggio all'utente)
         }
     }
@@ -91,7 +93,7 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
         onLeaderboardSelect(battle);
     };
 
-    const showGithubLinkInput = battle.status === 'pre-battle' || battle.status === 'battle' || battle.status === 'CONSOLIDATION';
+    const showGithubLinkInput = battle.status === 'PRE_BATTLE' || battle.status === 'BATTLE' || battle.status === 'CONSOLIDATION';
 
     async function sendGithubLink(e) {
         e.stopPropagation(); // Previene la propagazione dell'evento
