@@ -22,19 +22,18 @@ function AddEducatorToTournament() {
     const tournamentId = parseInt(tournament, 10);
 
     const goTOuserprofile = () => {
-        navigate('/successpage'); // Naviga alla userprofile
+        navigate('/successpage');
     }
     const goTOerrorpage = () => {
-        navigate('/errorpage'); // Naviga alla userprofile
+        navigate('/errorpage');
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            // Invia i dati al tuo endpoint API
             const response2 = await fetch(`${API_URL}/getId/${email}`, {
-                method: 'GET', // o 'PUT' se appropriato
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -47,13 +46,11 @@ function AddEducatorToTournament() {
             const responseData2 = await response2.json();
             console.log(responseData2);
 
-            // Configura i dati che desideri inviare
             const dataToSend = {
                 requesterId: userId,
                 tournamentId: tournamentId,
                 educatorId: responseData2.userId,
             };
-            // Invia i dati al tuo endpoint API
             const response = await fetch(`${API_URL}/tournament/educator`, {
                 method: 'POST', // o 'PUT' se appropriato
                 headers: {

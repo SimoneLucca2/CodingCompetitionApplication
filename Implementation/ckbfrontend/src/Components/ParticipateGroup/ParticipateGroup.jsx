@@ -42,9 +42,10 @@ const ParticipateGroup = () => {
                 const url = `${API_URL}/battle/group/students/${battleId}/${groupId}`;
                 const response = await axios.get(url);
                 const studentIds = response.data;
+                console.log(studentIds);
 
-                const emails = await Promise.all(studentIds.map(async (id) => {
-                    const url = `${API_URL}/user/email/${encodeURIComponent(id)}`;
+                const emails = await Promise.all(studentIds.map(async (studentId) => {
+                    const url = `${API_URL}/user/email/${studentId}`;
                     const { data: userData } = await axios.get(url);
                     return userData.email;
                 }));

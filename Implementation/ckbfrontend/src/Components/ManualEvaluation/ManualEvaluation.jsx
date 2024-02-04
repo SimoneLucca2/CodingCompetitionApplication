@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './ManualEvaluation.css';
 import {useNavigate, useParams} from "react-router-dom";
 import API_URL from "../../config"; // Import CSS
@@ -10,16 +10,39 @@ function ManualEvaluation() {
     const [score, setScore] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
+    const [groups, setGroups] = useState([]); // Stato per l'elenco dei gruppi
+    const [selectedGroup, setSelectedGroup] = useState('');
+
     const params = useParams();
     const battleId = params.battleId;
     const handleNoClick = () => {
         navigate(`/successpage`);
     };
 
+    const fetchGroups = async () => {
+        try {
+            const response = await fetch(`${API_URL}/battle/groupup/all/${battleId}`);
+            if (response.ok) {
+                const data = await response.json();
+                setGroups(data.ids);
+                console.log('Gruppi recuperati:', data.ids);
+                console.log('Gruppi:', groups);
+            } else {
+                console.error('Errore nel recupero dei gruppi');
+            }
+        } catch (error) {
+            console.error('Errore nella richiesta:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchGroups(); // Recupera i gruppi all'avvio del componente
+    }, [])
+
     const handleScoreSubmit = async () => {
         setSubmitting(true);
         try {
-            const response = await fetch(`${API_URL}/battle/score/${battleId}/1/${score}`, {
+            const response = await fetch(`${API_URL}/battle/score/${battleId}/${selectedGroup}/${score}`, { // Includi l'ID del gruppo selezionato
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +59,6 @@ function ManualEvaluation() {
         } catch (error) {
             console.error('Error in request:', error);
             navigate(`/errorpage`);
-
         } finally {
             setSubmitting(false);
         }
@@ -46,6 +68,15 @@ function ManualEvaluation() {
         <div className="manual-evaluation">
             {showEvaluation ? (
                 <div className="evaluation-form">
+                    <div>
+                        Select a group:
+                        <select value={selectedGroup} onChange={e => setSelectedGroup(e.target.value)}>
+                            <option value="">Select a group</option>
+                            {groups.map(group => (
+                                <option key={group.id} value={group.id}>{group.id}</option>
+                            ))}
+                        </select>
+                    </div>
                     <label htmlFor="score">
                         Enter a score from 0 to 100:
                         <input
@@ -58,7 +89,7 @@ function ManualEvaluation() {
                             className="score-input"
                         />
                     </label>
-                    <button onClick={handleScoreSubmit} disabled={submitting} className="buttony">
+                    <button onClick={handleScoreSubmit} disabled={submitting || !selectedGroup} className="buttony">
                         Submit
                     </button>
                 </div>

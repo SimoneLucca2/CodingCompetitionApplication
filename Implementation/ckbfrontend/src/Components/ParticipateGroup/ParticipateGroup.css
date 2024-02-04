@@ -1,29 +1,36 @@
 .group-component {
-    color: white;
-    background-color: black;
+    color: #FFF;
+    background-color: #000;
     padding: 20px;
     border-radius: 8px;
-    animation: fadeIn 1s ease-out;
+    animation: fadeIn 1s ease-out forwards;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    font-family: 'Arial', sans-serif;
+}
+
+.header, .change-group {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .group-component h2, .group-component h3 {
-    text-align: center;
-    animation: slideIn 0.5s ease-out;
+    animation: slideIn 0.5s ease-out forwards;
 }
 
 .group-component button {
     cursor: pointer;
-    background-color: #444;
-    color: white;
-    border: none;
+    background-color: #555;
+    color: #FFF;
+    border: 1px solid #777;
     padding: 10px 20px;
     margin: 5px;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
+    outline: none;
 }
 
-.group-component button:hover {
-    background-color: #666;
+.group-component button:hover, .group-component button:focus {
+    background-color: #777;
     transform: scale(1.05);
 }
 
@@ -34,7 +41,17 @@
 
 .group-component ul li {
     margin: 10px 0;
-    animation: fadeIn 2s ease-out;
+    animation: fadeIn 2s ease-out forwards;
+}
+
+.group-component input {
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: #FFF;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: calc(100% - 22px); /* Adjust based on padding and border */
 }
 
 @keyframes fadeIn {

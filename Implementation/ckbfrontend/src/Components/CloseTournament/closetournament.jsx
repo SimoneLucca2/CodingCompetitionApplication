@@ -8,11 +8,9 @@ const CloseTournament = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Here you would normally send a request to the backend
         console.log(`Educator ID: ${educatorId}`);
         console.log(`Message: ${message}`);
 
-        // Reset form after submission
         setEducatorId('');
         setMessage('');
     };

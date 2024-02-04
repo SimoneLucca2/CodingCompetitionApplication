@@ -30,11 +30,11 @@ function CreateBattle() {
     });
 
     const goTOuserprofile = () => {
-        navigate('/successpage'); // Naviga alla userprofile
+        navigate('/successpage');
     }
 
     const goTOerrorpage = () => {
-        navigate('/errorpage'); // Naviga alla userprofile
+        navigate('/errorpage');
     }
 
     const handleChange = (e) => {
@@ -44,7 +44,7 @@ function CreateBattle() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const apiEndpoint = `${API_URL}/battle`; // Replace with your actual API endpoint
+        const apiEndpoint = `${API_URL}/battle`;
         const options = {
             method: 'POST',
             headers: {
@@ -61,11 +61,9 @@ function CreateBattle() {
             }
             const result = await response.json();
             console.log("Battle created successfully:", result);
-            // Handle success (e.g., showing a success message, redirecting, etc.)
             {goTOuserprofile()};// Naviga alla userprofile
         } catch (error) {
             console.error("Error creating battle:", error);
-            // Handle errors (e.g., showing an error message)
             {goTOerrorpage()};// Naviga alla userprofile
         }
     };
