@@ -218,7 +218,9 @@ public class GitServiceImpl implements GitService {
         //Get the temporary score from sonarqube and save it in the database
         final String encodedComponent = URLEncoder.encode("ckb", StandardCharsets.UTF_8);
         final String encodedMetricKeys = URLEncoder.encode("bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density", StandardCharsets.UTF_8);
-        final String encodedUrl = sonarqubeUrl + "/api/measures/component?component=" + encodedComponent + "&metricKeys=" + encodedMetricKeys + "&additionalFields=metrics";
+        //final String encodedUrl = sonarqubeUrl + "/api/measures/component?component=" + encodedComponent + "&metricKeys=" + encodedMetricKeys + "&additionalFields=metrics";
+        final String encodedUrl = sonarqubeUrl + "/api/measures/component/" + encodedComponent + "/" + encodedMetricKeys + "/metrics";
+
 
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
@@ -229,8 +231,6 @@ public class GitServiceImpl implements GitService {
 
         try {
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            log.error(String.valueOf(response.statusCode()));
-            //log.info(response.body());
 
             if (response.statusCode() == HttpURLConnection.HTTP_OK) {
                 log.info("SonarQube project successfully created");
@@ -254,6 +254,25 @@ public class GitServiceImpl implements GitService {
         deleteRepository("./analysis");
 
         //Delete sonarqube project through API
+        final String encodedUrlDelete = sonarqubeUrl + "/api/project/delete";
+
+        final HttpRequest deleteRequest = HttpRequest.newBuilder()
+                .uri(URI.create(encodedUrlDelete))
+                .header("Authorization", "Bearer " + sonarToken)    //USER-TOKEN
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        try{
+            final HttpResponse<String> response = client.send(deleteRequest, HttpResponse.BodyHandlers.ofString());
+
+            if(response.statusCode() == HttpURLConnection.HTTP_OK){
+                log.info("SonarQube project successfully deleted");
+            } else {
+                throw new ErrorWhileExecutingScannerException();
+            }
+        } catch (InterruptedException e) {
+            throw new ErrorWhileExecutingScannerException();
+        }
     }
 
     private float applyFunction(JsonNode jsonNode){
@@ -277,7 +296,9 @@ public class GitServiceImpl implements GitService {
         final String sonarCloudURL = sonarqubeUrl + "/api/projects/create";
         final String encodedProjectName = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
         final String encodedProjectKey = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
-        final String urlWithParams = sonarCloudURL + "?name=" + encodedProjectName + "&project=" + encodedProjectKey;
+        //final String urlWithParams = sonarCloudURL + "?name=" + encodedProjectName + "&project=" + encodedProjectKey;
+        final String urlWithParams = sonarCloudURL + "/" + encodedProjectName + "/" + encodedProjectKey;
+
 
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
@@ -290,8 +311,6 @@ public class GitServiceImpl implements GitService {
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            //log.info(String.valueOf(response.statusCode()));
-            //log.info(response.body());
 
             if (response.statusCode() == HttpURLConnection.HTTP_CREATED) {
                 log.info("SonarQube project successfully created");
@@ -299,11 +318,7 @@ public class GitServiceImpl implements GitService {
                 throw new ErrorWhileCreatingSonarQubeProjectException();
             }
         } catch (IOException | InterruptedException e) {
-            //throw new ErrorWhileCreatingSonarQubeProjectException();
-            //throw new GroupDoesNotExistsException();
-            log.error("Error while creating sonarqube project" + e);
-            //log.error("CODE: " + response.statusCode());
-            throw new RuntimeException(e);
+            throw new ErrorWhileCreatingSonarQubeProjectException();
         }
     }
 

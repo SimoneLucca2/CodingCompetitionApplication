@@ -7,10 +7,7 @@ import com.polimi.ckb.battleService.dto.StudentJoinBattleDto;
 import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
 import com.polimi.ckb.battleService.entity.Student;
 import com.polimi.ckb.battleService.entity.StudentGroup;
-import com.polimi.ckb.battleService.exception.BattleDoesNotExistException;
-import com.polimi.ckb.battleService.exception.BattleStateTooAdvancedException;
-import com.polimi.ckb.battleService.exception.StudentDoesNotExistException;
-import com.polimi.ckb.battleService.exception.StudentNotRegisteredInBattleException;
+import com.polimi.ckb.battleService.exception.*;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.kafkaProducer.StudentJoinBattleProducer;
 import com.polimi.ckb.battleService.service.kafkaProducer.StudentLeaveBattleProducer;
@@ -40,7 +37,8 @@ public class StudentController {
                             .groupId(group.getGroupId())
                             .build()
             );
-        } catch (StudentDoesNotExistException | BattleDoesNotExistException | BattleStateTooAdvancedException e) {
+        } catch (StudentDoesNotExistException | BattleDoesNotExistException | BattleStateTooAdvancedException |
+                 StudentAlreadyRegisteredToBattleException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         } catch (JsonProcessingException e) {
