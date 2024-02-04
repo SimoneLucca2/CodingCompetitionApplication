@@ -53,7 +53,11 @@ public class GroupController {
         try {
             StudentGroup group = groupService.joinGroup(studentDto);
             log.info("Student joined group successfully");
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(
+                    GroupDto.builder()
+                            .groupId(group.getGroupId())
+                            .build()
+            );
         } catch (BattleStateTooAdvancedException | GroupIsFullException | StudentAlreadyInAnotherGroupException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
@@ -119,6 +123,21 @@ public class GroupController {
             dtos.add(
                     StudentDto.builder()
                             .studentId(student.getStudentId())
+                            .build()
+            );
+        }
+        return ResponseEntity.ok().body(dtos);
+    }
+
+    @GetMapping(path = "all/{battleId}")
+    public ResponseEntity<Object> getGroupsInBattle(@PathVariable Long battleId){
+        log.info("Getting groups in battle: {" + battleId + "}");
+        List<StudentGroup> groups = groupService.getGroupsInBattle(battleId);
+        List<GroupDto> dtos = new ArrayList<>();
+        for(StudentGroup group : groups){
+            dtos.add(
+                    GroupDto.builder()
+                            .groupId(group.getGroupId())
                             .build()
             );
         }

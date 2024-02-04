@@ -2,6 +2,7 @@ package com.polimi.ckb.battleService.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.polimi.ckb.battleService.dto.ErrorResponse;
+import com.polimi.ckb.battleService.dto.GroupDto;
 import com.polimi.ckb.battleService.dto.StudentJoinBattleDto;
 import com.polimi.ckb.battleService.dto.StudentLeaveBattleDto;
 import com.polimi.ckb.battleService.entity.Student;
@@ -34,7 +35,11 @@ public class StudentController {
             StudentGroup group = battleservice.joinBattle(studentDto);
             studentJoinBattleProducer.sendStudentJoinsBattleMessage(studentDto);
             log.info("Student joined battle successfully");
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(
+                    GroupDto.builder()
+                            .groupId(group.getGroupId())
+                            .build()
+            );
         } catch (StudentDoesNotExistException | BattleDoesNotExistException | BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
