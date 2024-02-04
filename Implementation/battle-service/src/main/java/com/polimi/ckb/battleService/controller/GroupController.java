@@ -35,9 +35,6 @@ public class GroupController {
             studentNotificationService.sendInvitationToStudent(studentDto);
             log.info("Email sending request successfully done");
             return ResponseEntity.ok().build();
-        } catch (JsonProcessingException e) {
-            log.error("Error processing JSON: {}", e.getMessage());
-            return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
         } catch (BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));

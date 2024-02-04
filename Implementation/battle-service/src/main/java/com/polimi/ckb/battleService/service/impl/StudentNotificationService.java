@@ -27,14 +27,18 @@ public class StudentNotificationService {
 
     @Async
     public void sendToRegisteredStudents(Battle newBattle) {
-        //send email to all students registered to the tournament
-        Long tournamentId = newBattle.getTournamentId();
-        List<Long> registeredStudents = tournamentParticipantsGetter.getParticipants(tournamentId);
-        registeredStudents.forEach(sId -> newBattleEmailKafkaProducer.sendBattleCreationEmail(sId, newBattle));
+        try{
+            //send email to all students registered to the tournament
+            Long tournamentId = newBattle.getTournamentId();
+            List<Long> registeredStudents = tournamentParticipantsGetter.getParticipants(tournamentId);
+            registeredStudents.forEach(sId -> newBattleEmailKafkaProducer.sendBattleCreationEmail(sId, newBattle));
+        } catch(Exception ignored){}
     }
 
     @Async @Retryable
-    public void sendInvitationToStudent(StudentInvitesToGroupDto studentInvitesToGroupDto) throws UnsupportedEncodingException, JsonProcessingException {
-        studentInvitationEmailKafkaProducer.sendEmailSendingRequestMessage(studentInvitesToGroupDto);
+    public void sendInvitationToStudent(StudentInvitesToGroupDto studentInvitesToGroupDto) {
+        try{
+            studentInvitationEmailKafkaProducer.sendEmailSendingRequestMessage(studentInvitesToGroupDto);
+        }catch (Exception ignored){}
     }
 }

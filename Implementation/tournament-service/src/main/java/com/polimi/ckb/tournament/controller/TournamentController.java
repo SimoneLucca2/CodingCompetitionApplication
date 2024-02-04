@@ -55,9 +55,14 @@ public class TournamentController {
 
     @GetMapping("/students/{tournamentId}")
     public ResponseEntity<List<Long>> getParticipants(@PathVariable(name = "tournamentId") Long tournamentId){
-        List<Student> students = tournamentService.getTournament(tournamentId).getParticipants();
-        List<Long> studentIds = students.stream().map(Student::getStudentId).toList();
-        return ResponseEntity.ok(studentIds);
+        try{
+            List<Student> students = tournamentService.getTournament(tournamentId).getParticipants();
+            List<Long> studentIds = students.stream().map(Student::getStudentId).toList();
+            return ResponseEntity.ok(studentIds);
+        } catch (Exception e){
+            log.error("Internal server error: {}", e.getMessage());
+            return ResponseEntity.ok(List.of());
+        }
     }
 
     @GetMapping("/enrolled/{studentId}")
