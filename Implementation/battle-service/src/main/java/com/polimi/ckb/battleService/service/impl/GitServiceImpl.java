@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -45,10 +44,10 @@ public class GitServiceImpl implements GitService {
     @Value("${github.api.username}")
     private String gitHubUsername = "MarcoF17";
 
-    @Value("${sonar.token}")
-    private String sonarToken;
-    @Value("${sonarqube.url}")
-    private String sonarqubeUrl;
+    //@Value("${sonar.token}")
+    private String sonarToken = "squ_99b3b8118bcf1fc2c3517fc1ef56ad9ef8f72cc6";
+    //@Value("${sonarqube.url}")
+    private String sonarqubeUrl = "http://localhost";
     @Value("${sonarcloud.token}")
     private String sonarCloudToken;
 
@@ -196,7 +195,6 @@ public class GitServiceImpl implements GitService {
             throw new CannotEvaluateGroupSolutionException();
         }
 
-        //TODO: verify github token
         Git git = Git.cloneRepository()
                 .setURI(newPushDto.getRepositoryUrl())
                 .setCredentialsProvider(new UsernamePasswordCredentialsProvider(newPushDto.getGithubName(), newPushDto.getGithubToken()))
@@ -231,7 +229,7 @@ public class GitServiceImpl implements GitService {
 
         try {
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            //log.info(String.valueOf(response.statusCode()));
+            log.error(String.valueOf(response.statusCode()));
             //log.info(response.body());
 
             if (response.statusCode() == HttpURLConnection.HTTP_OK) {
@@ -284,7 +282,7 @@ public class GitServiceImpl implements GitService {
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(urlWithParams))
-                //.timeout(Duration.ofSeconds(10))
+                .expectContinue(true)
                 .header("Authorization", "Bearer " + sonarToken)        //USER_TOKEN
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -313,7 +311,7 @@ public class GitServiceImpl implements GitService {
         File file = new File("./analysis/sonar-project.properties");
 
         if(!file.createNewFile())
-            throw new IOException("Error while creating sonar-project.properties file");
+            throw new ErrorWhileSettingUpSonarQubeFilesException();
 
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write("sonar.projectKey=" + sonarProjectKey + "\n");

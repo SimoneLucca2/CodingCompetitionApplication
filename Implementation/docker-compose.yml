@@ -71,8 +71,8 @@ services:
       SPRING_MAIL_PORT: 587
       SPRING_MAIL_USERNAME: simone.lucca.00@gmail.com
       SPRING_MAIL_PASSWORD: aqovysmghchkwlmw
-      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
-      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+      #SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+      #SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
     ports:
       - "8081:8081"
     depends_on:
@@ -95,7 +95,7 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       SONARQUBE_URL: http://sonarqube
       SONARCLOUD_TOKEN: 0a95732fbb06e15705af12c72052952bdac41525
-      SONAR_TOKEN: squ_d09646df463068536e54996ee42381f14e47e3ff
+      #SONAR_TOKEN: squ_d09646df463068536e54996ee42381f14e47e3ff
       GITHUB_API_USERNAME: MarcoF17
       GITHUB_API_TOKEN: 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
     ports:
