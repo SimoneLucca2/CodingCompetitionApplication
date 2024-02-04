@@ -33,14 +33,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class GitServiceImpl implements GitService {
 
-    //@Value("${github.api.token}")
-    private static String gitHubToken = "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";
+    @Value("${github.api.token}")
+    private static String gitHubToken;
     @Value("${github.api.username}")
     private String gitHubUsername = "MarcoF17";
 
@@ -87,19 +88,23 @@ public class GitServiceImpl implements GitService {
         FileUtils.copyDirectory(source.toFile(), destination.toFile());
     }
 
-    private void deleteRepository(final String directoryPath) throws IOException {
-        Path localpath = Paths.get(directoryPath);
+    private void deleteRepository(final String directoryPath) {
+        Path localPath = Paths.get(directoryPath);
 
-        if (Files.exists(localpath)) {
-            Files.walk(localpath)
-                    .sorted((a, b) -> -a.compareTo(b))
-                    .forEach(path -> {
-                        try {
-                            Files.deleteIfExists(path);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
+        if (Files.exists(localPath)) {
+            try {
+                Files.walk(localPath)
+                        .sorted(Comparator.reverseOrder())
+                        .forEach(path -> {
+                            try {
+                                Files.delete(path);
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
