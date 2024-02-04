@@ -282,7 +282,7 @@ public class BattleServiceImpl implements BattleService {
         Battle battle = battleRepository.findById(closeBattleDto.getBattleId())
                 .orElseThrow(BattleDoesNotExistException::new);
 
-        if (battle.getStatus() != BattleStatus.CONSOLIDATION) {
+        if (!battle.getStatus().equals(BattleStatus.CONSOLIDATION)) {
             throw new BattleChangingStatusException("Cannot close battle");
         }
 
