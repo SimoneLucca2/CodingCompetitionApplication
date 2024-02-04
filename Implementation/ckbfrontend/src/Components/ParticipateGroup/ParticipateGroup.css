@@ -1,0 +1,48 @@
+.group-component {
+    color: white;
+    background-color: black;
+    padding: 20px;
+    border-radius: 8px;
+    animation: fadeIn 1s ease-out;
+}
+
+.group-component h2, .group-component h3 {
+    text-align: center;
+    animation: slideIn 0.5s ease-out;
+}
+
+.group-component button {
+    cursor: pointer;
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.group-component button:hover {
+    background-color: #666;
+    transform: scale(1.05);
+}
+
+.group-component ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.group-component ul li {
+    margin: 10px 0;
+    animation: fadeIn 2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
