@@ -16,4 +16,8 @@ public interface GroupService {
 
     StudentGroup manuallyEvaluateGroup(Long groupId, float score, Long battleId);
     List<Student> getStudentsInBattle(Long battleId, Long groupId);
+
+    List<StudentGroup> getGroupsInBattle(Long battleId);
+
+    StudentGroup getGroupByStudentId(Long battleId, Long userId);
 }

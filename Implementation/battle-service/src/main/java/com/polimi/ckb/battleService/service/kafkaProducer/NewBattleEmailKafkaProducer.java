@@ -23,7 +23,6 @@ public class NewBattleEmailKafkaProducer {
     private final EmailGetter emailGetter;
     private final UsernameGetter usernameGetter;
 
-    @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 1000, multiplier = 1.5))
     @Async
     public void sendBattleCreationEmail(Long studentId, Battle battle) {
 
@@ -34,7 +33,7 @@ public class NewBattleEmailKafkaProducer {
 
             EmailDto emailDto = EmailDto.builder()
                     .to(receiverMail)
-                    .from("CKB Team")
+                    .from("simone.lucca.00@gmail.com")
                     .cc(new String[]{})
                     .bcc(new String[]{})
                     .subject("Battle \"Battle of the Code\" Has Been Created!")

@@ -45,8 +45,8 @@ public class BattleServiceImpl implements BattleService {
     private final ScoreServiceImpl scoreService;
     private final StudentNotificationService studentNotificationService;
 
-    @Value("${api.gateway.url}")
-    private String apiGatewayUrl;
+    //@Value("${api.gateway.url}")
+    private String apiGatewayUrl = "http://api-gateway";
 
     @Override
     @Transactional
@@ -282,7 +282,7 @@ public class BattleServiceImpl implements BattleService {
         Battle battle = battleRepository.findById(closeBattleDto.getBattleId())
                 .orElseThrow(BattleDoesNotExistException::new);
 
-        if (battle.getStatus() != BattleStatus.CONSOLIDATION) {
+        if (!battle.getStatus().equals(BattleStatus.CONSOLIDATION)) {
             throw new BattleChangingStatusException("Cannot close battle");
         }
 

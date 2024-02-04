@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -40,13 +39,13 @@ import java.util.Comparator;
 @RequiredArgsConstructor
 public class GitServiceImpl implements GitService {
 
-    //@Value("${github.api.token}")
+    @Value("${github.api.token}")
     private static String gitHubToken = "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";
     @Value("${github.api.username}")
     private String gitHubUsername = "MarcoF17";
 
     //@Value("${sonar.token}")
-    private String sonarToken = "squ_99b3b8118bcf1fc2c3517fc1ef56ad9ef8f72cc6";
+    private String sonarToken = "squ_5337e9b99bec3eb94a8dce9a742ac339f35a40c0";
     //@Value("${sonarqube.url}")
     private String sonarqubeUrl = "http://localhost:9000";
     @Value("${sonarcloud.token}")

@@ -35,9 +35,6 @@ public class GroupController {
             studentNotificationService.sendInvitationToStudent(studentDto);
             log.info("Email sending request successfully done");
             return ResponseEntity.ok().build();
-        } catch (JsonProcessingException e) {
-            log.error("Error processing JSON: {}", e.getMessage());
-            return ResponseEntity.internalServerError().body(new ErrorResponse("Error processing JSON: " + e.getMessage()));
         } catch (BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
@@ -53,7 +50,11 @@ public class GroupController {
         try {
             StudentGroup group = groupService.joinGroup(studentDto);
             log.info("Student joined group successfully");
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(
+                    GroupDto.builder()
+                            .groupId(group.getGroupId())
+                            .build()
+            );
         } catch (BattleStateTooAdvancedException | GroupIsFullException | StudentAlreadyInAnotherGroupException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
@@ -123,5 +124,34 @@ public class GroupController {
             );
         }
         return ResponseEntity.ok().body(dtos);
+    }
+
+    @GetMapping(path = "all/{battleId}")
+    public ResponseEntity<Object> getGroupsInBattle(@PathVariable Long battleId){
+        log.info("Getting groups in battle: {" + battleId + "}");
+        List<StudentGroup> groups = groupService.getGroupsInBattle(battleId);
+        List<GroupDto> dtos = new ArrayList<>();
+        for(StudentGroup group : groups){
+            dtos.add(
+                    GroupDto.builder()
+                            .groupId(group.getGroupId())
+                            .build()
+            );
+        }
+        return ResponseEntity.ok().body(dtos);
+    }
+
+    @GetMapping(path = "/id/{battleId}/{userId}")
+    public ResponseEntity<Object> getGroupByStudentId(@PathVariable Long battleId, @PathVariable Long userId){
+        log.info("Getting group by student id: {" + userId + "}");
+        StudentGroup group = groupService.getGroupByStudentId(battleId, userId);
+        if(group == null)
+            return ResponseEntity.noContent().build();
+        else
+            return ResponseEntity.ok().body(
+                    GroupDto.builder()
+                            .groupId(group.getGroupId())
+                            .build()
+            );
     }
 }
