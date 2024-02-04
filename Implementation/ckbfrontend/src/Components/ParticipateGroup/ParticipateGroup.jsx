@@ -36,7 +36,7 @@ const GroupComponent = () => {
                 setGroupId(response.data.groupId);
             } catch (error) {
                 console.error("Error fetching group ID", error);
-                navigate(`/errorpage`, { replace: true });
+                alert("Error fetching group ID");
             }
         };
 
@@ -54,7 +54,7 @@ const GroupComponent = () => {
                 setUserEmails(emails);
             } catch (error) {
                 console.error("Error fetching user emails", error);
-                navigate(`/errorpage`, { replace: true });
+                alert("Error fetching group ID");
             }
         };
 
