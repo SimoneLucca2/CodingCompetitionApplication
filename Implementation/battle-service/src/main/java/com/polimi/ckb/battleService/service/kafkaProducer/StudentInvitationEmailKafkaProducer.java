@@ -37,7 +37,7 @@ public class StudentInvitationEmailKafkaProducer {
 
         EmailDto emailDto = EmailDto.builder()
                 .to(receiverMail)
-                .from(requester)
+                .from("simone.lucca.00@gmail.com")
                 .cc(new String[]{})
                 .bcc(new String[]{})
                 .subject("You've Been Invited to Join a Group by Your Peer!")
