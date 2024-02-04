@@ -2,8 +2,8 @@
     font-family: 'Arial', sans-serif;
     text-align: center;
     padding: 20px;
-    background-color: #1c1c1c;
-    color: #f0f0f0;
+    background-color: #000; /* Sfondo nero */
+    color: #f0f0f0; /* Testo chiaro per contrasto */
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
     max-width: 400px;
@@ -28,7 +28,7 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     color: white;
-    background-color: #007bff;
+    background-color: #007bff; /* Bottone blu per visibilità */
     font-weight: bold;
 }
 
@@ -44,15 +44,29 @@
 .score-input {
     margin-top: 10px;
     padding: 5px;
-    border: 1px solid #888;
+    border: 1px solid #888; /* Bordo visibile su sfondo nero */
     border-radius: 4px;
-    background-color: #2c2c2c;
-    color: #f0f0f0;
+    background-color: #333; /* Sfondo più chiaro per contrasto */
+    color: #f0f0f0; /* Testo chiaro */
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .score-input:focus {
-    border-color: #007bff;
+    border-color: #007bff; /* Bordo blu per focus */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
+}
+
+select {
+    background-color: #333; /* Sfondo per select */
+    color: #f0f0f0; /* Colore testo */
+    border: 1px solid #888; /* Bordo per visibilità */
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }

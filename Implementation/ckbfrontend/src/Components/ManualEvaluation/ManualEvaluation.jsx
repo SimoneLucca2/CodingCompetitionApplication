@@ -21,11 +21,12 @@ function ManualEvaluation() {
 
     const fetchGroups = async () => {
         try {
-            const response = await fetch(`${API_URL}/battle/groupup/all/${battleId}`);
+            const response = await fetch(`${API_URL}/battle/group/all/${battleId}`);
             if (response.ok) {
                 const data = await response.json();
-                setGroups(data.ids);
-                console.log('Gruppi recuperati:', data.ids);
+                console.log('Data:', data);
+                setGroups(data);
+                console.log('Gruppi recuperati:', data);
                 console.log('Gruppi:', groups);
             } else {
                 console.error('Errore nel recupero dei gruppi');
@@ -73,7 +74,7 @@ function ManualEvaluation() {
                         <select value={selectedGroup} onChange={e => setSelectedGroup(e.target.value)}>
                             <option value="">Select a group</option>
                             {groups.map(group => (
-                                <option key={group.id} value={group.id}>{group.id}</option>
+                                <option key={group} value={group}>{group}</option>
                             ))}
                         </select>
                     </div>
