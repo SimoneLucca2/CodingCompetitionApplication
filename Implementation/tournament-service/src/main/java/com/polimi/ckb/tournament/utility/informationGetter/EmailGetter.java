@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class EmailGetter {
 
-    private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate;
     @Value("${api.gateway.url}")
     private String apiGatewayUrl;

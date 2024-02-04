@@ -299,6 +299,15 @@ public class BattleServiceImpl implements BattleService {
         return response.getBody();
     }
 
+    @Override
+    public void closeAllBattleInTournament(Long tournamentId){
+        List<Battle> battles = battleRepository.findByTournamentId(tournamentId);
+        for(Battle battle : battles){
+            battle.setStatus(BattleStatus.CLOSED);
+            battleRepository.save(battle);
+        }
+    }
+
     @Transactional
     @Override
     public List<Battle> getBattlesByTournamentId(Long tournamentId){

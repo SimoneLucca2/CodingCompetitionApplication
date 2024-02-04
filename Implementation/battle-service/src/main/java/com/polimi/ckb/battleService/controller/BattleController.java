@@ -5,6 +5,7 @@ import com.polimi.ckb.battleService.config.BattleStatus;
 import com.polimi.ckb.battleService.dto.*;
 import com.polimi.ckb.battleService.entity.Battle;
 import com.polimi.ckb.battleService.exception.*;
+import com.polimi.ckb.battleService.repository.BattleRepository;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.GitService;
 import com.polimi.ckb.battleService.service.kafkaProducer.NewBattleEmailKafkaProducer;

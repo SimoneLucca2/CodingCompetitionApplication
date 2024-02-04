@@ -24,4 +24,6 @@ public interface BattleService {
     void quitEntireTournament(StudentQuitTournamentDto studentQuitTournamentDto);
 
     Battle closeBattle(ChangeBattleStatusDto closeBattleDto);
+
+    void closeAllBattleInTournament(Long tournamentId);
 }
