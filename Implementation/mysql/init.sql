@@ -120,6 +120,7 @@ CREATE TABLE IF NOT EXISTS battle_schema.student_group_seq
 (
     next_val bigint not null default 1
 );
+INSERT INTO battle_schema.student_group_seq (next_val) VALUES (1);
 
 CREATE DATABASE IF NOT EXISTS user_schema;
 USE user_schema;
