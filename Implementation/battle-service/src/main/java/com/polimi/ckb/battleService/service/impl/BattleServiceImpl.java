@@ -1,7 +1,6 @@
 package com.polimi.ckb.battleService.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polimi.ckb.battleService.config.BattleStatus;
 import com.polimi.ckb.battleService.config.TournamentStatus;
 import com.polimi.ckb.battleService.dto.*;
@@ -14,22 +13,16 @@ import com.polimi.ckb.battleService.repository.EducatorRepository;
 import com.polimi.ckb.battleService.repository.GroupRepository;
 import com.polimi.ckb.battleService.repository.StudentRepository;
 import com.polimi.ckb.battleService.service.BattleService;
-import com.polimi.ckb.battleService.service.kafkaProducer.NewBattleEmailKafkaProducer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
@@ -107,17 +100,6 @@ public class BattleServiceImpl implements BattleService {
         return newBattle;
     }
 
-
-
-    /*private String getTournamentServiceUrl() {
-        List<ServiceInstance> instances = discoveryClient.getInstances("TOURNAMENT-SERVICE");
-        if (instances.isEmpty()) {
-            throw new RuntimeException("No instances of tournament service found");
-        }
-        return instances.get(0).getUri().toString();
-    }*/
-
-    //TODO: maybe put this inside a mapper class
     private Battle convertToEntity(CreateBattleDto createBattleDto){
         return Battle.builder()
                 .name(createBattleDto.getName())
