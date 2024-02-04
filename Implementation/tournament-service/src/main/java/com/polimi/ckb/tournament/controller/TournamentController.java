@@ -3,6 +3,7 @@ package com.polimi.ckb.tournament.controller;
 import com.polimi.ckb.tournament.dto.CreateTournamentDto;
 import com.polimi.ckb.tournament.dto.ErrorResponse;
 import com.polimi.ckb.tournament.dto.TournamentDto;
+import com.polimi.ckb.tournament.entity.Student;
 import com.polimi.ckb.tournament.entity.Tournament;
 import com.polimi.ckb.tournament.repository.TournamentRepository;
 import com.polimi.ckb.tournament.service.TournamentService;
@@ -49,6 +50,14 @@ public class TournamentController {
             log.error("Internal server error: {}", e.getMessage());
             return ResponseEntity.internalServerError().body(new ErrorResponse("Internal server error: " + e.getMessage()));
         }
+    }
+
+
+    @GetMapping("/students/{tournamentId}")
+    public ResponseEntity<List<Long>> getParticipants(@PathVariable(name = "tournamentId") Long tournamentId){
+        List<Student> students = tournamentService.getTournament(tournamentId).getParticipants();
+        List<Long> studentIds = students.stream().map(Student::getStudentId).toList();
+        return ResponseEntity.ok(studentIds);
     }
 
     @GetMapping("/enrolled/{studentId}")
