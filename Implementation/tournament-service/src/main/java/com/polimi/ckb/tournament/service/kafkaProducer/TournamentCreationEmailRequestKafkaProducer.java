@@ -45,7 +45,7 @@ public class TournamentCreationEmailRequestKafkaProducer {
 
         EmailDto emailDto = EmailDto.builder()
                 .to(receiverMail)
-                .from("CKB Team")
+                .from("simone.lucca.00@gmail.com")
                 .cc(new String[]{})
                 .bcc(new String[]{})
                 .subject("Battle \"Battle of the Code\" Has Been Created!")

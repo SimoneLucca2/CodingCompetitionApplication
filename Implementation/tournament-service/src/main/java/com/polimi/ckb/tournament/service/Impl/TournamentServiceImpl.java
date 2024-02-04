@@ -32,6 +32,7 @@ public class TournamentServiceImpl implements TournamentService {
     private final TournamentRepository tournamentRepository;
     private final StudentRepository studentRepository;
     private final ScoreRepository scoreRepository;
+    private final StudentNotificationService studentNotificationService;
     private final TournamentCreationEmailRequestKafkaProducer kafkaProducer;
 
     @Transactional
@@ -45,19 +46,9 @@ public class TournamentServiceImpl implements TournamentService {
 
         Tournament newTournament = tournamentRepository.save(CreateTournamentDtoToTournament.convertToEntity(msg));
 
-        sendToAllStudents(newTournament);
+        studentNotificationService.sendToAllStudents(newTournament);
 
         return newTournament;
-    }
-
-    @Async
-    protected void sendToAllStudents(Tournament newTournament) {
-        studentRepository.findAll().forEach(student -> {
-            try {
-                kafkaProducer.sendTournamentCreationEmailRequest(student.getStudentId(), newTournament);
-            } catch (Exception ignored) {
-            }
-        });
     }
 
     @Transactional(readOnly = true)

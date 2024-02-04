@@ -7,6 +7,7 @@ import com.polimi.ckb.battleService.entity.StudentGroup;
 import com.polimi.ckb.battleService.exception.*;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.GroupService;
+import com.polimi.ckb.battleService.service.impl.StudentNotificationService;
 import com.polimi.ckb.battleService.service.kafkaProducer.StudentInvitationEmailKafkaProducer;
 import com.polimi.ckb.battleService.service.kafkaProducer.StudentLeaveBattleProducer;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class GroupController {
     private final GroupService groupService;
     private final BattleService battleService;
-    private final StudentInvitationEmailKafkaProducer studentInvitationEmailKafkaProducer;
+    private final StudentNotificationService studentNotificationService;
     private final StudentLeaveBattleProducer studentLeaveBattleProducer;
 
     @PostMapping
@@ -29,7 +30,7 @@ public class GroupController {
         log.info("A student is trying to invite another student to a group with message: {" + studentDto + "}");
         groupService.inviteStudentToGroup(studentDto);
         try {
-            studentInvitationEmailKafkaProducer.sendEmailSendingRequestMessage(studentDto);
+            studentNotificationService.sendInvitationToStudent(studentDto);
             log.info("Email sending request successfully done");
             return ResponseEntity.ok().build();
         } catch (JsonProcessingException e) {

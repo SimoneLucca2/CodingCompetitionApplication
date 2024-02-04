@@ -1,7 +1,6 @@
 package com.polimi.ckb.user.controller;
 
 import com.polimi.ckb.user.dto.GetUserDto;
-import com.polimi.ckb.user.dto.UsernameDto;
 import com.polimi.ckb.user.entity.User;
 import com.polimi.ckb.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -41,11 +40,11 @@ public class UserController {
     }
 
     @GetMapping("/name/{userId}")
-    public ResponseEntity<UsernameDto> getUsername(@PathVariable Long userId) {
+    public ResponseEntity<String> getUsername(@PathVariable Long userId) {
         try{
             log.info("Getting username with id: {}", userId);
             return ResponseEntity.ok(
-                    UsernameDto.builder().username(userService.getUser(userId).getName()).build()
+                    userService.getUser(userId).getName()
             );
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
@@ -53,11 +52,11 @@ public class UserController {
     }
 
     @GetMapping("/email/{userId}")
-    public ResponseEntity<UsernameDto> getEmail(@PathVariable Long userId) {
+    public ResponseEntity<String> getEmail(@PathVariable Long userId) {
         try{
             log.info("Getting username with id: {}", userId);
             return ResponseEntity.ok(
-                    UsernameDto.builder().username(userService.getUser(userId).getName()).build()
+                    userService.getUser(userId).getEmail()
             );
         }catch (Exception e){
             return ResponseEntity.badRequest().build();

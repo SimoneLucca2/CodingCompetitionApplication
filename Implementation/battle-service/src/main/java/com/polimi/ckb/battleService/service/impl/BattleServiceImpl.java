@@ -15,10 +15,10 @@ import com.polimi.ckb.battleService.repository.GroupRepository;
 import com.polimi.ckb.battleService.repository.StudentRepository;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.kafkaProducer.NewBattleEmailKafkaProducer;
-import com.polimi.ckb.battleService.service.kafkaProducer.StudentInvitationEmailKafkaProducer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,10 +39,10 @@ public class BattleServiceImpl implements BattleService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final ScoreServiceImpl scoreService;
-    private final NewBattleEmailKafkaProducer newBattleEmailKafkaProducer;
+    private final StudentNotificationService studentNotificationService;
 
-    //@Value("${eureka.client.service-url.defaultZone}")
-    private final String TOURNAMENT_SERVICE_URL = "http://TOURNAMENT-SERVICE";
+    @Value("${api.gateway.url}")
+    private String apiGatewayUrl;
 
     @Override
     @Transactional
@@ -98,22 +98,12 @@ public class BattleServiceImpl implements BattleService {
 
         Battle newBattle = battleRepository.save(convertToEntity(createBattleDto));
 
-       sendToRegisteredStudents(newBattle);
+        studentNotificationService.sendToRegisteredStudents(newBattle);
 
         return newBattle;
     }
 
-    @Async
-    protected void sendToRegisteredStudents(Battle newBattle) {
-        //send email to all students registered to the tournament
-        newBattle.getStudentGroups().forEach(
-                gr -> gr.getStudents().forEach(
-                        st -> newBattleEmailKafkaProducer.sendBattleCreationEmail(
-                                st.getStudentId(), newBattle
-                        )
-                )
-        );
-    }
+
 
     /*private String getTournamentServiceUrl() {
         List<ServiceInstance> instances = discoveryClient.getInstances("TOURNAMENT-SERVICE");
@@ -300,7 +290,7 @@ public class BattleServiceImpl implements BattleService {
     private TournamentDto checkTournamentStats(Long tournamentId) throws JsonProcessingException {
         log.info("Checking tournament existence and status and creator's access to it");
         //String tournamentServiceUrl = getTournamentServiceUrl();
-        String response = restTemplate.getForObject(TOURNAMENT_SERVICE_URL + "/tournament/" + tournamentId, String.class);
+        String response = restTemplate.getForObject(apiGatewayUrl + "/tournament/" + tournamentId, String.class);
         return objectMapper.readValue(response, TournamentDto.class);
     }
 

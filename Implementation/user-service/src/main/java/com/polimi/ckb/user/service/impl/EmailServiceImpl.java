@@ -23,13 +23,8 @@ public class EmailServiceImpl implements EmailService {
         mailMessage.setSubject(msg.getSubject());
         mailMessage.setText(msg.getBody());
 
-        if (msg.getCc() != null && msg.getCc().length > 0) {
-            mailMessage.setCc(msg.getCc());
-        }
-
-        if (msg.getBcc() != null && msg.getBcc().length > 0) {
-            mailMessage.setBcc(msg.getBcc());
-        }
+        mailMessage.setCc(msg.getCc());
+        mailMessage.setBcc(msg.getBcc());
 
         javaMailSender.send(mailMessage);
     }
