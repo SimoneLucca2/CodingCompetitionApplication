@@ -18,6 +18,7 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
     const educatorId = oggettoSalvato?.userId;
     const isEducator = userId === tournament.creatorId;
 
+
     const [isFlipped, setIsFlipped] = useState(false);
     const [isVanished, setIsVanished] = useState(false);
 
@@ -55,12 +56,10 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
         fetch(url, {
             method: 'PUT',
             headers: {
-                // Aggiungi qui eventuali header richiesti, come Content-Type o token di autenticazione
                 'Content-Type': 'application/json',
-                // 'Authorization': 'Bearer tuoToken'
             },
             // Se necessario, includi il corpo della richiesta
-            body: JSON.stringify({ educatorId, tournamentId, status: 'CLOSED'})
+            body: JSON.stringify({ educatorId, tournamentId, status: 'CLOSING'})
         })
             .then(response => {
                 if (!response.ok) {
@@ -89,20 +88,25 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
         onLeaderboardSelect(tournament);
     };
 
+    const showAddEducatorAndClose = ['PREPARATION', 'ACTIVE'].includes(tournament.status);
+    const showCreateBattle = tournament.status === 'ACTIVE';
+
     return (
         <div className={`tournament-card ${isFlipped ? 'flipped' : ''} ${isVanished ? 'vanished' : ''}`}
              onClick={handleCardClick}>
             <h3>{tournament.name}</h3>
             <p>{tournament.description}</p>
-            <p>Registration Deadline:{tournament.registrationDeadline}</p>
-            <p>Status:{tournament.status}</p>
-            {isEducator && (
+            <p>Registration Deadline: {tournament.registrationDeadline}</p>
+            <p>Status: {tournament.status}</p>
+            {isEducator && showAddEducatorAndClose && (
                 <>
                     <button className="join-button-1" onClick={joinAddEducatortoaTournament}>ADD EDUCATOR</button>
                     <button className="quit-button" onClick={joinCloseTournament}>CLOSE TOURNAMENT</button>
                 </>
             )}
-            <button className="join-button-2" onClick={joinCreateBattle}>CREATE BATTLE</button>
+            {showCreateBattle && (
+                <button className="join-button-2" onClick={joinCreateBattle}>CREATE BATTLE</button>
+            )}
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
                 View Leaderboard
             </button>
