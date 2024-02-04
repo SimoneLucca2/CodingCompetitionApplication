@@ -45,9 +45,9 @@ public class GitServiceImpl implements GitService {
     private String gitHubUsername = "MarcoF17";
 
     //@Value("${sonar.token}")
-    private String sonarToken = "squ_99b3b8118bcf1fc2c3517fc1ef56ad9ef8f72cc6";
+    private String sonarToken = "squ_5337e9b99bec3eb94a8dce9a742ac339f35a40c0";
     //@Value("${sonarqube.url}")
-    private String sonarqubeUrl = "http://localhost";
+    private String sonarqubeUrl = "http://localhost:9000";
     @Value("${sonarcloud.token}")
     private String sonarCloudToken;
 

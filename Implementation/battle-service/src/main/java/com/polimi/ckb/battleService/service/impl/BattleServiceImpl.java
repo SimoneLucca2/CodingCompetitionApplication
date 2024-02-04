@@ -45,8 +45,8 @@ public class BattleServiceImpl implements BattleService {
     private final ScoreServiceImpl scoreService;
     private final StudentNotificationService studentNotificationService;
 
-    @Value("${api.gateway.url}")
-    private String apiGatewayUrl;
+    //@Value("${api.gateway.url}")
+    private String apiGatewayUrl = "http://api-gateway";
 
     @Override
     @Transactional

@@ -143,4 +143,18 @@ public class GroupController {
         }
         return ResponseEntity.ok().body(dtos);
     }
+
+    @GetMapping(path = "/id/{battleId}/{userId}")
+    public ResponseEntity<Object> getGroupByStudentId(@PathVariable Long battleId, @PathVariable Long userId){
+        log.info("Getting group by student id: {" + userId + "}");
+        StudentGroup group = groupService.getGroupByStudentId(battleId, userId);
+        if(group == null)
+            return ResponseEntity.noContent().build();
+        else
+            return ResponseEntity.ok().body(
+                    GroupDto.builder()
+                            .groupId(group.getGroupId())
+                            .build()
+            );
+    }
 }
