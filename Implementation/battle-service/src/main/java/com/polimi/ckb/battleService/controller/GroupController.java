@@ -115,7 +115,6 @@ public class GroupController {
 
     //Get all the students in the given battle except the ones in the given group
     @GetMapping(path = "/students/{battleId}")
-    @Async
     public ResponseEntity<Object> getStudentsInBattle(@PathVariable Long battleId){
         log.info("Getting students in battle: {" + battleId + "}");
         List<Student> students = groupService.getStudentsInBattle(battleId);
@@ -133,7 +132,6 @@ public class GroupController {
 
     //Get all the group ids in the given battle
     @GetMapping(path = "all/{battleId}")
-    @Async
     public ResponseEntity<Object> getGroupsInBattle(@PathVariable Long battleId){
         log.info("Getting groups in battle: {" + battleId + "}");
         List<StudentGroup> groups = groupService.getGroupsInBattle(battleId);
@@ -151,7 +149,6 @@ public class GroupController {
 
     //Get the group id of the given student in the given battle
     @GetMapping(path = "/id/{battleId}/{userId}")
-    @Async
     public ResponseEntity<Object> getGroupByStudentId(@PathVariable Long battleId, @PathVariable Long userId){
         log.info("Getting group by student id: {" + userId + "}");
         StudentGroup group = groupService.getGroupByStudentId(battleId, userId);
