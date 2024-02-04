@@ -39,7 +39,6 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
-                navigate(`/errorpage`);
             }
 
             // Gestisci qui la risposta in caso di successo
@@ -47,9 +46,7 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
             navigate(`/successpage`);
 
         } catch (error) {
-            console.error("Error joining battle:", error);
-            navigate(`/errorpage`);
-            // Gestisci qui l'errore (ad es., mostrando un messaggio all'utente)
+            alert("Error joining battle:", error);
         }
     }
 
@@ -74,17 +71,13 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
-                navigate(`/errorpage`);
             }
 
-            // Gestisci qui la risposta in caso di successo
             console.log("Quitted battle successfully");
             navigate(`/successpage`);
 
         } catch (error) {
-            console.error("Error Quitting battle:", error);
-            navigate(`/errorpage`);
-            // Gestisci qui l'errore (ad es., mostrando un messaggio all'utente)
+            alert("Error Quitting battle:", error);
         }
     }
 
@@ -93,8 +86,7 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
         onLeaderboardSelect(battle);
     };
 
-    const showGithubLinkInput = battle.status === 'PRE_BATTLE' || battle.status === 'BATTLE' || battle.status === 'CONSOLIDATION';
-
+    const showGithubLinkInput = battle.status === 'PRE_BATTLE' || battle.status === 'BATTLE' ;
     async function sendGithubLink(e) {
         e.stopPropagation(); // Previene la propagazione dell'evento
 
@@ -127,6 +119,10 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
         }
     }
 
+    function handleGroupClick() {
+        navigate(`/participategroup/${battle.battleId}/${battle.status}`);
+    }
+
     return (
         <div className="battle-card">
             <h3>{battle.name}</h3>
@@ -135,13 +131,14 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
             <p>SUBMISSION DEADLINE: {battle.submissionDeadline}</p>
             <p>Status: {battle.status}</p>
             <p>Link Repo: {battle.repoLink}</p>
-
-
             <button className="join-button-3" onClick={joinBattle}>Join the Battle</button>
             <button className="join-button-4" onClick={quitBattle}>Quit the Battle</button>
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
                 View Leaderboard
             </button>
+            <button className="leaderboard-button" onClick={handleGroupClick}>
+                    View Group
+                </button>
             {showGithubLinkInput && (
                 <div className="github-link-container">
                     <input

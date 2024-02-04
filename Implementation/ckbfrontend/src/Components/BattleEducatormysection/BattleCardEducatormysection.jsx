@@ -39,10 +39,11 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
                     alert('Error: ' + response.status);
                     throw new Error(`Errore HTTP: ${response.status}`);
                 }
-                return response.json(); // o response.text() se la risposta non è in JSON
+                return response.json();
             })
             .then(data => {
                 console.log('Chiusura avvenuta con successo:', data);
+                navigate(`/successpage`);
             })
             .catch(error => {
                 console.error('Si è verificato un errore:', error);

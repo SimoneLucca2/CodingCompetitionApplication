@@ -30,7 +30,7 @@ function CreateBattle() {
     });
 
     const goTOuserprofile = () => {
-        navigate('/mysectiontournamentspageeducator'); // Naviga alla userprofile
+        navigate('/successpage'); // Naviga alla userprofile
     }
 
     const goTOerrorpage = () => {

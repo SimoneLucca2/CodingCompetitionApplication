@@ -1,4 +1,3 @@
-
 import {BrowserRouter, Route, Routes, } from "react-router-dom";
 import './App.css';
 import LoginSignup from "./Components/Login-SignUp/LoginSignup";
@@ -25,6 +24,7 @@ import Educatorprofile from "./Components/EducatorProfile/educatorprofile";
 import SuccessPage  from "./Components/SuccessPage/SuccessPage";
 import ManualEvaluation from "./Components/ManualEvaluation/ManualEvaluation";
 import NeedAuthentication from "./Components/NeedAuthentication/NeedAuthentication";
+import ParticipateGroup from "./Components/ParticipateGroup/ParticipateGroup";
 
 function App() {
   return (
@@ -54,6 +54,7 @@ function App() {
             <Route path="/successpage" element={<SuccessPage/>}/>
             <Route path="/manualevaluation/:battleId" element={<ManualEvaluation/>}/>
             <Route path="/needauthentication" element={<NeedAuthentication/>}/>
+            <Route path="/participategroup/:battleId/:status" element={<ParticipateGroup/>}/>
           </Routes>
         </BrowserRouter>
       </ItemListProvider>

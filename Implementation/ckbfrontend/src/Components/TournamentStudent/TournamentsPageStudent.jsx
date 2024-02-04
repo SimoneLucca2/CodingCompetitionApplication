@@ -40,7 +40,7 @@ function TournamentsPageStudent() {
 
     const renderTournaments = () => {
         if (loading) return <p className="loading-message">Loading Tournaments...</p>;
-        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">There are no tournaments.</p>;
+        if (!tournaments || tournaments.length === 0) return <p className="no-tournaments-message">There are no tournaments to join.</p>;
         return tournaments.map(tournament => (
             <TournamentCardStudent key={tournament.tournamentId} tournament={tournament}
                                     onLeaderboardSelect={handleTournamentSelectForLeaderboard}/>
