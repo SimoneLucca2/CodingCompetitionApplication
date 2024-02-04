@@ -38,8 +38,8 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 public class GitServiceImpl implements GitService {
 
-    @Value("${github.api.token}")
-    private static String gitHubToken;
+    //@Value("${github.api.token}")
+    private static String gitHubToken = "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";
     @Value("${github.api.username}")
     private String gitHubUsername = "MarcoF17";
 
@@ -125,33 +125,37 @@ public class GitServiceImpl implements GitService {
             //get response
             String repositoryUrl = null;
             try (InputStream inputStream = connection.getInputStream()){
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                //read response line by line
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    response.append(line);
-                }
-
-                //map the request body to a JsonNode object
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode rootNode = objectMapper.readTree(response.toString());
+                JsonNode rootNode = getJsonNode(inputStream);
 
                 //get repository url
                 repositoryUrl = rootNode.get("html_url").asText();
                 log.info("Repository created successfully at: " + repositoryUrl);
             } catch (Exception e) {
-                throw new ErrorWhileCreatingRepositoryException("null");
+                throw new ErrorWhileCreatingRepositoryException("1");
             }
 
             //close connection
             outputStream.close();
             connection.disconnect();
             return repositoryUrl;
-        } catch (Exception e) {
-            throw new ErrorWhileCreatingRepositoryException("null");
+        } catch (IOException e) {
+            throw new ErrorWhileCreatingRepositoryException("2");
         }
+    }
+
+    private static JsonNode getJsonNode(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        //read response line by line
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            response.append(line);
+        }
+
+        //map the request body to a JsonNode object
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readTree(response.toString());
     }
 
     @NotNull
@@ -269,7 +273,7 @@ public class GitServiceImpl implements GitService {
         final String sonarCloudURL = sonarqubeUrl + "/api/projects/create";
         final String encodedProjectName = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
         final String encodedProjectKey = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
-        final String urlWithParams = sonarCloudURL + "?name=" + "ckb" + "&project=" + "ckb";
+        final String urlWithParams = sonarCloudURL + "?name=" + encodedProjectName + "&project=" + encodedProjectKey;
 
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
