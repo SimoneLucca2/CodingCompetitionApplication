@@ -42,6 +42,8 @@
 .group-component ul li {
     margin: 10px 0;
     animation: fadeIn 2s ease-out forwards;
+    color: black;
+
 }
 
 .group-component input {

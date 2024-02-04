@@ -6,9 +6,7 @@ import {useNavigate, useParams} from "react-router-dom";
 
 const GroupComponent = () => {
     const [groupId, setGroupId] = useState('');
-    const [userEmails, setUserEmails] = useState(['example1@example.com',
-        'example2@example.com',
-        'example3@example.com']);
+    const [userEmails, setUserEmails] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -46,12 +44,23 @@ const GroupComponent = () => {
                 const response = await axios.get(url);
                 const studentIds = response.data;
 
-                const emails = await Promise.all(studentIds.map(async (id) => {
-                    const url = `${API_URL}/user/email/${encodeURIComponent(id)}`;
-                    const { data: userData } = await axios.get(url);
-                    return userData.email;
-                }));
-                setUserEmails(emails);
+                console.log(studentIds);
+
+                if (Array.isArray(studentIds)) {
+                    console.log("studentIds è un array");
+                    const emails = await Promise.all(studentIds.map(async (id) => {
+                        const url = `${API_URL}/user/email/${encodeURIComponent(id)}`;
+                        const { data: userData } = await axios.get(url);
+                        console.log("UserData");
+                        console.log(userData);
+                        return userData;
+
+                    }));
+                    setUserEmails(emails);
+                } else {
+                    console.error('studentIds non è un array:', studentIds);
+                    // Gestisci il caso in cui studentIds non è un array
+                }
             } catch (error) {
                 console.error("Error fetching user emails", error);
                 alert("Error fetching user emails");
