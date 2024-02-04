@@ -42,7 +42,6 @@ public class BattleServiceImpl implements BattleService {
     private final GroupRepository groupRepository;
     private final StudentRepository studentRepository;
     private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
     private final ScoreServiceImpl scoreService;
     private final StudentNotificationService studentNotificationService;
 

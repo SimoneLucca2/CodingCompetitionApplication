@@ -87,7 +87,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/battle_schema
       SPRING_DATASOURCE_USERNAME: root
-      API_GATEWAY_URL: http://api-gateway:8080
+      API_GATEWAY_URL: http://api-gateway
       SPRING_DATASOURCE_PASSWORD: pw
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9093
