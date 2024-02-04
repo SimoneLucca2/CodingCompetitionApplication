@@ -11,11 +11,13 @@ import com.polimi.ckb.battleService.service.impl.StudentNotificationService;
 import com.polimi.ckb.battleService.service.kafkaProducer.StudentLeaveBattleProducer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/battle/group")
@@ -115,6 +117,7 @@ public class GroupController {
     public ResponseEntity<Object> getStudentsInBattle(@PathVariable Long battleId, @PathVariable Long groupId){
         log.info("Getting students in battle: {" + battleId + "}");
         List<Student> students = groupService.getStudentsInBattle(battleId, groupId);
+
         List<StudentDto> dtos = new ArrayList<>();
         for(Student student : students){
             dtos.add(
