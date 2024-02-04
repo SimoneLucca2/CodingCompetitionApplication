@@ -107,17 +107,6 @@ public class BattleServiceImpl implements BattleService {
         return newBattle;
     }
 
-
-
-    /*private String getTournamentServiceUrl() {
-        List<ServiceInstance> instances = discoveryClient.getInstances("TOURNAMENT-SERVICE");
-        if (instances.isEmpty()) {
-            throw new RuntimeException("No instances of tournament service found");
-        }
-        return instances.get(0).getUri().toString();
-    }*/
-
-    //TODO: maybe put this inside a mapper class
     Battle convertToEntity(CreateBattleDto createBattleDto){
         return Battle.builder()
                 .name(createBattleDto.getName())

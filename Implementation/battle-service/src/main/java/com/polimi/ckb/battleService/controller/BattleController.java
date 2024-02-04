@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,21 +41,7 @@ public class BattleController {
             if (createBattleDto.getName().equals("TEST"))
                 createdBattle = battleService.createBattle(createBattleDto, true);
             else {
-                createdBattle = battleService.createBattle(createBattleDto, false);
-                String repositoryUrl = gitService.createGitHubRepository(createBattleDto);
-
-                //save the link in battle entity
-                battleService.saveRepositoryUrl(
-                        SaveRepositoryLinkDto.builder()
-                                .repositoryUrl(repositoryUrl)
-                                .battleId(createdBattle.getBattleId())
-                                .build()
-                );
-
-                //push and commit a file yaml to set up an action that informs the system about new pushes on main branch
-                log.info("Pushing the configuration yaml file into the new repository");
-                gitService.uploadSetupFiles(repositoryUrl, createdBattle.getName());
-                log.info("Repository ready");
+               createdBattle = createNewBattle(createBattleDto);
             }
 
             log.info("Battle created successfully");
@@ -76,6 +63,26 @@ public class BattleController {
             );
             return ResponseEntity.internalServerError().body(new ErrorResponse("Error while creating repository: " + e.getMessage()));
         }
+    }
+
+    @Async
+    protected Battle createNewBattle(CreateBattleDto createBattleDto) throws GitAPIException, IOException {
+        Battle createdBattle = battleService.createBattle(createBattleDto, false);
+        String repositoryUrl = gitService.createGitHubRepository(createBattleDto);
+
+        //save the link in battle entity
+        battleService.saveRepositoryUrl(
+                SaveRepositoryLinkDto.builder()
+                        .repositoryUrl(repositoryUrl)
+                        .battleId(createdBattle.getBattleId())
+                        .build()
+        );
+
+        //push and commit a file yaml to set up an action that informs the system about new pushes on main branch
+        log.info("Pushing the configuration yaml file into the new repository");
+        gitService.uploadSetupFiles(repositoryUrl, createdBattle.getName());
+        log.info("Repository ready");
+        return createdBattle;
     }
 
     @GetMapping(path = "/all/{tournamentId}")

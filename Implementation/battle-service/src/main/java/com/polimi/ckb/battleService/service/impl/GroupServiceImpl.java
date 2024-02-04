@@ -181,14 +181,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Student> getStudentsInBattle(Long battleId, Long groupId) {
+    public List<Student> getStudentsInBattle(Long battleId) {
         Battle battle = battleRepository.findById(battleId).orElseThrow(BattleDoesNotExistException::new);
         List<StudentGroup> groups = groupRepository.findByBattle(battle);
         List<Student> students = new ArrayList<>();
         for(StudentGroup group : groups){
-            if(group.getGroupId().equals(groupId)){
-                continue;
-            } else if(!group.getStudents().isEmpty()){
+            if(!group.getStudents().isEmpty()){
                 students.addAll(group.getStudents());
             }
         }

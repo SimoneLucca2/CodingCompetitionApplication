@@ -12,6 +12,7 @@ import com.polimi.ckb.battleService.service.kafkaProducer.StudentLeaveBattleProd
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -98,6 +99,7 @@ public class GroupController {
         return ResponseEntity.ok().build();
     }
 
+    //Upload the cloned repo link of the group
     @PostMapping(path = "/repo")
     public ResponseEntity<Object> uploadClonedRepoLink(@RequestBody SaveGroupRepositoryLinkDto saveGroupRepositoryLinkDto){ //Argument to be changed
         log.info("A student is trying to upload a cloned repo link with message: {" + saveGroupRepositoryLinkDto + "}");
@@ -111,10 +113,15 @@ public class GroupController {
         }
     }
 
-    @GetMapping(path = "/students/{battleId}/{groupId}")
-    public ResponseEntity<Object> getStudentsInBattle(@PathVariable Long battleId, @PathVariable Long groupId){
+    //Get all the students in the given battle except the ones in the given group
+    @GetMapping(path = "/students/{battleId}")
+    @Async
+    public ResponseEntity<Object> getStudentsInBattle(@PathVariable Long battleId){
         log.info("Getting students in battle: {" + battleId + "}");
-        List<Student> students = groupService.getStudentsInBattle(battleId, groupId);
+        List<Student> students = groupService.getStudentsInBattle(battleId);
+        if(students.isEmpty())
+            return ResponseEntity.noContent().build();
+
         List<StudentDto> dtos = new ArrayList<>();
         for(Student student : students){
             dtos.add(
@@ -126,10 +133,15 @@ public class GroupController {
         return ResponseEntity.ok().body(dtos);
     }
 
+    //Get all the group ids in the given battle
     @GetMapping(path = "all/{battleId}")
+    @Async
     public ResponseEntity<Object> getGroupsInBattle(@PathVariable Long battleId){
         log.info("Getting groups in battle: {" + battleId + "}");
         List<StudentGroup> groups = groupService.getGroupsInBattle(battleId);
+        if(groups.isEmpty())
+            return ResponseEntity.noContent().build();
+
         List<GroupDto> dtos = new ArrayList<>();
         for(StudentGroup group : groups){
             dtos.add(
@@ -141,7 +153,9 @@ public class GroupController {
         return ResponseEntity.ok().body(dtos);
     }
 
+    //Get the group id of the given student in the given battle
     @GetMapping(path = "/id/{battleId}/{userId}")
+    @Async
     public ResponseEntity<Object> getGroupByStudentId(@PathVariable Long battleId, @PathVariable Long userId){
         log.info("Getting group by student id: {" + userId + "}");
         StudentGroup group = groupService.getGroupByStudentId(battleId, userId);

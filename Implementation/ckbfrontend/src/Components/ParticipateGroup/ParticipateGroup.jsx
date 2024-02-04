@@ -42,7 +42,7 @@ const GroupComponent = () => {
 
         const fetchUserEmails = async () => {
             try {
-                const url = `${API_URL}/battle/group/students/${battleId}/${groupId}`;
+                const url = `${API_URL}/battle/group/students/${battleId}`;
                 const response = await axios.get(url);
                 const studentIds = response.data;
 
