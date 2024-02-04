@@ -41,7 +41,7 @@ import java.util.Comparator;
 public class GitServiceImpl implements GitService {
 
     @Value("${github.api.token}")
-    private static String gitHubToken;
+    private static String gitHubToken = "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";
     @Value("${github.api.username}")
     private String gitHubUsername = "MarcoF17";
 
