@@ -51,7 +51,6 @@ const GroupComponent = () => {
                     const emails = await Promise.all(studentIds.map(async (id) => {
                         const url = `${API_URL}/user/email/${encodeURIComponent(id)}`;
                         const { data: userData } = await axios.get(url);
-                        console.log("UserData");
                         console.log(userData);
                         return userData;
 
