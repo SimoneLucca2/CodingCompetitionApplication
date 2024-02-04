@@ -18,4 +18,6 @@ public interface GroupService {
     List<Student> getStudentsInBattle(Long battleId, Long groupId);
 
     List<StudentGroup> getGroupsInBattle(Long battleId);
+
+    StudentGroup getGroupByStudentId(Long battleId, Long userId);
 }

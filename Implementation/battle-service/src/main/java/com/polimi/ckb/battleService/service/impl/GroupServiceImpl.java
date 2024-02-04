@@ -200,4 +200,18 @@ public class GroupServiceImpl implements GroupService {
         Battle battle = battleRepository.findById(battleId).orElseThrow(BattleDoesNotExistException::new);
         return groupRepository.findByBattle(battle);
     }
+
+    @Override
+    public StudentGroup getGroupByStudentId(Long battleId, Long userId) {
+        Battle battle = battleRepository.findById(battleId).orElseThrow(BattleDoesNotExistException::new);
+        List<StudentGroup> groups = groupRepository.findByBattle(battle);
+        for(StudentGroup group : groups){
+            for(Student student : group.getStudents()){
+                if(student.getStudentId().equals(userId)){
+                    return group;
+                }
+            }
+        }
+        return null;
+    }
 }
