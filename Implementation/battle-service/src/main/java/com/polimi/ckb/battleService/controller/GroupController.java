@@ -140,15 +140,13 @@ public class GroupController {
         if(groups.isEmpty())
             return ResponseEntity.noContent().build();
 
-        List<GroupDto> dtos = new ArrayList<>();
+        List<Long> ids = new ArrayList<>();
         for(StudentGroup group : groups){
-            dtos.add(
-                    GroupDto.builder()
-                            .groupId(group.getGroupId())
-                            .build()
+            ids.add(
+                    group.getGroupId()
             );
         }
-        return ResponseEntity.ok().body(dtos);
+        return ResponseEntity.ok().body(ids);
     }
 
     //Get the group id of the given student in the given battle
