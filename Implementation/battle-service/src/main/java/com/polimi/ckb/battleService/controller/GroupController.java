@@ -8,12 +8,14 @@ import com.polimi.ckb.battleService.exception.*;
 import com.polimi.ckb.battleService.service.BattleService;
 import com.polimi.ckb.battleService.service.GroupService;
 import com.polimi.ckb.battleService.service.impl.StudentNotificationService;
-import com.polimi.ckb.battleService.service.kafkaProducer.StudentInvitationEmailKafkaProducer;
 import com.polimi.ckb.battleService.service.kafkaProducer.StudentLeaveBattleProducer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/battle/group")
@@ -99,12 +101,27 @@ public class GroupController {
     public ResponseEntity<Object> uploadClonedRepoLink(@RequestBody SaveGroupRepositoryLinkDto saveGroupRepositoryLinkDto){ //Argument to be changed
         log.info("A student is trying to upload a cloned repo link with message: {" + saveGroupRepositoryLinkDto + "}");
         try {
-            groupService.saveRepositoryUrl(saveGroupRepositoryLinkDto);
+            StudentGroup group = groupService.saveRepositoryUrl(saveGroupRepositoryLinkDto);
             log.info("Cloned repo link uploaded successfully");
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(group);
         } catch (BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
+    }
+
+    @GetMapping(path = "/students/{battleId}/{groupId}")
+    public ResponseEntity<Object> getStudentsInBattle(@PathVariable Long battleId, @PathVariable Long groupId){
+        log.info("Getting students in battle: {" + battleId + "}");
+        List<Student> students = groupService.getStudentsInBattle(battleId, groupId);
+        List<StudentDto> dtos = new ArrayList<>();
+        for(Student student : students){
+            dtos.add(
+                    StudentDto.builder()
+                            .studentId(student.getStudentId())
+                            .build()
+            );
+        }
+        return ResponseEntity.ok().body(dtos);
     }
 }

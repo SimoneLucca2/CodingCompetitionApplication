@@ -117,7 +117,21 @@ public class BattleController {
                             .status(BattleStatus.CLOSED)
                             .build()
             );
-            return ResponseEntity.ok().body(battle);
+
+            BattleDto dto = BattleDto.builder()
+                    .battleId(battle.getBattleId())
+                    .name(battle.getName())
+                    .description(battle.getDescription())
+                    .registrationDeadline(battle.getRegistrationDeadline())
+                    .submissionDeadline(battle.getSubmissionDeadline())
+                    .status(battle.getStatus())
+                    .maxGroupSize(battle.getMaxGroupSize())
+                    .minGroupSize(battle.getMinGroupSize())
+                    .repoLink(battle.getRepoLink())
+                    .creatorId(battle.getCreator().getEducatorId())
+                    .build();
+
+            return ResponseEntity.ok().body(dto);
         } catch (BattleChangingStatusException e){
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().build();

@@ -21,7 +21,7 @@ public class ChangeTournamentStatusKafkaConsumer {
     private final BattleService battleService;
     private final CloseTournamentKafkaProducer closeTournamentKafkaProducer;
 
-    @KafkaListener(topics = "battle.lifecycle.closing", groupId = "battle-service")
+    @KafkaListener(topics = "tournament.lifecycle.closing", groupId = "battle-service")
     public void listener(ConsumerRecord<String, String> record) {
         try {
             String message = record.value();

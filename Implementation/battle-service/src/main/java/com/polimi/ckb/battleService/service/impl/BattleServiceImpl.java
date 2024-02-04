@@ -118,7 +118,7 @@ public class BattleServiceImpl implements BattleService {
     }*/
 
     //TODO: maybe put this inside a mapper class
-    private Battle convertToEntity(CreateBattleDto createBattleDto){
+    Battle convertToEntity(CreateBattleDto createBattleDto){
         return Battle.builder()
                 .name(createBattleDto.getName())
                 .description(createBattleDto.getDescription())
@@ -282,7 +282,7 @@ public class BattleServiceImpl implements BattleService {
         Battle battle = battleRepository.findById(closeBattleDto.getBattleId())
                 .orElseThrow(BattleDoesNotExistException::new);
 
-        if (battle.getStatus() != BattleStatus.CONSOLIDATION) {
+        if (!battle.getStatus().equals(BattleStatus.CONSOLIDATION)) {
             throw new BattleChangingStatusException("Cannot close battle");
         }
 
@@ -291,7 +291,7 @@ public class BattleServiceImpl implements BattleService {
         return battleRepository.save(battle);
     }
 
-    private TournamentDto checkTournamentStats(Long tournamentId) throws JsonProcessingException {
+    TournamentDto checkTournamentStats(Long tournamentId) throws JsonProcessingException {
         log.info("Checking tournament existence and status and creator's access to it");
         //String tournamentServiceUrl = getTournamentServiceUrl();
         String url = apiGatewayUrl + "/tournament/" + tournamentId;

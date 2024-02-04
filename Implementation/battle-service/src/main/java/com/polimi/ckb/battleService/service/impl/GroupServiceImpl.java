@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -155,11 +156,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void saveRepositoryUrl(SaveGroupRepositoryLinkDto saveGroupRepositoryLinkDto) {
-        //StudentGroup group = groupRepository.findById(saveGroupRepositoryLinkDto.getGroupId()).orElseThrow(GroupDoesNotExistsException::new);
-
-        //group.setClonedRepositoryLink(saveGroupRepositoryLinkDto.getClonedRepositoryLink());
-        //groupRepository.save(group);
+    public StudentGroup saveRepositoryUrl(SaveGroupRepositoryLinkDto saveGroupRepositoryLinkDto) {
+        List<StudentGroup> groups = groupRepository.findByBattle(battleRepository.findById(saveGroupRepositoryLinkDto.getBattleId()).orElseThrow(BattleDoesNotExistException::new));
+        for(StudentGroup group : groups){
+            for(Student student : group.getStudents()){
+                if(student.getStudentId().equals(saveGroupRepositoryLinkDto.getStudentId())){
+                    group.setClonedRepositoryLink(saveGroupRepositoryLinkDto.getClonedRepositoryLink());
+                    return groupRepository.save(group);
+                }
+            }
+        }
+        throw new GroupDoesNotExistsException();
     }
 
     @Override
@@ -171,5 +178,20 @@ public class GroupServiceImpl implements GroupService {
         StudentGroup group = groupRepository.findById(groupId).orElseThrow(GroupDoesNotExistsException::new);
         group.setScore(score);
         return groupRepository.save(group);
+    }
+
+    @Override
+    public List<Student> getStudentsInBattle(Long battleId, Long groupId) {
+        Battle battle = battleRepository.findById(battleId).orElseThrow(BattleDoesNotExistException::new);
+        List<StudentGroup> groups = groupRepository.findByBattle(battle);
+        List<Student> students = new ArrayList<>();
+        for(StudentGroup group : groups){
+            if(group.getGroupId().equals(groupId)){
+                continue;
+            } else if(!group.getStudents().isEmpty()){
+                students.addAll(group.getStudents());
+            }
+        }
+        return students;
     }
 }
