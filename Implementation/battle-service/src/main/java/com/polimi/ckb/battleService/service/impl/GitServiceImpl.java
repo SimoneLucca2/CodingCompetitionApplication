@@ -40,8 +40,8 @@ import java.util.Comparator;
 @RequiredArgsConstructor
 public class GitServiceImpl implements GitService {
 
-    @Value("${github.api.token}")
-    private static String gitHubToken;
+    //@Value("${github.api.token}")
+    private static String gitHubToken = "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";
     @Value("${github.api.username}")
     private String gitHubUsername = "MarcoF17";
 
@@ -196,7 +196,6 @@ public class GitServiceImpl implements GitService {
             throw new CannotEvaluateGroupSolutionException();
         }
 
-        //TODO: verify github token
         Git git = Git.cloneRepository()
                 .setURI(newPushDto.getRepositoryUrl())
                 .setCredentialsProvider(new UsernamePasswordCredentialsProvider(newPushDto.getGithubName(), newPushDto.getGithubToken()))
