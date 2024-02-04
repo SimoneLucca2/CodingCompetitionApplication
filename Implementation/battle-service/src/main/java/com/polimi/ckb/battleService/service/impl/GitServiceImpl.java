@@ -39,8 +39,8 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 public class GitServiceImpl implements GitService {
 
-    //@Value("${github.api.token}")
-    private static String gitHubToken = "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";
+    @Value("${github.api.token}")
+    private static String gitHubToken;
     @Value("${github.api.username}")
     private String gitHubUsername = "MarcoF17";
 
