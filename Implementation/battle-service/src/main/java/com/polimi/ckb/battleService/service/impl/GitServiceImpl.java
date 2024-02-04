@@ -40,16 +40,14 @@ import java.util.Comparator;
 public class GitServiceImpl implements GitService {
 
     @Value("${github.api.token}")
-    private static String gitHubToken = "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";
+    private static String gitHubToken;
     @Value("${github.api.username}")
-    private String gitHubUsername = "MarcoF17";
+    private String gitHubUsername;
 
-    //@Value("${sonar.token}")
-    private String sonarToken = "squ_5337e9b99bec3eb94a8dce9a742ac339f35a40c0";
-    //@Value("${sonarqube.url}")
+    @Value("${sonar.token}")
+    private String sonarToken;
+    @Value("${sonarqube.url}")
     private String sonarqubeUrl = "http://localhost:9000";
-    @Value("${sonarcloud.token}")
-    private String sonarCloudToken;
 
     private final String sonarProjectKey = "ckb";
     private final GroupRepository groupRepository;
@@ -218,9 +216,7 @@ public class GitServiceImpl implements GitService {
         //Get the temporary score from sonarqube and save it in the database
         final String encodedComponent = URLEncoder.encode("ckb", StandardCharsets.UTF_8);
         final String encodedMetricKeys = URLEncoder.encode("bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density", StandardCharsets.UTF_8);
-        //final String encodedUrl = sonarqubeUrl + "/api/measures/component?component=" + encodedComponent + "&metricKeys=" + encodedMetricKeys + "&additionalFields=metrics";
-        final String encodedUrl = sonarqubeUrl + "/api/measures/component/" + encodedComponent + "/" + encodedMetricKeys + "/metrics";
-
+        final String encodedUrl = sonarqubeUrl + "/api/measures/component?component=" + encodedComponent + "&metricKeys=" + encodedMetricKeys + "&additionalFields=metrics";
 
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
@@ -296,8 +292,7 @@ public class GitServiceImpl implements GitService {
         final String sonarCloudURL = sonarqubeUrl + "/api/projects/create";
         final String encodedProjectName = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
         final String encodedProjectKey = URLEncoder.encode(sonarProjectKey, StandardCharsets.UTF_8);
-        //final String urlWithParams = sonarCloudURL + "?name=" + encodedProjectName + "&project=" + encodedProjectKey;
-        final String urlWithParams = sonarCloudURL + "/" + encodedProjectName + "/" + encodedProjectKey;
+        final String urlWithParams = sonarCloudURL + "?name=" + encodedProjectName + "&project=" + encodedProjectKey;
 
 
         final HttpClient client = HttpClient.newHttpClient();
