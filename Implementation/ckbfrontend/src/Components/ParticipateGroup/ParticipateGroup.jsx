@@ -54,7 +54,7 @@ const GroupComponent = () => {
                 setUserEmails(emails);
             } catch (error) {
                 console.error("Error fetching user emails", error);
-                alert("Error fetching group ID");
+                alert("Error fetching user emails");
             }
         };
 
