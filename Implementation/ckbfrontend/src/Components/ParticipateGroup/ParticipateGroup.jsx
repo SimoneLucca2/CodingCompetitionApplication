@@ -4,11 +4,17 @@ import './ParticipateGroup.css';
 import API_URL from "../../config";
 import {useNavigate, useParams} from "react-router-dom";
 
-const GroupComponent = () => {
+const ParticipateGroup = () => {
+    const params = useParams();
+    const battle = params.battleId;
+    const battleId = parseInt(battle, 10);
     const [groupId, setGroupId] = useState('');
-    const [userEmails, setUserEmails] = useState(['example1@example.com',
+    const [receiverId, setreceiverId] = useState('');
+    const [newGroupId, setNewGroupId] = useState('');
+
+    const [userEmails, setUserEmails] = useState([/*'example1@example.com',
         'example2@example.com',
-        'example3@example.com']);
+        'example3@example.com'*/]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,30 +23,21 @@ const GroupComponent = () => {
             navigate(`/needauthentication`, { replace: true });
             return;
         }
-    }, [navigate]);
 
-    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
-    const userId = oggettoSalvato?.userId;
+        const userId = oggettoSalvato?.userId;
 
-    const params = useParams();
-    const battle = params.battleId;
-    const battleId = parseInt(battle, 10);
-
-    // Function to join the group
-    useEffect(() => {
         const fetchGroupId = async () => {
             try {
-                // Costruisce l'URL con i parametri di query
                 const url = `${API_URL}/battle/group/id/${battleId}/${userId}`;
                 const response = await axios.get(url);
                 setGroupId(response.data.groupId);
             } catch (error) {
                 console.error("Error fetching group ID", error);
-                navigate(`/errorpage`, { replace: true });
             }
         };
 
         const fetchUserEmails = async () => {
+            if (!groupId) return;
             try {
                 const url = `${API_URL}/battle/group/students/${battleId}/${groupId}`;
                 const response = await axios.get(url);
@@ -54,15 +51,17 @@ const GroupComponent = () => {
                 setUserEmails(emails);
             } catch (error) {
                 console.error("Error fetching user emails", error);
-                navigate(`/errorpage`, { replace: true });
             }
         };
 
-        fetchGroupId();
-        fetchUserEmails();
+        fetchGroupId().then(fetchUserEmails);
 
-    }, [userId, battleId]);
+    }, [navigate, battleId, groupId]);
 
+
+
+    const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
+    const userId = oggettoSalvato?.userId;
 
 
     // Function to leave the group
@@ -95,28 +94,90 @@ const GroupComponent = () => {
         }
     }
 
-    // Function to send an invite
+    // Function to send an invite  requesterId invitedId  groupId
     const inviteUser = async (email) => {
+        const url = new URL(`${API_URL}/getId/${email}`);
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La richiesta non è andata a buon fine');
+                    alert("Error fetching user ID");
+                }
+                setreceiverId(response.data.userId);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Si è verificato un errore:', error);
+            });
+
         try {
-            await axios.post('/api/user/invite', { email });
+            const payload = {
+                requesterId: userId, // Supponendo che 'email' sia già definita
+                receiverId: receiverId, // Sostituisci 'receiverId' con il valore effettivo
+                groupId: groupId // Sostituisci 'groupId' con il valore effettivo
+            };
+
+            await axios.post(`${API_URL}/battle/group`, payload);
             alert(`Invite sent to ${email}`);
         } catch (error) {
             console.error("Error sending invite", error);
         }
     };
 
+    const changeGroup = async () => {
+        const payload = {
+            studentId: userId,
+            groupId: newGroupId
+        };
+
+        try {
+            const response = await axios.put(`${API_URL}/battle/group`, payload);
+            if (response.status === 200) {
+                alert("Group changed successfully");
+                setGroupId(newGroupId); // Update the current groupId state
+                navigate(`/successpage`); // Navigate to a success page or reload current component
+            } else {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Error changing group", error);
+            alert("Error changing group:", error);
+        }
+    };
+
     return (
         <div className="group-component">
-            <h2>Your group ID: {groupId}</h2>
-            <button onClick={leaveGroup}>Leave Group</button>
+            <div className="header">
+                <h2>Your group ID: {groupId}</h2>
+                <button className="leave-btn" onClick={leaveGroup}>Leave Group</button>
+            </div>
             <h3>Users in battle:</h3>
             <ul>
                 {userEmails.map((email, index) => (
-                    <li key={index}>{email} <button onClick={() => inviteUser(email)}>Invite</button></li>
+                    <li key={index}>{email}
+                        <button className="invite-btn" onClick={() => inviteUser(email)}>Invite</button>
+                    </li>
                 ))}
             </ul>
+            <div className="change-group">
+                <input
+                    type="text"
+                    placeholder="Enter new group ID"
+                    value={newGroupId}
+                    onChange={(e) => setNewGroupId(e.target.value)}
+                />
+                <button className="change-btn" onClick={changeGroup}>Change Group</button>
+            </div>
         </div>
     );
 };
 
-export default GroupComponent;
+export default ParticipateGroup;

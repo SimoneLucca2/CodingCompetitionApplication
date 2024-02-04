@@ -1,69 +1,71 @@
-/* AuthenticationReminder.css */
-.authentication-reminder {
+/* GroupComponent.css */
+.group-component {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: black;
-    color: white;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 20px auto;
     font-family: 'Arial', sans-serif;
-    animation: fadeIn 2s ease-in-out;
 }
 
-.authentication-reminder p {
-    margin: 20px;
-    font-size: 20px;
-    text-align: center;
-    animation: slideIn 1.5s ease-out;
+.group-component h2, .group-component h3 {
+    color: #333;
+    margin-bottom: 15px;
 }
 
-.authentication-reminder button {
-    padding: 10px 20px;
+.group-component button {
+    padding: 8px 16px;
     border: none;
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     transition: background-color 0.3s, transform 0.2s;
-    animation: popIn 0.5s ease-out forwards;
+    border-radius: 4px;
+    margin-top: 5px;
 }
 
-.authentication-reminder button:hover {
+.group-component button:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.group-component ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
 }
 
-@keyframes slideIn {
-    0% {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+.group-component ul li {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-@keyframes popIn {
-    0% {
-        transform: scale(0);
-        opacity: 0;
+.group-component ul li button {
+    margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .group-component {
+        width: 90%;
     }
-    60% {
-        transform: scale(1.2);
-        opacity: 1;
+
+    .group-component button {
+        padding: 6px 12px;
+        font-size: 12px;
     }
-    100% {
-        transform: scale(1);
+
+    .group-component h2, .group-component h3 {
+        font-size: 16px;
     }
 }
