@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -48,7 +47,7 @@ public class GitServiceImpl implements GitService {
     //@Value("${sonar.token}")
     private String sonarToken = "squ_99b3b8118bcf1fc2c3517fc1ef56ad9ef8f72cc6";
     //@Value("${sonarqube.url}")
-    private String sonarqubeUrl = "http://localhost:9000";
+    private String sonarqubeUrl = "http://localhost";
     @Value("${sonarcloud.token}")
     private String sonarCloudToken;
 
