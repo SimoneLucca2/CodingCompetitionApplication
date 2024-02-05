@@ -25,9 +25,22 @@ For more details about the architecture design: https://github.com/SimoneLucca2/
 ## Setup and Installation
 
 ### Backend using docker compose:
-1.	Ensure to have docker installed in your system and the docker daemon running.
-2.	Open the terminal and go in the /implementation directory of the ckb project.
-3.	Run docker-compose up – This will start the backend API with all the services associated to it.
+1. Ensure to have docker installed in your system and the docker daemon running.
+2. Open the terminal and go in the /implementation directory of the ckb project.
+3. Run docker-compose up sonarqube
+4. Open the browser
+5. Go to “http://localhost:9000”
+6. Access SonarQube – Default user name and password are “admin”
+7. Click on the user logo on the right side of the screen
+8. Go on security
+9. Generate a new token – Choose as token type “user-token”
+10. Copy the token an put it in the docker-compose.yaml as the value of “SONAR_TOKEN”
+11. Now go to “github.com”
+12. Login into your account
+13. Generate a new token
+14. Copy the token in the docker-compose.yaml file as the value of “GITHUB_API_TOKEN”
+15. Set the value of “GITHUB_API_USERNAME” your github name
+16. Run docker-compose up – This will start the backend API with all the services associated to it.
 
 ### Web server
 1.	Install node.js.
