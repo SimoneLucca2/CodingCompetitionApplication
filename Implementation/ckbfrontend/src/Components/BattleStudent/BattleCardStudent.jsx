@@ -5,7 +5,7 @@ import './BattleCardStudent.css';
 
 function BattleCardStudent({ battle, onLeaderboardSelect}) {
     const handleLeaderboardClick = (e) => {
-        e.stopPropagation(); // Previene il click sull'intera carta
+        e.stopPropagation();
         onLeaderboardSelect(battle);
     };
     return (

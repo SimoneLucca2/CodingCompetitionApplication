@@ -15,7 +15,6 @@ function TournamentCardEducator({ tournament, onLeaderboardSelect }) {
     const handleCardClick = () => {
         setIsFlipped(true);
 
-        // Dopo un breve ritardo, applica l'effetto di svanimento e poi resetta
         setTimeout(() => {
             setIsVanished(true);
 
@@ -23,8 +22,8 @@ function TournamentCardEducator({ tournament, onLeaderboardSelect }) {
                 setIsFlipped(false);
                 setIsVanished(false);
                 goToTournamentBattles();
-            }, 600); // Tempo per il reset dell'animazione
-        }, 600); // Tempo prima che la carta svanisca
+            }, 600);
+        }, 600);
     };
 
 

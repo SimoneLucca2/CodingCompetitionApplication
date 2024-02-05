@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import './createtournament.css'; // Importing the CSS file
+import './createtournament.css';
 import {useNavigate} from "react-router-dom";
 import API_URL from "../../config";
 const CreateTournament = () => {

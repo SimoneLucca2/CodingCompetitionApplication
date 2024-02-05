@@ -85,7 +85,6 @@
     animation: fadeIn 1s ease-out;
 }
 
-/* Aggiungere un effetto di sfondo dinamico */
 .create-tournament::before {
     content: '';
     position: absolute;

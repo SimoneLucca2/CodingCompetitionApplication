@@ -1,4 +1,3 @@
-// SuccessPage.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';

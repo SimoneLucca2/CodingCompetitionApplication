@@ -61,10 +61,10 @@ function CreateBattle() {
             }
             const result = await response.json();
             console.log("Battle created successfully:", result);
-            {goTOuserprofile()};// Naviga alla userprofile
+            {goTOuserprofile()};
         } catch (error) {
             console.error("Error creating battle:", error);
-            {goTOerrorpage()};// Naviga alla userprofile
+            {goTOerrorpage()};
         }
     };
 

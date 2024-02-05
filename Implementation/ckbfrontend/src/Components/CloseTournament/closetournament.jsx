@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './closetournament.css'; // Importing the CSS file
+import './closetournament.css';
 
 const CloseTournament = () => {
     const [educatorId, setEducatorId] = useState('');

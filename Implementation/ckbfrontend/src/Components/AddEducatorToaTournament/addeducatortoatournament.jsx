@@ -52,7 +52,7 @@ function AddEducatorToTournament() {
                 educatorId: responseData2.userId,
             };
             const response = await fetch(`${API_URL}/tournament/educator`, {
-                method: 'POST', // o 'PUT' se appropriato
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -63,7 +63,7 @@ function AddEducatorToTournament() {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            {goTOuserprofile()};// Naviga alla userprofile
+            {goTOuserprofile()};
             const responseData = await response.json();
             console.log(responseData);
         } catch (error) {

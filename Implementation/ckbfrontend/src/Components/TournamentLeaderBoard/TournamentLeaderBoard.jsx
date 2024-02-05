@@ -40,7 +40,6 @@ function TournamentLeaderboard({ tournament }) {
         const s = ["th", "st", "nd", "rd"];
         const v = n % 100;
 
-        // Gestisce i casi speciali per 11, 12, 13
         if (v > 10 && v < 14) {
             return n + "th";
         }

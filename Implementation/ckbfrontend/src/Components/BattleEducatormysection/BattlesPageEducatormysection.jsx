@@ -8,7 +8,7 @@ import BattleLeaderBoard from "../BattleLeaderBoard/BattleLeaderBoard";
 import BattleCardEducator from "../BattleEducator/BattleCardEducator";
 
 function BattlesPageEducatormysection({ match }) {
-    const [selectedBattle, setSelectedBattle] = useState(null); // Torneo selezionato per la classifica
+    const [selectedBattle, setSelectedBattle] = useState(null);
     const [battles, setBattles] = useState([]);
     const [loading, setLoading] = useState(true);
 

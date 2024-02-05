@@ -32,8 +32,8 @@
 }
 
 .leaderboard-button {
-    background-color: rgba(50, 55, 62, 0.66); /* Scegli il colore che preferisci */
-    color: #000000; /* Colore del testo */
+    background-color: rgba(50, 55, 62, 0.66);
+    color: #000000;
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -47,7 +47,7 @@
 }
 
 .leaderboard-button:hover {
-    background-color: rgb(213, 217, 213); /* Colore al passaggio del mouse */
+    background-color: rgb(213, 217, 213);
 }
 
 .quit-button {
@@ -62,8 +62,8 @@
 }
 
 .leaderboard-button-2 {
-    background-color: rgba(60, 134, 19, 0.85); /* Scegli il colore che preferisci */
-    color: #000000; /* Colore del testo */
+    background-color: rgba(60, 134, 19, 0.85);
+    color: #000000;
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -77,5 +77,5 @@
 }
 
 .leaderboard-button-2:hover {
-    background-color: rgb(60, 134, 19); /* Colore al passaggio del mouse */
+    background-color: rgb(60, 134, 19);
 }

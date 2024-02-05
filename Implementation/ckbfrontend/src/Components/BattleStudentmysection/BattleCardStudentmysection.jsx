@@ -19,17 +19,16 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
     const userId = oggettoSalvato?.userId;
 
     async function joinBattle(e) {
-        e.stopPropagation(); // Impedisce al click sul bottone di attivare il click sulla card
+        e.stopPropagation();
 
-        // Preparazione del corpo della richiesta
         const requestBody = {
             studentId: userId,
-            battleId: battle.battleId // Assumendo che ogni battaglia abbia un campo 'id'
+            battleId: battle.battleId
         };
         console.log(requestBody);
 
         try {
-            const response = await fetch(`${API_URL}/battle/student`, { // Sostituisci '/api/joinbattle' con il tuo endpoint specifico
+            const response = await fetch(`${API_URL}/battle/student`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -41,7 +40,6 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            // Gestisci qui la risposta in caso di successo
             console.log("Joined battle successfully");
             navigate(`/successpage`);
 
@@ -51,17 +49,16 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
     }
 
     async function quitBattle(e) {
-        e.stopPropagation(); // Impedisce al click sul bottone di attivare il click sulla card
+        e.stopPropagation();
 
-        // Preparazione del corpo della richiesta
         const requestBody = {
             studentId: userId,
-            battleId: battle.battleId // Assumendo che ogni battaglia abbia un campo 'id'
+            battleId: battle.battleId
         };
         console.log(requestBody);
 
         try {
-            const response = await fetch(`${API_URL}/battle/student`, { // Sostituisci '/api/joinbattle' con il tuo endpoint specifico
+            const response = await fetch(`${API_URL}/battle/student`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -82,13 +79,13 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
     }
 
     const handleLeaderboardClick = (e) => {
-        e.stopPropagation(); // Previene il click sull'intera carta
+        e.stopPropagation();
         onLeaderboardSelect(battle);
     };
 
     const showGithubLinkInput = battle.status === 'PRE_BATTLE' || battle.status === 'BATTLE' ;
     async function sendGithubLink(e) {
-        e.stopPropagation(); // Previene la propagazione dell'evento
+        e.stopPropagation();
 
         const requestBody = {
             studentId: userId,
@@ -109,12 +106,10 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            // Qui gestisci la risposta positiva, come un messaggio all'utente
             alert("GitHub link sent successfully!");
 
         } catch (error) {
             console.error("Error sending GitHub link:", error);
-            // Gestisci qui l'errore
             alert("Failed to send GitHub link.");
         }
     }
@@ -131,8 +126,12 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
             <p>SUBMISSION DEADLINE: {battle.submissionDeadline}</p>
             <p>Status: {battle.status}</p>
             <p>Link Repo: {battle.repoLink}</p>
-            <button className="join-button-3" onClick={joinBattle}>Join the Battle</button>
-            <button className="join-button-4" onClick={quitBattle}>Quit the Battle</button>
+            {battle.status === 'PRE_BATTLE' && (
+                <button className="join-button-3" onClick={joinBattle}>Join the Battle</button>
+            )}
+            {(battle.status === 'PRE_BATTLE' || battle.status === 'BATTLE') && (
+                <button className="join-button-4" onClick={quitBattle}>Quit the Battle</button>
+            )}
             <button className="leaderboard-button" onClick={handleLeaderboardClick}>
                 View Leaderboard
             </button>

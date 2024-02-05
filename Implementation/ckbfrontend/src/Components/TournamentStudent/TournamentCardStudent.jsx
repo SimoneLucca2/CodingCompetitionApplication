@@ -22,7 +22,6 @@ function TournamentCardStudent({ tournament, onLeaderboardSelect }) {
     const handleCardClick = () => {
         setIsFlipped(true);
 
-        // Dopo un breve ritardo, applica l'effetto di svanimento e poi resetta
         setTimeout(() => {
             setIsVanished(true);
 
@@ -30,30 +29,25 @@ function TournamentCardStudent({ tournament, onLeaderboardSelect }) {
                 setIsFlipped(false);
                 setIsVanished(false);
                 goToTournamentBattles();
-            }, 600); // Tempo per il reset dell'animazione
-        }, 600); // Tempo prima che la carta svanisca
+            }, 600);
+        }, 600);
     };
 
     function sendRequest(studentId, tournamentId) {
-        // Define the URL of your backend endpoint
         const url = `${API_URL}/tournament/student`;
 
-        // Prepare the data to be sent
         const data = {
             studentId: studentId,
             tournamentId: tournamentId
         };
 
-        // Make the POST request
         axios.post(url, data)
             .then(response => {
-                // Handle the response here
                 console.log('Response received:', response.data);
                 navigate(`/successpage`);
 
             })
             .catch(error => {
-                // Handle any errors here
                 console.error('An error occurred:', error);
                 navigate(`/errorpage`);
             });
@@ -64,12 +58,12 @@ function TournamentCardStudent({ tournament, onLeaderboardSelect }) {
     };
 
     const joinTournament = (e) => {
-        e.stopPropagation(); // Impedisce al click sul bottone di attivare il click sulla card
+        e.stopPropagation();
         sendRequest(userId, tournament.tournamentId);
     };
 
     const handleLeaderboardClick = (e) => {
-        e.stopPropagation(); // Previene il click sull'intera carta
+        e.stopPropagation();
         onLeaderboardSelect(tournament);
     };
 

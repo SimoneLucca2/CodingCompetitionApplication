@@ -25,7 +25,6 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
     const handleCardClick = () => {
         setIsFlipped(true);
 
-        // Dopo un breve ritardo, applica l'effetto di svanimento e poi resetta
         setTimeout(() => {
             setIsVanished(true);
 
@@ -33,8 +32,8 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
                 setIsFlipped(false);
                 setIsVanished(false);
                 goToTournamentBattles();
-            }, 600); // Tempo per il reset dell'animazione
-        }, 600); // Tempo prima che la carta svanisca
+            }, 600);
+        }, 600);
     };
 
     const goToTournamentBattles = () => {
@@ -52,13 +51,11 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
 
         const url = `${API_URL}/tournament/status`;
 
-        // Prepare the data to be sent
         fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            // Se necessario, includi il corpo della richiesta
             body: JSON.stringify({ educatorId, tournamentId, status: 'CLOSING'})
         })
             .then(response => {
@@ -66,7 +63,7 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
                     alert('Error: ' + response.status);
                     throw new Error(`Errore HTTP: ${response.status}`);
                 }
-                return response.json(); // o response.text() se la risposta non è in JSON
+                return response.json();
             })
             .then(data => {
                 console.log('Chiusura avvenuta con successo:', data);
@@ -84,7 +81,7 @@ function TournamentCardEducatormysection({ tournament, onLeaderboardSelect }) {
     }
 
     const handleLeaderboardClick = (e) => {
-        e.stopPropagation(); // Previene il click sull'intera carta
+        e.stopPropagation();
         onLeaderboardSelect(tournament);
     };
 

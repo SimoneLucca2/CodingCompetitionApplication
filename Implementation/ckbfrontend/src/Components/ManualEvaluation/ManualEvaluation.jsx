@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './ManualEvaluation.css';
 import {useNavigate, useParams} from "react-router-dom";
-import API_URL from "../../config"; // Import CSS
+import API_URL from "../../config";
 
 function ManualEvaluation() {
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ function ManualEvaluation() {
     };
 
     useEffect(() => {
-        fetchGroups(); // Recupera i gruppi all'avvio del componente
+        fetchGroups();
     }, [])
 
     const handleScoreSubmit = async () => {

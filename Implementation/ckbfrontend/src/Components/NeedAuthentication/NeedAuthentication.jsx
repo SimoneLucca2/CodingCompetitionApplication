@@ -1,7 +1,6 @@
-// AuthenticationReminder.js
 import React from 'react';
 import './NeedAuthentication.css';
-import {useNavigate} from "react-router-dom"; // Make sure the CSS file path is correct
+import {useNavigate} from "react-router-dom";
 
 const NeedAuthentication = () => {
     const number = 1;

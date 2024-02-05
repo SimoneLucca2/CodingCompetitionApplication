@@ -26,11 +26,9 @@ const GroupComponent = () => {
     const battle = params.battleId;
     const battleId = parseInt(battle, 10);
 
-    // Function to join the group
     useEffect(() => {
         const fetchGroupId = async () => {
             try {
-                // Costruisce l'URL con i parametri di query
                 const url = `${API_URL}/battle/group/id/${battleId}/${userId}`;
                 const response = await axios.get(url);
                 setGroupId(response.data.groupId);
@@ -60,7 +58,6 @@ const GroupComponent = () => {
                     setUserEmails(emails);
                 } else {
                     console.error('studentIds non è un array:', studentIds);
-                    // Gestisci il caso in cui studentIds non è un array
                 }
             } catch (error) {
                 console.error("Error fetching user emails", error);
@@ -74,7 +71,6 @@ const GroupComponent = () => {
     }, [userId, battleId]);
 
 
-    // Function to leave the group
     async function leaveGroup() {
 
         const requestBody = {
@@ -104,7 +100,6 @@ const GroupComponent = () => {
         }
     }
 
-    // Function to send an invite  requesterId invitedId  groupId
     const inviteUser = async (email) => {
         try {
             const url = `${API_URL}/getId/${email}`;
@@ -114,6 +109,7 @@ const GroupComponent = () => {
             console.error("Error fetching group ID", error);
             alert("Error fetching group ID");
         }
+
 
         try {
             console.log(receiverId, groupId);
@@ -129,16 +125,16 @@ const GroupComponent = () => {
 
     const changeGroup = async () => {
         const payload = {
-            studentId: userId, // Assuming userId is the current user's ID
-            groupId: newGroupId // The new group ID entered by the user
+            studentId: userId,
+            groupId: newGroupId
         };
 
         try {
             const response = await axios.put(`${API_URL}/battle/group`, payload);
             if (response.status === 200) {
                 alert("Group changed successfully");
-                setGroupId(newGroupId); // Update the current groupId state
-                navigate(`/successpage`); // Navigate to a success page or reload current component
+                setGroupId(newGroupId);
+                navigate(`/successpage`);
             } else {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -147,7 +143,7 @@ const GroupComponent = () => {
             alert("Error changing group:", error);
         }
     };
-//             <button onClick={leaveGroup}>Leave Group</button>
+
     return (
         <div className="group-component">
             <h2>Your group ID: {groupId}</h2>

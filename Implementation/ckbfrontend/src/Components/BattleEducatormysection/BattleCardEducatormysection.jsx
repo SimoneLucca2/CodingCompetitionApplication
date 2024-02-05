@@ -19,14 +19,13 @@ function BattleCardEducatormysection({ battle, onLeaderboardSelect}) {
     const isEducator = userId === battle.creatorId;
 
     const handleLeaderboardClick = (e) => {
-        e.stopPropagation(); // Previene il click sull'intera carta
+        e.stopPropagation();
         onLeaderboardSelect(battle);
     };
 
     function joinCloseTournament(e) {
         const url = `${API_URL}/battle/${battleId}`;
 
-        // Prepare the data to be sent
         fetch(url, {
             method: 'DELETE',
             headers: {

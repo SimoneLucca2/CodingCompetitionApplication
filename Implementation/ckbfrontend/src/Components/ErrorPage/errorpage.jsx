@@ -1,13 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 import './errorpage.css';
 import errorImage from './errorimage.png';
 
 function ErrorPage({ message }) {
-    const navigate = useNavigate(); // Hook per la navigazione
+    const navigate = useNavigate();
 
-    // Animations
     const containerVariants = {
         hidden: { opacity: 0, scale: 0.8 },
         visible: {
@@ -17,8 +16,7 @@ function ErrorPage({ message }) {
         },
     };
 
-    // Funzione per tornare indietro
-    const goBack = () => navigate(-1); // -1 per tornare alla pagina precedente
+    const goBack = () => navigate(-2);
 
     return (
         <motion.div

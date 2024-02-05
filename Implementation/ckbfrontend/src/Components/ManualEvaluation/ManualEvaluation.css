@@ -52,15 +52,15 @@
 }
 
 .score-input:focus {
-    border-color: #007bff; /* Bordo blu per focus */
+    border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
 }
 
 select {
-    background-color: #333; /* Sfondo per select */
-    color: #f0f0f0; /* Colore testo */
-    border: 1px solid #888; /* Bordo per visibilità */
+    background-color: #333;
+    color: #f0f0f0;
+    border: 1px solid #888;
     padding: 5px;
     border-radius: 4px;
     margin-top: 10px;

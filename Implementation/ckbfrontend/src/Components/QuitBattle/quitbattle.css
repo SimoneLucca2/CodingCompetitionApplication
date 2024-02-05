@@ -1,10 +1,10 @@
 .subscription-success {
     text-align: center;
-    background-color: rgb(255, 255, 255); /* Green background */
+    background-color: rgb(255, 255, 255);
     color: #f51111;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgb(0, 0, 0); /* Slight shadow for depth */
+    box-shadow: 0 4px 8px rgb(0, 0, 0);
     max-width: 400px;
     margin: 50px auto;
 }
@@ -23,12 +23,12 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #f44336; /* Red button */
+    background-color: #f44336;
     color: white;
     font-size: 1rem;
     cursor: pointer;
 }
 
 .subscription-success button:hover {
-    background-color: #d32f2f; /* Darker shade on hover */
+    background-color: #d32f2f;
 }

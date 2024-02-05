@@ -1,10 +1,9 @@
-/* Import Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 .create-battle {
     background-color: #000000;
     color: white;
-    max-width: 500px; /* Ridotto da 600px per meglio adattarsi allo stile originale */
+    max-width: 500px;
     margin: 40px auto;
     padding: 30px;
     border-radius: 15px;
@@ -30,7 +29,7 @@
 .create-battle label {
     font-size: 1.2em;
     margin-bottom: 5px;
-    color: #adbac7; /* Mantenuto il colore originale */
+    color: #adbac7;
 }
 
 .create-battle input[type="text"],
@@ -83,7 +82,6 @@
 
 .create-battle h2 {
     text-align: center;
-    /* Altre regole di stile se necessarie */
 }
 
 @keyframes fadeIn {
@@ -101,7 +99,6 @@
     animation: fadeIn 1s ease-out;
 }
 
-/* Aggiungere un effetto di sfondo dinamico */
 .create-battle::before {
     content: '';
     position: absolute;
@@ -114,7 +111,6 @@
     border-radius: 15px;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .create-battle {
         width: 90%;

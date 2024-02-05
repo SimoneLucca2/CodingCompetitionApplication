@@ -1,10 +1,9 @@
-/* BattleCardStudentmysection.css */
 .battle-card {
     background: linear-gradient(135deg, #e6e6e6, #ffffff);
     border-radius: 15px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.5);
-    padding: 15px; /* Ridotto da 20px per risparmiare spazio */
-    width: 320px; /* Aumentato da 300px per più spazio */
+    padding: 15px;
+    width: 320px;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -31,8 +30,8 @@
 }
 
 .leaderboard-button {
-    background-color: rgba(50, 55, 62, 0.66); /* Scegli il colore che preferisci */
-    color: #000000; /* Colore del testo */
+    background-color: rgba(50, 55, 62, 0.66);
+    color: #000000;
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -46,7 +45,7 @@
 }
 
 .leaderboard-button:hover {
-    background-color: rgb(213, 217, 213); /* Colore al passaggio del mouse */
+    background-color: rgb(213, 217, 213);
 }
 
 .battle-card button {
@@ -88,27 +87,26 @@
 .github-link-container {
     display: flex;
     align-items: center;
-    gap: 8px; /* Ridotto lo spazio tra gli elementi */
-    flex-wrap: wrap; /* Permette agli elementi di andare a capo se necessario */
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .github-link-input, .send-github-link-button {
-    height: 35px; /* Ridotto l'altezza per risparmiare spazio */
-    padding: 0 10px; /* Ridotto il padding per risparmiare spazio */
-    font-size: 14px; /* Ridotto il font size per coerenza */
-    flex-grow: 1; /* Assicura che l'input si espanda */
-    flex-basis: 60%; /* Imposta una base per l'input, permettendo al bottone di ridursi */
+    height: 35px;
+    padding: 0 10px;
+    font-size: 14px;
+    flex-grow: 1;
+    flex-basis: 60%;
 }
 
 .github-link-input {
     margin-top: 10px;
-    flex-grow: 1; /* Permette all'input di espandersi per occupare lo spazio disponibile */
-    /* Aggiungi qui ulteriori stili per l'input se necessario */
+    flex-grow: 1;
 }
 
 .send-github-link-button {
     flex-grow: 0;
-    flex-basis: 30%; /* Assicura che il bottone non diventi troppo grande */
+    flex-basis: 30%;
     cursor: pointer;
     font-size: small;
 }
