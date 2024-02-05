@@ -31,9 +31,8 @@ public class StudentInvitationEmailKafkaProducer {
     @Async
     public void sendEmailSendingRequestMessage(StudentInvitesToGroupDto studentInvitesToGroupDto) throws JsonProcessingException, UnsupportedEncodingException {
 
-        String requester = usernameGetter.getUsername(studentInvitesToGroupDto.getRequesterId());
-        String receiver = usernameGetter.getUsername(studentInvitesToGroupDto.getInvitedId());
-        String receiverMail = emailGetter.getEmail(studentInvitesToGroupDto.getInvitedId());
+        String receiver = usernameGetter.getUsername(studentInvitesToGroupDto.getStudentId());
+        String receiverMail = emailGetter.getEmail(studentInvitesToGroupDto.getStudentId());
 
         EmailDto emailDto = EmailDto.builder()
                 .to(receiverMail)
@@ -41,7 +40,7 @@ public class StudentInvitationEmailKafkaProducer {
                 .cc(new String[]{})
                 .bcc(new String[]{})
                 .subject("You've Been Invited to Join a Group by Your Peer!")
-                .body("Dear " + receiver + ",\\n\\nYour fellow student, " + requester + ", has invited you to join their group for the upcoming battle. This is an excellent opportunity for you to collaborate, learn, and showcase your skills in a supportive and competitive environment.\\n\\nTo accept this invitation, please enter the following code into the join group section:\\n " + studentInvitesToGroupDto.getGroupId() + ".\\n\\nIf you have any questions or need further information, feel free to reach out to us or [Inviting Student's Name] directly.\\n\\nWe hope to see you in the group soon!\\n\\nBest regards,\\nCKB Team")
+                .body("Dear " + receiver + ",\\n\\nYour fellow student, a peer has invited you to join their group for the upcoming battle. This is an excellent opportunity for you to collaborate, learn, and showcase your skills in a supportive and competitive environment.\\n\\nTo accept this invitation, please enter the following code into the join group section:\\n " + studentInvitesToGroupDto.getGroupId() + ".\\n\\nIf you have any questions or need further information, feel free to reach out to us or [Inviting Student's Name] directly.\\n\\nWe hope to see you in the group soon!\\n\\nBest regards,\\nCKB Team")
                 .build();
 
         String jsonMessage = objectMapper.writeValueAsString(emailDto);
