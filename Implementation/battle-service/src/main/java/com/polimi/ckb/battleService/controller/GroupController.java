@@ -36,7 +36,7 @@ public class GroupController {
             studentNotificationService.sendInvitationToStudent(studentDto);
             log.info("Email sending request successfully done");
             return ResponseEntity.ok().build();
-        } catch (BattleStateTooAdvancedException e) {
+        } catch (BattleStateTooAdvancedException | BattleDoesNotExistException | GroupDoesNotExistsException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         } catch(Exception e){
@@ -56,7 +56,8 @@ public class GroupController {
                             .groupId(group.getGroupId())
                             .build()
             );
-        } catch (BattleStateTooAdvancedException | GroupIsFullException | StudentAlreadyInAnotherGroupException e) {
+        } catch (BattleStateTooAdvancedException | GroupIsFullException | StudentAlreadyInAnotherGroupException | BattleDoesNotExistException |
+                GroupDoesNotExistsException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
@@ -89,7 +90,8 @@ public class GroupController {
                 log.info("All students correctly kicked from the battle");
             }
         } catch (BattleStateTooAdvancedException | StudentNotRegisteredInBattleException |
-                 StudentNotMemberOfGroupException e) {
+                 StudentNotMemberOfGroupException | StudentDoesNotExistException | GroupDoesNotExistsException |
+                BattleDoesNotExistException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         } catch (JsonProcessingException e) {
@@ -106,7 +108,11 @@ public class GroupController {
         try {
             StudentGroup group = groupService.saveRepositoryUrl(saveGroupRepositoryLinkDto);
             log.info("Cloned repo link uploaded successfully");
-            return ResponseEntity.ok().body(group);
+            return ResponseEntity.ok().body(
+                    GroupDto.builder()
+                            .groupId(group.getGroupId())
+                            .build()
+            );
         } catch (BattleStateTooAdvancedException e) {
             log.error("Bad request: {}", e.getMessage());
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));

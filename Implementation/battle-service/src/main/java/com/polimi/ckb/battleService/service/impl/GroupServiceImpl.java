@@ -30,12 +30,9 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     public void inviteStudentToGroup(@Valid StudentInvitesToGroupDto studentInvitesToGroupDto) {
         //only check if the battle is in PRE_BATTLE state
-        StudentGroup group = groupRepository.findById(studentInvitesToGroupDto.getGroupId()).orElse(null);
-        //group is never null thanks to the @Valid annotation
-        assert group != null;
-        Battle battle = battleRepository.findById(group.getBattle().getBattleId()).orElse(null);
-        //battle is never null otherwise the group would not exist
-        assert battle != null;
+        StudentGroup group = groupRepository.findById(studentInvitesToGroupDto.getGroupId()).orElseThrow(GroupDoesNotExistsException::new);
+        Battle battle = battleRepository.findById(group.getBattle().getBattleId()).orElseThrow(BattleDoesNotExistException::new);
+
         if(!battle.getStatus().equals(BattleStatus.PRE_BATTLE)){
             throw new BattleStateTooAdvancedException();
         }
@@ -45,12 +42,10 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     public StudentGroup joinGroup(@Valid StudentJoinsGroupDto studentJoinsGroupDto) {
         //a group can be joined if it is not full and if the battle is in PRE_BATTLE state
-        StudentGroup group = groupRepository.findById(studentJoinsGroupDto.getGroupId()).orElse(null);
-        //group is never null thanks to the @Valid annotation
-        assert group != null;
-        Battle battle = battleRepository.findById(group.getBattle().getBattleId()).orElse(null);
-        //battle is never null otherwise the group would not exist
-        assert battle != null;
+        StudentGroup group = groupRepository.findById(studentJoinsGroupDto.getGroupId()).orElseThrow(GroupDoesNotExistsException::new);
+
+        Battle battle = battleRepository.findById(group.getBattle().getBattleId()).orElseThrow(BattleDoesNotExistException::new);
+
         if(!battle.getStatus().equals(BattleStatus.PRE_BATTLE)){
             throw new BattleStateTooAdvancedException();
         }
@@ -76,13 +71,13 @@ public class GroupServiceImpl implements GroupService {
             throw new StudentNotRegisteredInBattleException();
         }
 
-        //student need to leave the old group before joining the new one
         if(groupToDelete.getStudents().size() == 1){
             groupRepository.delete(groupToDelete);
             battle.getStudentGroups().remove(groupToDelete);
             battleRepository.save(battle);
         } else {
-            throw new StudentAlreadyInAnotherGroupException();
+            groupToDelete.getStudents().remove(student);
+            groupRepository.save(groupToDelete);
         }
 
         //apply and save changes in the db
@@ -99,21 +94,16 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public StudentGroup leaveGroup(@Valid StudentLeavesGroupDto studentLeavesGroupDto) {
-        StudentGroup group = groupRepository.findById(studentLeavesGroupDto.getGroupId()).orElse(null);
-        //group is never null thanks to the @Valid annotation
-        assert group != null;
-        Battle battle = battleRepository.findById(group.getBattle().getBattleId()).orElse(null);
-        //battle is never null otherwise the group would not exist
-        assert battle != null;
+        StudentGroup group = groupRepository.findById(studentLeavesGroupDto.getGroupId()).orElseThrow(GroupDoesNotExistsException::new);
+
+        Battle battle = battleRepository.findById(group.getBattle().getBattleId()).orElseThrow(BattleDoesNotExistException::new);
 
         //student can leave group only if the battle is in PRE_BATTLE or BATTLE state
         if(!((battle.getStatus().equals(BattleStatus.PRE_BATTLE)) || (battle.getStatus().equals(BattleStatus.BATTLE)))){
             throw new BattleStateTooAdvancedException();
         }
 
-        Student student = studentRepository.findById(studentLeavesGroupDto.getStudentId()).orElse(null);
-        //student is never null thanks to the @Valid annotation
-        assert student != null;
+        Student student = studentRepository.findById(studentLeavesGroupDto.getStudentId()).orElseThrow(StudentDoesNotExistException::new);
 
         //the student must be member of the group in order to leave it
         if(!group.getStudents().contains(student)){
