@@ -48,15 +48,15 @@ const LoginSignup = () => {
                     'Content-Type': 'application/json',
                 },
             });
+
             sessionStorage.setItem('utente', JSON.stringify(response.data));
             const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
             const nickname2 = oggettoSalvato.nickname;
             console.log(nickname2);
             goTOuserprofile(response.data.userType);
         } catch (error) {
-            console.error('Error:', error);
-            setErrorMessage('An error occurred during login/signup. Please try again');
-            goTOerrorpage();
+            //goTOerrorpage();
+            alert('Error during registration: The user does not exist or it could be network problem. Please try again.');
         }
     };
 

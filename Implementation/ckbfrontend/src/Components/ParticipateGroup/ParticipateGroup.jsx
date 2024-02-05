@@ -26,6 +26,9 @@ const GroupComponent = () => {
     const battle = params.battleId;
     const battleId = parseInt(battle, 10);
 
+    const status = params.status;
+    console.log(status);
+
     useEffect(() => {
         const fetchGroupId = async () => {
             try {
@@ -105,11 +108,13 @@ const GroupComponent = () => {
             const url = `${API_URL}/getId/${email}`;
             const response = await axios.get(url);
             setreceiverId(response.data.userId);
+            const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+            await delay(3000);
+            console.log("Sono passati 3 secondi");
         } catch (error) {
             console.error("Error fetching group ID", error);
             alert("Error fetching group ID");
         }
-
 
         try {
             console.log(receiverId, groupId);
@@ -147,21 +152,25 @@ const GroupComponent = () => {
     return (
         <div className="group-component">
             <h2>Your group ID: {groupId}</h2>
-            <h3>Users in battle:</h3>
-            <ul>
-                {userEmails.map((email, index) => (
-                    <li key={index}>{email} <button onClick={() => inviteUser(email)}>Invite</button> </li>
-                ))}
-            </ul>
-            <div className="change-group-container">
-                <input
-                    type="text"
-                    placeholder="Enter group ID you received from the email"
-                    value={newGroupId}
-                    onChange={(e) => setNewGroupId(e.target.value)}
-                />
-                <button onClick={changeGroup}>Change Group</button>
-            </div>
+            {status === 'PRE_BATTLE' && (
+                <>
+                    <h3>Users in battle:</h3>
+                    <ul>
+                        {userEmails.map((email, index) => (
+                            <li key={index}>{email} <button onClick={() => inviteUser(email)}>Invite</button></li>
+                        ))}
+                    </ul>
+                    <div className="change-group-container">
+                        <input
+                            type="text"
+                            placeholder="Enter group ID you received from the email"
+                            value={newGroupId}
+                            onChange={(e) => setNewGroupId(e.target.value)}
+                        />
+                        <button onClick={changeGroup}>Change Group</button>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

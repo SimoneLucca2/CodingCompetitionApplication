@@ -64,7 +64,8 @@ function CreateBattle() {
             {goTOuserprofile()};
         } catch (error) {
             console.error("Error creating battle:", error);
-            {goTOerrorpage()};
+            //{goTOerrorpage()};
+            alert("Error creating battle: it could be the battle already exists or for network problem, try again. ", error);
         }
     };
 

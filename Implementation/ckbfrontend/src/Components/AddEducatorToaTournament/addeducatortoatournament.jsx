@@ -41,6 +41,7 @@ function AddEducatorToTournament() {
 
             if (!response2.ok) {
                 console.log("non va");
+                alert("We are having problem, the email could be not valid. Try again ");
             }
 
             const responseData2 = await response2.json();
@@ -68,7 +69,8 @@ function AddEducatorToTournament() {
             console.log(responseData);
         } catch (error) {
             console.error('There was an error!', error);
-            {goTOerrorpage()};
+            alert("Error: "+ error.message);
+            //{goTOerrorpage()};
 
         }
     };

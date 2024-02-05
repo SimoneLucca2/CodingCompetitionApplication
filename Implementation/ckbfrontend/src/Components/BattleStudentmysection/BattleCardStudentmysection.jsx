@@ -44,7 +44,7 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
             navigate(`/successpage`);
 
         } catch (error) {
-            alert("Error joining battle:", error);
+            alert("Error joining battle. Control you are not already subscribed to this battle!", error);
         }
     }
 
@@ -74,7 +74,7 @@ function BattleCardStudentmysection({ battle, onLeaderboardSelect}) {
             navigate(`/successpage`);
 
         } catch (error) {
-            alert("Error Quitting battle:", error);
+            alert("Error Quitting battle. Control you were subscribed to this battle before try to quit.", error);
         }
     }
 

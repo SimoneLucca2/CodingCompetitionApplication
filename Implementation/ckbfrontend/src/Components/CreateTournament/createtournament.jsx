@@ -38,7 +38,7 @@ const CreateTournament = () => {
             });
 
             if (!response.ok) {
-                navigate('/errorpage');
+                //navigate('/errorpage');
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
@@ -46,9 +46,8 @@ const CreateTournament = () => {
             console.log('Success:', data);
             navigate('/successpage');
         } catch (error) {
-            console.error('Error:', error);
+            alert('Error: the tournament could already exists or it could be network trouble', );
         }
-
     };
 
     return (
