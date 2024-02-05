@@ -71,13 +71,13 @@ public class GroupServiceImpl implements GroupService {
             throw new StudentNotRegisteredInBattleException();
         }
 
-        //student need to leave the old group before joining the new one
         if(groupToDelete.getStudents().size() == 1){
             groupRepository.delete(groupToDelete);
             battle.getStudentGroups().remove(groupToDelete);
             battleRepository.save(battle);
         } else {
-            throw new StudentAlreadyInAnotherGroupException();
+            groupToDelete.getStudents().remove(student);
+            groupRepository.save(groupToDelete);
         }
 
         //apply and save changes in the db
