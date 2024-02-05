@@ -56,6 +56,11 @@
     width: calc(100% - 22px); /* Adjust based on padding and border */
 }
 
+.change-group-container {
+    justify-content: space-between;
+
+    text-align: center;
+}
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }

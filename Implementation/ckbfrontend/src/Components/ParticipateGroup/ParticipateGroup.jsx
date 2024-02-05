@@ -7,12 +7,13 @@ import {useNavigate, useParams} from "react-router-dom";
 const GroupComponent = () => {
     const [groupId, setGroupId] = useState('');
     const [userEmails, setUserEmails] = useState([]);
+    const [newGroupId, setNewGroupId] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
         const oggettoSalvato = JSON.parse(sessionStorage.getItem('utente'));
         if (!oggettoSalvato) {
-            navigate(`/needauthentication`, { replace: true });
+            navigate(`/needauthentication`, {replace: true});
             return;
         }
     }, [navigate]);
@@ -50,7 +51,7 @@ const GroupComponent = () => {
                     console.log("studentIds è un array");
                     const emails = await Promise.all(studentIds.map(async (id) => {
                         const url = `${API_URL}/user/email/${encodeURIComponent(id)}`;
-                        const { data: userData } = await axios.get(url);
+                        const {data: userData} = await axios.get(url);
                         console.log(userData);
                         return userData;
 
@@ -72,13 +73,12 @@ const GroupComponent = () => {
     }, [userId, battleId]);
 
 
-
     // Function to leave the group
     async function leaveGroup() {
 
         const requestBody = {
             studentId: userId,
-            groupId: battle.battleId
+            groupId: groupId
         };
         console.log(requestBody);
 
@@ -96,7 +96,7 @@ const GroupComponent = () => {
             }
             setGroupId('');
             console.log("Quitted group successfully");
-            navigate(`successpage`);
+            navigate(`/successpage`);
 
         } catch (error) {
             alert("Error Quitting battle:", error);
@@ -106,23 +106,54 @@ const GroupComponent = () => {
     // Function to send an invite
     const inviteUser = async (email) => {
         try {
-            await axios.post('/api/user/invite', { email });
+            await axios.post('/api/user/invite', {email});
             alert(`Invite sent to ${email}`);
         } catch (error) {
             console.error("Error sending invite", error);
         }
     };
 
+    const changeGroup = async () => {
+        const payload = {
+            studentId: userId, // Assuming userId is the current user's ID
+            groupId: newGroupId // The new group ID entered by the user
+        };
+
+        try {
+            const response = await axios.put(`${API_URL}/battle/group`, payload);
+            if (response.status === 200) {
+                alert("Group changed successfully");
+                setGroupId(newGroupId); // Update the current groupId state
+                navigate(`/successpage`); // Navigate to a success page or reload current component
+            } else {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Error changing group", error);
+            alert("Error changing group:", error);
+        }
+    };
+//             <button onClick={leaveGroup}>Leave Group</button>
     return (
         <div className="group-component">
             <h2>Your group ID: {groupId}</h2>
-            <button onClick={leaveGroup}>Leave Group</button>
             <h3>Users in battle:</h3>
             <ul>
                 {userEmails.map((email, index) => (
-                    <li key={index}>{email} <button onClick={() => inviteUser(email)}>Invite</button></li>
+                    <li key={index}>{email}
+                        <button onClick={() => inviteUser(email)}>Invite</button>
+                    </li>
                 ))}
             </ul>
+            <div className="change-group-container">
+                <input
+                    type="text"
+                    placeholder="Enter new group ID"
+                    value={newGroupId}
+                    onChange={(e) => setNewGroupId(e.target.value)}
+                />
+                <button onClick={changeGroup}>Change Group</button>
+            </div>
         </div>
     );
 };
