@@ -8,6 +8,7 @@ const GroupComponent = () => {
     const [groupId, setGroupId] = useState('');
     const [userEmails, setUserEmails] = useState([]);
     const [newGroupId, setNewGroupId] = useState('');
+    const [receiverId, setreceiverId] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -104,10 +105,37 @@ const GroupComponent = () => {
     }
 
     // Function to send an invite
+    // Function to send an invite  requesterId invitedId  groupId
     const inviteUser = async (email) => {
+        const url = new URL(`${API_URL}/getId/${email}`);
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La richiesta non è andata a buon fine');
+                }
+                return response.json(); // Assicurati di restituire il risultato di response.json() per il successivo .then()
+            })
+            .then(data => {
+                console.log(data.userId); // Questo log viene eseguito dopo aver ricevuto la risposta
+                setreceiverId(data.userId);
+                console.log(receiverId); // Assicurati che questa variabile sia accessibile o definisci la logica qui
+            })
+            .catch(error => {
+                console.error('Si è verificato un errore:', error);
+            });
+
         try {
-            await axios.post('/api/user/invite', {email});
-            alert(`Invite sent to ${email}`);
+            const payload = {
+                studentId: receiverId,
+                groupId: groupId
+            };
+
+            await axios.post(`${API_URL}/battle/group`, payload);
         } catch (error) {
             console.error("Error sending invite", error);
         }
@@ -140,9 +168,7 @@ const GroupComponent = () => {
             <h3>Users in battle:</h3>
             <ul>
                 {userEmails.map((email, index) => (
-                    <li key={index}>{email}
-                        <button onClick={() => inviteUser(email)}>Invite</button>
-                    </li>
+                    <li key={index}>{email} <button onClick={() => inviteUser(email)}>Invite</button> </li>
                 ))}
             </ul>
             <div className="change-group-container">
