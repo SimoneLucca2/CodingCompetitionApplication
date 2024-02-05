@@ -104,37 +104,23 @@ const GroupComponent = () => {
         }
     }
 
-    // Function to send an invite
     // Function to send an invite  requesterId invitedId  groupId
     const inviteUser = async (email) => {
-        const url = new URL(`${API_URL}/getId/${email}`);
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('La richiesta non è andata a buon fine');
-                }
-                return response.json(); // Assicurati di restituire il risultato di response.json() per il successivo .then()
-            })
-            .then(data => {
-                console.log(data.userId); // Questo log viene eseguito dopo aver ricevuto la risposta
-                setreceiverId(data.userId);
-                console.log(receiverId); // Assicurati che questa variabile sia accessibile o definisci la logica qui
-            })
-            .catch(error => {
-                console.error('Si è verificato un errore:', error);
-            });
+        try {
+            const url = `${API_URL}/getId/${email}`;
+            const response = await axios.get(url);
+            setreceiverId(response.data.userId);
+        } catch (error) {
+            console.error("Error fetching group ID", error);
+            alert("Error fetching group ID");
+        }
 
         try {
+            console.log(receiverId, groupId);
             const payload = {
                 studentId: receiverId,
                 groupId: groupId
             };
-
             await axios.post(`${API_URL}/battle/group`, payload);
         } catch (error) {
             console.error("Error sending invite", error);
@@ -174,7 +160,7 @@ const GroupComponent = () => {
             <div className="change-group-container">
                 <input
                     type="text"
-                    placeholder="Enter new group ID"
+                    placeholder="Enter group ID you received from the email"
                     value={newGroupId}
                     onChange={(e) => setNewGroupId(e.target.value)}
                 />

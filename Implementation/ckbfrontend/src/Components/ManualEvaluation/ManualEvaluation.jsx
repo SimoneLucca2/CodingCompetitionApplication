@@ -6,7 +6,6 @@ import API_URL from "../../config"; // Import CSS
 function ManualEvaluation() {
     const navigate = useNavigate();
 
-    const [showEvaluation, setShowEvaluation] = useState(false);
     const [score, setScore] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
@@ -67,7 +66,6 @@ function ManualEvaluation() {
 
     return (
         <div className="manual-evaluation">
-            {showEvaluation ? (
                 <div className="evaluation-form">
                     <div>
                         Select a group:
@@ -94,13 +92,6 @@ function ManualEvaluation() {
                         Submit
                     </button>
                 </div>
-            ) : (
-                <div className="evaluation-query">
-                    Do you want to perform manual evaluation?
-                    <button onClick={() => setShowEvaluation(true)} className="yes-button">Yes</button>
-                    <button onClick={handleNoClick} className="no-button">No</button>
-                </div>
-            )}
         </div>
     );
 }
