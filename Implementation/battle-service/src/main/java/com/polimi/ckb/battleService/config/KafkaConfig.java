@@ -62,4 +62,12 @@ public class KafkaConfig {
                 .replicas(1)
                 .build();
     }
+
+    @Bean
+    public NewTopic battleScoreTopic() {
+        return TopicBuilder.name("battle.student.score")
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
 }

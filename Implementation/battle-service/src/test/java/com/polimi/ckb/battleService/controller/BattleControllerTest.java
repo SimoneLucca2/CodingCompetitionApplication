@@ -441,8 +441,7 @@ public class BattleControllerTest {
         battleService.joinBattle(secondDto);
 
         StudentInvitesToGroupDto inviteDto = StudentInvitesToGroupDto.builder()
-                .requesterId(firstDto.getStudentId())
-                .invitedId(secondDto.getStudentId())
+                .studentId(secondDto.getStudentId())
                 .groupId(group.getGroupId())
                 .build();
 
